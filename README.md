@@ -8,6 +8,7 @@ It attempts to solve a couple of key issues that the databasedotcom gem has been
 * Support for interacting with multiple users from different orgs.
 * Support for parent-to-child relationships.
 * Remove the need to materialize constants.
+* Support for the Streaming API
 
 ## Installation
 
