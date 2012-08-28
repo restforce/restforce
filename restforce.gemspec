@@ -14,4 +14,9 @@ Gem::Specification.new do |gem|
   gem.name          = "restforce"
   gem.require_paths = ["lib"]
   gem.version       = Restforce::VERSION
+
+  gem.add_dependency 'faraday', '~> 0.8.4'
+
+  gem.add_development_dependency 'rspec'
+  gem.add_development_dependency 'webmock'
 end
