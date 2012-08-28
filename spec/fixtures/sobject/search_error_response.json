@@ -1,0 +1,4 @@
+[ {
+  "message" : "No search term found. The search term must be enclosed in braces.",
+  "errorCode" : "MALFORMED_SEARCH"
+} ]

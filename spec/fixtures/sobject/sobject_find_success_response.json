@@ -1,0 +1,29 @@
+{
+  "attributes" : {
+    "type" : "Whizbang",
+    "url" : "/services/data/v20.0/sobjects/Whizbang/23foo"
+  },
+  "Id" : "23foo",
+  "OwnerId" : "owner_id",
+  "IsDeleted" : false,
+  "Name" : "My First Whizbang",
+  "CreatedById" : "created_by_id",
+  "LastModifiedById" : "last_modified_by_id",
+  "Auto_Number" : "A-1",
+  "Checkbox_Label" : true,
+  "Currency_Label" : 23.0,
+  "Date_Label" : "2010-01-01",
+  "DateTime_Label" : "2011-07-07T00:37:00.000+0000",
+  "OtherDateTime_Label" : null,
+  "Email_Label" : "danny@example.com",
+  "Number_Label" : 23.0,
+  "Percent_Label" : 33.0,
+  "Phone_Label" : "(415) 555-1212",
+  "Picklist_Label" : "one",
+  "Picklist_Multiselect_Label" : "four;six",
+  "Text_Label" : "some text",
+  "TextArea_Label" : "a text area",
+  "TextAreaLong_Label" : "a loooooooooooooong text area",
+  "TextAreaRich_Label" : "Rich <strong>text</strong>",
+  "URL_Label" : "http://pivotallabs.com"
+}

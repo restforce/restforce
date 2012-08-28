@@ -1,0 +1,47 @@
+{
+    "parent": {
+        "id": "005x0000000JbFuAAK",
+        "url": "/services/data/v23.0/chatter/users/005x0000000JbFuAAK"
+    },
+    "id": "0D7x000000005dRCAQ",
+    "user": {
+        "name": "Admin User",
+        "title": null,
+        "firstName": "Admin",
+        "lastName": "User",
+        "companyName": "Pivotal",
+        "mySubscription": null,
+        "photo": {
+            "smallPhotoUrl": "/profilephoto/005/T",
+            "largePhotoUrl": "/profilephoto/005/F"
+        },
+        "isChatterGuest": false,
+        "id": "005x0000000JbFuAAK",
+        "type": "User",
+        "url": "/services/data/v23.0/chatter/users/005x0000000JbFuAAK"
+    },
+    "clientInfo": {
+        "applicationName": "localhost",
+        "applicationUrl": "null"
+    },
+    "url": "/services/data/v23.0/chatter/comments/0D7x000000005dRCAQ",
+    "body": {
+        "text": "So do I like #frogs",
+        "messageSegments": [{
+            "type": "Text",
+            "text": "So do I like "
+        },
+        {
+            "url": "/services/data/v23.0/chatter/feed-items?q=%23frogs",
+            "tag": "frogs",
+            "type": "Hashtag",
+            "text": "#frogs"
+        }]
+    },
+    "createdDate": "2011-08-08T21:39:23.000+0000",
+    "deletable": true,
+    "feedItem": {
+        "id": "0D5x00000001g6tCAA",
+        "url": "/services/data/v23.0/chatter/feed-items/0D5x00000001g6tCAA"
+    }
+}

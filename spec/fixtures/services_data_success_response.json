@@ -1,0 +1,12 @@
+[
+  {
+    "version": "20.0",
+    "url": "/services/data/v20.0",
+    "label": "Winter '11"
+  },
+  {
+    "version": "100",
+    "url": "/services/data/v100",
+    "label": "Spring '86"
+  }
+]

@@ -1,0 +1,6 @@
+{
+    "feeds": [{
+        "label": "Contacts",
+        "feedUrl": "/services/data/v23.0/chatter/feeds/filter/005x0000000JbFuAAK/003"
+    }]
+}

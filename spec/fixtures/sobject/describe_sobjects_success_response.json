@@ -1,0 +1,31 @@
+{
+  "encoding" : "UTF-8",
+  "maxBatchSize" : 200,
+  "sobjects" : [ {
+    "name" : "Account",
+    "label" : "Account",
+    "custom" : false,
+    "keyPrefix" : "001",
+    "labelPlural" : "Accounts",
+    "layoutable" : true,
+    "activateable" : false,
+    "updateable" : true,
+    "urls" : {
+      "sobject" : "/services/data/v23.0/sobjects/Account",
+      "describe" : "/services/data/v23.0/sobjects/Account/describe",
+      "rowTemplate" : "/services/data/v23.0/sobjects/Account/{ID}"
+    },
+    "searchable" : true,
+    "createable" : true,
+    "customSetting" : false,
+    "deletable" : true,
+    "deprecatedAndHidden" : false,
+    "feedEnabled" : true,
+    "mergeable" : true,
+    "queryable" : true,
+    "replicateable" : true,
+    "retrieveable" : true,
+    "undeletable" : true,
+    "triggerable" : true
+  }]
+}

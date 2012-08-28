@@ -1,0 +1,97 @@
+{
+    "messages": {
+        "messages": [{
+            "id": "03Jx000000000FYEAY",
+            "sender": {
+                "name": "Admin User",
+                "title": null,
+                "firstName": "Admin",
+                "lastName": "User",
+                "companyName": "Pivotal",
+                "mySubscription": null,
+                "photo": {
+                    "smallPhotoUrl": "/profilephoto/005/T",
+                    "largePhotoUrl": "/profilephoto/005/F"
+                },
+                "isChatterGuest": false,
+                "id": "005x0000000JbFuAAK",
+                "type": "User",
+                "url": "/services/data/v23.0/chatter/users/005x0000000JbFuAAK"
+            },
+            "url": "/services/data/v23.0/chatter/users/me/messages/03Jx000000000FYEAY",
+            "body": {
+                "text": "Yes",
+                "messageSegments": []
+            },
+            "recipients": [],
+            "sentDate": "2011-08-08T21:36:05.000Z",
+            "conversationId": "03Mx0000000009XEAQ",
+            "conversationUrl": "/services/data/v23.0/chatter/users/me/conversations/03Mx0000000009XEAQ"
+        },
+        {
+            "id": "03Jx000000000FTEAY",
+            "sender": {
+                "name": "Chatter Expert",
+                "title": null,
+                "firstName": null,
+                "lastName": "Chatter Expert",
+                "companyName": null,
+                "mySubscription": null,
+                "photo": {
+                    "smallPhotoUrl": "/profilephoto/729x000000005Gw/T",
+                    "largePhotoUrl": "/profilephoto/729x000000005Gw/F"
+                },
+                "isChatterGuest": false,
+                "id": "005x0000000JbGVAA0",
+                "type": "User",
+                "url": "/services/data/v23.0/chatter/users/005x0000000JbGVAA0"
+            },
+            "url": "/services/data/v23.0/chatter/users/me/messages/03Jx000000000FTEAY",
+            "body": {
+                "text": "Did you know that you can now send private messages that don’t show up in your Chatter feed? You can keep a conversation private between you and the people you send a message to.\n\nMessages are a great way to:\n- Ask someone a question privately\n- Talk about confidential subjects like hiring or compensation\n- Work on a top-secret project with a few select people\n\nGo to My Messages and try sending a message now!\n\nP.S. This message was automatically generated. If you reply, Chatter Expert isn’t able to reply back.",
+                "messageSegments": []
+            },
+            "recipients": [],
+            "sentDate": "2011-08-08T21:20:18.000Z",
+            "conversationId": "03Mx0000000009XEAQ",
+            "conversationUrl": "/services/data/v23.0/chatter/users/me/conversations/03Mx0000000009XEAQ"
+        }],
+        "nextPageUrl": null,
+        "currentPageUrl": "/services/data/v23.0/chatter/users/me/conversations/03Mx0000000009XEAQ"
+    },
+    "members": [{
+        "name": "Chatter Expert",
+        "title": null,
+        "firstName": null,
+        "lastName": "Chatter Expert",
+        "companyName": null,
+        "mySubscription": null,
+        "photo": {
+            "smallPhotoUrl": "/profilephoto/729x000000005Gw/T",
+            "largePhotoUrl": "/profilephoto/729x000000005Gw/F"
+        },
+        "isChatterGuest": false,
+        "id": "005x0000000JbGVAA0",
+        "type": "User",
+        "url": "/services/data/v23.0/chatter/users/005x0000000JbGVAA0"
+    },
+    {
+        "name": "Admin User",
+        "title": null,
+        "firstName": "Admin",
+        "lastName": "User",
+        "companyName": "Pivotal",
+        "mySubscription": null,
+        "photo": {
+            "smallPhotoUrl": "/profilephoto/005/T",
+            "largePhotoUrl": "/profilephoto/005/F"
+        },
+        "isChatterGuest": false,
+        "id": "005x0000000JbFuAAK",
+        "type": "User",
+        "url": "/services/data/v23.0/chatter/users/005x0000000JbFuAAK"
+    }],
+    "read": false,
+    "conversationId": "03Mx0000000009XEAQ",
+    "conversationUrl": "/services/data/v23.0/chatter/users/me/conversations/03Mx0000000009XEAQ"
+}

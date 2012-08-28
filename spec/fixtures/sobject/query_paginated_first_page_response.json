@@ -1,0 +1,12 @@
+{
+  "totalSize" : 2,
+  "done" : false,
+  "nextRecordsUrl" : "/next/page/url",
+  "records" : [ {
+    "attributes" : {
+      "type" : "Whizbang",
+      "url" : "/services/data/v20.0/sobjects/Whizbang/foo"
+    },
+    "Text_Label" : "First Page"
+  } ]
+}

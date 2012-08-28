@@ -1,0 +1,11 @@
+{
+  "totalSize" : 1,
+  "done" : true,
+  "records" : [ {
+    "attributes" : {
+      "type" : "Organization",
+      "url" : "/services/data/v20.0/sobjects/Organization/00Dx0000000BV7z"
+    },
+    "Id" : "00Dx0000000BV7z"
+  } ]
+}

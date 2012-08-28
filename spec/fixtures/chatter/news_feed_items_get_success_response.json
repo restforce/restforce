@@ -1,0 +1,395 @@
+{
+    "items": [{
+        "parent": {
+            "name": "Admin User",
+            "title": null,
+            "firstName": "Admin",
+            "lastName": "User",
+            "companyName": "Pivotal",
+            "mySubscription": null,
+            "photo": {
+                "smallPhotoUrl": "/profilephoto/005/T",
+                "largePhotoUrl": "/profilephoto/005/F"
+            },
+            "isChatterGuest": false,
+            "id": "005x0000000JbFuAAK",
+            "type": "User",
+            "url": "/services/data/v23.0/chatter/users/005x0000000JbFuAAK"
+        },
+        "id": "0D5x00000001g6tCAA",
+        "type": "UserStatus",
+        "clientInfo": {
+            "applicationName": "localhost",
+            "applicationUrl": "null"
+        },
+        "url": "/services/data/v23.0/chatter/feed-items/0D5x00000001g6tCAA",
+        "body": {
+            "text": "I love #frogs",
+            "messageSegments": [{
+                "type": "Text",
+                "text": "I love "
+            },
+            {
+                "url": "/services/data/v23.0/chatter/feed-items?q=%23frogs",
+                "tag": "frogs",
+                "type": "Hashtag",
+                "text": "#frogs"
+            }]
+        },
+        "createdDate": "2011-08-08T21:37:08.000Z",
+        "modifiedDate": "2011-08-08T21:39:23.000Z",
+        "photoUrl": "/profilephoto/005/T",
+        "comments": {
+            "total": 1,
+            "comments": [{
+                "parent": {
+                    "id": "005x0000000JbFuAAK",
+                    "url": "/services/data/v23.0/chatter/users/005x0000000JbFuAAK"
+                },
+                "id": "0D7x000000005dRCAQ",
+                "user": {
+                    "name": "Admin User",
+                    "title": null,
+                    "firstName": "Admin",
+                    "lastName": "User",
+                    "companyName": "Pivotal",
+                    "mySubscription": null,
+                    "photo": {
+                        "smallPhotoUrl": "/profilephoto/005/T",
+                        "largePhotoUrl": "/profilephoto/005/F"
+                    },
+                    "isChatterGuest": false,
+                    "id": "005x0000000JbFuAAK",
+                    "type": "User",
+                    "url": "/services/data/v23.0/chatter/users/005x0000000JbFuAAK"
+                },
+                "clientInfo": {
+                    "applicationName": "localhost",
+                    "applicationUrl": "null"
+                },
+                "url": "/services/data/v23.0/chatter/comments/0D7x000000005dRCAQ",
+                "body": {
+                    "text": "So do I like #frogs",
+                    "messageSegments": [{
+                        "type": "Text",
+                        "text": "So do I like "
+                    },
+                    {
+                        "url": "/services/data/v23.0/chatter/feed-items?q=%23frogs",
+                        "tag": "frogs",
+                        "type": "Hashtag",
+                        "text": "#frogs"
+                    }]
+                },
+                "createdDate": "2011-08-08T21:39:23.000+0000",
+                "deletable": true,
+                "feedItem": {
+                    "id": "0D5x00000001g6tCAA",
+                    "url": "/services/data/v23.0/chatter/feed-items/0D5x00000001g6tCAA"
+                }
+            }],
+            "nextPageUrl": null,
+            "currentPageUrl": "/services/data/v23.0/chatter/feed-items/0D5x00000001g6tCAA/comments"
+        },
+        "likes": {
+            "total": 1,
+            "likes": [{
+                "id": "0I0x000000001XiCAI",
+                "user": {
+                    "name": "Admin User",
+                    "title": null,
+                    "firstName": "Admin",
+                    "lastName": "User",
+                    "companyName": "Pivotal",
+                    "mySubscription": null,
+                    "photo": {
+                        "smallPhotoUrl": "/profilephoto/005/T",
+                        "largePhotoUrl": "/profilephoto/005/F"
+                    },
+                    "isChatterGuest": false,
+                    "id": "005x0000000JbFuAAK",
+                    "type": "User",
+                    "url": "/services/data/v23.0/chatter/users/005x0000000JbFuAAK"
+                },
+                "url": "/services/data/v23.0/chatter/likes/0I0x000000001XiCAI"
+            }],
+            "previousPageUrl": null,
+            "nextPageUrl": null,
+            "currentPageUrl": "/services/data/v23.0/chatter/feed-items/0D5x00000001g6tCAA/likes",
+            "myLike": {
+                "id": "0I0x000000001XiCAI",
+                "url": "/services/data/v23.0/chatter/likes/0I0x000000001XiCAI"
+            }
+        },
+        "isLikedByCurrentUser": true,
+        "currentUserLike": {
+            "id": "0I0x000000001XiCAI",
+            "url": "/services/data/v23.0/chatter/likes/0I0x000000001XiCAI"
+        },
+        "actor": {
+            "name": "Admin User",
+            "title": null,
+            "firstName": "Admin",
+            "lastName": "User",
+            "companyName": "Pivotal",
+            "mySubscription": null,
+            "photo": {
+                "smallPhotoUrl": "/profilephoto/005/T",
+                "largePhotoUrl": "/profilephoto/005/F"
+            },
+            "isChatterGuest": false,
+            "id": "005x0000000JbFuAAK",
+            "type": "User",
+            "url": "/services/data/v23.0/chatter/users/005x0000000JbFuAAK"
+        },
+        "event": false,
+        "attachment": null
+    },
+    {
+        "parent": {
+            "name": "Admin User",
+            "title": null,
+            "firstName": "Admin",
+            "lastName": "User",
+            "companyName": "Pivotal",
+            "mySubscription": null,
+            "photo": {
+                "smallPhotoUrl": "/profilephoto/005/T",
+                "largePhotoUrl": "/profilephoto/005/F"
+            },
+            "isChatterGuest": false,
+            "id": "005x0000000JbFuAAK",
+            "type": "User",
+            "url": "/services/data/v23.0/chatter/users/005x0000000JbFuAAK"
+        },
+        "id": "0D5x00000001g7CCAQ",
+        "type": "UserStatus",
+        "clientInfo": {
+            "applicationName": "localhost",
+            "applicationUrl": "null"
+        },
+        "url": "/services/data/v23.0/chatter/feed-items/0D5x00000001g7CCAQ",
+        "body": {
+            "text": "Posting",
+            "messageSegments": [{
+                "type": "Text",
+                "text": "Posting"
+            }]
+        },
+        "createdDate": "2011-08-08T21:36:13.000Z",
+        "modifiedDate": "2011-08-08T21:36:13.000Z",
+        "photoUrl": "/profilephoto/005/T",
+        "comments": {
+            "total": 0,
+            "comments": [],
+            "nextPageUrl": null,
+            "currentPageUrl": "/services/data/v23.0/chatter/feed-items/0D5x00000001g7CCAQ/comments"
+        },
+        "likes": {
+            "total": 0,
+            "likes": [],
+            "previousPageUrl": null,
+            "nextPageUrl": null,
+            "currentPageUrl": "/services/data/v23.0/chatter/feed-items/0D5x00000001g7CCAQ/likes",
+            "myLike": null
+        },
+        "isLikedByCurrentUser": false,
+        "currentUserLike": null,
+        "actor": {
+            "name": "Admin User",
+            "title": null,
+            "firstName": "Admin",
+            "lastName": "User",
+            "companyName": "Pivotal",
+            "mySubscription": null,
+            "photo": {
+                "smallPhotoUrl": "/profilephoto/005/T",
+                "largePhotoUrl": "/profilephoto/005/F"
+            },
+            "isChatterGuest": false,
+            "id": "005x0000000JbFuAAK",
+            "type": "User",
+            "url": "/services/data/v23.0/chatter/users/005x0000000JbFuAAK"
+        },
+        "event": false,
+        "attachment": null
+    },
+    {
+        "parent": {
+            "name": "Admin User",
+            "title": null,
+            "firstName": "Admin",
+            "lastName": "User",
+            "companyName": "Pivotal",
+            "mySubscription": null,
+            "photo": {
+                "smallPhotoUrl": "/profilephoto/005/T",
+                "largePhotoUrl": "/profilephoto/005/F"
+            },
+            "isChatterGuest": false,
+            "id": "005x0000000JbFuAAK",
+            "type": "User",
+            "url": "/services/data/v23.0/chatter/users/005x0000000JbFuAAK"
+        },
+        "id": "0D5x00000001g78CAA",
+        "type": "UserStatus",
+        "clientInfo": null,
+        "url": "/services/data/v23.0/chatter/feed-items/0D5x00000001g78CAA",
+        "body": {
+            "text": "This is so great",
+            "messageSegments": [{
+                "type": "Text",
+                "text": "This is so great"
+            }]
+        },
+        "createdDate": "2011-08-08T21:07:48.000Z",
+        "modifiedDate": "2011-08-08T21:07:48.000Z",
+        "photoUrl": "/profilephoto/005/T",
+        "comments": {
+            "total": 0,
+            "comments": [],
+            "nextPageUrl": null,
+            "currentPageUrl": "/services/data/v23.0/chatter/feed-items/0D5x00000001g78CAA/comments"
+        },
+        "likes": {
+            "total": 0,
+            "likes": [],
+            "previousPageUrl": null,
+            "nextPageUrl": null,
+            "currentPageUrl": "/services/data/v23.0/chatter/feed-items/0D5x00000001g78CAA/likes",
+            "myLike": null
+        },
+        "isLikedByCurrentUser": false,
+        "currentUserLike": null,
+        "actor": {
+            "name": "Admin User",
+            "title": null,
+            "firstName": "Admin",
+            "lastName": "User",
+            "companyName": "Pivotal",
+            "mySubscription": null,
+            "photo": {
+                "smallPhotoUrl": "/profilephoto/005/T",
+                "largePhotoUrl": "/profilephoto/005/F"
+            },
+            "isChatterGuest": false,
+            "id": "005x0000000JbFuAAK",
+            "type": "User",
+            "url": "/services/data/v23.0/chatter/users/005x0000000JbFuAAK"
+        },
+        "event": false,
+        "attachment": null
+    },
+    {
+        "parent": {
+            "name": "All Pivotal",
+            "description": "Get company announcements and other important updates",
+            "visibility": "PublicAccess",
+            "memberCount": 1,
+            "canHaveChatterGuests": false,
+            "mySubscription": {
+                "id": "0FBx000000006TrGAI",
+                "url": "/services/data/v23.0/chatter/group-memberships/0FBx000000006TrGAI"
+            },
+            "myRole": "GroupOwner",
+            "photo": {
+                "smallPhotoUrl": "/profilephoto/729x000000005HB/T",
+                "largePhotoUrl": "/profilephoto/729x000000005HB/F"
+            },
+            "id": "0F9x000000002HVCAY",
+            "type": "CollaborationGroup",
+            "url": "/services/data/v23.0/chatter/groups/0F9x000000002HVCAY"
+        },
+        "id": "0D5x00000001g77CAA",
+        "type": "TrackedChange",
+        "clientInfo": null,
+        "url": "/services/data/v23.0/chatter/feed-items/0D5x00000001g77CAA",
+        "body": {
+            "text": "created this group.",
+            "messageSegments": [{
+                "type": "Text",
+                "text": "created this group."
+            }]
+        },
+        "createdDate": "2011-08-08T21:07:31.000Z",
+        "modifiedDate": "2011-08-08T21:08:06.000Z",
+        "photoUrl": "/profilephoto/005/T",
+        "comments": {
+            "total": 1,
+            "comments": [{
+                "parent": {
+                    "id": "0F9x000000002HVCAY",
+                    "url": "/services/data/v23.0/chatter/groups/0F9x000000002HVCAY"
+                },
+                "id": "0D7x000000005dMCAQ",
+                "user": {
+                    "name": "Admin User",
+                    "title": null,
+                    "firstName": "Admin",
+                    "lastName": "User",
+                    "companyName": "Pivotal",
+                    "mySubscription": null,
+                    "photo": {
+                        "smallPhotoUrl": "/profilephoto/005/T",
+                        "largePhotoUrl": "/profilephoto/005/F"
+                    },
+                    "isChatterGuest": false,
+                    "id": "005x0000000JbFuAAK",
+                    "type": "User",
+                    "url": "/services/data/v23.0/chatter/users/005x0000000JbFuAAK"
+                },
+                "clientInfo": {
+                    "applicationName": "localhost",
+                    "applicationUrl": "null"
+                },
+                "url": "/services/data/v23.0/chatter/comments/0D7x000000005dMCAQ",
+                "body": {
+                    "text": "yes, it is",
+                    "messageSegments": [{
+                        "type": "Text",
+                        "text": "yes, it is"
+                    }]
+                },
+                "createdDate": "2011-08-08T21:08:06.000+0000",
+                "deletable": true,
+                "feedItem": {
+                    "id": "0D5x00000001g77CAA",
+                    "url": "/services/data/v23.0/chatter/feed-items/0D5x00000001g77CAA"
+                }
+            }],
+            "nextPageUrl": null,
+            "currentPageUrl": "/services/data/v23.0/chatter/feed-items/0D5x00000001g77CAA/comments"
+        },
+        "likes": {
+            "total": 0,
+            "likes": [],
+            "previousPageUrl": null,
+            "nextPageUrl": null,
+            "currentPageUrl": "/services/data/v23.0/chatter/feed-items/0D5x00000001g77CAA/likes",
+            "myLike": null
+        },
+        "isLikedByCurrentUser": false,
+        "currentUserLike": null,
+        "actor": {
+            "name": "Admin User",
+            "title": null,
+            "firstName": "Admin",
+            "lastName": "User",
+            "companyName": "Pivotal",
+            "mySubscription": null,
+            "photo": {
+                "smallPhotoUrl": "/profilephoto/005/T",
+                "largePhotoUrl": "/profilephoto/005/F"
+            },
+            "isChatterGuest": false,
+            "id": "005x0000000JbFuAAK",
+            "type": "User",
+            "url": "/services/data/v23.0/chatter/users/005x0000000JbFuAAK"
+        },
+        "event": true,
+        "attachment": null
+    }],
+    "nextPageUrl": null,
+    "currentPageUrl": "/services/data/v23.0/chatter/feeds/company/feed-items",
+    "isModifiedUrl": null
+}

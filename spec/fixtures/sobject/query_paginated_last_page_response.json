@@ -1,0 +1,11 @@
+{
+  "totalSize" : 2,
+  "done" : true,
+  "records" : [ {
+    "attributes" : {
+      "type" : "Whizbang",
+      "url" : "/services/data/v20.0/sobjects/Whizbang/foo"
+    },
+    "Text_Label" : "Last Page"
+  } ]
+}

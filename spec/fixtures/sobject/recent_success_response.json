@@ -1,0 +1,18 @@
+[
+  {
+    "attributes" : {
+      "type" : "Whizbang",
+      "url" : "/services/data/v23.0/sobjects/Whizbang/foo"
+    },
+    "Id" : "foo",
+    "Name" : "whatever"
+  },
+  {
+    "attributes" : {
+      "type" : "Whizbang",
+      "url" : "/services/data/v23.0/sobjects/Whizbang/bar"
+    },
+    "Id" : "bar",
+    "Name" : "whatever"
+  }
+]

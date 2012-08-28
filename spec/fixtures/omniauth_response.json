@@ -1,0 +1,9 @@
+{
+    "provider":"salesforce",
+    "uid":"https://login.salesforce.com/id/00Dx0000000BV7z/005x00000012Q9P",
+    "credentials":{
+        "token":"access_token",
+        "instance_url":"https://na1.salesforce.com",
+        "refresh_token":"refresh_token"
+    }
+}
