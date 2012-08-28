@@ -1,5 +1,6 @@
-require "restforce/version"
+require 'faraday'
+require 'faraday_middleware'
 
-module Restforce
-  # Your code goes here...
-end
+require 'restforce/version'
+require 'restforce/config'
+require 'restforce/client'
