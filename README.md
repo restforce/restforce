@@ -3,11 +3,17 @@
 Restforce is a ruby gem for the [Salesforce REST api](http://www.salesforce.com/us/developer/docs/api_rest/index.htm).
 It's meant to be a lighter weight alternative to the [databasedotcom gem](https://github.com/heroku/databasedotcom).
 
+It attempts to solve a couple of key issues that the databasedotcom gem has been unable to solve:
+
+* Support for interacting with multiple users from different orgs.
+* Support for parent-to-child relationships.
+* Remove the need to materialize constants.
+
 ## Installation
 
 Add this line to your application's Gemfile:
 
-    gem 'restforce'
+    gem 'restforce
 
 And then execute:
 
