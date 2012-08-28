@@ -1,7 +1,7 @@
 require 'spec_helper'
 
 describe Restforce::Configuration do
-  describe 'Restforce.configuration' do
+  describe 'the configuration object' do
     subject { Restforce.configuration }
 
     it { should be_a Restforce::Configuration }
@@ -13,6 +13,14 @@ describe Restforce::Configuration do
          oauth_token refresh_token instance_url).each do |attr|
         its(attr.to_sym) { should be_nil }
       end
+    end
+  end
+
+  describe 'logging' do
+    subject { Restforce.log? }
+
+    context 'by default' do
+      it { should be_false }
     end
   end
 end
