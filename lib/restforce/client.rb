@@ -2,6 +2,7 @@ module Restforce
   class Client
 
     def initialize(options)
+      raise 'Please specify a hash of options' unless options.is_a?(Hash)
       @options = {
         :username       => Restforce.configuration.username,
         :password       => Restforce.configuration.password,
@@ -13,7 +14,7 @@ module Restforce
         :oauth_token    => Restforce.configuration.oauth_token,
         :refresh_token  => Restforce.configuration.refresh_token,
         :instance_url   => Restforce.configuration.instance_url
-      }.merge(options) if options.is_a?(Hash)
+      }.merge(options)
     end
 
   private
@@ -25,6 +26,7 @@ module Restforce
         builder.adapter Faraday.default_adapter
       end
       @connection.headers['Authorization'] = "OAuth #{oauth_token}" if oauth_token
+      @connection
     end
 
     def oauth_token
