@@ -13,7 +13,7 @@ describe Restforce::Middleware::Authentication do
           to_return(:status => 401, :body => fixture(:expired_session_response))
 
         requests << stub_request(:get, 'https://login.salesforce.com/services/oauth2/authorize?client_id=client_id' \
-                     '&client_secret=client_secret&grant_type=password&password=bar&username=foo').
+         '&client_secret=client_secret&grant_type=password&password=bar&username=foo').
          to_return(:status => 200, :body => fixture(:auth_success_response))
 
         requests << stub_request(:get, %r{/services/data/v24\.0/sobjects}).
