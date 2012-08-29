@@ -29,13 +29,16 @@ Or install it yourself as:
 ### Initialization
 
 ```ruby
-client = Restforce::Client.new :oauth_token => 'token'
-```
+# If you're obtaining an oauth token from something like omniauth...
+client = Restforce::Client.new :oauth_token => 'oauth token',
+  :refresh_token => 'refresh token',
+  :instance_url => 'instance url'
 
-### Authentication
-
-```ruby
-client.authenticate!
+# If you're using a username and password...
+client = Restforce::Client.new :username => 'foo',
+  :password => 'bar',
+  :client_id => ENV['SALESFORCE_CLIENT_ID'],
+  :client_secret => ENV['SALESFORCE_CLIENT_SECRET']
 ```
 
 ### Querying
