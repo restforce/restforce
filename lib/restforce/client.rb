@@ -50,9 +50,5 @@ module Restforce
       @connection
     end
 
-    def oauth_token
-      @options[:oauth_token]
-    end
-
   end
 end
