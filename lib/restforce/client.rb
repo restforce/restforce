@@ -3,18 +3,13 @@ module Restforce
 
     def initialize(options)
       raise 'Please specify a hash of options' unless options.is_a?(Hash)
-      @options = {
-        :username       => Restforce.configuration.username,
-        :password       => Restforce.configuration.password,
-        :security_token => Restforce.configuration.security_token,
-        :client_id      => Restforce.configuration.client_id,
-        :client_secret  => Restforce.configuration.client_secret,
-        :host           => Restforce.configuration.host,
-        :api_version    => Restforce.configuration.api_version,
-        :oauth_token    => Restforce.configuration.oauth_token,
-        :refresh_token  => Restforce.configuration.refresh_token,
-        :instance_url   => Restforce.configuration.instance_url
-      }.merge(options)
+      @options = {}.tap do |options|
+        [:username, :password, :security_token, :client_id, :client_secret, :host,
+         :api_version, :oauth_token, :refresh_token, :instance_url].each do |option|
+          options[option] = Restforce.configuration.send option
+        end
+      end
+      @options.merge!(options)
     end
 
     def describe_sobjects
