@@ -18,16 +18,14 @@ describe Restforce::Middleware::Authentication do
 
         requests << stub_request(:get, %r{/services/data/v24\.0/sobjects}).
           with(:headers => {'Authorization' => "OAuth #{oauth_token}"}).
-          to_return(:status => 401, :body => fixture(:expired_session_response))
+          to_return(:status => 200)
       end
 
       client.get '/services/data/v24.0/sobjects'
     end
 
     after do
-      @requests.each do |request|
-        request.should have_been_requested.once
-      end
+      @requests.each { |request| request.should have_been_requested.once }
     end
 
     context 'when a username and password is set' do
