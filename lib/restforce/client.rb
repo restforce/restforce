@@ -17,12 +17,34 @@ module Restforce
       }.merge(options)
     end
 
+    def describe_sobjects
+      response = get api_path('sobjects')
+      response.body['sobjects']
+    end
+
+    def list_sobjects
+      describe_sobjects.collect { |sobject| sobject['name'] }
+    end
+
+    # Helper methods for performing abritrary actions against the API using
+    # various HTTP verbs
+    [:get, :post, :put, :delete].each do |method|
+      define_method method do |*args|
+        connection.send method, *args
+      end
+    end
+
   private
+
+    def api_path(path)
+      "/services/data/v#{@options[:api_version]}/#{path}"
+    end
 
     def connection
       @connection ||= Faraday.new(:url => "https://#{@options[:host]}") do |builder|
         builder.request :json
         builder.response :json
+        builder.use Restforce::Middleware::Authentication
         builder.adapter Faraday.default_adapter
       end
       @connection.headers['Authorization'] = "OAuth #{oauth_token}" if oauth_token

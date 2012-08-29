@@ -1,10 +1,26 @@
 require 'spec_helper'
 
 describe Restforce::Client do
-  let(:client_options) { { :oauth_token => 'token' } }
-  let(:client) { Restforce::Client.new client_options }
+  include_context 'basic client'
   
-  it do
-    puts client.send(:connection)
+  describe '.describe_sobjects' do
+    subject { client.describe_sobjects }
+
+    before do
+      stub_api_request :sobjects, with: 'sobject/describe_sobjects_success_response'
+    end
+
+    it { should be_an Array }
+  end
+
+  describe '.list_sobjects' do
+    subject { client.list_sobjects }
+
+    before do
+      stub_api_request :sobjects, with: 'sobject/describe_sobjects_success_response'
+    end
+
+    it { should be_an Array }
+    it { should eq ['Account'] }
   end
 end
