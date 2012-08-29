@@ -34,8 +34,8 @@ describe Restforce::Middleware::Authentication do
       describe 'the client options' do
         subject { client.instance_variable_get :@options }
 
-        its([:instance_url]) { should eq 'https://na1.salesforce.com' }
-        its([:oauth_token]) { should eq oauth_token }
+        its([:instance_url]) { should eq instance_url }
+        its([:oauth_token])  { should eq oauth_token  }
       end
     end
   end
