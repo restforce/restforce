@@ -1,4 +1,5 @@
 module FixtureHelpers
+
   def stub_api_request(endpoint, options = {})
     options = {
       :method => :get,
@@ -8,6 +9,11 @@ module FixtureHelpers
     }.merge(options)
 
     stub_request(:get, "https://login.salesforce.com/services/data/v#{options[:api_version]}/#{endpoint}").
-      to_return(:status => options[:status], :body => File.read(File.expand_path("../../fixtures/#{options[:with]}.json", __FILE__)))
+      to_return(:status => options[:status], :body => fixture(options[:with]))
   end
+
+  def fixture(f)
+    File.read(File.expand_path("../../fixtures/#{f}.json", __FILE__))
+  end
+
 end

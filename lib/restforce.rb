@@ -8,3 +8,7 @@ require 'restforce/config'
 require 'restforce/client'
 
 require 'restforce/middleware/authentication'
+
+module Restforce
+  class AuthenticationError < StandardError; end
+end

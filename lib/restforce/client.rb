@@ -44,10 +44,9 @@ module Restforce
       @connection ||= Faraday.new(:url => "https://#{@options[:host]}") do |builder|
         builder.request :json
         builder.response :json
-        builder.use Restforce::Middleware::Authentication
+        builder.use Restforce::Middleware::Authentication, @options
         builder.adapter Faraday.default_adapter
       end
-      @connection.headers['Authorization'] = "OAuth #{oauth_token}" if oauth_token
       @connection
     end
 
