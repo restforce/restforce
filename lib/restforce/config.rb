@@ -1,3 +1,5 @@
+require 'logger'
+
 module Restforce
   class << self
     attr_writer :log

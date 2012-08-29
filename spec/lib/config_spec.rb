@@ -17,10 +17,39 @@ describe Restforce::Configuration do
   end
 
   describe 'logging' do
-    subject { Restforce.log? }
+    describe '#log?' do
+      subject { Restforce.log? }
 
-    context 'by default' do
-      it { should be_false }
+      context 'by default' do
+        it { should be_false }
+      end
+    end
+    
+    describe '#log' do
+      context 'with logging disabled' do
+        before do
+          Restforce.log = false
+          Restforce.configuration.logger.should_not_receive(:debug)
+        end
+        
+        after do
+        end
+
+        it 'doesnt log anytning' do
+          Restforce.log 'foobar'
+        end
+      end
+      
+      context 'with logging enabled' do
+        before do
+          Restforce.log = true
+          Restforce.configuration.logger.should_receive(:debug)
+        end
+
+        it 'doesnt log anytning' do
+          Restforce.log 'foobar'
+        end
+      end
     end
   end
 end
