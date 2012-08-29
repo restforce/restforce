@@ -7,7 +7,7 @@ describe Restforce::Middleware::Authentication do
     before do
       @requests = [].tap do |requests|
         requests << stub_request(:get, %r{/services/data/v24\.0/sobjects}).
-          with(:headers => {'Authorization' => 'OAuth bad_token'}).
+          with(:headers => {'Authorization' => "OAuth #{expired_token}"}).
           to_return(:status => 401, :body => fixture(:expired_session_response))
 
         requests << stub_request(:get, "https://login.salesforce.com/services/oauth2" \
@@ -29,7 +29,8 @@ describe Restforce::Middleware::Authentication do
     end
 
     context 'when a username and password is set' do
-      let(:client_options) { base_options.merge(:oauth_token => 'bad_token') }
+      let(:expired_token)  { 'expired_token' }
+      let(:client_options) { base_options.merge(:oauth_token => expired_token) }
 
       describe 'the client options' do
         subject { client.instance_variable_get :@options }
