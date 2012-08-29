@@ -31,9 +31,6 @@ describe Restforce::Configuration do
           Restforce.log = false
           Restforce.configuration.logger.should_not_receive(:debug)
         end
-        
-        after do
-        end
 
         it 'doesnt log anytning' do
           Restforce.log 'foobar'
@@ -43,10 +40,10 @@ describe Restforce::Configuration do
       context 'with logging enabled' do
         before do
           Restforce.log = true
-          Restforce.configuration.logger.should_receive(:debug)
+          Restforce.configuration.logger.should_receive(:debug).with('foobar')
         end
 
-        it 'doesnt log anytning' do
+        it 'logs something' do
           Restforce.log 'foobar'
         end
       end
