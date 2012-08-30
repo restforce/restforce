@@ -31,20 +31,51 @@ module Restforce
 
   private
 
+    # Returns a path to an api endpoint
+    #
+    # Example
+    #
+    #   api_path('sobjects')
+    #   # => '/services/data/v24.0/sobjects'
     def api_path(path)
       "/services/data/v#{@options[:api_version]}/#{path}"
     end
 
+    # Internal faraday connection where all requests go through
     def connection
       @connection ||= Faraday.new(:url => "https://#{@options[:host]}") do |builder|
         builder.request :json
         builder.response :json
-        builder.use Restforce::Middleware::PasswordAuthentication, @options
+        builder.use authentication_middleware, @options
         builder.use Restforce::Middleware::Authorization, @options
         builder.response :raise_error
         builder.adapter Faraday.default_adapter
       end
-      @connection
+    end
+
+    # Determins what middleware will be used based on the options provided
+    def authentication_middleware
+      if username_password?
+        Restforce::Middleware::PasswordAuthentication
+      elsif oauth_refresh?
+        Restforce::Middleware::OAuthRefresh
+      end
+    end
+
+    # Returns true if username/password (autonomous) flow should be used for
+    # authentication.
+    def username_password?
+      @options[:username] &&
+        @options[:password] &&
+        @options[:security_token] &&
+        @options[:client_id] &&
+        @options[:client_secret]
+    end
+
+    # Returns true if oauth token refresh flow should be used for
+    # authentication.
+    def oauth_refresh?
+      
     end
 
   end
