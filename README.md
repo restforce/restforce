@@ -33,7 +33,9 @@ Or install it yourself as:
 # If you're obtaining an oauth token from something like omniauth...
 client = Restforce::Client.new :oauth_token => 'oauth token',
   :refresh_token => 'refresh token',
-  :instance_url => 'instance url'
+  :instance_url => 'instance url',
+  :client_id => ENV['SALESFORCE_CLIENT_ID'],
+  :client_secret => ENV['SALESFORCE_CLIENT_SECRET']
 
 # If you're using a username and password...
 client = Restforce::Client.new :username => 'foo',
