@@ -13,7 +13,7 @@ module Restforce
     end
 
     def describe_sobjects
-      response = get api_path('sobjects')
+      response = api_get('sobjects')
       response.body['sobjects']
     end
 
@@ -22,7 +22,13 @@ module Restforce
     end
 
     # Helper methods for performing abritrary actions against the API using
-    # various HTTP verbs
+    # various HTTP verbs.
+    #
+    # Example
+    #
+    #   # Perform a get request
+    #   client.get '/services/data/v24.0/sobjects
+    #   client.api_get 'sobjects'
     [:get, :post, :put, :delete].each do |method|
       define_method method do |*args|
         begin
@@ -31,6 +37,11 @@ module Restforce
           connection.url_prefix = @options[:instance_url]
           connection.send(method, *args)
         end
+      end
+
+      define_method :"api_#{method}" do |*args|
+        args[0] = api_path(args[0])
+        send(method, *args)
       end
     end
 
