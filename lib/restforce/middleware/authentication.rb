@@ -21,6 +21,10 @@ module Restforce
         end
       end
 
+      def authenticate!
+        raise 'must subclass'
+      end
+
       def connection
         @connection ||= Faraday.new(:url => "https://#{@options[:host]}") do |builder|
           builder.request :json

@@ -6,15 +6,15 @@ module Restforce
 
       def authenticate!
         response = connection.get '/services/oauth2/authorize', {
-          :grant_type => 'password',
-          :client_id => @options[:client_id],
+          :grant_type    => 'password',
+          :client_id     => @options[:client_id],
           :client_secret => @options[:client_secret],
-          :username => @options[:username],
-          :password => @options[:password]
+          :username      => @options[:username],
+          :password      => @options[:password]
         }
         raise Restforce::AuthenticationError if response.status != 200
         @options[:instance_url] = response.body['instance_url']
-        @options[:oauth_token] = response.body['access_token']
+        @options[:oauth_token]  = response.body['access_token']
       end
     
     end
