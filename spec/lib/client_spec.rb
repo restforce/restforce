@@ -14,6 +14,16 @@ describe Restforce::Client do
     its([:password])       { should eq password       }
     its([:security_token]) { should eq security_token }
   end
+
+  describe '.authentication_middleware' do
+    subject { client.send :authentication_middleware }
+
+    context 'without required options for authentication middleware to be provided' do
+      let(:client_options) { {} }
+
+      it { should be_nil }
+    end
+  end
   
   describe '.describe_sobjects' do
     subject { client.describe_sobjects }
