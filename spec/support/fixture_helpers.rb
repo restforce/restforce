@@ -8,7 +8,7 @@ module FixtureHelpers
       :with => nil
     }.merge(options)
 
-    stub_request(:get, "https://login.salesforce.com/services/data/v#{options[:api_version]}/#{endpoint}").
+    stub_request(:get, %r{/services/data/v#{options[:api_version]}/#{endpoint}}).
       to_return(:status => options[:status], :body => fixture(options[:with]))
   end
 
