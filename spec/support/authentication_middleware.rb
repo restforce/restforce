@@ -15,7 +15,8 @@ shared_examples_for 'authentication middleware' do
     stub_request(:get, "https://login.salesforce.com/services/oauth2" \
       "/authorize?client_id=#{client_options[:client_id]}&client_secret=" \
       "#{client_options[:client_secret]}&grant_type=password&password=" \
-      "#{client_options[:password]}&username=#{client_options[:username]}").
+      "#{client_options[:password]}#{client_options[:security_token]}" \
+      "&username=#{client_options[:username]}").
       to_return(:status => 200, :body => fixture(:auth_success_response))
   end
 
