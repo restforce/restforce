@@ -59,7 +59,7 @@ module Restforce
       if username_password?
         Restforce::Middleware::PasswordAuthentication
       elsif oauth_refresh?
-        Restforce::Middleware::OAuthRefresh
+        Restforce::Middleware::OAuthRefreshAuthentication
       end
     end
 
@@ -76,7 +76,7 @@ module Restforce
     # Returns true if oauth token refresh flow should be used for
     # authentication.
     def oauth_refresh?
-      
+      @options[:oauth_token] && @options[:refresh_token]
     end
 
   end

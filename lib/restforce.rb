@@ -9,6 +9,7 @@ require 'restforce/client'
 
 require 'restforce/middleware/authentication'
 require 'restforce/middleware/password_authentication'
+require 'restforce/middleware/oauth_refresh_authentication'
 require 'restforce/middleware/authorization'
 require 'restforce/middleware/instance_url'
 

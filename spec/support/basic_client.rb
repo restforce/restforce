@@ -21,6 +21,10 @@ shared_context 'basic client' do
     }
   end
 
+  let(:oauth_refresh_options) do
+    base_options.merge(:username => nil, :password => nil, :security_token => nil)
+  end
+
   let(:client_options) { base_options }
 
   let(:client) { Restforce::Client.new client_options }
