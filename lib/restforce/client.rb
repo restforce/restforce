@@ -43,7 +43,7 @@ module Restforce
 
     # Internal faraday connection where all requests go through
     def connection
-      @connection ||= Faraday.new(:url => "https://#{@options[:instance_url]}") do |builder|
+      @connection ||= Faraday.new do |builder|
         builder.request :json
         builder.response :json
         builder.use authentication_middleware, @options
