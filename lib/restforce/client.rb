@@ -78,6 +78,7 @@ module Restforce
         builder.use Restforce::Middleware::Authorization, @options
         builder.use Restforce::Middleware::InstanceURL, self, @options
         builder.response :raise_error
+        builder.response :logger, Restforce.configuration.logger if Restforce.log?
         builder.adapter Faraday.default_adapter
       end
     end
