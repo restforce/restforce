@@ -1,5 +1,8 @@
 module Restforce
   module Middleware
+
+    # Piece of middleware that simply injects the OAuth token into the request
+    # headers.
     class Authorization < Faraday::Middleware
       AUTH_HEADER = 'Authorization'.freeze
 
@@ -18,5 +21,6 @@ module Restforce
       end
     
     end
+
   end
 end
