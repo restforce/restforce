@@ -10,7 +10,9 @@ module Restforce
       end
 
       def call(env)
+        raise Faraday::Error::ClientError, 'instance url not set' unless @options[:instance_url]
         env[:url].hostname = instance_url.hostname
+        env[:url].scheme   = instance_url.scheme
         @app.call(env)
       end
 

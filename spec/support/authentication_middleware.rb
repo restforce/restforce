@@ -6,7 +6,7 @@ shared_examples_for 'authentication middleware' do
   end
 
   let(:success_request) do
-    stub_request(:get, %r{#{instance_url}/services/data/v24\.0/sobjects}).
+    stub_request(:get, %r{#{instance_url}:80/services/data/v24\.0/sobjects}).
       with(:headers => {'Authorization' => "OAuth #{oauth_token}"}).
       to_return(:status => 200)
   end
