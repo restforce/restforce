@@ -15,4 +15,5 @@ require 'restforce/middleware/instance_url'
 
 module Restforce
   class AuthenticationError < StandardError; end
+  class InstanceURLError < StandardError; end
 end

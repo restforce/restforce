@@ -25,7 +25,12 @@ module Restforce
     # various HTTP verbs
     [:get, :post, :put, :delete].each do |method|
       define_method method do |*args|
-        connection.send method, *args
+        begin
+          connection.send(method, *args)
+        rescue Restforce::InstanceURLError
+          connection.url_prefix = @options[:instance_url]
+          connection.send(method, *args)
+        end
       end
     end
 
@@ -48,7 +53,7 @@ module Restforce
         builder.response :json
         builder.use authentication_middleware, @options
         builder.use Restforce::Middleware::Authorization, @options
-        builder.use Restforce::Middleware::InstanceURL, @options
+        builder.use Restforce::Middleware::InstanceURL, self, @options
         builder.response :raise_error
         builder.adapter Faraday.default_adapter
       end
