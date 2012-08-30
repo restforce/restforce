@@ -48,6 +48,7 @@ module Restforce
         builder.response :json
         builder.use authentication_middleware, @options
         builder.use Restforce::Middleware::Authorization, @options
+        builder.use Restforce::Middleware::InstanceURL, @options
         builder.response :raise_error
         builder.adapter Faraday.default_adapter
       end

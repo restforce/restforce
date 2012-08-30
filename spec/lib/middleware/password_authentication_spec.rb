@@ -16,7 +16,7 @@ describe Restforce::Middleware::Authentication do
           "#{client_options[:password]}&username=#{client_options[:username]}").
           to_return(:status => 200, :body => fixture(:auth_success_response))
 
-        requests << stub_request(:get, %r{/services/data/v24\.0/sobjects}).
+        requests << stub_request(:get, %r{#{instance_url}/services/data/v24\.0/sobjects}).
           with(:headers => {'Authorization' => "OAuth #{oauth_token}"}).
           to_return(:status => 200)
       end
