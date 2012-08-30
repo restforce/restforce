@@ -39,7 +39,7 @@ module Restforce
       @connection ||= Faraday.new(:url => "https://#{@options[:host]}") do |builder|
         builder.request :json
         builder.response :json
-        builder.use Restforce::Middleware::Authentication, @options
+        builder.use Restforce::Middleware::PasswordAuthentication, @options
         builder.use Restforce::Middleware::Authorization, @options
         builder.response :raise_error
         builder.adapter Faraday.default_adapter
