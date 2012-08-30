@@ -1,7 +1,6 @@
 module Restforce
   module Middleware
     class Authentication < Faraday::Middleware
-      AUTH_HEADER = 'Authorization'.freeze
 
       def initialize(app, options = {})
         @app = app
@@ -9,20 +8,12 @@ module Restforce
       end
 
       def call(env)
-        set_auth_header(env)
-        response = @app.call(env)
-
-        if env[:status] == 401
+        begin
+          @app.call(env)
+        rescue Faraday::Error::ClientError
           authenticate!
-          set_auth_header(env)
-          response = @app.call(env)
+          @app.call(env)
         end
-
-        response
-      end
-
-      def set_auth_header(env)
-        env[:request_headers][AUTH_HEADER] = %(OAuth #{token})
       end
 
       def authenticate!
@@ -48,10 +39,6 @@ module Restforce
           builder.adapter Faraday.default_adapter
         end
         @connection
-      end
-
-      def token
-        @options[:oauth_token]
       end
 
       def username_password_flow?
