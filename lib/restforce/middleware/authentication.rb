@@ -31,7 +31,6 @@ module Restforce
           builder.response :json
           builder.adapter Faraday.default_adapter
         end
-        @connection
       end
     
     end
