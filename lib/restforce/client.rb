@@ -17,8 +17,36 @@ module Restforce
       response.body['sobjects']
     end
 
+    # Returns an array of the names of all sobjects on the org
+    #
+    # Example
+    #
+    #   # get the names of all sobjects on the org
+    #   client.list_sobjects
+    #   # => ['Account', 'Lead', ... ]
     def list_sobjects
       describe_sobjects.collect { |sobject| sobject['name'] }
+    end
+    
+    def describe(sobject)
+    end
+    
+    def query(query)
+    end
+    
+    def search(term)
+    end
+    
+    def find(sobject, id)
+    end
+    
+    def create(sobject, attrs)
+    end
+
+    def update(sobject, attrs)
+    end
+
+    def destroy(sobject, id)
     end
 
     # Helper methods for performing abritrary actions against the API using
