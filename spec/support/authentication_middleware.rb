@@ -20,9 +20,9 @@ shared_examples_for 'authentication middleware' do
   end
 
   let(:oauth_refresh_authentication_request) do
-    stub_request(:get, "https://login.salesforce.com/services/oauth2" \
-      "/authorize?client_id=#{client_options[:client_id]}&client_secret=" \
-      "#{client_options[:client_secret]}&grant_type=refresh_token").
+    stub_request(:post, "https://login.salesforce.com/services/oauth2/token").
+      with(:body => "grant_type=refresh_token&refresh_token=refresh&" \
+      "client_id=client_id&client_secret=client_secret").
       to_return(:status => 200, :body => fixture(:auth_success_response))
   end
 

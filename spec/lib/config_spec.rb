@@ -26,6 +26,10 @@ describe Restforce::Configuration do
     end
     
     describe '#log' do
+      after do
+        Restforce.log = false
+      end
+
       context 'with logging disabled' do
         before do
           Restforce.log = false
