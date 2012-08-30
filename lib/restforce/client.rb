@@ -27,9 +27,21 @@ module Restforce
     # Example
     #
     #   # Perform a get request
-    #   client.get '/services/data/v24.0/sobjects
+    #   client.get '/services/data/v24.0/sobjects'
     #   client.api_get 'sobjects'
-    [:get, :post, :put, :delete].each do |method|
+    #
+    #   # Perform a post request
+    #   client.post '/services/data/v24.0/sobjects/Account', { ... }
+    #   client.api_post 'sobjects/Account', { ... }
+    #
+    #   # Perform a put request
+    #   client.put '/services/data/v24.0/sobjects/Account/001D000000INjVe', { ... }
+    #   client.api_put 'sobjects/Account/001D000000INjVe', { ... }
+    #
+    #   # Perform a delete request
+    #   client.delete '/services/data/v24.0/sobjects/Account/001D000000INjVe'
+    #   client.api_delete 'sobjects/Account/001D000000INjVe'
+    [:get, :post, :put, :delete, :patch].each do |method|
       define_method method do |*args|
         begin
           connection.send(method, *args)
