@@ -5,6 +5,7 @@ require 'hashie/mash'
 
 require 'restforce/version'
 require 'restforce/config'
+require 'restforce/collection'
 require 'restforce/sobject'
 require 'restforce/client'
 
