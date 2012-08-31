@@ -4,7 +4,7 @@ describe Restforce::Middleware::Authentication do
   let(:app)        { double('app')            }
   let(:env)        { { }  }
   let(:options)    { { host: 'login.salesforce.com' } }
-  let(:middleware) { described_class.new app, options }
+  let(:middleware) { described_class.new app, nil, options }
 
   describe '.authenticate!' do
     it 'raises an error' do

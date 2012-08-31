@@ -3,7 +3,7 @@ require 'spec_helper'
 describe Restforce::Middleware::PasswordAuthentication do
   let(:app)        { double('app')            }
   let(:env)        { { }  }
-  let(:middleware) { described_class.new app, options }
+  let(:middleware) { described_class.new app, nil, options }
 
   let(:options) do
     { host: 'login.salesforce.com',

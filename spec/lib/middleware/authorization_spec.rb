@@ -4,7 +4,7 @@ describe Restforce::Middleware::Authorization do
   let(:app)        { double('app')            }
   let(:env)        { { request_headers: {} }  }
   let(:options)    { { oauth_token: 'token' } }
-  let(:middleware) { described_class.new app, options }
+  let(:middleware) { described_class.new app, nil, options }
 
   before do
     app.should_receive(:call)

@@ -102,8 +102,8 @@ module Restforce
       @connection ||= Faraday.new do |builder|
         builder.request :json
         builder.response :json
-        builder.use authentication_middleware, @options
-        builder.use Restforce::Middleware::Authorization, @options
+        builder.use authentication_middleware, self, @options
+        builder.use Restforce::Middleware::Authorization, self, @options
         builder.use Restforce::Middleware::InstanceURL, self, @options
         builder.response :raise_error
         builder.response :logger, Restforce.configuration.logger if Restforce.log?
