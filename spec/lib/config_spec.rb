@@ -1,6 +1,10 @@
 require 'spec_helper'
 
 describe Restforce::Configuration do
+  after do
+    Restforce.instance_variable_set :@configuration, nil
+  end
+
   describe 'the configuration object' do
     subject { Restforce.configuration }
 
@@ -12,6 +16,18 @@ describe Restforce::Configuration do
       [:username, :password, :security_token, :client_id, :client_secret,
        :oauth_token, :refresh_token, :instance_url].each do |attr|
         its(attr) { should be_nil }
+      end
+    end
+  end
+
+  describe '#configure' do
+    [:username, :password, :security_token, :client_id, :client_secret,
+     :oauth_token, :refresh_token, :instance_url, :api_version, :host].each do |attr|
+      it "allows #{attr} to be set" do
+        Restforce.configure do |config|
+          config.send("#{attr}=", 'foobar')
+        end
+        Restforce.configuration.send(attr).should eq 'foobar'
       end
     end
   end

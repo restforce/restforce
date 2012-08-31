@@ -23,6 +23,18 @@ describe Restforce::Client do
 
       it { should be_nil }
     end
+
+    context 'with username, password, security token, client id and client secret provided' do
+      let(:client_options) { password_options }
+
+      it { should eq Restforce::Middleware::Authentication::Password }
+    end
+
+    context 'with oauth token, refresh token, client id and client secret provided' do
+      let(:client_options) { oauth_options }
+
+      it { should eq Restforce::Middleware::Authentication::OAuth }
+    end
   end
   
   describe '.describe_sobjects' do
