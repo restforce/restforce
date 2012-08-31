@@ -19,6 +19,18 @@
         "type" : "Whizbang",
         "url" : "/services/data/v20.0/sobjects/Whizbang/bar"
       }
+    },
+
+    "Whizbangs__r" : {
+      "totalSize" : 1,
+      "done" : true,
+      "records" : [ {
+        "attributes" : {
+          "type" : "Whizbang__c",
+          "url" : "/services/data/v24.0/sobjects/Whizbang__c/a00E0000004D5lsIAC"
+        },
+        "Name" : "Child Whizbang"
+      } ]
     }
   } ]
 }
