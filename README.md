@@ -70,25 +70,25 @@ record.Id
 # => "someid"
 ```
 
-## Search
+### Search
 
 ```ruby
 records = client.search('SOSL Expression')
 ```
 
-## Create
+### Create
 
 ```ruby
 record = client.create('Account', :Name => 'Foobar Inc.')
 ```
 
-## Update
+### Update
 
 ```ruby
 record = client.update('Account', :Id => '0016000000MRatd', :Name => 'Foobar Inc.')
 ```
 
-## Destroy
+### Destroy
 
 ```ruby
 record = client.destroy('Account', '0016000000MRatd')
