@@ -21,10 +21,6 @@ module Restforce
     def instance_url
       URI.parse(@options[:instance_url])
     end
-
-    def connection
-      @client.send(:connection)
-    end
   
   end
 
