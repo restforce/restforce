@@ -105,6 +105,7 @@ module Restforce
         builder.use authentication_middleware, self, @options
         builder.use Restforce::Middleware::Authorization, self, @options
         builder.use Restforce::Middleware::InstanceURL, self, @options
+        builder.use Restforce::Middleware::Mashify, self, @options
         builder.response :raise_error
         builder.response :logger, Restforce.configuration.logger if Restforce.log?
         builder.adapter Faraday.default_adapter
