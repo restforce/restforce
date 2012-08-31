@@ -57,7 +57,7 @@ client = Restforce::Client.new :username => 'foo',
   :client_secret => 'client_secret'
 ```
 
-### Querying
+### Query
 
 ```ruby
 records = client.query("select Id, Something__c from Lead where Id = 'someid'")
@@ -69,6 +69,31 @@ record = records.first
 record.Id
 # => "someid"
 ```
+
+## Search
+
+```ruby
+records = client.search('SOSL Expression')
+```
+
+## Create
+
+```ruby
+record = client.create('Account', :Name => 'Foobar Inc.')
+```
+
+## Update
+
+```ruby
+record = client.update('Account', :Id => '0016000000MRatd', :Name => 'Foobar Inc.')
+```
+
+## Destroy
+
+```ruby
+record = client.destroy('Account', '0016000000MRatd')
+```
+
 
 ## Contributing
 
