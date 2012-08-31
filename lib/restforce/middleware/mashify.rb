@@ -8,9 +8,18 @@ module Restforce
   class Middleware::Mashify < Restforce::Middleware
 
     def call(env)
+      @env = env
       response = @app.call(env)
-      env[:body] = Restforce::Collection.new(env[:body]) if env[:body].has_key?('records')
+      env[:body] = Restforce::Collection.new(body) if collection?
       response
+    end
+
+    def body
+      @env[:body]
+    end
+
+    def collection?
+      body.is_a?(Hash) && body.has_key?('records')
     end
   
   end
