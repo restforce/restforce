@@ -8,10 +8,10 @@ describe Restforce::Middleware::Authorization do
 
   before do
     app.should_receive(:call)
+    middleware.call(env)
   end
 
   it 'adds the oauth token to the headers' do
-    middleware.call(env)
     env[:request_headers]['Authorization'].should eq 'OAuth token'
   end
 end
