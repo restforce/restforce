@@ -33,7 +33,7 @@ module Restforce
     
     def query(query)
       response = api_get 'query', { q: query}
-      response.body['records']
+      response.body
     end
     
     def search(term)

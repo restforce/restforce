@@ -65,6 +65,6 @@ describe Restforce::Client do
       stub_api_request :query, with: 'sobject/query_success_response'
     end
 
-    it { should be_an Array }
+    it { should be_a Restforce::Collection }
   end
 end
