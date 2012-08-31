@@ -11,17 +11,13 @@ describe Restforce::Middleware::OAuthRefreshAuthentication do
       client_secret: 'client_secret' }
   end
 
-  before do
-    request
-  end
-
-  after do
-    request.should have_been_requested
-  end
-
   describe '.authenticate!' do
+    after do
+      request.should have_been_requested
+    end
+
     context 'when successful' do
-      let(:request) do
+      let!(:request) do
         stub_request(:post, "https://login.salesforce.com/services/oauth2/token").
           with(:body => "grant_type=refresh_token&refresh_token=refresh_token&" \
           "client_id=client_id&client_secret=client_secret").
@@ -41,7 +37,7 @@ describe Restforce::Middleware::OAuthRefreshAuthentication do
     end
 
     context 'when unsuccessful' do
-      let(:request) do
+      let!(:request) do
         stub_request(:post, "https://login.salesforce.com/services/oauth2/token").
           with(:body => "grant_type=refresh_token&refresh_token=refresh_token&" \
           "client_id=client_id&client_secret=client_secret").

@@ -19,16 +19,12 @@ describe Restforce::Middleware::PasswordAuthentication do
   end
 
   describe '.authenticate!' do
-    before do
-      request
-    end
-
     after do
       request.should have_been_requested
     end
 
     context 'when successful' do
-      let(:request) do
+      let!(:request) do
         stub_request(:get, "https://login.salesforce.com/services/oauth2" \
           "/authorize?client_id=client_id&client_secret=client_secret" \
           "&grant_type=password&password=barsecurity_token&username=foo").
@@ -48,7 +44,7 @@ describe Restforce::Middleware::PasswordAuthentication do
     end
 
     context 'when unsuccessful' do
-      let(:request) do
+      let!(:request) do
         stub_request(:get, "https://login.salesforce.com/services/oauth2" \
           "/authorize?client_id=client_id&client_secret=client_secret" \
           "&grant_type=password&password=barsecurity_token&username=foo").
