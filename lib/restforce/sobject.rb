@@ -9,15 +9,6 @@ module Restforce
       default ? super(default) : super(&blk)
     end
 
-    # Converts the source hash into a Hashie::Mash object, then replaces self
-    # with this value.
-    def build(hash)
-      attributes = hash.delete('attributes')
-      @sobject_type = attributes['type']
-      mash = Hashie::Mash.new(hash)
-      self.replace(mash)
-    end
-
     def convert_value(val, duping=false)
       case val
       when self.class
