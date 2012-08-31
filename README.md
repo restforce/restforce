@@ -30,19 +30,31 @@ Or install it yourself as:
 
 ### Initialization
 
+If you have an access token and an instance url obtained through oauth:
+
 ```ruby
-# If you're obtaining an oauth token from something like omniauth...
+client = Restforce::Client.new :oauth_token => 'oauth token',
+  :instance_url  => 'instance url'
+```
+
+Although the above will work, you'll probably want to take advantage of the
+(re)authentication middleware by specifying a refresh token, client id and client secret:
+
+```ruby
 client = Restforce::Client.new :oauth_token => 'oauth token',
   :refresh_token => 'refresh token',
-  :instance_url => 'instance url',
-  :client_id => ENV['SALESFORCE_CLIENT_ID'],
-  :client_secret => ENV['SALESFORCE_CLIENT_SECRET']
+  :instance_url  => 'instance url',
+  :client_id     => 'client_id',
+  :client_secret => 'client_secret'
+```
 
-# If you're using a username and password...
+If you prefer to use a username and password to authenticate:
+
+```ruby
 client = Restforce::Client.new :username => 'foo',
-  :password => 'bar',
-  :client_id => ENV['SALESFORCE_CLIENT_ID'],
-  :client_secret => ENV['SALESFORCE_CLIENT_SECRET']
+  :password      => 'bar',
+  :client_id     => 'client_id',
+  :client_secret => 'client_secret'
 ```
 
 ### Querying
