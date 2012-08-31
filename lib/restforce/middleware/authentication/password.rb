@@ -1,7 +1,7 @@
 module Restforce
 
   # Authentication middleware used if username and password flow is used
-  class Middleware::PasswordAuthentication < Restforce::Middleware::Authentication
+  class Middleware::Authentication::Password < Restforce::Middleware::Authentication
 
     def authenticate!
       response = connection.get '/services/oauth2/authorize', {

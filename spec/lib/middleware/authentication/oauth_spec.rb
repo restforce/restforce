@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe Restforce::Middleware::OAuthRefreshAuthentication do
+describe Restforce::Middleware::Authentication::OAuth do
   let(:app)        { double('app')            }
   let(:env)        { { }  }
   let(:middleware) { described_class.new app, nil, options }

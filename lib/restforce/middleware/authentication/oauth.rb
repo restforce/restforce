@@ -1,7 +1,7 @@
 module Restforce
 
   # Authentication middleware used if oauth_token and refresh_token are set
-  class Middleware::OAuthRefreshAuthentication < Restforce::Middleware::Authentication
+  class Middleware::Authentication::OAuth < Restforce::Middleware::Authentication
 
     def authenticate!
       response = connection.post '/services/oauth2/token' do |req|

@@ -114,9 +114,9 @@ module Restforce
     # Determins what middleware will be used based on the options provided
     def authentication_middleware
       if username_password?
-        Restforce::Middleware::PasswordAuthentication
+        Restforce::Middleware::Authentication::Password
       elsif oauth_refresh?
-        Restforce::Middleware::OAuthRefreshAuthentication
+        Restforce::Middleware::Authentication::OAuth
       end
     end
 

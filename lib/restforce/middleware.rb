@@ -22,7 +22,7 @@ module Restforce
 end
 
 require 'restforce/middleware/authentication'
-require 'restforce/middleware/password_authentication'
-require 'restforce/middleware/oauth_refresh_authentication'
+require 'restforce/middleware/authentication/password'
+require 'restforce/middleware/authentication/oauth'
 require 'restforce/middleware/authorization'
 require 'restforce/middleware/instance_url'
