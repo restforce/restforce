@@ -13,7 +13,7 @@ module Restforce
     end
 
     def describe_sobjects
-      response = api_get('sobjects')
+      response = api_get 'sobjects'
       response.body['sobjects']
     end
 
@@ -32,6 +32,8 @@ module Restforce
     end
     
     def query(query)
+      response = api_get 'query', { q: query}
+      response.body['records']
     end
     
     def search(term)
@@ -100,12 +102,12 @@ module Restforce
     # Internal faraday connection where all requests go through
     def connection
       @connection ||= Faraday.new do |builder|
+        builder.use Restforce::Middleware::Mashify, self, @options
         builder.request :json
         builder.response :json
         builder.use authentication_middleware, self, @options
         builder.use Restforce::Middleware::Authorization, self, @options
         builder.use Restforce::Middleware::InstanceURL, self, @options
-        builder.use Restforce::Middleware::Mashify, self, @options
         builder.response :raise_error
         builder.response :logger, Restforce.configuration.logger if Restforce.log?
         builder.adapter Faraday.default_adapter

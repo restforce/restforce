@@ -57,4 +57,14 @@ describe Restforce::Client do
     it { should be_an Array }
     it { should eq ['Account'] }
   end
+
+  describe '.query' do
+    subject { client.query('SELECT some, fields FROM object') }
+
+    before do
+      stub_api_request :query, with: 'sobject/query_success_response'
+    end
+
+    it { should be_an Array }
+  end
 end

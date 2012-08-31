@@ -5,7 +5,8 @@ module Restforce
   class Middleware::Mashify < Restforce::Middleware
 
     def call(env)
-      @app.call(env)
+      @app.call(env).on_complete do
+      end
     end
   
   end
