@@ -139,12 +139,12 @@ module Restforce
       @connection ||= Faraday.new do |builder|
         builder.use Restforce::Middleware::Mashify, self, @options
         builder.request :json
-        builder.response :json
         builder.use authentication_middleware, self, @options if authentication_middleware
         builder.use Restforce::Middleware::Authorization, self, @options
         builder.use Restforce::Middleware::InstanceURL, self, @options
-        builder.response :raise_error
+        builder.use Restforce::Middleware::RaiseError
         builder.response :logger, Restforce.configuration.logger if Restforce.log?
+        builder.response :json
         builder.adapter Faraday.default_adapter
       end
     end

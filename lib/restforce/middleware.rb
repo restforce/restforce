@@ -21,6 +21,7 @@ module Restforce
   end
 end
 
+require 'restforce/middleware/raise_error'
 require 'restforce/middleware/authentication'
 require 'restforce/middleware/authentication/password'
 require 'restforce/middleware/authentication/oauth'
