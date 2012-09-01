@@ -38,63 +38,57 @@ describe Restforce::Client do
   end
   
   describe '.describe_sobjects' do
-    subject { client.describe_sobjects }
-
     before do
       stub_api_request :sobjects, with: 'sobject/describe_sobjects_success_response'
     end
 
+    subject { client.describe_sobjects }
     it { should be_an Array }
   end
 
   describe '.list_sobjects' do
-    subject { client.list_sobjects }
-
     before do
       stub_api_request :sobjects, with: 'sobject/describe_sobjects_success_response'
     end
 
+    subject { client.list_sobjects }
     it { should be_an Array }
     it { should eq ['Account'] }
   end
 
   describe '.describe' do
-    subject { client.describe('Whizbang') }
-
     before do
       stub_api_request 'sobject/Whizbang/describe', with: 'sobject/sobject_describe_success_response'
     end
 
+    subject { client.describe('Whizbang') }
     its(:name) { should eq 'Whizbang' }
   end
 
   describe '.query' do
-    subject { client.query('SELECT some, fields FROM object') }
-
     before do
       stub_api_request :query, with: 'sobject/query_success_response'
     end
 
+    subject { client.query('SELECT some, fields FROM object') }
     it { should be_a Restforce::Collection }
   end
 
   pending '.search' do
-    subject { client.search('FIND {bar}') }
-
     before do
       stub_api_request :search, with: 'sobject/search_success_response'
     end
 
+    subject { client.search('FIND {bar}') }
     it { puts subject }
   end
 
   describe '.org_id' do
-    subject { client.org_id }
-
     before do
       stub_api_request :query, with: 'sobject/org_query_response'
     end
 
+    subject { client.org_id }
     it { should eq '00Dx0000000BV7z' }
   end
 end
