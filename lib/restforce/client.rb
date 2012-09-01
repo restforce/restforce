@@ -14,7 +14,7 @@ module Restforce
 
     def describe_sobjects
       response = api_get 'sobjects'
-      response.body.sobjects
+      response.body['sobjects']
     end
 
     # Public: Returns an array of the names of all sobjects on the org
@@ -25,7 +25,7 @@ module Restforce
     #   client.list_sobjects
     #   # => ['Account', 'Lead', ... ]
     def list_sobjects
-      describe_sobjects.collect { |sobject| sobject.name }
+      describe_sobjects.collect { |sobject| sobject['name'] }
     end
     
     # Public: Returns a detailed describe result for the specified sobject
@@ -47,7 +47,7 @@ module Restforce
     #   client.org_id
     #   # => '00Dx0000000BV7z'
     def org_id
-      query('select id from Organization').first.Id
+      query('select id from Organization').first['Id']
     end
     
     # Public: Executs a SOQL query and returns the result.
