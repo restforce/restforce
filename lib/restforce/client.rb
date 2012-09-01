@@ -58,11 +58,19 @@ module Restforce
     #   client.query('select Name from Account').map(&:Name)
     #   # => ['Foo Bar Inc.', 'Whizbang Corp']
     def query(query)
-      response = api_get 'query', { q: query}
+      response = api_get 'query', q: query
       response.body
     end
     
+    # Public: Perform a SOSL search
+    #
+    # Examples
+    #
+    #   # Find all occurances of 'bar'
+    #   client.search('FIND {bar}')
     def search(term)
+      response = api_get 'search', q: term
+      response.body
     end
     
     def find(sobject, id)

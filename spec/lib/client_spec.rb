@@ -78,6 +78,16 @@ describe Restforce::Client do
     it { should be_a Restforce::Collection }
   end
 
+  pending '.search' do
+    subject { client.search('FIND {bar}') }
+
+    before do
+      stub_api_request :search, with: 'sobject/search_success_response'
+    end
+
+    it { puts subject }
+  end
+
   describe '.org_id' do
     subject { client.org_id }
 
