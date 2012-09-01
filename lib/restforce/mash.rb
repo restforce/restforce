@@ -47,8 +47,6 @@ module Restforce
         val.dup
       when ::Hash
         val = val.dup if duping
-        # If the hash has a 'records' key, then it's a collection
-        # of sobject records.
         self.class.klass(val).new(val, @client)
       when Array
         val.collect{ |e| convert_value(e) }
