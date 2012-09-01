@@ -1,8 +1,6 @@
 require 'spec_helper'
 
-describe Restforce::Client do
-  include_context 'basic client'
-  
+shared_examples_for 'instance methods' do
   describe '@options' do
     subject { client.instance_variable_get :@options }
 
@@ -62,7 +60,7 @@ describe Restforce::Client do
     end
 
     subject { client.describe('Whizbang') }
-    its(:name) { should eq 'Whizbang' }
+    its(['name']) { should eq 'Whizbang' }
   end
 
   describe '.query' do
@@ -71,7 +69,7 @@ describe Restforce::Client do
     end
 
     subject { client.query('SELECT some, fields FROM object') }
-    it { should be_a Restforce::Collection }
+    it { should be_an Array }
   end
 
   pending '.search' do
@@ -90,5 +88,33 @@ describe Restforce::Client do
 
     subject { client.org_id }
     it { should eq '00Dx0000000BV7z' }
+  end
+end
+
+describe Restforce::Client do
+  include_context 'basic client'
+
+  context 'with mashify middleware' do
+    include_examples 'instance methods'
+
+    describe '.mashify?' do
+      subject { client.send :mashify? }
+
+      it { should be_true }
+    end
+  end
+
+  context 'without mashify middleware' do
+    before do
+      client.send(:connection).builder.delete(Restforce::Middleware::Mashify)
+    end
+
+    include_examples 'instance methods'
+    
+    describe '.mashify?' do
+      subject { client.send :mashify? }
+
+      it { should be_false }
+    end
   end
 end

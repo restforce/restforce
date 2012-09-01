@@ -59,7 +59,7 @@ module Restforce
     #   # => ['Foo Bar Inc.', 'Whizbang Corp']
     def query(query)
       response = api_get 'query', q: query
-      response.body
+      mashify? ? response.body : response.body['records']
     end
     
     # Public: Perform a SOSL search
@@ -174,6 +174,10 @@ module Restforce
         @options[:refresh_token] &&
         @options[:client_id] &&
         @options[:client_secret]
+    end
+
+    def mashify?
+      connection.builder.handlers.find { |handler| handler == Restforce::Middleware::Mashify }
     end
 
   end
