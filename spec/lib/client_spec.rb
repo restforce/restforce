@@ -67,4 +67,14 @@ describe Restforce::Client do
 
     it { should be_a Restforce::Collection }
   end
+
+  describe '.org_id' do
+    subject { client.org_id }
+
+    before do
+      stub_api_request :query, with: 'sobject/org_query_response'
+    end
+
+    it { should eq '00Dx0000000BV7z' }
+  end
 end

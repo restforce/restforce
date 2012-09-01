@@ -17,9 +17,9 @@ module Restforce
       response.body['sobjects']
     end
 
-    # Returns an array of the names of all sobjects on the org
+    # Public: Returns an array of the names of all sobjects on the org
     #
-    # Example
+    # Examples
     #
     #   # get the names of all sobjects on the org
     #   client.list_sobjects
@@ -30,7 +30,24 @@ module Restforce
     
     def describe(sobject)
     end
+
+    # Public: Get the current organization's Id
+    #
+    # Examples
+    #
+    #   client.org_id
+    #   # => '00Dx0000000BV7z'
+    def org_id
+      query('select id from Organization').first.Id
+    end
     
+    # Public: Executs a SOQL query and returns the result.
+    #
+    # Examples
+    #
+    #   # Find the names of all Accounts
+    #   client.query('select Name from Account').map(&:Name)
+    #   # => ['Foo Bar Inc.', 'Whizbang Corp']
     def query(query)
       response = api_get 'query', { q: query}
       response.body
@@ -51,10 +68,10 @@ module Restforce
     def destroy(sobject, id)
     end
 
-    # Helper methods for performing abritrary actions against the API using
+    # Public: Helper methods for performing abritrary actions against the API using
     # various HTTP verbs.
     #
-    # Example
+    # Examples
     #
     #   # Perform a get request
     #   client.get '/services/data/v24.0/sobjects'
@@ -89,9 +106,9 @@ module Restforce
 
   private
 
-    # Returns a path to an api endpoint
+    # Private: Returns a path to an api endpoint
     #
-    # Example
+    # Examples
     #
     #   api_path('sobjects')
     #   # => '/services/data/v24.0/sobjects'
@@ -99,13 +116,13 @@ module Restforce
       "/services/data/v#{@options[:api_version]}/#{path}"
     end
 
-    # Internal faraday connection where all requests go through
+    # Private: Internal faraday connection where all requests go through
     def connection
       @connection ||= Faraday.new do |builder|
         builder.use Restforce::Middleware::Mashify, self, @options
         builder.request :json
         builder.response :json
-        builder.use authentication_middleware, self, @options
+        builder.use authentication_middleware, self, @options if authentication_middleware
         builder.use Restforce::Middleware::Authorization, self, @options
         builder.use Restforce::Middleware::InstanceURL, self, @options
         builder.response :raise_error
@@ -114,7 +131,7 @@ module Restforce
       end
     end
 
-    # Determins what middleware will be used based on the options provided
+    # Internal: Determins what middleware will be used based on the options provided
     def authentication_middleware
       if username_password?
         Restforce::Middleware::Authentication::Password
@@ -123,7 +140,7 @@ module Restforce
       end
     end
 
-    # Returns true if username/password (autonomous) flow should be used for
+    # Internal: Returns true if username/password (autonomous) flow should be used for
     # authentication.
     def username_password?
       @options[:username] &&
@@ -133,7 +150,7 @@ module Restforce
         @options[:client_secret]
     end
 
-    # Returns true if oauth token refresh flow should be used for
+    # Internal: Returns true if oauth token refresh flow should be used for
     # authentication.
     def oauth_refresh?
       @options[:oauth_token] &&
