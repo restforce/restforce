@@ -36,6 +36,8 @@ module Restforce
     #   client.describe('Account')
     #   # => { ... }
     def describe(sobject)
+      response = api_get "sobject/#{sobject}/describe"
+      response.body
     end
 
     # Public: Get the current organization's Id

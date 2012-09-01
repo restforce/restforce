@@ -58,6 +58,16 @@ describe Restforce::Client do
     it { should eq ['Account'] }
   end
 
+  describe '.describe' do
+    subject { client.describe('Whizbang') }
+
+    before do
+      stub_api_request 'sobject/Whizbang/describe', with: 'sobject/sobject_describe_success_response'
+    end
+
+    its(:name) { should eq 'Whizbang' }
+  end
+
   describe '.query' do
     subject { client.query('SELECT some, fields FROM object') }
 
