@@ -108,6 +108,15 @@ shared_examples_for 'instance methods' do
     subject { client.org_id }
     it { should eq '00Dx0000000BV7z' }
   end
+
+  describe '.create' do
+    before do
+      stub_api_request 'sobjects/Account', with: 'sobject/create_success_response', method: :post
+    end
+
+    subject { client.create('Account', Name: 'Foobar') }
+    it { should eq 'some_id' }
+  end
 end
 
 describe Restforce::Client do

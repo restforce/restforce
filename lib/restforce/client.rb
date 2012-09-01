@@ -77,7 +77,18 @@ module Restforce
       response.body
     end
     
+    # Public: Insert a new record.
+    #
+    # Examples
+    #
+    #   # Add a new account
+    #   client.create('Account', { Name: 'Foobar Inc.' })
+    #   # => '0016000000MRatd'
     def create(sobject, attrs)
+      response = api_post "sobjects/#{sobject}" do |req|
+        req.body = attrs
+      end
+      response.body['id']
     end
 
     def update(sobject, attrs)
