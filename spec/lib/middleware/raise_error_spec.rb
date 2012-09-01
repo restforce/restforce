@@ -20,9 +20,8 @@ describe Restforce::Middleware::RaiseError do
     end
 
     context 'when the status code is 401' do
-      let(:body) { JSON.parse(fixture(:auth_error_response)) }
       let(:status) { 401 }
-      specify { expect { subject }.to raise_error Restforce::UnauthorizedError, 'invalid_grant: authentication failure - Invalid Password' }
+      specify { expect { subject }.to raise_error Restforce::UnauthorizedError, 'INVALID_FIELD: error_message' }
     end
   end
 end
