@@ -10,15 +10,15 @@ module Restforce
       # Restforce::Mash objects.
       def build(val, client)
         if val.is_a?(Array)
-          val.collect { |e| self.type(e).new(e, client) }
+          val.collect { |e| self.klass(e).new(e, client) }
         else
-          self.type(val).new(val, client)
+          self.klass(val).new(val, client)
         end
       end
 
       # When passed a hash, it will determine what class is appropriate to
       # represent the data.
-      def type(val)
+      def klass(val)
         if val.has_key? 'records'
           # When the hash has a records key, it should be considered a collection
           # of sobject records.
@@ -49,7 +49,7 @@ module Restforce
         val = val.dup if duping
         # If the hash has a 'records' key, then it's a collection
         # of sobject records.
-        self.class.type(val).new(val, @client)
+        self.class.klass(val).new(val, @client)
       when Array
         val.collect{ |e| convert_value(e) }
       else
