@@ -1,12 +1,13 @@
 module Restforce
   class SObject < Hashie::Mash
-    attr_reader :sobject_type
 
     def initialize(source_hash = nil, default = nil, &blk)
-      attributes = source_hash.delete('attributes')
-      @sobject_type = attributes['type']
       deep_update(source_hash) if source_hash
       default ? super(default) : super(&blk)
+    end
+
+    def sobject_type
+      self.attributes.type
     end
 
     def convert_value(val, duping=false)
@@ -19,8 +20,10 @@ module Restforce
         # of sobject records.
         if val.has_key? 'records'
           Restforce::Collection.new(val)
+        elsif val.has_key? 'attributes'
+          Restforce::SObject.new(val)
         else
-          self.class.new(val)
+          Hashie::Mash.new.merge(val)
         end
       when Array
         val.collect{ |e| convert_value(e) }
