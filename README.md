@@ -28,6 +28,10 @@ Or install it yourself as:
 
 ## Usage
 
+Restforce is designed with flexibility and ease of use in mind. By default, all api calls will
+return [Hashie::Mash](https://github.com/intridea/hashie/tree/v1.2.0) objects,
+so you can do things like `client.query('select Id, (select Name from Children__r) from Account').Children__r.first.Name`.
+
 ### Initialization
 
 If you have an access token and an instance url obtained through oauth:
