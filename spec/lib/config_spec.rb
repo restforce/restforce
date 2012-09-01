@@ -1,11 +1,11 @@
 require 'spec_helper'
 
-describe Restforce::Configuration do
+describe Restforce do
   after do
     Restforce.instance_variable_set :@configuration, nil
   end
 
-  describe 'the configuration object' do
+  describe '#configuration' do
     subject { Restforce.configuration }
 
     it { should be_a Restforce::Configuration }
