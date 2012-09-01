@@ -5,6 +5,9 @@ module Restforce
 
     class << self
 
+      # Pass in an Array or Hash and it will be recursively converted into the
+      # appropriate Restforce::Collection, Restforce::SObject and
+      # Restforce::Mash objects.
       def build(val, client)
         if val.is_a?(Array)
           val.collect { |e| self.type(e).new(e, client) }
@@ -13,11 +16,18 @@ module Restforce
         end
       end
 
+      # When passed a hash, it will determine what class is appropriate to
+      # represent the data.
       def type(val)
+        # When the hash has a records key, it should be considered a collection
+        # of sobject records.
         if val.has_key? 'records'
           Restforce::Collection
+        # When the has contains an attributes key, it should be considered an
+        # sobject record
         elsif val.has_key? 'attributes'
           Restforce::SObject
+        # Fallback to a standard Restforce::Mash for everything else
         else
           Restforce::Mash
         end
