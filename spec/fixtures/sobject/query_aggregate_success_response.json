@@ -1,0 +1,23 @@
+{
+  "totalSize" : 3,
+  "done" : true,
+  "records" : [ {
+    "attributes" : {
+      "type" : "AggregateResult"
+    },
+    "CampaignId" : "701E0000000JuFHIA0",
+    "expr0" : 300.0
+  }, {
+    "attributes" : {
+      "type" : "AggregateResult"
+    },
+    "CampaignId" : "701E00000005ZqAIAU",
+    "expr0" : 100.0
+  }, {
+    "attributes" : {
+      "type" : "AggregateResult"
+    },
+    "CampaignId" : null,
+    "expr0" : 400
+  } ]
+}
