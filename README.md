@@ -56,9 +56,19 @@ If you prefer to use a username and password to authenticate:
 
 ```ruby
 client = Restforce::Client.new :username => 'foo',
-  :password      => 'bar',
-  :client_id     => 'client_id',
-  :client_secret => 'client_secret'
+  :password       => 'bar',
+  :security_token => 'security token'
+  :client_id      => 'client_id',
+  :client_secret  => 'client_secret'
+```
+
+#### Sandbox Orgs
+
+You can connect to sandbox orgs by specifying a host. The default host is
+'login.salesforce.com':
+
+```ruby
+client = Restforce::Client.new :host => 'test.salesforce.com'
 ```
 
 ### Query
