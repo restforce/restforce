@@ -28,6 +28,13 @@ module Restforce
       describe_sobjects.collect { |sobject| sobject['name'] }
     end
     
+    # Public: Returns a detailed describe result for the specified sobject
+    #
+    # Examples
+    #
+    #   # get the describe for the Account object
+    #   client.describe('Account')
+    #   # => { ... }
     def describe(sobject)
     end
 
