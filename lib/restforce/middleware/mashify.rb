@@ -10,20 +10,12 @@ module Restforce
     def call(env)
       @env = env
       response = @app.call(env)
-      if collection?
-        env[:body] = Restforce::Collection.new(body, client)
-      else
-        env[:body] = Hashie::Mash.new(body)
-      end
+      env[:body] = Restforce::Mash.build(body, client)
       response
     end
 
     def body
       @env[:body]
-    end
-
-    def collection?
-      body.is_a?(Hash) && body.has_key?('records')
     end
   
   end
