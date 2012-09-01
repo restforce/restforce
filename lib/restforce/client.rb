@@ -85,9 +85,7 @@ module Restforce
     #   client.create('Account', { Name: 'Foobar Inc.' })
     #   # => '0016000000MRatd'
     def create(sobject, attrs)
-      response = api_post "sobjects/#{sobject}" do |req|
-        req.body = attrs
-      end
+      response = api_post "sobjects/#{sobject}", attrs
       response.body['id']
     end
 
@@ -158,6 +156,8 @@ module Restforce
         builder.response :json
         builder.adapter Faraday.default_adapter
       end
+      @connection.headers['Content-Type'] = 'application/json'
+      @connection
     end
 
     # Internal: Determins what middleware will be used based on the options provided
