@@ -90,13 +90,14 @@ shared_examples_for 'instance methods' do
     it { should be_an Array }
   end
 
-  pending '.search' do
+  describe '.search' do
     before do
       stub_api_request :search, with: 'sobject/search_success_response'
     end
 
     subject { client.search('FIND {bar}') }
-    it { puts subject }
+    it { should be_an Array }
+    its(:size) { should eq 2 }
   end
 
   describe '.org_id' do

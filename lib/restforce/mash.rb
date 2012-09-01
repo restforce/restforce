@@ -6,7 +6,11 @@ module Restforce
     class << self
 
       def build(val, client)
-        self.type(val).new(val, client)
+        if val.is_a?(Array)
+          val.collect { |e| self.type(e).new(e, client) }
+        else
+          self.type(val).new(val, client)
+        end
       end
 
       def type(val)
