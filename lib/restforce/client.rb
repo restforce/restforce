@@ -1,7 +1,7 @@
 module Restforce
   class Client
 
-    def initialize(options)
+    def initialize(options = {})
       raise 'Please specify a hash of options' unless options.is_a?(Hash)
       @options = {}.tap do |options|
         [:username, :password, :security_token, :client_id, :client_secret, :host,

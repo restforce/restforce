@@ -1,6 +1,24 @@
 require 'spec_helper'
 
 shared_examples_for 'instance methods' do
+  describe '#new' do
+    context 'without options passed in' do
+      it 'should not raise an exception' do
+        expect {
+          described_class.new
+        }.to_not raise_error
+      end
+    end
+
+    context 'with a non-hash value' do
+      it 'should raise an exception' do
+        expect {
+          described_class.new 'foo'
+        }.to raise_error, 'Please specify a hash of options'
+      end
+    end
+  end
+
   describe '@options' do
     subject { client.instance_variable_get :@options }
 
