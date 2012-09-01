@@ -10,7 +10,7 @@ module Restforce
     def call(env)
       @env = env
       response = @app.call(env)
-      env[:body] = Restforce::Collection.new(body) if collection?
+      env[:body] = Restforce::Collection.new(body, client) if collection?
       response
     end
 

@@ -1,7 +1,8 @@
 module Restforce
   class SObject < Hashie::Mash
 
-    def initialize(source_hash = nil, default = nil, &blk)
+    def initialize(source_hash = nil, client = nil, default = nil, &blk)
+      @client = client
       deep_update(source_hash) if source_hash
       default ? super(default) : super(&blk)
     end
@@ -19,9 +20,9 @@ module Restforce
         # If the hash has a 'records' key, then it's a collection
         # of sobject records.
         if val.has_key? 'records'
-          Restforce::Collection.new(val)
+          Restforce::Collection.new(val, @client)
         elsif val.has_key? 'attributes'
-          Restforce::SObject.new(val)
+          Restforce::SObject.new(val, @client)
         else
           Hashie::Mash.new.merge(val)
         end
