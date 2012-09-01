@@ -68,12 +68,13 @@ module Restforce
     #
     #   # Find all occurances of 'bar'
     #   client.search('FIND {bar}')
+    #
+    #   # Find accounts match the term 'genepoint' and return the Name field
+    #   client.search('FIND {genepoint} RETURNING Account (Name)').map(&:Name)
+    #   # => ['GenePoint']
     def search(term)
       response = api_get 'search', q: term
       response.body
-    end
-    
-    def find(sobject, id)
     end
     
     def create(sobject, attrs)
