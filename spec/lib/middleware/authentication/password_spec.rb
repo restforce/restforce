@@ -16,16 +16,16 @@ describe Restforce::Middleware::Authentication::Password do
 
   it_behaves_like 'authentication middleware' do
     let(:success_request) do
-      stub_request(:get, "https://login.salesforce.com/services/oauth2" \
-        "/authorize?client_id=client_id&client_secret=client_secret" \
-        "&grant_type=password&password=barsecurity_token&username=foo").
+      stub_request(:post, "https://login.salesforce.com/services/oauth2/token").
+        with(:body => "grant_type=password&client_id=client_id&client_secret=" \
+        "client_secret&username=foo&password=barsecurity_token").
         to_return(:status => 200, :body => fixture(:auth_success_response))
     end
 
     let(:fail_request) do
-      stub_request(:get, "https://login.salesforce.com/services/oauth2" \
-        "/authorize?client_id=client_id&client_secret=client_secret" \
-        "&grant_type=password&password=barsecurity_token&username=foo").
+      stub_request(:post, "https://login.salesforce.com/services/oauth2/token").
+        with(:body => "grant_type=password&client_id=client_id&client_secret=" \
+        "client_secret&username=foo&password=barsecurity_token").
         to_return(:status => 400, :body => fixture(:auth_success_response))
     end
   end

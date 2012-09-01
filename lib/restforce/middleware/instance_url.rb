@@ -6,7 +6,7 @@ module Restforce
     def call(env)
       # If the instance url isn't set in options, raise a
       # Faraday::Error::ClientError to trigger reauthentication.
-      raise Faraday::Error::ClientError, 'instance url not set' unless @options[:instance_url]
+      raise Restforce::UnauthorizedError, 'instance url not set' unless @options[:instance_url]
 
       # If the url_prefix for the connection doesn't match the instance_url
       # set in the options, we raise an error which gets caught outside of

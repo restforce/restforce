@@ -4,13 +4,15 @@ module Restforce
   class Middleware::Authentication::Password < Restforce::Middleware::Authentication
 
     def authenticate!
-      response = connection.get '/services/oauth2/authorize', {
-        :grant_type    => 'password',
-        :client_id     => @options[:client_id],
-        :client_secret => @options[:client_secret],
-        :username      => @options[:username],
-        :password      => password
-      }
+      response = connection.post '/services/oauth2/token' do |req|
+        req.body = URI.encode_www_form(
+          :grant_type    => 'password',
+          :client_id     => @options[:client_id],
+          :client_secret => @options[:client_secret],
+          :username      => @options[:username],
+          :password      => password
+        )
+      end
       raise Restforce::AuthenticationError if response.status != 200
       @options[:instance_url] = response.body['instance_url']
       @options[:oauth_token]  = response.body['access_token']

@@ -12,7 +12,7 @@ describe Restforce::Middleware::InstanceURL do
     it 'raises an error' do
       expect {
         middleware.call(nil)
-      }.to raise_error Faraday::Error::ClientError
+      }.to raise_error Restforce::UnauthorizedError
     end
   end
 
