@@ -19,16 +19,16 @@ module Restforce
       # When passed a hash, it will determine what class is appropriate to
       # represent the data.
       def type(val)
-        # When the hash has a records key, it should be considered a collection
-        # of sobject records.
         if val.has_key? 'records'
+          # When the hash has a records key, it should be considered a collection
+          # of sobject records.
           Restforce::Collection
-        # When the has contains an attributes key, it should be considered an
-        # sobject record
         elsif val.has_key? 'attributes'
+          # When the hash contains an attributes key, it should be considered an
+          # sobject record
           Restforce::SObject
-        # Fallback to a standard Restforce::Mash for everything else
         else
+          # Fallback to a standard Restforce::Mash for everything else
           Restforce::Mash
         end
       end
