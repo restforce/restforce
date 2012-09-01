@@ -27,7 +27,7 @@ describe Restforce::Middleware::Authentication do
 
     context 'when an exception is thrown' do
       before do
-        app.should_receive(:call).once.and_raise(Faraday::Error::ClientError.new('something bad'))
+        app.should_receive(:call).once.and_raise(Restforce::UnauthorizedError.new('something bad'))
         middleware.should_receive(:authenticate!)
         app.should_receive(:call).once
       end

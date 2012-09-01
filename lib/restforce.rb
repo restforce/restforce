@@ -13,5 +13,6 @@ require 'restforce/middleware'
 
 module Restforce
   class AuthenticationError < StandardError; end
+  class UnauthorizedError < StandardError; end
   class InstanceURLError < StandardError; end
 end

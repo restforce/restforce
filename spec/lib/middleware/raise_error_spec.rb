@@ -2,7 +2,8 @@ require 'spec_helper'
 
 describe Restforce::Middleware::RaiseError do
   let(:app)        { double('app') }
-  let(:env)        { { status: status, body: JSON.parse(fixture('sobject/query_error_response')) } }
+  let(:body)       { JSON.parse(fixture('sobject/query_error_response')) }
+  let(:env)        { { status: status, body: body } }
   let(:middleware) { described_class.new app }
 
   describe '.on_complete' do
@@ -16,6 +17,12 @@ describe Restforce::Middleware::RaiseError do
     context 'when the status code is 400' do
       let(:status) { 400 }
       specify { expect { subject }.to raise_error Faraday::Error::ClientError, 'INVALID_FIELD: error_message' }
+    end
+
+    context 'when the status code is 401' do
+      let(:body) { JSON.parse(fixture(:auth_error_response)) }
+      let(:status) { 401 }
+      specify { expect { subject }.to raise_error Restforce::UnauthorizedError, 'invalid_grant: authentication failure - Invalid Password' }
     end
   end
 end

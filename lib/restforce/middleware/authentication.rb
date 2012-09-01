@@ -9,7 +9,7 @@ module Restforce
     def call(env)
       begin
         @app.call(env)
-      rescue Faraday::Error::ClientError
+      rescue Restforce::UnauthorizedError
         authenticate!
         @app.call(env)
       end
