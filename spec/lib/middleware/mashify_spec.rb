@@ -18,10 +18,11 @@ describe Restforce::Middleware::Mashify do
     end
   end
 
-  context 'when the body does not contain a records key' do
-    let(:env) { { body: 'foobar' } }
+  context 'when the body does not contain records' do
+    let(:env) { { body: { 'foo' => 'bar' } } }
+
     it 'does not touch the body' do
-      env[:body].should eq 'foobar'
+      env[:body].foo.should eq 'bar'
     end
   end
 end
