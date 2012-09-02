@@ -119,16 +119,27 @@ shared_examples_for 'instance methods' do
   end
 
   describe '.update' do
-    before do
-      @request = stub_api_request 'sobjects/Account/001D000000INjVe', method: :patch
-    end
+    pending 'with invalid Id'
+    pending 'with missing Id'
+    context 'success' do
+      before do
+        @request = stub_api_request 'sobjects/Account/001D000000INjVe', method: :patch
+      end
 
-    after do
-      @request.should have_been_requested
-    end
+      after do
+        @request.should have_been_requested
+      end
 
-    subject { client.update('Account', Id: '001D000000INjVe', Name: 'Foobar') }
-    specify { expect { subject }.to_not raise_error }
+      context 'with symbol Id key' do
+        subject { client.update('Account', Id: '001D000000INjVe', Name: 'Foobar') }
+        specify { expect { subject }.to_not raise_error }
+      end
+
+      context 'with string Id key' do
+        subject { client.update('Account', 'Id' => '001D000000INjVe', 'Name' => 'Foobar') }
+        specify { expect { subject }.to_not raise_error }
+      end
+    end
   end
 end
 
