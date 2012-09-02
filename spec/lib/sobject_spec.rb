@@ -1,5 +1,11 @@
 require 'spec_helper'
 
+RSpec::Matchers.define :have_client do |expected|
+  match do |actual|
+    actual.instance_variable_get(:@client) == expected
+  end
+end
+
 describe Restforce::SObject do
   let(:client) { double('client') }
 
@@ -13,7 +19,7 @@ describe Restforce::SObject do
       it                 { should be_a Restforce::SObject }
       its(:sobject_type) { should eq 'Whizbang' }
       its(:Text_Label)   { should eq 'Hi there!' }
-      specify { subject.instance_variable_get(:@client).should eq client }
+      it { should have_client client }
 
       describe 'child records object' do
         subject { record.Whizbangs__r }
@@ -26,7 +32,7 @@ describe Restforce::SObject do
           end
 
           it 'should set the client' do
-            record.Whizbangs__r.each { |record| record.instance_variable_get(:@client).should eq client }
+            record.Whizbangs__r.each { |record| record.should have_client client }
           end
         end
       end
@@ -37,7 +43,7 @@ describe Restforce::SObject do
         it { should be_a Restforce::SObject }
         its(:sobject_type) { should eq 'Whizbang' }
         its(:Name) { should eq 'Parent Whizbang' }
-        specify { subject.instance_variable_get(:@client).should eq client }
+        it { should have_client client }
       end
     end
   end
