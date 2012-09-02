@@ -143,10 +143,9 @@ shared_examples_for 'instance methods' do
   end
 end
 
-describe Restforce::Client do
-  include_context 'basic client'
-
-  context 'with mashify middleware' do
+describe 'with mashify middleware' do
+  describe Restforce::Client do
+    include_context 'basic client'
     include_examples 'instance methods'
 
     describe '.mashify?' do
@@ -155,12 +154,15 @@ describe Restforce::Client do
       it { should be_true }
     end
   end
+end
 
-  context 'without mashify middleware' do
-    before do
-      client.send(:connection).builder.delete(Restforce::Middleware::Mashify)
-    end
+describe 'without mashify middleware' do
+  before do
+    client.send(:connection).builder.delete(Restforce::Middleware::Mashify)
+  end
 
+  describe Restforce::Client do
+    include_context 'basic client'
     include_examples 'instance methods'
     
     describe '.mashify?' do
