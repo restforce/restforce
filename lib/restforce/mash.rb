@@ -11,8 +11,10 @@ module Restforce
       def build(val, client)
         if val.is_a?(Array)
           val.collect { |e| self.klass(e).new(e, client) }
-        else
+        elsif val.is_a?(Hash)
           self.klass(val).new(val, client)
+        else
+          val
         end
       end
 

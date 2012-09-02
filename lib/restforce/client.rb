@@ -146,7 +146,7 @@ module Restforce
     # Examples
     #
     #   # Add a new account
-    #   client.create('Account', { Name: 'Foobar Inc.' })
+    #   client.create('Account', Name: 'Foobar Inc.')
     #   # => '0016000000MRatd'
     #
     # Returns the String Id of the newly created sobject.
@@ -155,7 +155,18 @@ module Restforce
       response.body['id']
     end
 
+    # Public: Update a record.
+    #
+    # Examples
+    #
+    #   # Update the Account with Id '0016000000MRatd'
+    #   client.update('Account', Id: => '0016000000MRatd', Name: => 'Whizbang Corp')
+    #
+    # Returns true if the sobject was successfully update, false otherwise.
     def update(sobject, attrs)
+      id = attrs.has_key?(:Id) ? attrs.delete(:Id) : attrs.delete('Id')
+      response = api_patch "sobjects/#{sobject}/#{id}", attrs
+      response.body
     end
 
     def destroy(sobject, id)

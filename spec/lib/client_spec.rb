@@ -117,6 +117,19 @@ shared_examples_for 'instance methods' do
     subject { client.create('Account', Name: 'Foobar') }
     it { should eq 'some_id' }
   end
+
+  describe '.update' do
+    before do
+      @request = stub_api_request 'sobjects/Account/001D000000INjVe', method: :patch
+    end
+
+    after do
+      @request.should have_been_requested
+    end
+
+    subject { client.update('Account', Id: '001D000000INjVe', Name: 'Foobar') }
+    specify { expect { subject }.to_not raise_error }
+  end
 end
 
 describe Restforce::Client do
