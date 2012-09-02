@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-shared_examples_for 'instance methods' do
+shared_examples_for 'methods' do
   describe '#new' do
     context 'without options passed in' do
       it 'should not raise an exception' do
@@ -146,7 +146,7 @@ end
 describe 'with mashify middleware' do
   describe Restforce::Client do
     include_context 'basic client'
-    include_examples 'instance methods'
+    include_examples 'methods'
 
     describe '.mashify?' do
       subject { client.send :mashify? }
@@ -163,7 +163,7 @@ describe 'without mashify middleware' do
 
   describe Restforce::Client do
     include_context 'basic client'
-    include_examples 'instance methods'
+    include_examples 'methods'
     
     describe '.mashify?' do
       subject { client.send :mashify? }
