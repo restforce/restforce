@@ -166,10 +166,20 @@ module Restforce
     def update(sobject, attrs)
       id = attrs.has_key?(:Id) ? attrs.delete(:Id) : attrs.delete('Id')
       response = api_patch "sobjects/#{sobject}/#{id}", attrs
-      response.body
+      true
     end
 
+    # Public: Delete a record.
+    #
+    # Examples
+    #
+    #   # Delete the Account with Id '0016000000MRatd'
+    #   client.delete('Account', '0016000000MRatd')
+    #
+    # Returns true if the sobject was successfully deleted, false otherwise.
     def destroy(sobject, id)
+      response = api_delete "sobjects/#{sobject}/#{id}"
+      true
     end
 
     # Public: Helper methods for performing arbitrary actions against the API using

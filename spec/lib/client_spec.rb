@@ -121,7 +121,7 @@ shared_examples_for 'methods' do
   describe '.update' do
     pending 'with invalid Id'
     pending 'with missing Id'
-    context 'success' do
+    context 'with success' do
       before do
         @request = stub_api_request 'sobjects/Account/001D000000INjVe', method: :patch
       end
@@ -132,13 +132,30 @@ shared_examples_for 'methods' do
 
       context 'with symbol Id key' do
         subject { client.update('Account', Id: '001D000000INjVe', Name: 'Foobar') }
-        specify { expect { subject }.to_not raise_error }
+        it { should be_true }
       end
 
       context 'with string Id key' do
         subject { client.update('Account', 'Id' => '001D000000INjVe', 'Name' => 'Foobar') }
-        specify { expect { subject }.to_not raise_error }
+        it { should be_true }
       end
+    end
+  end
+
+  describe '.destroy' do
+    pending 'with invalid Id'
+
+    context 'with success' do
+      before do 
+        @request = stub_api_request 'sobjects/Account/001D000000INjVe', method: :delete
+      end
+
+      after do
+        @request.should have_been_requested
+      end
+
+      subject { client.destroy('Account', '001D000000INjVe') }
+      it { should be_true }
     end
   end
 end
