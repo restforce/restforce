@@ -14,7 +14,7 @@ describe Restforce::Collection do
       it               { should respond_to :each }
       its(:size)       { should eq 1 }
       its(:total_size) { should eq 1 }
-      its(:next_page)  { should be_nil }
+      its(:next_page_url)  { should be_nil }
       specify { subject.instance_variable_get(:@client).should eq client }
 
       describe 'each record' do
@@ -34,8 +34,17 @@ describe Restforce::Collection do
       it               { should respond_to :each }
       its(:size)       { should eq 1 }
       its(:total_size) { should eq 2 }
-      its(:next_page)  { should eq '/next/page/url' }
+      its(:next_page_url)  { should eq '/next/page/url' }
       specify { subject.instance_variable_get(:@client).should eq client }
+
+      describe '.next_page' do
+        before do
+          client.should_receive(:get).and_return(Faraday::Response.new(body: Restforce::Collection.new({'records' => {}}, client)))
+        end
+
+        subject { records.next_page }
+        it { should be_a Restforce::Collection }
+      end
     end
   end
 end
