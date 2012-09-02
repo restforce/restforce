@@ -1,6 +1,53 @@
 module Restforce
   class Client
-
+    # Public: Creates a new client instance
+    #
+    # options - A hash of options to be passed in (default: {}).
+    #           :username       - The String username to use (required for password authentication).
+    #           :password       - The String password to use (required for password authentication).
+    #           :security_token - The String security token to use 
+    #                             (required for password authentication).
+    #
+    #           :oauth_token    - The String oauth access token to authenticate api
+    #                             calls (required unless password
+    #                             authentication is used).
+    #           :refresh_token  - The String refresh token to obtain fresh
+    #                             oauth access tokens (required if oauth
+    #                             authentication is used).
+    #           :instance_url   - The String base url for all api requests
+    #                             (required if oauth authentication is used).
+    #
+    #           :client_id      - The oauth client id to use. Needed for both
+    #                             password and oauth authentication
+    #           :client_secret  - The oauth client secret to use.
+    #
+    #           :host           - The String hostname to use during
+    #                             authentication requests (default: 'login.salesforce.com').
+    #
+    #           :api_version    - The String REST api version to use (default: '24.0')
+    #
+    # Examples
+    #
+    #   # Initialize a new client using password authentication:
+    #   Restforce::Client.new :username => 'user',
+    #     :password => 'pass',
+    #     :security_token => 'security token',
+    #     :client_id => 'client id',
+    #     :client_secret => 'client secret'
+    #   # => #<Restforce::Client:0x007f934aa2dc28 @options={ ... }>
+    #
+    #   # Initialize a new client using oauth authentication:
+    #   Restforce::Client.new :oauth_token => 'access token',
+    #     :refresh_token => 'refresh token',
+    #     :instance_url => 'https://na1.salesforce.com',
+    #     :client_id => 'client id',
+    #     :client_secret => 'client secret'
+    #   # => #<Restforce::Client:0x007f934aaaa0e8 @options={ ... }>
+    #
+    #   # Initialize a new client with using any authentication middleware:
+    #   Restforce::Client.new :oauth_token => 'access token',
+    #     :instance_url => 'https://na1.salesforce.com'
+    #   # => #<Restforce::Client:0x007f934aab9980 @options={ ... }>
     def initialize(options = {})
       raise 'Please specify a hash of options' unless options.is_a?(Hash)
       @options = {}.tap do |options|
@@ -12,40 +59,51 @@ module Restforce
       @options.merge!(options)
     end
 
+    # Public: Get the global describe for all sobjects.
+    #
+    # Returns the Hash representation of the describe call.
     def describe_sobjects
       response = api_get 'sobjects'
       response.body['sobjects']
     end
 
-    # Public: Returns an array of the names of all sobjects on the org
+    # Public: Get the names of all sobjects on the org.
     #
     # Examples
     #
     #   # get the names of all sobjects on the org
     #   client.list_sobjects
     #   # => ['Account', 'Lead', ... ]
+    #
+    # Returns an Array of String names for each SObject.
     def list_sobjects
       describe_sobjects.collect { |sobject| sobject['name'] }
     end
     
     # Public: Returns a detailed describe result for the specified sobject
     #
+    # sobject - Stringish name of the sobject (default: nil).
+    #
     # Examples
     #
     #   # get the describe for the Account object
     #   client.describe('Account')
     #   # => { ... }
+    #
+    # Returns the Hash representation of the describe call.
     def describe(sobject)
-      response = api_get "sobject/#{sobject}/describe"
+      response = api_get "sobject/#{sobject.to_s}/describe"
       response.body
     end
 
-    # Public: Get the current organization's Id
+    # Public: Get the current organization's Id.
     #
     # Examples
     #
     #   client.org_id
     #   # => '00Dx0000000BV7z'
+    #
+    # Returns the String organization Id
     def org_id
       query('select id from Organization').first['Id']
     end
@@ -57,6 +115,9 @@ module Restforce
     #   # Find the names of all Accounts
     #   client.query('select Name from Account').map(&:Name)
     #   # => ['Foo Bar Inc.', 'Whizbang Corp']
+    #
+    # Returns a Restforce::Collection if Restforce.configuration.mashify is true.
+    # Returns an Array of Hash for each record in the result if Restforce.configuration.mashify is false.
     def query(query)
       response = api_get 'query', q: query
       mashify? ? response.body : response.body['records']
@@ -66,12 +127,15 @@ module Restforce
     #
     # Examples
     #
-    #   # Find all occurances of 'bar'
+    #   # Find all occurrences of 'bar'
     #   client.search('FIND {bar}')
     #
     #   # Find accounts match the term 'genepoint' and return the Name field
     #   client.search('FIND {genepoint} RETURNING Account (Name)').map(&:Name)
     #   # => ['GenePoint']
+    #
+    # Returns a Restforce::Collection if Restforce.configuration.mashify is true.
+    # Returns an Array of Hash for each record in the result if Restforce.configuration.mashify is false.
     def search(term)
       response = api_get 'search', q: term
       response.body
@@ -84,6 +148,8 @@ module Restforce
     #   # Add a new account
     #   client.create('Account', { Name: 'Foobar Inc.' })
     #   # => '0016000000MRatd'
+    #
+    # Returns the String Id of the newly created sobject.
     def create(sobject, attrs)
       response = api_post "sobjects/#{sobject}", attrs
       response.body['id']
@@ -95,7 +161,7 @@ module Restforce
     def destroy(sobject, id)
     end
 
-    # Public: Helper methods for performing abritrary actions against the API using
+    # Public: Helper methods for performing arbitrary actions against the API using
     # various HTTP verbs.
     #
     # Examples
@@ -115,6 +181,8 @@ module Restforce
     #   # Perform a delete request
     #   client.delete '/services/data/v24.0/sobjects/Account/001D000000INjVe'
     #   client.api_delete 'sobjects/Account/001D000000INjVe'
+    #
+    # Returns the Faraday::Response.
     [:get, :post, :put, :delete, :patch].each do |method|
       define_method method do |*args|
         begin
@@ -133,7 +201,7 @@ module Restforce
 
   private
 
-    # Private: Returns a path to an api endpoint
+    # Internal: Returns a path to an api endpoint
     #
     # Examples
     #
@@ -143,7 +211,7 @@ module Restforce
       "/services/data/v#{@options[:api_version]}/#{path}"
     end
 
-    # Private: Internal faraday connection where all requests go through
+    # Internal: Internal faraday connection where all requests go through
     def connection
       @connection ||= Faraday.new do |builder|
         builder.use Restforce::Middleware::Mashify, self, @options
@@ -160,7 +228,7 @@ module Restforce
       @connection
     end
 
-    # Internal: Determins what middleware will be used based on the options provided
+    # Internal: Determines what middleware will be used based on the options provided
     def authentication_middleware
       if username_password?
         Restforce::Middleware::Authentication::Password
@@ -188,9 +256,10 @@ module Restforce
         @options[:client_secret]
     end
 
+    # Internal: Returns true if the middlware stack includes the
+    # Restforce::Middleware::Mashify middleware.
     def mashify?
       connection.builder.handlers.find { |handler| handler == Restforce::Middleware::Mashify }
     end
-
   end
 end
