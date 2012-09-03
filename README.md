@@ -108,7 +108,7 @@ client.create('Account', Name: 'Foobar Inc.')
 
 ```ruby
 # Update the Account with Id '0016000000MRatd'
-client.update('Account', Id: => '0016000000MRatd', Name: => 'Whizbang Corp')
+client.update('Account', Id: '0016000000MRatd', Name: 'Whizbang Corp')
 # => true
 ```
 

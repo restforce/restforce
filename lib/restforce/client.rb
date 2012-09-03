@@ -161,7 +161,7 @@ module Restforce
     # Examples
     #
     #   # Update the Account with Id '0016000000MRatd'
-    #   client.update('Account', Id: => '0016000000MRatd', Name: => 'Whizbang Corp')
+    #   client.update('Account', Id: '0016000000MRatd', Name: 'Whizbang Corp')
     #
     # Returns true if the sobject was successfully update, false otherwise.
     def update(sobject, attrs)
