@@ -4,9 +4,9 @@ require File.expand_path('../lib/restforce/version', __FILE__)
 Gem::Specification.new do |gem|
   gem.authors       = ["Eric J. Holmes"]
   gem.email         = ["eric@ejholmes.net"]
-  gem.description   = %q{TODO: Write a gem description}
-  gem.summary       = %q{TODO: Write a gem summary}
-  gem.homepage      = ""
+  gem.description   = %q{A lightweight ruby client for the Salesforce REST api.}
+  gem.summary       = %q{A lightweight ruby client for the Salesforce REST api.}
+  gem.homepage      = "https://github.com/ejholmes/restforce"
 
   gem.files         = `git ls-files`.split($\)
   gem.executables   = gem.files.grep(%r{^bin/}).map{ |f| File.basename(f) }
