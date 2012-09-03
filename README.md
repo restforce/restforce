@@ -39,7 +39,7 @@ building an application where many users from different orgs are authenticated
 through oauth and you need to interact with data in their org on their behalf,
 you should use the OAuth token authentication method.
 
-If you're using the gem to interact with a single org (maybe your building some
+If you're using the gem to interact with a single org (maybe you're building some
 salesforce integration internally?) then you should use the username/password
 authentication method.
 
