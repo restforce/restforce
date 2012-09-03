@@ -78,7 +78,7 @@ records = client.query("select Id, Something__c from Lead where Id = 'someid'")
 # => #<Restforce::Collection >
 
 record = records.first
-# => #<Restforce::SObject @type="Lead" >
+# => #<Restforce::SObject >
 
 record.Id
 # => "someid"
@@ -87,25 +87,37 @@ record.Id
 ### Search
 
 ```ruby
-records = client.search('SOSL Expression')
+# Find all occurrences of 'bar'
+client.search('FIND {bar}')
+# => #<Restforce::Collection >
+
+# Find accounts match the term 'genepoint' and return the Name field
+client.search('FIND {genepoint} RETURNING Account (Name)').map(&:Name)
+# => ['GenePoint']
 ```
 
 ### Create
 
 ```ruby
-record = client.create('Account', :Name => 'Foobar Inc.')
+# Add a new account
+client.create('Account', Name: 'Foobar Inc.')
+# => '0016000000MRatd'
 ```
 
 ### Update
 
 ```ruby
-record = client.update('Account', :Id => '0016000000MRatd', :Name => 'Foobar Inc.')
+# Update the Account with Id '0016000000MRatd'
+client.update('Account', Id: => '0016000000MRatd', Name: => 'Whizbang Corp')
+# => true
 ```
 
 ### Destroy
 
 ```ruby
-record = client.destroy('Account', '0016000000MRatd')
+# Delete the Account with Id '0016000000MRatd'
+client.delete('Account', '0016000000MRatd')
+# => true
 ```
 
 

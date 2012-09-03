@@ -129,6 +129,7 @@ module Restforce
     #
     #   # Find all occurrences of 'bar'
     #   client.search('FIND {bar}')
+    #   # => #<Restforce::Collection >
     #
     #   # Find accounts match the term 'genepoint' and return the Name field
     #   client.search('FIND {genepoint} RETURNING Account (Name)').map(&:Name)
