@@ -34,7 +34,18 @@ so you can do things like `client.query('select Id, (select Name from Children__
 
 ### Initialization
 
+Which authentication method you use really depends on your use case. If you're
+building an application where many users from different orgs are authenticated
+through oauth and you need to interact with data in their org on their behalf,
+you should use the OAuth token authentication method.
+
+If you're using the gem to interact with a single org (maybe your building some
+salesforce integration internally?) then you should use the username/password
+authentication method.
+
 If you have an access token and an instance url obtained through oauth:
+
+#### OAuth token authentication
 
 ```ruby
 client = Restforce::Client.new :oauth_token => 'oauth token',
@@ -51,6 +62,8 @@ client = Restforce::Client.new :oauth_token => 'oauth token',
   :client_id     => 'client_id',
   :client_secret => 'client_secret'
 ```
+
+#### Username/Password authentication
 
 If you prefer to use a username and password to authenticate:
 
@@ -69,6 +82,17 @@ You can connect to sandbox orgs by specifying a host. The default host is
 
 ```ruby
 client = Restforce::Client.new :host => 'test.salesforce.com'
+```
+
+#### Global configuration
+
+You can set any of the options passed into Restforce::Client.new globally:
+
+```ruby
+Restforce.configure do |config|
+    config.client_id     = ENV['SALESFORCE_CLIENT_ID']
+    config.client_secret = ENV['SALESFORCE_CLIENT_SECRET']
+end
 ```
 
 ### Query
