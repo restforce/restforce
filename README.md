@@ -16,7 +16,7 @@ It attempts to solve a couple of key issues that the databasedotcom gem has been
 
 Add this line to your application's Gemfile:
 
-    gem 'restforce
+    gem 'restforce'
 
 And then execute:
 
