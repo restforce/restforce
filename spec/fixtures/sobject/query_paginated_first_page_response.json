@@ -1,7 +1,7 @@
 {
   "totalSize" : 2,
   "done" : false,
-  "nextRecordsUrl" : "/next/page/url",
+  "nextRecordsUrl" : "/services/data/v24.0/query/01gD",
   "records" : [ {
     "attributes" : {
       "type" : "Whizbang",

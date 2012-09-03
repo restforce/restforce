@@ -170,6 +170,25 @@ describe 'with mashify middleware' do
 
       it { should be_true }
     end
+
+    describe '.query' do
+      context 'with pagination' do
+        before do
+          @requests = [].tap do |requests|
+            requests << stub_api_request('query\?q', with: 'sobject/query_paginated_first_page_response')
+            requests << stub_api_request('query/01gD', with: 'sobject/query_paginated_last_page_response')
+          end
+        end
+
+        after do
+          @requests.each { |request| request.should have_been_requested }
+        end
+
+        subject { client.query('SELECT some, fields FROM object').next_page }
+        it { should be_a Restforce::Collection }
+        specify { subject.first.Text_Label.should eq 'Last Page' }
+      end
+    end
   end
 end
 
