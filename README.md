@@ -74,14 +74,21 @@ client = Restforce::Client.new :host => 'test.salesforce.com'
 ### Query
 
 ```ruby
-records = client.query("select Id, Something__c from Lead where Id = 'someid'")
+accounts = client.query("select Id, Something__c from Account where Id = 'someid'")
 # => #<Restforce::Collection >
 
-record = records.first
+account = records.first
 # => #<Restforce::SObject >
 
-record.Id
+account.Id
 # => "someid"
+
+account.Name = 'Foobar'
+account.save
+# => true
+
+account.destroy
+# => true
 ```
 
 ### Search
