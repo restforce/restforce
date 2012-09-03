@@ -53,7 +53,7 @@ describe Restforce::SObject do
     subject { sobject.save }
 
     context 'when an Id was not queried' do
-      specify { expect { subject }.to raise_error RuntimeError, 'You need to query the Id for the record in order to save.' }
+      specify { expect { subject }.to raise_error RuntimeError, 'You need to query the Id for the record first.' }
     end
 
     context 'when an Id is present' do
@@ -77,7 +77,7 @@ describe Restforce::SObject do
     subject { sobject.destroy }
 
     context 'when an Id was not queried' do
-      specify { expect { subject }.to raise_error RuntimeError, 'You need to query the Id for the record in order to save.' }
+      specify { expect { subject }.to raise_error RuntimeError, 'You need to query the Id for the record first.' }
     end
 
     context 'when an Id is present' do

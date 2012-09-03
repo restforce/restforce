@@ -34,7 +34,7 @@ module Restforce
   private
 
     def ensure_id
-      raise 'You need to query the Id for the record in order to save.' unless self.Id?
+      raise 'You need to query the Id for the record first.' unless self.Id?
     end
 
   end
