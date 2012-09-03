@@ -8,8 +8,9 @@ module FixtureHelpers
       :with => nil
     }.merge(options)
 
-    stub_request(options[:method], %r{/services/data/v#{options[:api_version]}/#{endpoint}}).
-      to_return(:status => options[:status], :body => options[:with] ? fixture(options[:with]) : '')
+    stub = stub_request(options[:method], %r{/services/data/v#{options[:api_version]}/#{endpoint}})
+    stub = stub.with(:body => options[:body]) if options[:body]
+    stub = stub.to_return(:status => options[:status], :body => options[:with] ? fixture(options[:with]) : '')
   end
 
   def fixture(f)

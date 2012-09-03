@@ -111,7 +111,11 @@ shared_examples_for 'methods' do
 
   describe '.create' do
     before do
-      stub_api_request 'sobjects/Account', with: 'sobject/create_success_response', method: :post
+      @request = stub_api_request 'sobjects/Account', with: 'sobject/create_success_response', method: :post, body: "{\"Name\":\"Foobar\"}"
+    end
+
+    after do
+      @request.should have_been_requested
     end
 
     subject { client.create('Account', Name: 'Foobar') }
@@ -123,7 +127,7 @@ shared_examples_for 'methods' do
     pending 'with missing Id'
     context 'with success' do
       before do
-        @request = stub_api_request 'sobjects/Account/001D000000INjVe', method: :patch
+        @request = stub_api_request 'sobjects/Account/001D000000INjVe', method: :patch, body: "{\"Name\":\"Foobar\"}"
       end
 
       after do

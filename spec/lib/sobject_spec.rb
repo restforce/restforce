@@ -59,10 +59,7 @@ describe Restforce::SObject do
     context 'when an Id is present' do
       before do
         hash.merge!(Id: '001D000000INjVe')
-      end
-
-      before do
-        @request = stub_api_request 'sobjects/Whizbang/001D000000INjVe', method: :patch
+        @request = stub_api_request 'sobjects/Whizbang/001D000000INjVe', method: :patch, body: "{\"Checkbox_Label\":false,\"Text_Label\":\"Hi there!\",\"Date_Label\":\"2010-01-01\",\"DateTime_Label\":\"2011-07-07T00:37:00.000+0000\",\"Picklist_Multiselect_Label\":\"four;six\"}"
       end
 
       after do
@@ -81,11 +78,8 @@ describe Restforce::SObject do
     end
 
     context 'when an Id is present' do
-      before do
-        hash.merge!(Id: '001D000000INjVe')
-      end
-
       before do 
+        hash.merge!(Id: '001D000000INjVe')
         @request = stub_api_request 'sobjects/Whizbang/001D000000INjVe', method: :delete
       end
 
