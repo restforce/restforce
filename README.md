@@ -147,7 +147,7 @@ client.update('Account', Id: '0016000000MRatd', Name: 'Whizbang Corp')
 
 ```ruby
 # Delete the Account with Id '0016000000MRatd'
-client.delete('Account', '0016000000MRatd')
+client.destroy('Account', '0016000000MRatd')
 # => true
 ```
 
