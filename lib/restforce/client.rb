@@ -179,7 +179,14 @@ module Restforce
     #
     # Returns true if the sobject was successfully deleted, false otherwise.
     def destroy(sobject, id)
-      response = api_delete "sobjects/#{sobject}/#{id}"
+      destroy!(sobject, id)
+    rescue Faraday::Error::ResourceNotFound
+      false
+    end
+
+    # See .destroy
+    def destroy!(sobject, id)
+      api_delete "sobjects/#{sobject}/#{id}"
       true
     end
 

@@ -170,8 +170,20 @@ shared_examples_for 'methods' do
     end
   end
 
-  describe '.destroy' do
-    pending 'with invalid Id'
+  describe '.destroy!' do
+    subject { client.destroy!('Account', '001D000000INjVe') }
+
+    context 'with invalid Id' do
+      before do
+        @request = stub_api_request 'sobjects/Account/001D000000INjVe', with: 'sobject/delete_error_response', method: :delete, status: 404
+      end
+
+      after do
+        @request.should have_been_requested
+      end
+
+      specify { expect { subject }.to raise_error Faraday::Error::ResourceNotFound }
+    end
 
     context 'with success' do
       before do 
@@ -182,7 +194,34 @@ shared_examples_for 'methods' do
         @request.should have_been_requested
       end
 
-      subject { client.destroy('Account', '001D000000INjVe') }
+      it { should be_true }
+    end
+  end
+
+  describe '.destroy' do
+    subject { client.destroy('Account', '001D000000INjVe') }
+
+    context 'with invalid Id' do
+      before do
+        @request = stub_api_request 'sobjects/Account/001D000000INjVe', with: 'sobject/delete_error_response', method: :delete, status: 404
+      end
+
+      after do
+        @request.should have_been_requested
+      end
+
+      it { should be_false }
+    end
+
+    context 'with success' do
+      before do 
+        @request = stub_api_request 'sobjects/Account/001D000000INjVe', method: :delete
+      end
+
+      after do
+        @request.should have_been_requested
+      end
+
       it { should be_true }
     end
   end
