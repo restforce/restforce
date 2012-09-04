@@ -163,7 +163,7 @@ module Restforce
     #   # Update the Account with Id '0016000000MRatd'
     #   client.update('Account', Id: '0016000000MRatd', Name: 'Whizbang Corp')
     #
-    # Returns true if the sobject was successfully update, false otherwise.
+    # Returns true if the sobject was successfully updated, false otherwise.
     def update(sobject, attrs)
       update!(sobject, attrs)
     rescue Faraday::Error::ResourceNotFound
@@ -171,6 +171,9 @@ module Restforce
     end
 
     # See .update
+    #
+    # Returns true if the sobject was successfully updated, raises an error
+    # otherwise.
     def update!(sobject, attrs)
       id = attrs.has_key?(:Id) ? attrs.delete(:Id) : attrs.delete('Id')
       api_patch "sobjects/#{sobject}/#{id}", attrs
@@ -192,6 +195,9 @@ module Restforce
     end
 
     # See .destroy
+    #
+    # Returns true of the sobject was successfully deleted, raises an error
+    # otherwise.
     def destroy!(sobject, id)
       api_delete "sobjects/#{sobject}/#{id}"
       true
