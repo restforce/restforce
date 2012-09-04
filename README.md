@@ -10,6 +10,7 @@ It attempts to solve a couple of key issues that the databasedotcom gem has been
 * Support for aggregate queries.
 * Remove the need to materialize constants.
 * Support for the Streaming API
+* Support for blob data types.
 * A clean and modular architecture using [Faraday middleware](https://github.com/technoweenie/faraday)
 
 ## Installation
