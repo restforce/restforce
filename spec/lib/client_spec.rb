@@ -55,7 +55,11 @@ shared_examples_for 'methods' do
   
   describe '.describe_sobjects' do
     before do
-      stub_api_request :sobjects, with: 'sobject/describe_sobjects_success_response'
+      @request = stub_api_request :sobjects, with: 'sobject/describe_sobjects_success_response'
+    end
+
+    after do
+      @request.should have_been_requested
     end
 
     subject { client.describe_sobjects }
@@ -64,7 +68,11 @@ shared_examples_for 'methods' do
 
   describe '.list_sobjects' do
     before do
-      stub_api_request :sobjects, with: 'sobject/describe_sobjects_success_response'
+      @request = stub_api_request :sobjects, with: 'sobject/describe_sobjects_success_response'
+    end
+
+    after do
+      @request.should have_been_requested
     end
 
     subject { client.list_sobjects }
@@ -74,7 +82,11 @@ shared_examples_for 'methods' do
 
   describe '.describe' do
     before do
-      stub_api_request 'sobject/Whizbang/describe', with: 'sobject/sobject_describe_success_response'
+      @request = stub_api_request 'sobject/Whizbang/describe', with: 'sobject/sobject_describe_success_response'
+    end
+
+    after do
+      @request.should have_been_requested
     end
 
     subject { client.describe('Whizbang') }
@@ -83,7 +95,11 @@ shared_examples_for 'methods' do
 
   describe '.query' do
     before do
-      stub_api_request :query, with: 'sobject/query_success_response'
+      @request = stub_api_request 'query\?q=SELECT%20some,%20fields%20FROM%20object', with: 'sobject/query_success_response'
+    end
+
+    after do
+      @request.should have_been_requested
     end
 
     subject { client.query('SELECT some, fields FROM object') }
@@ -92,7 +108,11 @@ shared_examples_for 'methods' do
 
   describe '.search' do
     before do
-      stub_api_request :search, with: 'sobject/search_success_response'
+      @request = stub_api_request 'search\?q=FIND%20%7Bbar%7D', with: 'sobject/search_success_response'
+    end
+
+    after do
+      @request.should have_been_requested
     end
 
     subject { client.search('FIND {bar}') }
@@ -102,7 +122,11 @@ shared_examples_for 'methods' do
 
   describe '.org_id' do
     before do
-      stub_api_request :query, with: 'sobject/org_query_response'
+      @request = stub_api_request 'query\?q=select%20id%20from%20Organization', with: 'sobject/org_query_response'
+    end
+
+    after do
+      @request.should have_been_requested
     end
 
     subject { client.org_id }
