@@ -43,8 +43,6 @@ If you're using the gem to interact with a single org (maybe you're building som
 salesforce integration internally?) then you should use the username/password
 authentication method.
 
-If you have an access token and an instance url obtained through oauth:
-
 #### OAuth token authentication
 
 ```ruby
