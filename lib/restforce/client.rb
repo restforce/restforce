@@ -165,8 +165,15 @@ module Restforce
     #
     # Returns true if the sobject was successfully update, false otherwise.
     def update(sobject, attrs)
+      update!(sobject, attrs)
+    rescue Faraday::Error::ResourceNotFound
+      false
+    end
+
+    # See .update
+    def update!(sobject, attrs)
       id = attrs.has_key?(:Id) ? attrs.delete(:Id) : attrs.delete('Id')
-      response = api_patch "sobjects/#{sobject}/#{id}", attrs
+      api_patch "sobjects/#{sobject}/#{id}", attrs
       true
     end
 

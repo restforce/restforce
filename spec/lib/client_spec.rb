@@ -146,9 +146,37 @@ shared_examples_for 'methods' do
     it { should eq 'some_id' }
   end
 
+  describe '.update!' do
+    context 'with invalid Id' do
+      before do
+        @request = stub_api_request 'sobjects/Account/001D000000INjVe', with: 'sobject/delete_error_response', method: :patch, body: "{\"Name\":\"Foobar\"}", status: 404
+      end
+
+      after do
+        @request.should have_been_requested
+      end
+
+      subject { client.update!('Account', Id: '001D000000INjVe', Name: 'Foobar') }
+      specify { expect { subject }.to raise_error Faraday::Error::ResourceNotFound }
+    end
+  end
+
   describe '.update' do
-    pending 'with invalid Id'
     pending 'with missing Id'
+
+    context 'with invalid Id' do
+      before do
+        @request = stub_api_request 'sobjects/Account/001D000000INjVe', with: 'sobject/delete_error_response', method: :patch, body: "{\"Name\":\"Foobar\"}", status: 404
+      end
+
+      after do
+        @request.should have_been_requested
+      end
+
+      subject { client.update('Account', Id: '001D000000INjVe', Name: 'Foobar') }
+      it { should be_false }
+    end
+
     context 'with success' do
       before do
         @request = stub_api_request 'sobjects/Account/001D000000INjVe', method: :patch, body: "{\"Name\":\"Foobar\"}"
