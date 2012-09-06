@@ -150,6 +150,11 @@ client.destroy('Account', '0016000000MRatd')
 # => true
 ```
 
+### File Uploads
+
+```ruby
+client.create('Document', FolderId: '00lE0000000FJ6H', Description: 'Document test', Name: 'My image', Body: Restforce::UploadIO.new(File.expand_path('image.jpg', __FILE__), 'image/jpeg'))
+```
 
 ## Contributing
 
