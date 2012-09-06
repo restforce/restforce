@@ -89,8 +89,8 @@ You can set any of the options passed into Restforce::Client.new globally:
 
 ```ruby
 Restforce.configure do |config|
-    config.client_id     = ENV['SALESFORCE_CLIENT_ID']
-    config.client_secret = ENV['SALESFORCE_CLIENT_SECRET']
+  config.client_id     = ENV['SALESFORCE_CLIENT_ID']
+  config.client_secret = ENV['SALESFORCE_CLIENT_SECRET']
 end
 ```
 
