@@ -1,28 +1,3 @@
-require 'faraday/upload_io'
-
-module Parts
-  class ParamPart
-    include Part
-    def initialize(boundary, name, value)
-      @part = build_part(boundary, name, value)
-      @io = StringIO.new(@part)
-    end
-
-    def length
-     @part.bytesize
-    end 
-
-    def build_part(boundary, name, value)
-      part = ''
-      part << "--#{boundary}\r\n"
-      part << "Content-Disposition: form-data; name=\"#{name.to_s}\";\r\n"
-      part << "Content-Type: application/json\r\n"
-      part << "\r\n"
-      part << "#{value}\r\n"
-    end
-  end
-end
-
 module Restforce
   class Middleware::Multipart < Faraday::Request::UrlEncoded
     self.mime_type = 'multipart/form-data'.freeze
@@ -67,6 +42,7 @@ module Restforce
         end
       end
       parts << Faraday::Parts::Part.new(boundary, 'entity_content', params.reject { |key, _| skip.include? key }.to_json)
+      parts.reverse!
       parts << Faraday::Parts::EpiloguePart.new(boundary)
 
       body = Faraday::CompositeReadIO.new(parts)

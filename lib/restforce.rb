@@ -7,6 +7,7 @@ require 'restforce/config'
 require 'restforce/mash'
 require 'restforce/collection'
 require 'restforce/sobject'
+require 'restforce/upload_io'
 require 'restforce/client'
 
 require 'restforce/middleware'

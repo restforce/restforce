@@ -149,14 +149,14 @@ shared_examples_for 'methods' do
 
     context 'with multipart' do
       before do
-        @request = stub_api_request 'sobjects/Account', with: 'sobject/create_success_response', method: :post, body: %r{----boundary_string\r\nContent-Disposition: form-data; name=\"Name\"\r\n\r\nFoobar\r\n----boundary_string\r\nContent-Disposition: form-data; name=\"Blob\"; filename=\"blob.jpg\"\r\nContent-Length: 42171\r\nContent-Type: image\/jpeg\r\nContent-Transfer-Encoding: binary}
+        @request = stub_api_request 'sobjects/Account', with: 'sobject/create_success_response', method: :post, body: %r(----boundary_string\r\nContent-Disposition: form-data; name=\"entity_content\";\r\nContent-Type: application/json\r\n\r\n{\"Name\":\"Foobar\"}\r\n----boundary_string\r\nContent-Disposition: form-data; name=\"Blob\"; filename=\"blob.jpg\"\r\nContent-Length: 42171\r\nContent-Type: image/jpeg\r\nContent-Transfer-Encoding: binary)
       end
 
       after do
         @request.should have_been_requested
       end
 
-      subject { client.create('Account', Name: 'Foobar', Blob: Faraday::UploadIO.new(File.expand_path('../../fixtures/blob.jpg', __FILE__), 'image/jpeg')) }
+      subject { client.create('Account', Name: 'Foobar', Blob: Restforce::UploadIO.new(File.expand_path('../../fixtures/blob.jpg', __FILE__), 'image/jpeg')) }
       it { should eq 'some_id' }
     end
   end
