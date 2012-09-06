@@ -134,16 +134,31 @@ shared_examples_for 'methods' do
   end
 
   describe '.create' do
-    before do
-      @request = stub_api_request 'sobjects/Account', with: 'sobject/create_success_response', method: :post, body: "{\"Name\":\"Foobar\"}"
+    context 'without multipart' do
+      before do
+        @request = stub_api_request 'sobjects/Account', with: 'sobject/create_success_response', method: :post, body: "{\"Name\":\"Foobar\"}"
+      end
+
+      after do
+        @request.should have_been_requested
+      end
+
+      subject { client.create('Account', Name: 'Foobar') }
+      it { should eq 'some_id' }
     end
 
-    after do
-      @request.should have_been_requested
-    end
+    context 'with multipart' do
+      before do
+        @request = stub_api_request 'sobjects/Account', with: 'sobject/create_success_response', method: :post, body: %r{----boundary_string\r\nContent-Disposition: form-data; name=\"Name\"\r\n\r\nFoobar\r\n----boundary_string\r\nContent-Disposition: form-data; name=\"Blob\"; filename=\"blob.jpg\"\r\nContent-Length: 42171\r\nContent-Type: image\/jpeg\r\nContent-Transfer-Encoding: binary}
+      end
 
-    subject { client.create('Account', Name: 'Foobar') }
-    it { should eq 'some_id' }
+      after do
+        @request.should have_been_requested
+      end
+
+      subject { client.create('Account', Name: 'Foobar', Blob: Faraday::UploadIO.new(File.expand_path('../../fixtures/blob.jpg', __FILE__), 'image/jpeg')) }
+      it { should eq 'some_id' }
+    end
   end
 
   describe '.update!' do

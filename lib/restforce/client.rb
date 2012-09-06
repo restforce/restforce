@@ -257,6 +257,7 @@ module Restforce
     def connection
       @connection ||= Faraday.new do |builder|
         builder.use Restforce::Middleware::Mashify, self, @options
+        builder.use Restforce::Middleware::Multipart
         builder.request :json
         builder.use authentication_middleware, self, @options if authentication_middleware
         builder.use Restforce::Middleware::Authorization, self, @options
@@ -266,7 +267,6 @@ module Restforce
         builder.response :json
         builder.adapter Faraday.default_adapter
       end
-      @connection.headers['Content-Type'] = 'application/json'
       @connection
     end
 
