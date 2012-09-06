@@ -152,11 +152,22 @@ client.destroy('Account', '0016000000MRatd')
 
 ### File Uploads
 
+Using the new [Blob Data](http://www.salesforce.com/us/developer/docs/api_rest/Content/dome_sobject_insert_update_blob.htm) api feature (500mb limit):
+
 ```ruby
 client.create 'Document', FolderId: '00lE0000000FJ6H',
   Description: 'Document test',
   Name: 'My image',
   Body: Restforce::UploadIO.new(File.expand_path('image.jpg', __FILE__), 'image/jpeg'))
+```
+
+Using base64 encoded data (37.5mb limit):
+
+```ruby
+client.create 'Document', FolderId: '00lE0000000FJ6H',
+  Description: 'Document test',
+  Name: 'My image',
+  Body: Base64::encode64(File.read('image.jpg'))
 ```
 
 ## Contributing
