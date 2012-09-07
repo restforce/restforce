@@ -275,7 +275,7 @@ module Restforce
       if username_password?
         Restforce::Middleware::Authentication::Password
       elsif oauth_refresh?
-        Restforce::Middleware::Authentication::OAuth
+        Restforce::Middleware::Authentication::Token
       end
     end
 

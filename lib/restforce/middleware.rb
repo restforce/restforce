@@ -24,7 +24,7 @@ end
 require 'restforce/middleware/raise_error'
 require 'restforce/middleware/authentication'
 require 'restforce/middleware/authentication/password'
-require 'restforce/middleware/authentication/oauth'
+require 'restforce/middleware/authentication/token'
 require 'restforce/middleware/authorization'
 require 'restforce/middleware/instance_url'
 require 'restforce/middleware/mashify'
