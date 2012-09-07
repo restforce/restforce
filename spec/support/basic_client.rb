@@ -22,7 +22,7 @@ shared_context 'basic client' do
   end
 
   let(:oauth_options) do
-    base_options.merge(:username => nil, :password => nil, :security_token => nil)
+    base_options.merge(:username => nil, :password => nil, :security_token => nil, :oauth_token => nil)
   end
 
   let(:password_options) do

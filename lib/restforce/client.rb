@@ -292,8 +292,7 @@ module Restforce
     # Internal: Returns true if oauth token refresh flow should be used for
     # authentication.
     def oauth_refresh?
-      @options[:oauth_token] &&
-        @options[:refresh_token] &&
+      @options[:refresh_token] &&
         @options[:client_id] &&
         @options[:client_secret]
     end

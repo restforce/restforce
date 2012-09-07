@@ -46,7 +46,7 @@ shared_examples_for 'methods' do
       it { should eq Restforce::Middleware::Authentication::Password }
     end
 
-    context 'with oauth token, refresh token, client id and client secret provided' do
+    context 'with refresh token, client id and client secret provided' do
       let(:client_options) { oauth_options }
 
       it { should eq Restforce::Middleware::Authentication::Token }
