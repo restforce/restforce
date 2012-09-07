@@ -110,6 +110,8 @@ module Restforce
     
     # Public: Executs a SOQL query and returns the result.
     #
+    # soql - A SOQL expression.
+    #
     # Examples
     #
     #   # Find the names of all Accounts
@@ -118,12 +120,14 @@ module Restforce
     #
     # Returns a Restforce::Collection if Restforce.configuration.mashify is true.
     # Returns an Array of Hash for each record in the result if Restforce.configuration.mashify is false.
-    def query(query)
-      response = api_get 'query', q: query
+    def query(soql)
+      response = api_get 'query', q: soql
       mashify? ? response.body : response.body['records']
     end
     
     # Public: Perform a SOSL search
+    #
+    # sosl - A SOSL expression.
     #
     # Examples
     #
@@ -137,8 +141,8 @@ module Restforce
     #
     # Returns a Restforce::Collection if Restforce.configuration.mashify is true.
     # Returns an Array of Hash for each record in the result if Restforce.configuration.mashify is false.
-    def search(term)
-      response = api_get 'search', q: term
+    def search(sosl)
+      response = api_get 'search', q: sosl
       response.body
     end
     
