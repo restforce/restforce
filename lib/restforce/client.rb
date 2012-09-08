@@ -214,6 +214,13 @@ module Restforce
       faye.subscribe "/topic/#{channel}", &block
     end
 
+    # Public: Force an authentication
+    def authenticate!
+      connection.headers['X-ForceAuthenticate'] = true
+      get nil
+      connection.headers.delete('X-ForceAuthenticate')
+    end
+
     # Public: Helper methods for performing arbitrary actions against the API using
     # various HTTP verbs.
     #
