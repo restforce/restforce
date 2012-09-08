@@ -221,6 +221,7 @@ module Restforce
     def authenticate!
       connection.headers['X-ForceAuthenticate'] = true
       get nil
+    ensure
       connection.headers.delete('X-ForceAuthenticate')
     end
 
