@@ -316,8 +316,14 @@ module Restforce
 
     # Internal: Faye client to use for PushTopics
     def faye
-      Faye::Client.new("#{@options[:instance_url]}/cometd/#{@options[:api_version]}").tap do |client|
+      @faye ||= Faye::Client.new("#{@options[:instance_url]}/cometd/#{@options[:api_version]}").tap do |client|
         client.set_header 'Authorization', "OAuth #{@options[:oauth_token]}"
+        client.bind 'transport:down' do
+          Restforce.log "[COMETD DOWN]"
+        end
+        client.bind 'transport:up' do
+          Restforce.log "[COMETD UP]"
+        end
       end
     end
   end
