@@ -157,9 +157,7 @@ module Restforce
     # Returns the String Id of the newly created sobject. Returns false if
     # something bad happens
     def create(sobject, attrs)
-      create!(sobject, attrs)
-    rescue
-      false
+      create!(sobject, attrs) rescue false
     end
 
     # See .create
@@ -180,9 +178,7 @@ module Restforce
     #
     # Returns true if the sobject was successfully updated, false otherwise.
     def update(sobject, attrs)
-      update!(sobject, attrs)
-    rescue
-      false
+      update!(sobject, attrs) rescue false
     end
 
     # See .update
@@ -204,9 +200,7 @@ module Restforce
     #
     # Returns true if the sobject was successfully deleted, false otherwise.
     def destroy(sobject, id)
-      destroy!(sobject, id)
-    rescue
-      false
+      destroy!(sobject, id) rescue false
     end
 
     # See .destroy
