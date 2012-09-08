@@ -170,6 +170,29 @@ client.create 'Document', FolderId: '00lE0000000FJ6H',
   Body: Base64::encode64(File.read('image.jpg'))
 ```
 
+### Streaming
+
+Restforce supports the [Streaming API](http://wiki.developerforce.com/page/Getting_Started_with_the_Force.com_Streaming_API), and makes implementing
+pub/sub with Salesforce a trivial task:
+
+```ruby
+# Initialize a client with your username/password/oauth token/etc
+client = Restforce::Client.new
+
+# Force an authentication request
+client.authenticate!
+
+EM.run {
+  # Assuming you've setup a PushTopic called 'AllAccounts' (See the link above.)
+  client.subscribe 'AllAccounts' do |message|
+    puts message.inspect
+  end
+}
+```
+
+Boom, you're now receiving push notifications when Accounts are
+created/updated.
+
 ## Contributing
 
 1. Fork it
