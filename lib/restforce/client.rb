@@ -210,8 +210,8 @@ module Restforce
     # Public: Subscribe to a PushTopic
     #
     # channel - The name of the PushTopic channel to subscribe to
-    def subscribe(channel)
-      faye.subscribe "/topic/#{channel}"
+    def subscribe(channel, &block)
+      faye.subscribe "/topic/#{channel}", &block
     end
 
     # Public: Helper methods for performing arbitrary actions against the API using
