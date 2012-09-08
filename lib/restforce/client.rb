@@ -154,8 +154,19 @@ module Restforce
     #   client.create('Account', Name: 'Foobar Inc.')
     #   # => '0016000000MRatd'
     #
-    # Returns the String Id of the newly created sobject.
+    # Returns the String Id of the newly created sobject. Returns false if
+    # something bad happens
     def create(sobject, attrs)
+      create!(sobject, attrs)
+    rescue
+      false
+    end
+
+    # See .create
+    #
+    # Returns the String Id of the newly created sobject. Raises an error if
+    # something bad happens.
+    def create!(sobject, attrs)
       response = api_post "sobjects/#{sobject}", attrs
       response.body['id']
     end
@@ -170,7 +181,7 @@ module Restforce
     # Returns true if the sobject was successfully updated, false otherwise.
     def update(sobject, attrs)
       update!(sobject, attrs)
-    rescue Faraday::Error::ResourceNotFound
+    rescue
       false
     end
 
@@ -194,7 +205,7 @@ module Restforce
     # Returns true if the sobject was successfully deleted, false otherwise.
     def destroy(sobject, id)
       destroy!(sobject, id)
-    rescue Faraday::Error::ResourceNotFound
+    rescue
       false
     end
 
