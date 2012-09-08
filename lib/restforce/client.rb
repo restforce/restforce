@@ -207,6 +207,13 @@ module Restforce
       true
     end
 
+    # Public: Subscribe to a PushTopic
+    #
+    # channel - The name of the PushTopic channel to subscribe to
+    def subscribe(channel)
+      faye.subscribe "/topic/#{channel}"
+    end
+
     # Public: Helper methods for performing arbitrary actions against the API using
     # various HTTP verbs.
     #
@@ -305,6 +312,13 @@ module Restforce
     # Restforce::Middleware::Mashify middleware.
     def mashify?
       connection.builder.handlers.find { |handler| handler == Restforce::Middleware::Mashify }
+    end
+
+    # Internal: Faye client to use for PushTopics
+    def faye
+      Faye::Client.new("#{@options[:instance_url]}/cometd/#{@options[:api_version]}").tap do |client|
+        client.set_header 'Authorization', "OAuth #{@options[:oauth_token]}"
+      end
     end
   end
 end
