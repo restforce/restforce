@@ -64,4 +64,21 @@ describe Restforce::Middleware::Authentication do
       end
     end
   end
+
+  describe '.force_authenticate?' do
+    subject { middleware.force_authenticate?(env) }
+
+    context 'without X-ForceAuthenticate header set' do
+      it { should be_false }
+    end
+
+    context 'with X-ForceAuthenticate header set' do
+      before do
+        env[:request_headers] = {}
+        env[:request_headers]['X-ForceAuthenticate'] = true
+      end
+
+      it { should be_true }
+    end
+  end
 end

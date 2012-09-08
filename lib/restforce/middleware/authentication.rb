@@ -8,6 +8,7 @@ module Restforce
 
     def call(env)
       begin
+        return authenticate! if force_authenticate?(env)
         @app.call(env)
       rescue Restforce::UnauthorizedError
         authenticate!
@@ -25,6 +26,10 @@ module Restforce
         builder.response :logger, Restforce.configuration.logger if Restforce.log?
         builder.adapter Faraday.default_adapter
       end
+    end
+
+    def force_authenticate?(env)
+      env[:request_headers] && env[:request_headers]['X-ForceAuthenticate']
     end
   
   end
