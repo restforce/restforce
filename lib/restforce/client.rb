@@ -209,7 +209,10 @@ module Restforce
 
     # Public: Subscribe to a PushTopic
     #
-    # channel - The name of the PushTopic channel to subscribe to
+    # channel - The name of the PushTopic channel to subscribe to.
+    # block   - A block to run when a new message is received.
+    #
+    # Returns a Faye::Subscription
     def subscribe(channel, &block)
       faye.subscribe "/topic/#{channel}", &block
     end
@@ -321,7 +324,7 @@ module Restforce
       connection.builder.handlers.find { |handler| handler == Restforce::Middleware::Mashify }
     end
 
-    # Internal: Faye client to use for PushTopics
+    # Internal: Faye client to use for subscribing to PushTopics
     def faye
       @faye ||= Faye::Client.new("#{@options[:instance_url]}/cometd/#{@options[:api_version]}").tap do |client|
         client.set_header 'Authorization', "OAuth #{@options[:oauth_token]}"
