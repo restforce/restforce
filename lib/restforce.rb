@@ -14,6 +14,15 @@ require 'restforce/client'
 require 'restforce/middleware'
 
 module Restforce
+  class << self
+    # Alias for Restforce::Client.new
+    #
+    # Shamelessly pulled from https://github.com/pengwynn/octokit/blob/master/lib/octokit.rb
+    def new(options = {})
+      Restforce::Client.new(options)
+    end
+  end
+
   class AuthenticationError < StandardError; end
   class UnauthorizedError < StandardError; end
   class InstanceURLError < StandardError; end

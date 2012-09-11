@@ -47,7 +47,7 @@ authentication method.
 #### OAuth token authentication
 
 ```ruby
-client = Restforce::Client.new :oauth_token => 'oauth token',
+client = Restforce.new :oauth_token => 'oauth token',
   :instance_url  => 'instance url'
 ```
 
@@ -55,7 +55,7 @@ Although the above will work, you'll probably want to take advantage of the
 (re)authentication middleware by specifying a refresh token, client id and client secret:
 
 ```ruby
-client = Restforce::Client.new :oauth_token => 'oauth token',
+client = Restforce.new :oauth_token => 'oauth token',
   :refresh_token => 'refresh token',
   :instance_url  => 'instance url',
   :client_id     => 'client_id',
@@ -67,7 +67,7 @@ client = Restforce::Client.new :oauth_token => 'oauth token',
 If you prefer to use a username and password to authenticate:
 
 ```ruby
-client = Restforce::Client.new :username => 'foo',
+client = Restforce.new :username => 'foo',
   :password       => 'bar',
   :security_token => 'security token'
   :client_id      => 'client_id',
@@ -80,12 +80,12 @@ You can connect to sandbox orgs by specifying a host. The default host is
 'login.salesforce.com':
 
 ```ruby
-client = Restforce::Client.new :host => 'test.salesforce.com'
+client = Restforce.new :host => 'test.salesforce.com'
 ```
 
 #### Global configuration
 
-You can set any of the options passed into Restforce::Client.new globally:
+You can set any of the options passed into Restforce.new globally:
 
 ```ruby
 Restforce.configure do |config|
@@ -185,7 +185,7 @@ pub/sub with Salesforce a trivial task:
 
 ```ruby
 # Initialize a client with your username/password/oauth token/etc
-client = Restforce::Client.new
+client = Restforce.new
 
 # Force an authentication request
 client.authenticate!
@@ -210,7 +210,7 @@ The gem supports easy caching of GET requests (e.g. queries):
 
 cache = Dalli::Client.new
 
-client = Restforce::Client.new cache: cache
+client = Restforce.new cache: cache
 
 # or
 
