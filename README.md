@@ -210,7 +210,7 @@ The gem supports easy caching of GET requests (e.g. queries):
 
 cache = Dalli::Client.new
 
-client = Client.new cache: cache
+client = Restforce::Client.new cache: cache
 
 # or
 
