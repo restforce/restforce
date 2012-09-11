@@ -90,4 +90,17 @@ describe Restforce::SObject do
       specify { expect { subject }.to_not raise_error }
     end
   end
+
+  describe '.describe' do
+    before do
+      @request = stub_api_request 'sobject/Whizbang/describe', with: 'sobject/sobject_describe_success_response'
+    end
+
+    after do
+      @request.should have_been_requested
+    end
+
+    subject { sobject.describe }
+    it { should be_a Hash }
+  end
 end

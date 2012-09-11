@@ -5,6 +5,11 @@ module Restforce
       self.attributes.type
     end
 
+    # Public: Get the describe for this sobject type
+    def describe
+      @client.describe(sobject_type)
+    end
+
     # Public: Persist the attributes to Salesforce.
     #
     # Examples
