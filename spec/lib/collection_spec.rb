@@ -39,7 +39,7 @@ describe Restforce::Collection do
 
       describe '.next_page' do
         before do
-          client.should_receive(:get).and_return(Faraday::Response.new(body: Restforce::Collection.new({'records' => {}}, client)))
+          client.should_receive(:get).and_return(Faraday::Response.new(body: Restforce::Collection.new({'records' => []}, client)))
         end
 
         subject { records.next_page }

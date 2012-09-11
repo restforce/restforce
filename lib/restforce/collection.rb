@@ -6,12 +6,7 @@ module Restforce
       @client        = client
       @total_size    = hash['totalSize']
       @next_page_url = hash['nextRecordsUrl']
-      super(self.build(hash['records']))
-    end
-
-    # Converts an array of Hash's into an array of Restforce::SObject.
-    def build(array)
-      array.map { |record| Restforce::SObject.new(record, @client) }
+      super(Restforce::Mash.build(hash['records'], @client))
     end
 
     def next_page
