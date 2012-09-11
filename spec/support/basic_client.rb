@@ -7,6 +7,7 @@ shared_context 'basic client' do
   let(:security_token) { 'security_token' }
   let(:client_id)      { 'client_id'      }
   let(:client_secret)  { 'client_secret'  }
+  let(:cache)          { nil }
 
   let(:base_options) do
     {
@@ -17,7 +18,8 @@ shared_context 'basic client' do
       :password       => password,
       :security_token => security_token,
       :client_id      => client_id,
-      :client_secret  => client_secret
+      :client_secret  => client_secret,
+      :cache          => cache
     }
   end
 

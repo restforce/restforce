@@ -326,6 +326,13 @@ shared_examples_for 'methods' do
     subject { client.authenticate! }
     specify { expect { subject }.to_not raise_error }
   end
+
+  describe '.cache' do
+    let(:cache) { double('cache') }
+
+    subject { client.send :cache }
+    it { should eq cache }
+  end
 end
 
 describe 'with mashify middleware' do

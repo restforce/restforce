@@ -56,6 +56,10 @@ module Restforce
     attr_accessor :refresh_token
     attr_accessor :instance_url
 
+    # Set this to an object that responds to read, write and fetch and all GET
+    # requests will be cached.
+    attr_accessor :cache
+
     def initialize
       @api_version ||= '24.0'
       @host        ||= 'login.salesforce.com'

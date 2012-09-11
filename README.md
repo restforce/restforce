@@ -198,6 +198,24 @@ EM.run {
 }
 ```
 
+### Caching
+
+The gem supports easy caching of GET requests (e.g. queries):
+
+```ruby
+# Memcached example:
+
+cache = Dalli::Client.new
+
+client = Client.new cache: cache
+
+# or
+
+Restforce.configure do |config|
+  config.cache = cache
+end
+```
+
 Boom, you're now receiving push notifications when Accounts are
 created/updated.
 

@@ -52,7 +52,7 @@ module Restforce
       raise 'Please specify a hash of options' unless options.is_a?(Hash)
       @options = {}.tap do |options|
         [:username, :password, :security_token, :client_id, :client_secret, :host,
-         :api_version, :oauth_token, :refresh_token, :instance_url].each do |option|
+         :api_version, :oauth_token, :refresh_token, :instance_url, :cache].each do |option|
           options[option] = Restforce.configuration.send option
         end
       end
@@ -329,6 +329,7 @@ module Restforce
         builder.use Restforce::Middleware::RaiseError
         builder.response :logger, Restforce.configuration.logger if Restforce.log?
         builder.response :json
+        builder.use Restforce::Middleware::Caching, cache if cache
         builder.adapter Faraday.default_adapter
       end
       @connection
@@ -359,6 +360,11 @@ module Restforce
       @options[:refresh_token] &&
         @options[:client_id] &&
         @options[:client_secret]
+    end
+
+    # Internal: Cache to use for the caching middleware
+    def cache
+      @options[:cache]
     end
 
     # Internal: Returns true if the middlware stack includes the
