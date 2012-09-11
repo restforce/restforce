@@ -158,7 +158,7 @@ module Restforce
     # something bad happens
     def create(sobject, attrs)
       create!(sobject, attrs)
-    rescue Faraday::Error::ClientError
+    rescue *exceptions
       false
     end
 
@@ -181,7 +181,7 @@ module Restforce
     # Returns true if the sobject was successfully updated, false otherwise.
     def update(sobject, attrs)
       update!(sobject, attrs)
-    rescue Faraday::Error::ClientError
+    rescue *exceptions
       false
     end
 
@@ -211,7 +211,7 @@ module Restforce
     # Returns false if something bad happens.
     def upsert(sobject, field, attrs)
       upsert!(sobject, field, attrs)
-    rescue Faraday::Error::ClientError
+    rescue *exceptions
       false
     end
 
@@ -236,7 +236,7 @@ module Restforce
     # Returns true if the sobject was successfully deleted, false otherwise.
     def destroy(sobject, id)
       destroy!(sobject, id)
-    rescue Faraday::Error::ClientError
+    rescue *exceptions
       false
     end
 
@@ -365,6 +365,11 @@ module Restforce
     # Restforce::Middleware::Mashify middleware.
     def mashify?
       connection.builder.handlers.find { |handler| handler == Restforce::Middleware::Mashify }
+    end
+
+    # Internal: Errors that should be rescued from in non-bang methods
+    def exceptions
+      [Faraday::Error::ClientError]
     end
 
     # Internal: Faye client to use for subscribing to PushTopics
