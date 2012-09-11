@@ -157,7 +157,9 @@ module Restforce
     # Returns the String Id of the newly created sobject. Returns false if
     # something bad happens
     def create(sobject, attrs)
-      create!(sobject, attrs) rescue false
+      create!(sobject, attrs)
+    rescue Faraday::Error::ClientError
+      false
     end
 
     # See .create
@@ -178,7 +180,19 @@ module Restforce
     #
     # Returns true if the sobject was successfully updated, false otherwise.
     def update(sobject, attrs)
-      update!(sobject, attrs) rescue false
+      update!(sobject, attrs)
+    rescue Faraday::Error::ClientError
+      false
+    end
+
+    # See .update
+    #
+    # Returns true if the sobject was successfully updated, raises an error
+    # otherwise.
+    def update!(sobject, attrs)
+      id = attrs.has_key?(:Id) ? attrs.delete(:Id) : attrs.delete('Id')
+      api_patch "sobjects/#{sobject}/#{id}", attrs
+      true
     end
 
     # Public: Update or Create a record based on an external ID
@@ -196,7 +210,9 @@ module Restforce
     # Returns the Id of the newly created record if the record was created.
     # Returns false if something bad happens.
     def upsert(sobject, field, attrs)
-      upsert!(sobject, field, attrs) rescue false
+      upsert!(sobject, field, attrs)
+    rescue Faraday::Error::ClientError
+      false
     end
 
     # See .upsert
@@ -210,16 +226,6 @@ module Restforce
       (response.body && response.body['id']) ? response.body['id'] : true
     end
 
-    # See .update
-    #
-    # Returns true if the sobject was successfully updated, raises an error
-    # otherwise.
-    def update!(sobject, attrs)
-      id = attrs.has_key?(:Id) ? attrs.delete(:Id) : attrs.delete('Id')
-      api_patch "sobjects/#{sobject}/#{id}", attrs
-      true
-    end
-
     # Public: Delete a record.
     #
     # Examples
@@ -229,7 +235,9 @@ module Restforce
     #
     # Returns true if the sobject was successfully deleted, false otherwise.
     def destroy(sobject, id)
-      destroy!(sobject, id) rescue false
+      destroy!(sobject, id)
+    rescue Faraday::Error::ClientError
+      false
     end
 
     # See .destroy
