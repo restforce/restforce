@@ -198,6 +198,9 @@ EM.run {
 }
 ```
 
+Boom, you're now receiving push notifications when Accounts are
+created/updated.
+
 ### Caching
 
 The gem supports easy caching of GET requests (e.g. queries):
@@ -215,9 +218,6 @@ Restforce.configure do |config|
   config.cache = cache
 end
 ```
-
-Boom, you're now receiving push notifications when Accounts are
-created/updated.
 
 ## Contributing
 
