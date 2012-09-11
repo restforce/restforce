@@ -142,6 +142,14 @@ client.update('Account', Id: '0016000000MRatd', Name: 'Whizbang Corp')
 # => true
 ```
 
+
+### Upsert
+
+```ruby
+# Update the record with external ID of 12
+client.upsert('Account', 'External__c', External__c: 12, Name: 'Foobar')
+```
+
 ### Destroy
 
 ```ruby

@@ -181,6 +181,35 @@ module Restforce
       update!(sobject, attrs) rescue false
     end
 
+    # Public: Update or Create a record based on an external ID
+    #
+    # sobject - The name of the sobject to created.
+    # field   - The name of the external Id field to match against.
+    # attrs   - Hash of attributes for the record.
+    #
+    # Examples
+    #
+    #   # Update the record with external ID of 12
+    #   client.upsert('Account', 'External__c', External__c: 12, Name: 'Foobar')
+    #
+    # Returns true if the record was found and updated.
+    # Returns the Id of the newly created record if the record was created.
+    # Returns false if something bad happens.
+    def upsert(sobject, field, attrs)
+      upsert!(sobject, field, attrs) rescue false
+    end
+
+    # See .upsert
+    #
+    # Returns true if the record was found and updated.
+    # Returns the Id of the newly created record if the record was created.
+    # Raises an error if something bad happens.
+    def upsert!(sobject, field, attrs)
+      external_id = attrs.has_key?(field.to_sym) ? attrs.delete(field.to_sym) : attrs.delete(field.to_s)
+      response = api_patch "sobjects/#{sobject}/#{field.to_s}/#{external_id}", attrs
+      (response.body && response.body['id']) ? response.body['id'] : true
+    end
+
     # See .update
     #
     # Returns true if the sobject was successfully updated, raises an error

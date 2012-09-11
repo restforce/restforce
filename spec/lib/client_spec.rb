@@ -213,6 +213,48 @@ shared_examples_for 'methods' do
     end
   end
 
+  describe '.upsert!' do
+    context 'when updated' do
+      before do
+        @request = stub_api_request 'sobjects/Account/External__c/foobar', method: :patch, body: "{\"Name\":\"Foobar\"}"
+      end
+
+      after do
+        @request.should have_been_requested
+      end
+
+      context 'with symbol external Id key' do
+        subject { client.upsert!('Account', 'External__c', External__c: 'foobar', Name: 'Foobar') }
+        it { should be_true }
+      end
+
+      context 'with string external Id key' do
+        subject { client.upsert!('Account', 'External__c', 'External__c' => 'foobar', 'Name' => 'Foobar') }
+        it { should be_true }
+      end
+    end
+
+    context 'when created' do
+      before do
+        @request = stub_api_request 'sobjects/Account/External__c/foobar', method: :patch, body: "{\"Name\":\"Foobar\"}", with: 'sobject/upsert_created_success_response'
+      end
+
+      after do
+        @request.should have_been_requested
+      end
+
+      context 'with symbol external Id key' do
+        subject { client.upsert!('Account', 'External__c', External__c: 'foobar', Name: 'Foobar') }
+        it { should eq 'foo' }
+      end
+
+      context 'with string external Id key' do
+        subject { client.upsert!('Account', 'External__c', 'External__c' => 'foobar', 'Name' => 'Foobar') }
+        it { should eq 'foo' }
+      end
+    end
+  end
+
   describe '.destroy!' do
     subject { client.destroy!('Account', '001D000000INjVe') }
 
