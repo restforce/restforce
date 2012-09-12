@@ -52,7 +52,7 @@ describe Restforce::Middleware::Authentication do
         end
 
         its(:handlers) { should include FaradayMiddleware::ParseJson, Faraday::Adapter::NetHttp }
-        its(:handlers) { should_not include Faraday::Response::Logger  }
+        its(:handlers) { should_not include Restforce::Middleware::Logger  }
       end
 
       context 'with logging enabled' do
@@ -60,7 +60,7 @@ describe Restforce::Middleware::Authentication do
           Restforce.stub!(:log?).and_return(true)
         end
 
-        its(:handlers) { should include FaradayMiddleware::ParseJson, Faraday::Response::Logger, Faraday::Adapter::NetHttp }
+        its(:handlers) { should include FaradayMiddleware::ParseJson, Restforce::Middleware::Logger, Faraday::Adapter::NetHttp }
       end
     end
   end
