@@ -25,7 +25,7 @@ shared_examples_for 'authentication middleware' do
       it 'raises an exception' do
         expect {
           middleware.authenticate!
-        }.to raise_error Restforce::AuthenticationError
+        }.to raise_error Restforce::AuthenticationError, /^invalid_grant: .*/
       end
     end
 

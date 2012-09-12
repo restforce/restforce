@@ -31,6 +31,10 @@ module Restforce
     def force_authenticate?(env)
       env[:request_headers] && env[:request_headers]['X-ForceAuthenticate']
     end
+
+    def error_message(response)
+      "#{response.body['error']}: #{response.body['error_description']}"
+    end
   
   end
 
