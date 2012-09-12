@@ -327,9 +327,9 @@ module Restforce
         builder.use Restforce::Middleware::Authorization, self, @options
         builder.use Restforce::Middleware::InstanceURL, self, @options
         builder.use Restforce::Middleware::RaiseError
-        builder.response :logger, Restforce.configuration.logger if Restforce.log?
         builder.response :json
         builder.use Restforce::Middleware::Caching, cache if cache
+        builder.use Restforce::Middleware::Logger, Restforce.configuration.logger if Restforce.log?
         builder.adapter Faraday.default_adapter
       end
       @connection
