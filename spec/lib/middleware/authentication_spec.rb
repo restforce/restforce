@@ -27,12 +27,13 @@ describe Restforce::Middleware::Authentication do
 
     context 'when an exception is thrown' do
       before do
-        app.should_receive(:call).once.and_raise(Restforce::UnauthorizedError.new('something bad'))
-        middleware.should_receive(:authenticate!)
-        app.should_receive(:call).once
+        env[:body] = 'foo'
       end
 
       it 'attempts to authenticate' do
+        app.should_receive(:call).once { |env| env[:body] = 'bar'; raise Restforce::UnauthorizedError.new('something bad') }
+        middleware.should_receive(:authenticate!)
+        app.should_receive(:call).with(:body => 'foo').once
         middleware.call(env)
       end
     end
