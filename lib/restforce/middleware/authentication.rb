@@ -7,11 +7,13 @@ module Restforce
   class Middleware::Authentication < Restforce::Middleware
 
     def call(env)
+      request_body = env[:body]
       begin
         return authenticate! if force_authenticate?(env)
         @app.call(env)
       rescue Restforce::UnauthorizedError
         authenticate!
+        env[:body] = request_body
         @app.call(env)
       end
     end
