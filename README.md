@@ -261,11 +261,9 @@ The gem supports easy caching of GET requests (e.g. queries):
 
 ```ruby
 # rails example:
-
 client = Restforce.new cache: Rails.cache
 
 # or
-
 Restforce.configure do |config|
   config.cache = Rails.cache
 end
