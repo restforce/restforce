@@ -260,16 +260,14 @@ _See also: http://www.salesforce.com/us/developer/docs/api_streaming/index.htm_
 The gem supports easy caching of GET requests (e.g. queries):
 
 ```ruby
-# Memcached example:
+# rails example:
 
-cache = Dalli::Client.new
-
-client = Restforce.new cache: cache
+client = Restforce.new cache: Rails.cache
 
 # or
 
 Restforce.configure do |config|
-  config.cache = cache
+  config.cache = Rails.cache
 end
 ```
 
