@@ -13,6 +13,8 @@ It attempts to solve a couple of key issues that the databasedotcom gem has been
 * Support for blob data types.
 * A clean and modular architecture using [Faraday middleware](https://github.com/technoweenie/faraday)
 
+[Documentation](http://rubydoc.info/gems/restforce/frames)
+
 ## Installation
 
 Add this line to your application's Gemfile:
@@ -94,7 +96,12 @@ Restforce.configure do |config|
 end
 ```
 
-### Query
+* * *
+
+### query(soql)
+
+Performs a soql query and returns the result. The result will be a
+[Restforce::Collection][], which can be iterated over.
 
 ```ruby
 accounts = client.query("select Id, Something__c from Account where Id = 'someid'")
@@ -114,7 +121,14 @@ account.destroy
 # => true
 ```
 
-### Search
+_See also: http://www.salesforce.com/us/developer/docs/api_rest/Content/dome_query.htm_
+
+* * *
+
+### search(sosl)
+
+Performs a sosl query and returns the result. The result will be a
+[Restforce::Collection][].
 
 ```ruby
 # Find all occurrences of 'bar'
@@ -126,7 +140,14 @@ client.search('FIND {genepoint} RETURNING Account (Name)').map(&:Name)
 # => ['GenePoint']
 ```
 
-### Create
+_See also: http://www.salesforce.com/us/developer/docs/api_rest/Content/dome_search.htm_
+
+* * *
+
+### create(sobject, attrs)
+
+Takes an sobject name and a hash of attributes to create a record. Returns the
+Id of the newly created reocrd if the record was successfully created.
 
 ```ruby
 # Add a new account
@@ -134,7 +155,15 @@ client.create('Account', Name: 'Foobar Inc.')
 # => '0016000000MRatd'
 ```
 
-### Update
+_See also: http://www.salesforce.com/us/developer/docs/api_rest/Content/dome_sobject_create.htm_
+
+* * *
+
+### update(sobject, attrs)
+
+Takes an sobject name and a hash of attributes to update a record. The
+'Id' field is required to update. Returns true if the record was successfully
+updated.
 
 ```ruby
 # Update the Account with Id '0016000000MRatd'
@@ -142,21 +171,38 @@ client.update('Account', Id: '0016000000MRatd', Name: 'Whizbang Corp')
 # => true
 ```
 
+_See also: http://www.salesforce.com/us/developer/docs/api_rest/Content/dome_update_fields.htm_
 
-### Upsert
+* * *
+
+### upsert(sobject, field, attrs)
+
+Takes an sobject name, an external id field, and a hash of attributes and
+either inserts or updates the record depending on the existince of the record.
+Returns true if the record was updated or the Id of the record if the record was
+created.
 
 ```ruby
 # Update the record with external ID of 12
 client.upsert('Account', 'External__c', External__c: 12, Name: 'Foobar')
 ```
 
-### Destroy
+_See also: http://www.salesforce.com/us/developer/docs/api_rest/Content/dome_upsert.htm_
+
+### destroy(sobject, id)
+
+Takes an sobject name and an Id and deletes the record. Returns true if the
+record was successfully deleted.
 
 ```ruby
 # Delete the Account with Id '0016000000MRatd'
 client.destroy('Account', '0016000000MRatd')
 # => true
 ```
+
+_See also: http://www.salesforce.com/us/developer/docs/api_rest/Content/dome_delete_record.htm_
+
+* * *
 
 ### File Uploads
 
@@ -177,6 +223,10 @@ client.create 'Document', FolderId: '00lE0000000FJ6H',
   Name: 'My image',
   Body: Base64::encode64(File.read('image.jpg'))
 ```
+
+_See also: http://www.salesforce.com/us/developer/docs/api_rest/Content/dome_sobject_insert_update_blob.htm_
+
+* * *
 
 ### Streaming
 
@@ -201,6 +251,10 @@ EM.run {
 Boom, you're now receiving push notifications when Accounts are
 created/updated.
 
+_See also: http://www.salesforce.com/us/developer/docs/api_streaming/index.htm_
+
+* * *
+
 ### Caching
 
 The gem supports easy caching of GET requests (e.g. queries):
@@ -218,6 +272,8 @@ Restforce.configure do |config|
   config.cache = cache
 end
 ```
+
+* * *
 
 ### Logging/Debugging
 
@@ -255,3 +311,5 @@ client = Restforce.new.query('select Id, Name from Account')
 3. Commit your changes (`git commit -am 'Added some feature'`)
 4. Push to the branch (`git push origin my-new-feature`)
 5. Create new Pull Request
+
+[Restforce::Collection]: https://github.com/ejholmes/restforce/blob/master/lib/restforce/collection.rb "Restforce::Collection"
