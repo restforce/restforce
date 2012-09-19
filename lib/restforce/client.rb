@@ -92,7 +92,7 @@ module Restforce
     #
     # Returns the Hash representation of the describe call.
     def describe(sobject)
-      response = api_get "sobject/#{sobject.to_s}/describe"
+      response = api_get "sobjects/#{sobject.to_s}/describe"
       response.body
     end
 

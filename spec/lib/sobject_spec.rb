@@ -93,7 +93,7 @@ describe Restforce::SObject do
 
   describe '.describe' do
     before do
-      @request = stub_api_request 'sobject/Whizbang/describe', with: 'sobject/sobject_describe_success_response'
+      @request = stub_api_request 'sobjects/Whizbang/describe', with: 'sobject/sobject_describe_success_response'
     end
 
     after do
