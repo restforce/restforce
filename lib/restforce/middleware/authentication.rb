@@ -8,12 +8,14 @@ module Restforce
 
     def call(env)
       request_body = env[:body]
+      request = env[:request]
       begin
         return authenticate! if force_authenticate?(env)
         @app.call(env)
       rescue Restforce::UnauthorizedError
         authenticate!
         env[:body] = request_body
+        env[:request] = request
         @app.call(env)
       end
     end
