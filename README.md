@@ -282,25 +282,29 @@ You can easily inspect what Restforce is sending/receiving by setting
 ```ruby
 Restforce.log = true
 client = Restforce.new.query('select Id, Name from Account')
+```
 
-# => I, [2012-09-11T21:54:00.488991 #24032]  INFO -- : post https://login.salesforce.com/services/oauth2/token
-# => D, [2012-09-11T21:54:00.489078 #24032] DEBUG -- request: 
-# => I, [2012-09-11T21:54:00.997295 #24032]  INFO -- Status: 200
-# => D, [2012-09-11T21:54:00.997391 #24032] DEBUG -- response headers: server: ""
-# => content-type: "application/json; charset=UTF-8"
-# => transfer-encoding: "chunked"
-# => date: "Wed, 12 Sep 2012 04:53:59 GMT"
-# => connection: "close"
-# => D, [2012-09-11T21:54:00.997431 #24032] DEBUG -- response body: { ... }
-# => I, [2012-09-11T21:54:00.998985 #24032]  INFO -- : get https://na9.salesforce.com/services/data/v24.0/query?q=select+Id%2C+Name+from+Account
-# => D, [2012-09-11T21:54:00.999040 #24032] DEBUG -- request: Authorization: "OAuth token"
-# => I, [2012-09-11T21:54:01.622874 #24032]  INFO -- Status: 200
-# => D, [2012-09-11T21:54:01.623001 #24032] DEBUG -- response headers: server: ""
-# => content-type: "application/json; charset=UTF-8"
-# => transfer-encoding: "chunked"
-# => date: "Wed, 12 Sep 2012 04:54:00 GMT"
-# => connection: "close"
-# => D, [2012-09-11T21:54:01.623058 #24032] DEBUG -- response body: { ... }
+**Log Output**
+
+```
+I, [2012-09-11T21:54:00.488991 #24032]  INFO -- : post https://login.salesforce.com/services/oauth2/token
+D, [2012-09-11T21:54:00.489078 #24032] DEBUG -- request: 
+I, [2012-09-11T21:54:00.997295 #24032]  INFO -- Status: 200
+D, [2012-09-11T21:54:00.997391 #24032] DEBUG -- response headers: server: ""
+content-type: "application/json; charset=UTF-8"
+transfer-encoding: "chunked"
+date: "Wed, 12 Sep 2012 04:53:59 GMT"
+connection: "close"
+D, [2012-09-11T21:54:00.997431 #24032] DEBUG -- response body: { ... }
+I, [2012-09-11T21:54:00.998985 #24032]  INFO -- : get https://na9.salesforce.com/services/data/v24.0/query?q=select+Id%2C+Name+from+Account
+D, [2012-09-11T21:54:00.999040 #24032] DEBUG -- request: Authorization: "OAuth token"
+I, [2012-09-11T21:54:01.622874 #24032]  INFO -- Status: 200
+D, [2012-09-11T21:54:01.623001 #24032] DEBUG -- response headers: server: ""
+content-type: "application/json; charset=UTF-8"
+transfer-encoding: "chunked"
+date: "Wed, 12 Sep 2012 04:54:00 GMT"
+connection: "close"
+D, [2012-09-11T21:54:01.623058 #24032] DEBUG -- response body: { ... }
 ```
 
 ## Contributing
