@@ -110,6 +110,9 @@ accounts = client.query("select Id, Something__c from Account where Id = 'someid
 account = records.first
 # => #<Restforce::SObject >
 
+account.sobject_type
+# => 'Account'
+
 account.Id
 # => "someid"
 
