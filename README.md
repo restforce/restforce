@@ -12,6 +12,7 @@ It attempts to solve a couple of key issues that the databasedotcom gem has been
 * Support for the Streaming API
 * Support for blob data types.
 * A clean and modular architecture using [Faraday middleware](https://github.com/technoweenie/faraday)
+* Support for [Force.com Canvas](http://www.salesforce.com/us/developer/docs/platform_connectpre/canvas_framework.pdf) signed requests.
 
 [Documentation](http://rubydoc.info/gems/restforce/frames)
 

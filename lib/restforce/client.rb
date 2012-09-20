@@ -267,6 +267,19 @@ module Restforce
       connection.headers.delete('X-ForceAuthenticate')
     end
 
+    # Public: Decodes a signed request received from Force.com Canvas.
+    #
+    # message - The POST message containing the signed request from Salesforce.
+    #
+    # Returns the Hash context if the message is valid.
+    def decode_signed_request(message)
+      raise 'client_secret not set' unless @options[:client_secret]
+      encryped_secret, payload = message.split('.')
+      digest = OpenSSL::Digest::Digest.new('sha256')
+      signature = Base64.encode64(OpenSSL::HMAC.hexdigest(digest, @options[:client_secret], payload))
+      JSON.parse(Base64.decode64(payload)) if encryped_secret == signature
+    end
+
     # Public: Helper methods for performing arbitrary actions against the API using
     # various HTTP verbs.
     #
