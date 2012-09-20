@@ -3,6 +3,9 @@ require 'faraday_middleware'
 require 'json'
 require 'faye'
 
+require 'openssl'
+require 'base64'
+
 require 'restforce/version'
 require 'restforce/config'
 require 'restforce/mash'
