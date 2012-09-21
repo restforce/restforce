@@ -411,7 +411,9 @@ module Restforce
 
     # Internal: Faye client to use for subscribing to PushTopics
     def faye
+      raise 'Instance URL missing. Call .authenticate! first.' unless @options[:instance_url]
       @faye ||= Faye::Client.new("#{@options[:instance_url]}/cometd/#{@options[:api_version]}").tap do |client|
+        raise 'OAuth token missing. Call .authenticate! first.' unless @options[:oauth_token]
         client.set_header 'Authorization', "OAuth #{@options[:oauth_token]}"
         client.bind 'transport:down' do
           Restforce.log "[COMETD DOWN]"

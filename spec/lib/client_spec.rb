@@ -374,6 +374,27 @@ shared_examples_for 'methods' do
     subject { client.without_caching { client.query('SELECT some, fields FROM object') } }
     it { should be_an Array }
   end
+
+  describe '.faye' do
+    subject { client.send(:faye) }
+
+    context 'with missing oauth token' do
+      let(:instance_url) { 'foobar' }
+      let(:oauth_token) { nil }
+      specify { expect { subject }.to raise_error RuntimeError, 'OAuth token missing. Call .authenticate! first.' }
+    end
+
+    context 'with missing instance url' do
+      let(:instance_url) { nil }
+      specify { expect { subject }.to raise_error RuntimeError, 'Instance URL missing. Call .authenticate! first.' }
+    end
+
+    context 'with oauth token and instance url' do
+      let(:instance_url) { 'foo' }
+      let(:oauth_token) { 'bar' }
+      specify { expect { subject }.to_not raise_error }
+    end
+  end
 end
 
 describe 'with mashify middleware' do
