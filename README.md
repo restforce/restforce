@@ -208,6 +208,25 @@ _See also: http://www.salesforce.com/us/developer/docs/api_rest/Content/dome_del
 
 * * *
 
+### describe(sobject)
+
+If no parameter is given, it will return the global describe. If the name of an
+sobject is given, it will return the describe for that sobject.
+
+```ruby
+# get the global describe for all sobjects
+client.describe
+# => { ... }
+
+# get the describe for the Account object
+client.describe('Account')
+# => { ... }
+```
+
+_See also: http://www.salesforce.com/us/developer/docs/api_rest/Content/dome_describeGlobal.htm, http://www.salesforce.com/us/developer/docs/api_rest/Content/dome_sobject_describe.htm_
+
+* * *
+
 ### File Uploads
 
 Using the new [Blob Data](http://www.salesforce.com/us/developer/docs/api_rest/Content/dome_sobject_insert_update_blob.htm) api feature (500mb limit):
