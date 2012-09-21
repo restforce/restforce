@@ -249,6 +249,18 @@ module Restforce
       true
     end
 
+    # Public: Runs the block with caching disabled.
+    #
+    # block - A query/describe/etc.
+    #
+    # Returns the result of the block
+    def without_caching(&block)
+      @options[:perform_caching] = false
+      block.call
+    ensure
+      @options.delete(:perform_caching)
+    end
+
     # Public: Subscribe to a PushTopic
     #
     # channel - The name of the PushTopic channel to subscribe to.
@@ -341,7 +353,7 @@ module Restforce
         builder.use Restforce::Middleware::InstanceURL, self, @options
         builder.use Restforce::Middleware::RaiseError
         builder.response :json
-        builder.use Restforce::Middleware::Caching, cache if cache
+        builder.use Restforce::Middleware::Caching, cache, @options if cache
         builder.use Restforce::Middleware::Logger, Restforce.configuration.logger if Restforce.log?
         builder.adapter Faraday.default_adapter
       end
