@@ -257,14 +257,23 @@ Restforce supports the [Streaming API](http://wiki.developerforce.com/page/Getti
 pub/sub with Salesforce a trivial task:
 
 ```ruby
-# Initialize a client with your username/password/oauth token/etc
+# Initialize a client with your username/password/oauth token/etc.
 client = Restforce.new
 
-# Force an authentication request
+# Force an authentication request.
 client.authenticate!
 
+# Create a PushTopic for subsribing to Account changes.
+client.create! 'PushTopic', {
+  ApiVersion: '23.0',
+  Name: 'AllAccounts',
+  Description: 'All account records',
+  NotifyForOperations: 'All',
+  NotifyForFields: 'All',
+  Query: "select Id from Account"
+}
+
 EM.run {
-  # Assuming you've setup a PushTopic called 'AllAccounts' (See the link above.)
   client.subscribe 'AllAccounts' do |message|
     puts message.inspect
   end
