@@ -353,6 +353,22 @@ shared_examples_for 'methods' do
       it { should be_nil }
     end
   end
+
+  describe '.without_caching' do
+    let(:cache) { double('cache') }
+
+    before do
+      @request = stub_api_request 'query\?q=SELECT%20some,%20fields%20FROM%20object', with: 'sobject/query_success_response'
+      cache.should_receive(:fetch).never
+    end
+
+    after do
+      @request.should have_been_requested
+    end
+
+    subject { client.without_caching { client.query('SELECT some, fields FROM object') } }
+    it { should be_an Array }
+  end
 end
 
 describe 'with mashify middleware' do
