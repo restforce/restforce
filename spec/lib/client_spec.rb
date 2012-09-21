@@ -52,19 +52,6 @@ shared_examples_for 'methods' do
       it { should eq Restforce::Middleware::Authentication::Token }
     end
   end
-  
-  describe '.describe_sobjects' do
-    before do
-      @request = stub_api_request :sobjects, with: 'sobject/describe_sobjects_success_response'
-    end
-
-    after do
-      @request.should have_been_requested
-    end
-
-    subject { client.describe_sobjects }
-    it { should be_an Array }
-  end
 
   describe '.list_sobjects' do
     before do
@@ -81,16 +68,31 @@ shared_examples_for 'methods' do
   end
 
   describe '.describe' do
-    before do
-      @request = stub_api_request 'sobjects/Whizbang/describe', with: 'sobject/sobject_describe_success_response'
+    context 'with no arguments' do
+      before do
+        @request = stub_api_request :sobjects, with: 'sobject/describe_sobjects_success_response'
+      end
+
+      after do
+        @request.should have_been_requested
+      end
+
+      subject { client.describe }
+      it { should be_an Array }
     end
 
-    after do
-      @request.should have_been_requested
-    end
+    context 'with an argument' do
+      before do
+        @request = stub_api_request 'sobjects/Whizbang/describe', with: 'sobject/sobject_describe_success_response'
+      end
 
-    subject { client.describe('Whizbang') }
-    its(['name']) { should eq 'Whizbang' }
+      after do
+        @request.should have_been_requested
+      end
+
+      subject { client.describe('Whizbang') }
+      its(['name']) { should eq 'Whizbang' }
+    end
   end
 
   describe '.query' do

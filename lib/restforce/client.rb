@@ -59,14 +59,6 @@ module Restforce
       @options.merge!(options)
     end
 
-    # Public: Get the global describe for all sobjects.
-    #
-    # Returns the Hash representation of the describe call.
-    def describe_sobjects
-      response = api_get 'sobjects'
-      response.body['sobjects']
-    end
-
     # Public: Get the names of all sobjects on the org.
     #
     # Examples
@@ -77,7 +69,7 @@ module Restforce
     #
     # Returns an Array of String names for each SObject.
     def list_sobjects
-      describe_sobjects.collect { |sobject| sobject['name'] }
+      describe.collect { |sobject| sobject['name'] }
     end
     
     # Public: Returns a detailed describe result for the specified sobject
@@ -86,14 +78,23 @@ module Restforce
     #
     # Examples
     #
+    #   # get the global describe for all sobjects
+    #   client.describe
+    #   # => { ... }
+    #
     #   # get the describe for the Account object
     #   client.describe('Account')
     #   # => { ... }
     #
     # Returns the Hash representation of the describe call.
-    def describe(sobject)
-      response = api_get "sobjects/#{sobject.to_s}/describe"
-      response.body
+    def describe(sobject=nil)
+      if sobject
+        response = api_get "sobjects/#{sobject.to_s}/describe"
+        response.body
+      else
+        response = api_get 'sobjects'
+        response.body['sobjects']
+      end
     end
 
     # Public: Get the current organization's Id.
