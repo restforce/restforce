@@ -3,7 +3,7 @@ require 'spec_helper'
 describe Restforce::Middleware::Authentication do
   let(:app)        { double('app')            }
   let(:env)        { { }  }
-  let(:options)    { { host: 'login.salesforce.com' } }
+  let(:options)    { { host: 'login.salesforce.com', authentication_retries: 3 } }
   let(:middleware) { described_class.new app, nil, options }
 
   describe '.authenticate!' do

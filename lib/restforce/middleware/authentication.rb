@@ -7,16 +7,21 @@ module Restforce
   class Middleware::Authentication < Restforce::Middleware
 
     def call(env)
+      retries = @options[:authentication_retries]
       request_body = env[:body]
       request = env[:request]
       begin
         return authenticate! if force_authenticate?(env)
         @app.call(env)
       rescue Restforce::UnauthorizedError
-        authenticate!
-        env[:body] = request_body
-        env[:request] = request
-        @app.call(env)
+        if retries > 0
+          authenticate!
+          env[:body] = request_body
+          env[:request] = request
+          retries -= 1
+          retry
+        end
+        raise
       end
     end
 
