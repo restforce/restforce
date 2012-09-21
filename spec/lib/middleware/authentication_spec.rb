@@ -3,7 +3,8 @@ require 'spec_helper'
 describe Restforce::Middleware::Authentication do
   let(:app)        { double('app')            }
   let(:env)        { { }  }
-  let(:options)    { { host: 'login.salesforce.com' } }
+  let(:retries)    { 3 }
+  let(:options)    { { host: 'login.salesforce.com', authentication_retries: retries } }
   let(:middleware) { described_class.new app, nil, options }
 
   describe '.authenticate!' do
@@ -36,6 +37,18 @@ describe Restforce::Middleware::Authentication do
         middleware.should_receive(:authenticate!)
         app.should_receive(:call).with(body: 'foo', request: { proxy: nil }).once
         middleware.call(env)
+      end
+    end
+
+    context 'when the retry limit is reached' do
+      before do
+        app.should_receive(:call).twice.and_raise(Restforce::UnauthorizedError)
+        middleware.should_receive(:authenticate!)
+      end
+
+      let(:retries) { 1 }
+      it 'should raise an exception' do
+        expect { middleware.call(env) }.to raise_error Restforce::UnauthorizedError
       end
     end
   end
