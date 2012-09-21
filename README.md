@@ -263,7 +263,7 @@ client = Restforce.new
 # Force an authentication request.
 client.authenticate!
 
-# Create a PushTopic for subsribing to Account changes.
+# Create a PushTopic for subscribing to Account changes.
 client.create! 'PushTopic', {
   ApiVersion: '23.0',
   Name: 'AllAccounts',
@@ -274,6 +274,7 @@ client.create! 'PushTopic', {
 }
 
 EM.run {
+  # Subscribe to the PushTopic.
   client.subscribe 'AllAccounts' do |message|
     puts message.inspect
   end
