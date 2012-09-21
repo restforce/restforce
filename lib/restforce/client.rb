@@ -52,7 +52,7 @@ module Restforce
       raise 'Please specify a hash of options' unless options.is_a?(Hash)
       @options = {}.tap do |options|
         [:username, :password, :security_token, :client_id, :client_secret, :host,
-         :api_version, :oauth_token, :refresh_token, :instance_url, :cache].each do |option|
+         :api_version, :oauth_token, :refresh_token, :instance_url, :cache, :authentication_retries].each do |option|
           options[option] = Restforce.configuration.send option
         end
       end

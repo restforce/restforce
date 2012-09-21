@@ -60,9 +60,13 @@ module Restforce
     # requests will be cached.
     attr_accessor :cache
 
+    # The number of times reauthentication should be tried before failing.
+    attr_accessor :authentication_retries
+
     def initialize
-      @api_version ||= '24.0'
-      @host        ||= 'login.salesforce.com'
+      @api_version            ||= '24.0'
+      @host                   ||= 'login.salesforce.com'
+      @authentication_retries ||= 3
     end
 
     def logger
