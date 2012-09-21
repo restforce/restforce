@@ -179,7 +179,10 @@ shared_examples_for 'methods' do
   end
 
   describe '.update' do
-    pending 'with missing Id'
+    context 'with missing Id' do
+      subject { client.update('Account', Name: 'Foobar') }
+      specify { expect { subject }.to raise_error RuntimeError, 'Id field missing.' }
+    end
 
     context 'with invalid Id' do
       before do
