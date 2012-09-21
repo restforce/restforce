@@ -256,7 +256,9 @@ module Restforce
     # Returns the result of the block
     def without_caching(&block)
       @options[:perform_caching] = false
-      block.call.tap { @options.delete(:perform_caching) }
+      block.call
+    ensure
+      @options.delete(:perform_caching)
     end
 
     # Public: Subscribe to a PushTopic
