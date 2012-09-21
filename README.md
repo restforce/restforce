@@ -273,6 +273,15 @@ Restforce.configure do |config|
 end
 ```
 
+If you enable caching, you can disable caching on a per-request basis by using
+.without_caching:
+
+```ruby
+client.without_caching do
+  client.query('select Id from Account')
+end
+```
+
 * * *
 
 ### Logging/Debugging
