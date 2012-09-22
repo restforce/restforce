@@ -150,6 +150,8 @@ _See also: http://www.salesforce.com/us/developer/docs/api_rest/Content/dome_sea
 
 ### create(sobject, attrs)
 
+_Alias: insert_
+
 Takes an sobject name and a hash of attributes to create a record. Returns the
 Id of the newly created reocrd if the record was successfully created.
 
@@ -194,6 +196,8 @@ client.upsert('Account', 'External__c', External__c: 12, Name: 'Foobar')
 _See also: http://www.salesforce.com/us/developer/docs/api_rest/Content/dome_upsert.htm_
 
 ### destroy(sobject, id)
+
+_Alias: delete_
 
 Takes an sobject name and an Id and deletes the record. Returns true if the
 record was successfully deleted.
