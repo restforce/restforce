@@ -32,7 +32,7 @@ module Restforce
     def connection
       @connection ||= Faraday.new(:url => "https://#{@options[:host]}") do |builder|
         builder.response :json
-        builder.use Restforce::Middleware::Logger, Restforce.configuration.logger if Restforce.log?
+        builder.use Restforce::Middleware::Logger, Restforce.configuration.logger, @options if Restforce.log?
         builder.adapter Faraday.default_adapter
       end
     end
