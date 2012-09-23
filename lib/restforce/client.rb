@@ -324,7 +324,7 @@ module Restforce
       define_method method do |*args|
         begin
           connection.send(method, *args)
-        rescue Restforce::InstanceURLError
+        rescue Restforce::UnauthorizedError
           connection.url_prefix = @options[:instance_url]
           connection.send(method, *args)
         end
