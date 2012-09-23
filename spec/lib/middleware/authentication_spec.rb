@@ -33,21 +33,8 @@ describe Restforce::Middleware::Authentication do
       end
 
       it 'attempts to authenticate' do
-        app.should_receive(:call).once { |env| env[:body] = 'bar'; env[:request] = 'foo'; raise Restforce::UnauthorizedError.new('something bad') }
+        app.should_receive(:call).once.and_raise(Restforce::UnauthorizedError.new('something bad'))
         middleware.should_receive(:authenticate!)
-        app.should_receive(:call).with(body: 'foo', request: { proxy: nil }).once
-        middleware.call(env)
-      end
-    end
-
-    context 'when the retry limit is reached' do
-      before do
-        app.should_receive(:call).twice.and_raise(Restforce::UnauthorizedError)
-        middleware.should_receive(:authenticate!)
-      end
-
-      let(:retries) { 1 }
-      it 'should raise an exception' do
         expect { middleware.call(env) }.to raise_error Restforce::UnauthorizedError
       end
     end
