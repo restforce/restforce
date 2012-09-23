@@ -322,11 +322,16 @@ module Restforce
     # Returns the Faraday::Response.
     [:get, :post, :put, :delete, :patch].each do |method|
       define_method method do |*args|
+        retries = @options[:authentication_retries]
         begin
           connection.send(method, *args)
-        rescue Restforce::InstanceURLError
-          connection.url_prefix = @options[:instance_url]
-          connection.send(method, *args)
+        rescue Restforce::UnauthorizedError
+          if retries > 0
+            retries -= 1
+            connection.url_prefix = @options[:instance_url]
+            retry
+          end
+          raise
         end
       end
 
@@ -350,7 +355,7 @@ module Restforce
 
     # Internal: Internal faraday connection where all requests go through
     def connection
-      @connection ||= Faraday.new do |builder|
+      @connection ||= Faraday.new(@options[:instance_url]) do |builder|
         builder.use Restforce::Middleware::Mashify, self, @options
         builder.use Restforce::Middleware::Multipart
         builder.request :json
