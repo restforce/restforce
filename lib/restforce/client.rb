@@ -323,10 +323,15 @@ module Restforce
     [:get, :post, :put, :delete, :patch].each do |method|
       define_method method do |*args|
         begin
+          retries = @options[:authentication_retries]
           connection.send(method, *args)
         rescue Restforce::UnauthorizedError
-          connection.url_prefix = @options[:instance_url]
-          connection.send(method, *args)
+          if retries > 0
+            retries -= 1
+            connection.url_prefix = @options[:instance_url]
+            connection.send(method, *args)
+          end
+          raise
         end
       end
 
