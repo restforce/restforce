@@ -364,6 +364,7 @@ module Restforce
         builder.use Restforce::Middleware::RaiseError
         builder.response :json
         builder.use Restforce::Middleware::Caching, cache, @options if cache
+        builder.use FaradayMiddleware::FollowRedirects
         builder.use Restforce::Middleware::Logger, Restforce.configuration.logger, @options if Restforce.log?
         builder.adapter Faraday.default_adapter
       end
