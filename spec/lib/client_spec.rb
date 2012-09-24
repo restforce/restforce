@@ -330,6 +330,7 @@ shared_examples_for 'methods' do
 
     subject { client.authenticate! }
     specify { expect { subject }.to_not raise_error }
+    it { should be_a Hash }
   end
 
   describe '.cache' do

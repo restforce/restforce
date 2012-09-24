@@ -7,7 +7,6 @@ module Restforce
   class Middleware::Authentication < Restforce::Middleware
 
     def call(env)
-      return authenticate! if force_authenticate?(env)
       @app.call(env)
     rescue Restforce::UnauthorizedError
       authenticate!
@@ -15,19 +14,23 @@ module Restforce
     end
 
     def authenticate!
-      raise 'must subclass'
+      raise Restforce::AuthenticationError, error_message(response) if response.status != 200
+      @options[:instance_url] = response.body['instance_url']
+      @options[:oauth_token]  = response.body['access_token']
+      response.body
+    end
+
+    def response
+      raise 'not implemented'
     end
 
     def connection
       @connection ||= Faraday.new(:url => "https://#{@options[:host]}") do |builder|
+        builder.use Restforce::Middleware::Mashify, nil, @options
         builder.response :json
         builder.use Restforce::Middleware::Logger, Restforce.configuration.logger, @options if Restforce.log?
         builder.adapter Faraday.default_adapter
       end
-    end
-
-    def force_authenticate?(env)
-      env[:request_headers] && env[:request_headers]['X-ForceAuthenticate']
     end
 
     def error_message(response)

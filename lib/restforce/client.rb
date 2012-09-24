@@ -279,10 +279,9 @@ module Restforce
 
     # Public: Force an authentication
     def authenticate!
-      connection.headers['X-ForceAuthenticate'] = true
-      get nil
-    ensure
-      connection.headers.delete('X-ForceAuthenticate')
+      raise 'No authentication middleware present' unless authentication_middleware
+      middleware = authentication_middleware.new nil, self, @options
+      middleware.authenticate!
     end
 
     # Public: Decodes a signed request received from Force.com Canvas.
