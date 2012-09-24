@@ -18,10 +18,7 @@ module Restforce
     #   account.Name = 'Foobar'
     #   account.save
     def save
-      # Remove 'attributes' and parent/child relationships. We only want to
-      # persist the attributes on the sobject.
       ensure_id
-      attrs = self.to_hash.reject { |key, _| key =~ /.*__r/ || key =~ /^attributes$/ }
       @client.update(sobject_type, attrs)
     end
 
@@ -34,6 +31,12 @@ module Restforce
     def destroy
       ensure_id
       @client.destroy(sobject_type, self.Id)
+    end
+
+    # Public: Returns a hash representation of this object with the attributes
+    # key and parent/child relationships removed.
+    def attrs
+      self.to_hash.reject { |key, _| key =~ /.*__r/ || key =~ /^attributes$/ }
     end
 
   private
