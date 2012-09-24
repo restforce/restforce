@@ -243,7 +243,6 @@ module Restforce
     rescue *exceptions
       false
     end
-    alias_method :delete, :destroy
 
     # See .destroy
     #
@@ -253,7 +252,6 @@ module Restforce
       api_delete "sobjects/#{sobject}/#{id}"
       true
     end
-    alias_method :delete!, :destroy!
 
     # Public: Runs the block with caching disabled.
     #

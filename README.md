@@ -197,8 +197,6 @@ _See also: http://www.salesforce.com/us/developer/docs/api_rest/Content/dome_ups
 
 ### destroy(sobject, id)
 
-_Alias: delete_
-
 Takes an sobject name and an Id and deletes the record. Returns true if the
 record was successfully deleted.
 
