@@ -11,7 +11,7 @@ describe Restforce::Middleware::Authentication do
     it 'raises an error' do
       expect {
         middleware.authenticate!
-      }.to raise_error RuntimeError, 'must subclass'
+      }.to raise_error RuntimeError, 'not implemented'
     end
   end
 
@@ -64,23 +64,6 @@ describe Restforce::Middleware::Authentication do
 
         its(:handlers) { should include FaradayMiddleware::ParseJson, Restforce::Middleware::Logger, Faraday::Adapter::NetHttp }
       end
-    end
-  end
-
-  describe '.force_authenticate?' do
-    subject { middleware.force_authenticate?(env) }
-
-    context 'without X-ForceAuthenticate header set' do
-      it { should be_false }
-    end
-
-    context 'with X-ForceAuthenticate header set' do
-      before do
-        env[:request_headers] = {}
-        env[:request_headers]['X-ForceAuthenticate'] = true
-      end
-
-      it { should be_true }
     end
   end
 end
