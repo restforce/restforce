@@ -231,6 +231,21 @@ _See also: http://www.salesforce.com/us/developer/docs/api_rest/Content/dome_des
 
 * * *
 
+### authenticate!
+
+Performs an authentication and returns the response. In general, calling this
+directly shouldn't be required, since the client will handle authentication for
+you automatically. This should only be used if you want to force
+an authentication before using the streaming api, or you want to get some
+information about the user.
+
+```ruby
+response = client.authenticate!
+# => #<Restforce::Mash access_token="..." id="https://login.salesforce.com/id/00DE0000000cOGcMAM/005E0000001eM4LIAU" instance_url="https://na9.salesforce.com" issued_at="1348465359751" scope="api refresh_token" signature="3fW0pC/TEY2cjK5FCBFOZdjRtCfAuEbK1U74H/eF+Ho=">
+```
+
+* * *
+
 ### File Uploads
 
 Using the new [Blob Data](http://www.salesforce.com/us/developer/docs/api_rest/Content/dome_sobject_insert_update_blob.htm) api feature (500mb limit):
