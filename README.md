@@ -242,6 +242,11 @@ information about the user.
 ```ruby
 response = client.authenticate!
 # => #<Restforce::Mash access_token="..." id="https://login.salesforce.com/id/00DE0000000cOGcMAM/005E0000001eM4LIAU" instance_url="https://na9.salesforce.com" issued_at="1348465359751" scope="api refresh_token" signature="3fW0pC/TEY2cjK5FCBFOZdjRtCfAuEbK1U74H/eF+Ho=">
+
+# Get the user information
+info = client.get(response.id).body
+info.user_id
+# => '005E0000001eM4LIAU'
 ```
 
 * * *
