@@ -14,13 +14,16 @@ module Restforce
     end
 
     def authenticate!
+      response = connection.post '/services/oauth2/token' do |req|
+        req.body = URI.encode_www_form params
+      end
       raise Restforce::AuthenticationError, error_message(response) if response.status != 200
       @options[:instance_url] = response.body['instance_url']
       @options[:oauth_token]  = response.body['access_token']
       response.body
     end
 
-    def response
+    def params
       raise 'not implemented'
     end
 
