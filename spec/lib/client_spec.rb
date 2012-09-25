@@ -430,15 +430,20 @@ shared_examples_for 'methods' do
     let(:cache) { MockCache.new }
 
     before do
-      stub_request(:get, /query\?q=SELECT%20some,%20fields%20FROM%20object/)
+      @query = stub_request(:get, /query\?q=SELECT%20some,%20fields%20FROM%20object/)
         .with(headers: { 'Authorization' => "OAuth #{oauth_token}" })
         .to_return(status: 401, body: fixture('expired_session_response')).then
         .to_return(status: 200, body: fixture('sobject/query_success_response'))
 
-      stub_request(:post, "https://login.salesforce.com/services/oauth2/token")
+      @login = stub_request(:post, "https://login.salesforce.com/services/oauth2/token")
         .with(:body => "grant_type=password&client_id=client_id&client_secret=" \
         "client_secret&username=foo&password=barsecurity_token")
         .to_return(status: 200, body: fixture(:auth_success_response))
+    end
+
+    after do
+      @query.should have_been_made.times(2)
+      @login.should have_been_made
     end
 
     subject { client.query('SELECT some, fields FROM object') }
