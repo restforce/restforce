@@ -353,18 +353,18 @@ module Restforce
     # Internal: Internal faraday connection where all requests go through
     def connection
       @connection ||= Faraday.new(@options[:instance_url]) do |builder|
-        builder.use Restforce::Middleware::Mashify, self, @options
-        builder.use Restforce::Middleware::Multipart
-        builder.request :json
-        builder.use authentication_middleware, self, @options if authentication_middleware
-        builder.use Restforce::Middleware::Authorization, self, @options
-        builder.use Restforce::Middleware::InstanceURL, self, @options
-        builder.use Restforce::Middleware::RaiseError
+        builder.use      Restforce::Middleware::Mashify, self, @options
+        builder.use      Restforce::Middleware::Multipart
+        builder.request  :json
+        builder.use      authentication_middleware, self, @options if authentication_middleware
+        builder.use      Restforce::Middleware::Authorization, self, @options
+        builder.use      Restforce::Middleware::InstanceURL, self, @options
         builder.response :json
-        builder.use Restforce::Middleware::Caching, cache, @options if cache
-        builder.use FaradayMiddleware::FollowRedirects
-        builder.use Restforce::Middleware::Logger, Restforce.configuration.logger, @options if Restforce.log?
-        builder.adapter Faraday.default_adapter
+        builder.use      Restforce::Middleware::Caching, cache, @options if cache
+        builder.use      FaradayMiddleware::FollowRedirects
+        builder.use      Restforce::Middleware::RaiseError
+        builder.use      Restforce::Middleware::Logger, Restforce.configuration.logger, @options if Restforce.log?
+        builder.adapter  Faraday.default_adapter
       end
       @connection
     end
