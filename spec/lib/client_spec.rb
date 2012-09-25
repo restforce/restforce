@@ -428,27 +428,22 @@ shared_examples_for 'methods' do
     end
 
     let(:cache) { MockCache.new }
-    let(:oauth_token) { 'foobar' }
 
     before do
-      @requests = [].tap do |requests|
-        requests << stub_request(:get, /query\?q=SELECT%20some,%20fields%20FROM%20object/)
-          .with(headers: { 'Authorization' => "OAuth #{oauth_token}" })
-          .to_return(status: 401, body: fixture('expired_session_response'))
+      @query = stub_request(:get, /query\?q=SELECT%20some,%20fields%20FROM%20object/)
+        .with(headers: { 'Authorization' => "OAuth #{oauth_token}" })
+        .to_return(status: 401, body: fixture('expired_session_response')).then
+        .to_return(status: 200, body: fixture('sobject/query_success_response'))
 
-        requests << stub_request(:post, "https://login.salesforce.com/services/oauth2/token")
-          .with(:body => "grant_type=password&client_id=client_id&client_secret=" \
-          "client_secret&username=foo&password=barsecurity_token")
-          .to_return(status: 200, body: fixture(:auth_success_response))
-
-        requests << stub_request(:get, /query\?q=SELECT%20some,%20fields%20FROM%20object/)
-          .with(headers: { 'Authorization' => "OAuth 00Dx0000000BV7z!AR8AQAxo9UfVkh8AlV0Gomt9Czx9LjHnSSpwBMmbRcgKFmxOtvxjTrKW19ye6PE3Ds1eQz3z8jr3W7_VbWmEu4Q8TVGSTHxs" })
-          .to_return(status: 200, body: fixture('sobject/query_success_response'))
-      end
+      @login = stub_request(:post, "https://login.salesforce.com/services/oauth2/token")
+        .with(:body => "grant_type=password&client_id=client_id&client_secret=" \
+        "client_secret&username=foo&password=barsecurity_token")
+        .to_return(status: 200, body: fixture(:auth_success_response))
     end
 
     after do
-      @requests.each { |request| request.should have_been_requested }
+      @query.should have_been_made.times(2)
+      @login.should have_been_made
     end
 
     subject { client.query('SELECT some, fields FROM object') }
