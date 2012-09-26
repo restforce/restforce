@@ -5,6 +5,8 @@ module Restforce
   # will attempt to either reauthenticate (username and password) or refresh
   # the oauth access token (if a refresh token is present).
   class Middleware::Authentication < Restforce::Middleware
+    autoload :Password, 'restforce/middleware/authentication/password'
+    autoload :Token,    'restforce/middleware/authentication/token'
 
     def call(env)
       @app.call(env)
