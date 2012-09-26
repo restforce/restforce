@@ -12,9 +12,7 @@ module Restforce
     autoload :Logger,         'restforce/middleware/logger'
 
     def initialize(app, client, options)
-      @app     = app
-      @client  = client
-      @options = options
+      @app, @client, @options = app, client, options
     end
 
     # Internal: Proxy to the client.
