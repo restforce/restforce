@@ -350,7 +350,7 @@ Faraday, you can insert your own middleware. For example, if you were using
 Restforce in a rails app, you can setup custom logging using
 ActiveSupport::Notifications:
 
-```
+```ruby
 client = Restforce.new
 client.middleware.insert_after Restforce::Middleware::InstanceURL, FaradayMiddleware::Instrumentation
 
