@@ -70,7 +70,8 @@ shared_examples_for 'methods' do
   describe '.describe' do
     context 'with no arguments' do
       before do
-        @request = stub_api_request :sobjects, with: 'sobject/describe_sobjects_success_response'
+        @request = stub_api_request :sobjects,
+          with: 'sobject/describe_sobjects_success_response'
       end
 
       after do
@@ -83,7 +84,8 @@ shared_examples_for 'methods' do
 
     context 'with an argument' do
       before do
-        @request = stub_api_request 'sobjects/Whizbang/describe', with: 'sobject/sobject_describe_success_response'
+        @request = stub_api_request 'sobjects/Whizbang/describe',
+          with: 'sobject/sobject_describe_success_response'
       end
 
       after do
@@ -97,7 +99,8 @@ shared_examples_for 'methods' do
 
   describe '.query' do
     before do
-      @request = stub_api_request 'query\?q=SELECT%20some,%20fields%20FROM%20object', with: 'sobject/query_success_response'
+      @request = stub_api_request 'query\?q=SELECT%20some,%20fields%20FROM%20object',
+        with: 'sobject/query_success_response'
     end
 
     after do
@@ -110,7 +113,8 @@ shared_examples_for 'methods' do
 
   describe '.search' do
     before do
-      @request = stub_api_request 'search\?q=FIND%20%7Bbar%7D', with: 'sobject/search_success_response'
+      @request = stub_api_request 'search\?q=FIND%20%7Bbar%7D',
+        with: 'sobject/search_success_response'
     end
 
     after do
@@ -124,7 +128,8 @@ shared_examples_for 'methods' do
 
   describe '.org_id' do
     before do
-      @request = stub_api_request 'query\?q=select%20id%20from%20Organization', with: 'sobject/org_query_response'
+      @request = stub_api_request 'query\?q=select%20id%20from%20Organization',
+        with: 'sobject/org_query_response'
     end
 
     after do
@@ -138,7 +143,10 @@ shared_examples_for 'methods' do
   describe '.create' do
     context 'without multipart' do
       before do
-        @request = stub_api_request 'sobjects/Account', with: 'sobject/create_success_response', method: :post, body: "{\"Name\":\"Foobar\"}"
+        @request = stub_api_request 'sobjects/Account',
+          with: 'sobject/create_success_response',
+          method: :post,
+          body: "{\"Name\":\"Foobar\"}"
       end
 
       after do
@@ -151,7 +159,10 @@ shared_examples_for 'methods' do
 
     context 'with multipart' do
       before do
-        @request = stub_api_request 'sobjects/Account', with: 'sobject/create_success_response', method: :post, body: %r(----boundary_string\r\nContent-Disposition: form-data; name=\"entity_content\";\r\nContent-Type: application/json\r\n\r\n{\"Name\":\"Foobar\"}\r\n----boundary_string\r\nContent-Disposition: form-data; name=\"Blob\"; filename=\"blob.jpg\"\r\nContent-Length: 42171\r\nContent-Type: image/jpeg\r\nContent-Transfer-Encoding: binary)
+        @request = stub_api_request 'sobjects/Account',
+          with: 'sobject/create_success_response',
+          method: :post,
+          body: %r(----boundary_string\r\nContent-Disposition: form-data; name=\"entity_content\";\r\nContent-Type: application/json\r\n\r\n{\"Name\":\"Foobar\"}\r\n----boundary_string\r\nContent-Disposition: form-data; name=\"Blob\"; filename=\"blob.jpg\"\r\nContent-Length: 42171\r\nContent-Type: image/jpeg\r\nContent-Transfer-Encoding: binary)
       end
 
       after do
@@ -166,7 +177,11 @@ shared_examples_for 'methods' do
   describe '.update!' do
     context 'with invalid Id' do
       before do
-        @request = stub_api_request 'sobjects/Account/001D000000INjVe', with: 'sobject/delete_error_response', method: :patch, body: "{\"Name\":\"Foobar\"}", status: 404
+        @request = stub_api_request 'sobjects/Account/001D000000INjVe',
+          with: 'sobject/delete_error_response',
+          method: :patch,
+          body: "{\"Name\":\"Foobar\"}",
+          status: 404
       end
 
       after do
@@ -186,7 +201,11 @@ shared_examples_for 'methods' do
 
     context 'with invalid Id' do
       before do
-        @request = stub_api_request 'sobjects/Account/001D000000INjVe', with: 'sobject/delete_error_response', method: :patch, body: "{\"Name\":\"Foobar\"}", status: 404
+        @request = stub_api_request 'sobjects/Account/001D000000INjVe',
+          with: 'sobject/delete_error_response',
+          method: :patch,
+          body: "{\"Name\":\"Foobar\"}",
+          status: 404
       end
 
       after do
@@ -199,7 +218,9 @@ shared_examples_for 'methods' do
 
     context 'with success' do
       before do
-        @request = stub_api_request 'sobjects/Account/001D000000INjVe', method: :patch, body: "{\"Name\":\"Foobar\"}"
+        @request = stub_api_request 'sobjects/Account/001D000000INjVe',
+          method: :patch,
+          body: "{\"Name\":\"Foobar\"}"
       end
 
       after do
@@ -221,7 +242,9 @@ shared_examples_for 'methods' do
   describe '.upsert!' do
     context 'when updated' do
       before do
-        @request = stub_api_request 'sobjects/Account/External__c/foobar', method: :patch, body: "{\"Name\":\"Foobar\"}"
+        @request = stub_api_request 'sobjects/Account/External__c/foobar',
+          method: :patch,
+          body: "{\"Name\":\"Foobar\"}"
       end
 
       after do
@@ -241,7 +264,10 @@ shared_examples_for 'methods' do
 
     context 'when created' do
       before do
-        @request = stub_api_request 'sobjects/Account/External__c/foobar', method: :patch, body: "{\"Name\":\"Foobar\"}", with: 'sobject/upsert_created_success_response'
+        @request = stub_api_request 'sobjects/Account/External__c/foobar',
+          method: :patch,
+          body: "{\"Name\":\"Foobar\"}",
+          with: 'sobject/upsert_created_success_response'
       end
 
       after do
@@ -265,7 +291,10 @@ shared_examples_for 'methods' do
 
     context 'with invalid Id' do
       before do
-        @request = stub_api_request 'sobjects/Account/001D000000INjVe', with: 'sobject/delete_error_response', method: :delete, status: 404
+        @request = stub_api_request 'sobjects/Account/001D000000INjVe',
+          with: 'sobject/delete_error_response',
+          method: :delete,
+          status: 404
       end
 
       after do
@@ -293,7 +322,10 @@ shared_examples_for 'methods' do
 
     context 'with invalid Id' do
       before do
-        @request = stub_api_request 'sobjects/Account/001D000000INjVe', with: 'sobject/delete_error_response', method: :delete, status: 404
+        @request = stub_api_request 'sobjects/Account/001D000000INjVe',
+          with: 'sobject/delete_error_response',
+          method: :delete,
+          status: 404
       end
 
       after do
@@ -318,10 +350,9 @@ shared_examples_for 'methods' do
 
   describe '.authenticate!' do
     before do
-      @request = stub_request(:post, "https://login.salesforce.com/services/oauth2/token").
-        with(:body => "grant_type=password&client_id=client_id&client_secret=" \
-        "client_secret&username=foo&password=barsecurity_token").
-        to_return(:status => 200, :body => fixture(:auth_success_response))
+      @request = stub_login_request(body: "grant_type=password&client_id=client_id&client_secret=" \
+        "client_secret&username=foo&password=barsecurity_token")
+        .to_return(status: 200, body: fixture(:auth_success_response))
     end
 
     after do
@@ -377,7 +408,8 @@ shared_examples_for 'methods' do
     let(:cache) { double('cache') }
 
     before do
-      @request = stub_api_request 'query\?q=SELECT%20some,%20fields%20FROM%20object', with: 'sobject/query_success_response'
+      @request = stub_api_request 'query\?q=SELECT%20some,%20fields%20FROM%20object',
+        with: 'sobject/query_success_response'
       cache.should_receive(:fetch).never
     end
 
@@ -413,11 +445,12 @@ shared_examples_for 'methods' do
   describe 'authentication retries' do
     context 'when retries reaches 0' do
       before do
-        @auth_request = stub_api_request('query\?q=SELECT%20some,%20fields%20FROM%20object', status: 401, with: 'expired_session_response')
-        @query_request = stub_request(:post, "https://login.salesforce.com/services/oauth2/token")
-          .with(:body => "grant_type=password&client_id=client_id&client_secret=" \
+        @auth_request = stub_api_request('query\?q=SELECT%20some,%20fields%20FROM%20object',
+          status: 401,
+          with: 'expired_session_response')
+        @query_request = stub_login_request(body: "grant_type=password&client_id=client_id&client_secret=" \
           "client_secret&username=foo&password=barsecurity_token")
-          .to_return(:status => 200, :body => fixture(:auth_success_response))
+          .to_return(status: 200, body: fixture(:auth_success_response))
       end
 
       subject { client.query('SELECT some, fields FROM object') }
@@ -443,13 +476,12 @@ shared_examples_for 'methods' do
     let(:cache) { MockCache.new }
 
     before do
-      @query = stub_request(:get, /query\?q=SELECT%20some,%20fields%20FROM%20object/)
+      @query = stub_api_request('query\?q=SELECT%20some,%20fields%20FROM%20object')
         .with(headers: { 'Authorization' => "OAuth #{oauth_token}" })
         .to_return(status: 401, body: fixture('expired_session_response')).then
         .to_return(status: 200, body: fixture('sobject/query_success_response'))
 
-      @login = stub_request(:post, "https://login.salesforce.com/services/oauth2/token")
-        .with(:body => "grant_type=password&client_id=client_id&client_secret=" \
+      @login = stub_login_request(body: "grant_type=password&client_id=client_id&client_secret=" \
         "client_secret&username=foo&password=barsecurity_token")
         .to_return(status: 200, body: fixture(:auth_success_response))
     end
