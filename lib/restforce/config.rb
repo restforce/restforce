@@ -63,6 +63,9 @@ module Restforce
     # The number of times reauthentication should be tried before failing.
     attr_accessor :authentication_retries
 
+    # Set to true if you want responses from Salesforce to be gzip compressed.
+    attr_accessor :compress
+
     def initialize
       @api_version            ||= '24.0'
       @host                   ||= 'login.salesforce.com'

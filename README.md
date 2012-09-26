@@ -11,6 +11,7 @@ It attempts to solve a couple of key issues that the databasedotcom gem has been
 * Remove the need to materialize constants.
 * Support for the Streaming API
 * Support for blob data types.
+* Support for GZIP compression.
 * A clean and modular architecture using [Faraday middleware](https://github.com/technoweenie/faraday)
 * Support for decoding [Force.com Canvas](http://www.salesforce.com/us/developer/docs/platform_connectpre/canvas_framework.pdf) signed requests. (NEW!)
 

@@ -15,15 +15,15 @@ describe Restforce do
       its(:host)                   { should eq 'login.salesforce.com' }
       its(:authentication_retries) { should eq 3 }
       [:username, :password, :security_token, :client_id, :client_secret,
-       :oauth_token, :refresh_token, :instance_url].each do |attr|
+       :oauth_token, :refresh_token, :instance_url, :compress].each do |attr|
         its(attr) { should be_nil }
       end
     end
   end
 
   describe '#configure' do
-    [:username, :password, :security_token, :client_id, :client_secret,
-     :oauth_token, :refresh_token, :instance_url, :api_version, :host].each do |attr|
+    [:username, :password, :security_token, :client_id, :client_secret, :compress,
+     :oauth_token, :refresh_token, :instance_url, :api_version, :host, :authentication_retries].each do |attr|
       it "allows #{attr} to be set" do
         Restforce.configure do |config|
           config.send("#{attr}=", 'foobar')

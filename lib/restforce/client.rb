@@ -30,6 +30,9 @@ module Restforce
     #                                     should attempt to reauthenticate
     #                                     before raising an exception (default: 3).
     #
+    #           :compress               - Set to true to have Salesforce compress the
+    #                                     response (default: false).
+    #
     # Examples
     #
     #   # Initialize a new client using password authentication:
@@ -55,7 +58,7 @@ module Restforce
     def initialize(options = {})
       raise 'Please specify a hash of options' unless options.is_a?(Hash)
       @options = {}.tap do |options|
-        [:username, :password, :security_token, :client_id, :client_secret, :host,
+        [:username, :password, :security_token, :client_id, :client_secret, :host, :compress,
          :api_version, :oauth_token, :refresh_token, :instance_url, :cache, :authentication_retries].each do |option|
           options[option] = Restforce.configuration.send option
         end
@@ -378,6 +381,7 @@ module Restforce
         builder.use      FaradayMiddleware::FollowRedirects
         builder.use      Restforce::Middleware::RaiseError
         builder.use      Restforce::Middleware::Logger, Restforce.configuration.logger, @options if Restforce.log?
+        builder.use      Restforce::Middleware::Gzip, self, @options
         builder.adapter  Faraday.default_adapter
       end
     end
