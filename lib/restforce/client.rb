@@ -338,6 +338,19 @@ module Restforce
       end
     end
 
+    # Public: The Faraday::Builder instance used for the middleware stack. This
+    # can be used to insert an custom middleware.
+    #
+    # Examples
+    #
+    #   # Add the instrumentation middleware for Rails.
+    #   client.middleware.use FaradayMiddleware::Instrumentation
+    #
+    # Returns the Faraday::Builder for the Faraday connection.
+    def middleware
+      connection.builder
+    end
+
   private
 
     # Internal: Returns a path to an api endpoint
@@ -404,7 +417,7 @@ module Restforce
     # Internal: Returns true if the middlware stack includes the
     # Restforce::Middleware::Mashify middleware.
     def mashify?
-      connection.builder.handlers.find { |handler| handler == Restforce::Middleware::Mashify }
+      middleware.handlers.find { |handler| handler == Restforce::Middleware::Mashify }
     end
 
     # Internal: Errors that should be rescued from in non-bang methods

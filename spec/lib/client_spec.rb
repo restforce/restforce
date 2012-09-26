@@ -360,6 +360,19 @@ shared_examples_for 'methods' do
     end
   end
 
+  describe '.middleware' do
+    subject { client.middleware }
+    it { should eq client.send(:connection).builder }
+
+    context 'adding middleware' do
+      before do
+        client.middleware.use FaradayMiddleware::Instrumentation
+      end
+
+      its(:handlers) { should include FaradayMiddleware::Instrumentation }
+    end
+  end
+
   describe '.without_caching' do
     let(:cache) { double('cache') }
 
