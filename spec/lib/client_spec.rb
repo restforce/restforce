@@ -530,7 +530,7 @@ end
 
 describe 'without mashify middleware' do
   before do
-    client.send(:connection).builder.delete(Restforce::Middleware::Mashify)
+    client.middleware.delete(Restforce::Middleware::Mashify)
   end
 
   describe Restforce::Client do
