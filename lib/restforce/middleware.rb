@@ -17,10 +17,12 @@ module Restforce
       @options = options
     end
 
+    # Internal: Proxy to the client.
     def client
       @client
     end
 
+    # Internal: Proxy to the client's faraday connection.
     def connection
       client.send(:connection)
     end
