@@ -10,6 +10,7 @@ module Restforce
     autoload :Mashify,        'restforce/middleware/mashify'
     autoload :Caching,        'restforce/middleware/caching'
     autoload :Logger,         'restforce/middleware/logger'
+    autoload :Gzip,           'restforce/middleware/gzip'
 
     def initialize(app, client, options)
       @app, @client, @options = app, client, options
