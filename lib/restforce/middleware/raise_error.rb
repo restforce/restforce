@@ -17,7 +17,7 @@ module Restforce
     end
 
     def body
-      @body ||= JSON.parse(@env[:body])
+      JSON.parse(@env[:body])
     end
   end
 end
