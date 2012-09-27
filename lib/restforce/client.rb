@@ -421,7 +421,7 @@ module Restforce
     # Internal: Returns true if the middlware stack includes the
     # Restforce::Middleware::Mashify middleware.
     def mashify?
-      middleware.handlers.find { |handler| handler == Restforce::Middleware::Mashify }
+      middleware.handlers.index(Restforce::Middleware::Mashify)
     end
 
     # Internal: Errors that should be rescued from in non-bang methods
