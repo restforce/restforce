@@ -383,7 +383,6 @@ module Restforce
         builder.use      Restforce::Middleware::Logger, Restforce.configuration.logger, @options if Restforce.log?
         builder.adapter  Faraday.default_adapter
       end
-      @connection
     end
 
     # Internal: Determines what middleware will be used based on the options provided

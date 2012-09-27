@@ -1,6 +1,6 @@
 module Restforce
   # Faraday middleware that allows for on the fly authentication of requests.
-  # When a request fails (ie. A status of 401 is returned). The middleware
+  # When a request fails (a status of 401 is returned), the middleware
   # will attempt to either reauthenticate (username and password) or refresh
   # the oauth access token (if a refresh token is present).
   class Middleware::Authentication < Restforce::Middleware
