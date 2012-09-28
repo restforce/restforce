@@ -94,11 +94,9 @@ module Restforce
     # Returns the Hash representation of the describe call.
     def describe(sobject=nil)
       if sobject
-        response = api_get "sobjects/#{sobject.to_s}/describe"
-        response.body
+        api_get("sobjects/#{sobject.to_s}/describe").body
       else
-        response = api_get 'sobjects'
-        response.body['sobjects']
+        api_get('sobjects').body['sobjects']
       end
     end
 
@@ -148,8 +146,7 @@ module Restforce
     # Returns a Restforce::Collection if Restforce.configuration.mashify is true.
     # Returns an Array of Hash for each record in the result if Restforce.configuration.mashify is false.
     def search(sosl)
-      response = api_get 'search', q: sosl
-      response.body
+      api_get('search', q: sosl).body
     end
     
     # Public: Insert a new record.
@@ -174,8 +171,7 @@ module Restforce
     # Returns the String Id of the newly created sobject. Raises an error if
     # something bad happens.
     def create!(sobject, attrs)
-      response = api_post "sobjects/#{sobject}", attrs
-      response.body['id']
+      api_post("sobjects/#{sobject}", attrs).body['id']
     end
     alias_method :insert!, :create!
 
