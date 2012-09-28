@@ -60,12 +60,8 @@ module Restforce
     #   # => #<Restforce::Client:0x007f934aab9980 @options={ ... }>
     def initialize(options = {})
       raise 'Please specify a hash of options' unless options.is_a?(Hash)
-      @options = {}.tap do |options|
-         OPTIONS.each do |option|
-          options[option] = Restforce.configuration.send option
-        end
-      end
-      @options.merge!(options)
+      @options = Hash[OPTIONS.map { |option| [option, Restforce.configuration.send(option)] }]
+      @options.merge! options
     end
 
     # Public: Get the names of all sobjects on the org.
