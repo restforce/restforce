@@ -1,5 +1,8 @@
 module Restforce
   class Client
+    OPTIONS = [:username, :password, :security_token, :client_id, :client_secret, :host, :compress,
+       :api_version, :oauth_token, :refresh_token, :instance_url, :cache, :authentication_retries]
+
     # Public: Creates a new client instance
     #
     # options - A hash of options to be passed in (default: {}).
@@ -58,8 +61,7 @@ module Restforce
     def initialize(options = {})
       raise 'Please specify a hash of options' unless options.is_a?(Hash)
       @options = {}.tap do |options|
-        [:username, :password, :security_token, :client_id, :client_secret, :host, :compress,
-         :api_version, :oauth_token, :refresh_token, :instance_url, :cache, :authentication_retries].each do |option|
+         OPTIONS.each do |option|
           options[option] = Restforce.configuration.send option
         end
       end
