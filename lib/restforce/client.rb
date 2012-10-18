@@ -2,7 +2,7 @@ module Restforce
   class Client
     # Public: Creates a new client instance
     #
-    # options - A hash of options to be passed in (default: {}).
+    # opts - A hash of options to be passed in (default: {}).
     #           :username               - The String username to use (required for password authentication).
     #           :password               - The String password to use (required for password authentication).
     #           :security_token         - The String security token to use 
@@ -55,15 +55,15 @@ module Restforce
     #   Restforce::Client.new :oauth_token => 'access token',
     #     :instance_url => 'https://na1.salesforce.com'
     #   # => #<Restforce::Client:0x007f934aab9980 @options={ ... }>
-    def initialize(options = {})
-      raise 'Please specify a hash of options' unless options.is_a?(Hash)
+    def initialize(opts = {})
+      raise 'Please specify a hash of options' unless opts.is_a?(Hash)
       @options = {}.tap do |options|
         [:username, :password, :security_token, :client_id, :client_secret, :host, :compress,
          :api_version, :oauth_token, :refresh_token, :instance_url, :cache, :authentication_retries].each do |option|
           options[option] = Restforce.configuration.send option
         end
       end
-      @options.merge!(options)
+      @options.merge!(opts)
     end
 
     # Public: Get the names of all sobjects on the org.

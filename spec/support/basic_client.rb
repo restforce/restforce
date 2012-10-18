@@ -33,5 +33,5 @@ shared_context 'basic client' do
 
   let(:client_options) { base_options }
 
-  let(:client) { Restforce::Client.new client_options }
+  let(:client) { Restforce::Client.new(client_options) }
 end

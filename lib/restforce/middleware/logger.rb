@@ -4,7 +4,7 @@ module Restforce
   class Middleware::Logger < Faraday::Response::Middleware
     extend Forwardable
 
-    def initialize(app, logger = nil, options)
+    def initialize(app, logger, options)
       super(app)
       @options = options
       @logger = logger || begin
