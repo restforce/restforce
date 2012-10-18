@@ -1,5 +1,8 @@
 module Restforce
   class Client
+    OPTIONS = [:username, :password, :security_token, :client_id, :client_secret, :host, :compress,
+       :api_version, :oauth_token, :refresh_token, :instance_url, :cache, :authentication_retries]
+
     # Public: Creates a new client instance
     #
     # opts - A hash of options to be passed in (default: {}).
@@ -57,13 +60,8 @@ module Restforce
     #   # => #<Restforce::Client:0x007f934aab9980 @options={ ... }>
     def initialize(opts = {})
       raise 'Please specify a hash of options' unless opts.is_a?(Hash)
-      @options = {}.tap do |options|
-        [:username, :password, :security_token, :client_id, :client_secret, :host, :compress,
-         :api_version, :oauth_token, :refresh_token, :instance_url, :cache, :authentication_retries].each do |option|
-          options[option] = Restforce.configuration.send option
-        end
-      end
-      @options.merge!(opts)
+      @options = Hash[OPTIONS.map { |option| [option, Restforce.configuration.send(option)] }]
+      @options.merge! opts
     end
 
     # Public: Get the names of all sobjects on the org.
@@ -96,11 +94,9 @@ module Restforce
     # Returns the Hash representation of the describe call.
     def describe(sobject=nil)
       if sobject
-        response = api_get "sobjects/#{sobject.to_s}/describe"
-        response.body
+        api_get("sobjects/#{sobject.to_s}/describe").body
       else
-        response = api_get 'sobjects'
-        response.body['sobjects']
+        api_get('sobjects').body['sobjects']
       end
     end
 
@@ -150,8 +146,7 @@ module Restforce
     # Returns a Restforce::Collection if Restforce.configuration.mashify is true.
     # Returns an Array of Hash for each record in the result if Restforce.configuration.mashify is false.
     def search(sosl)
-      response = api_get 'search', :q => sosl
-      response.body
+      api_get('search', :q => sosl).body
     end
     
     # Public: Insert a new record.
@@ -176,8 +171,7 @@ module Restforce
     # Returns the String Id of the newly created sobject. Raises an error if
     # something bad happens.
     def create!(sobject, attrs)
-      response = api_post "sobjects/#{sobject}", attrs
-      response.body['id']
+      api_post("sobjects/#{sobject}", attrs).body['id']
     end
     alias_method :insert!, :create!
 
