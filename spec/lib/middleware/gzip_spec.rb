@@ -2,8 +2,8 @@ require 'spec_helper'
 
 describe Restforce::Middleware::Gzip do
   let(:app)        { double('app')            }
-  let(:env)        { { request_headers: {}, response_headers: {} }  }
-  let(:options)    { { oauth_token: 'token' } }
+  let(:env)        { { :request_headers => {}, :response_headers => {} }  }
+  let(:options)    { { :oauth_token => 'token' } }
   let(:middleware) { described_class.new app, nil, options }
 
   # Return a gzipped string.

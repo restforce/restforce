@@ -5,7 +5,7 @@ module Restforce
 
     # Public: Creates a new client instance
     #
-    # options - A hash of options to be passed in (default: {}).
+    # opts - A hash of options to be passed in (default: {}).
     #           :username               - The String username to use (required for password authentication).
     #           :password               - The String password to use (required for password authentication).
     #           :security_token         - The String security token to use 
@@ -58,10 +58,10 @@ module Restforce
     #   Restforce::Client.new :oauth_token => 'access token',
     #     :instance_url => 'https://na1.salesforce.com'
     #   # => #<Restforce::Client:0x007f934aab9980 @options={ ... }>
-    def initialize(options = {})
-      raise 'Please specify a hash of options' unless options.is_a?(Hash)
+    def initialize(opts = {})
+      raise 'Please specify a hash of options' unless opts.is_a?(Hash)
       @options = Hash[OPTIONS.map { |option| [option, Restforce.configuration.send(option)] }]
-      @options.merge! options
+      @options.merge! opts
     end
 
     # Public: Get the names of all sobjects on the org.
@@ -125,7 +125,7 @@ module Restforce
     # Returns a Restforce::Collection if Restforce.configuration.mashify is true.
     # Returns an Array of Hash for each record in the result if Restforce.configuration.mashify is false.
     def query(soql)
-      response = api_get 'query', q: soql
+      response = api_get 'query', :q => soql
       mashify? ? response.body : response.body['records']
     end
     
@@ -146,7 +146,7 @@ module Restforce
     # Returns a Restforce::Collection if Restforce.configuration.mashify is true.
     # Returns an Array of Hash for each record in the result if Restforce.configuration.mashify is false.
     def search(sosl)
-      api_get('search', q: sosl).body
+      api_get('search', :q => sosl).body
     end
     
     # Public: Insert a new record.

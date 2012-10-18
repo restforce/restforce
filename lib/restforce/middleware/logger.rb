@@ -4,7 +4,7 @@ module Restforce
   class Middleware::Logger < Faraday::Response::Middleware
     extend Forwardable
 
-    def initialize(app, logger = nil, options)
+    def initialize(app, logger, options)
       super(app)
       @options = options
       @logger = logger || begin
@@ -17,19 +17,19 @@ module Restforce
 
     def call(env)
       debug('request') do
-        dump url: env[:url].to_s,
-          method: env[:method],
-          headers: env[:request_headers],
-          body: env[:body]
+        dump :url => env[:url].to_s,
+          :method => env[:method],
+          :headers => env[:request_headers],
+          :body => env[:body]
       end
       super
     end
 
     def on_complete(env)
       debug('response') do
-        dump status: env[:status].to_s,
-          headers: env[:response_headers],
-          body: env[:body]
+        dump :status => env[:status].to_s,
+          :headers => env[:response_headers],
+          :body => env[:body]
       end
     end
 

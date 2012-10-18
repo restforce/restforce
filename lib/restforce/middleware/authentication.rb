@@ -19,7 +19,7 @@ module Restforce
     # Internal: Performs the authentication and returns the response body.
     def authenticate!
       response = connection.post '/services/oauth2/token' do |req|
-        req.body = URI.encode_www_form params
+        req.body = encode_www_form(params)
       end
       raise Restforce::AuthenticationError, error_message(response) if response.status != 200
       @options[:instance_url] = response.body['instance_url']
@@ -45,6 +45,19 @@ module Restforce
     # Internal: The parsed error response.
     def error_message(response)
       "#{response.body['error']}: #{response.body['error_description']}"
+    end
+
+    # Featured detect form encoding.
+    # URI in 1.8 does not include encode_www_form
+    def encode_www_form(params)
+      if URI.respond_to?(:encode_www_form)
+        URI.encode_www_form(params)
+      else
+        params.map do |k, v|
+          k, v = CGI.escape(k.to_s), CGI.escape(v.to_s)
+          "#{k}=#{v}"
+        end.join('&')
+      end
     end
   end
 end

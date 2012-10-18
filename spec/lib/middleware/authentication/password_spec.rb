@@ -6,25 +6,25 @@ describe Restforce::Middleware::Authentication::Password do
   let(:middleware) { described_class.new app, nil, options }
 
   let(:options) do
-    { host: 'login.salesforce.com',
-      username: 'foo',
-      password: 'bar',
-      security_token: 'security_token',
-      client_id: 'client_id',
-      client_secret: 'client_secret' }
+    { :host => 'login.salesforce.com',
+      :username => 'foo',
+      :password => 'bar',
+      :security_token => 'security_token',
+      :client_id => 'client_id',
+      :client_secret => 'client_secret' }
   end
 
   it_behaves_like 'authentication middleware' do
     let(:success_request) do
-      stub_login_request(body: "grant_type=password&client_id=client_id&client_secret=" \
-        "client_secret&username=foo&password=barsecurity_token")
-        .to_return(status: 200, body: fixture(:auth_success_response))
+      stub_login_request(:body => "grant_type=password&client_id=client_id&client_secret=" \
+        "client_secret&username=foo&password=barsecurity_token").
+        to_return(:status => 200, :body => fixture(:auth_success_response))
     end
 
     let(:fail_request) do
-      stub_login_request(body: "grant_type=password&client_id=client_id&client_secret=" \
-        "client_secret&username=foo&password=barsecurity_token")
-        .to_return(status: 400, body: fixture(:auth_error_response))
+      stub_login_request(:body => "grant_type=password&client_id=client_id&client_secret=" \
+        "client_secret&username=foo&password=barsecurity_token").
+        to_return(:status => 400, :body => fixture(:auth_error_response))
     end
   end
 

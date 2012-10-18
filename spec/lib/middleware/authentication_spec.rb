@@ -4,7 +4,7 @@ describe Restforce::Middleware::Authentication do
   let(:app)        { double('app')            }
   let(:env)        { { }  }
   let(:retries)    { 3 }
-  let(:options)    { { host: 'login.salesforce.com', authentication_retries: retries } }
+  let(:options)    { { :host => 'login.salesforce.com', :authentication_retries => retries } }
   let(:middleware) { described_class.new app, nil, options }
 
   describe '.authenticate!' do
@@ -29,7 +29,7 @@ describe Restforce::Middleware::Authentication do
     context 'when an exception is thrown' do
       before do
         env[:body] = 'foo'
-        env[:request] = {proxy: nil}
+        env[:request] = {:proxy => nil}
       end
 
       it 'attempts to authenticate' do
