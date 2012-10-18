@@ -351,8 +351,8 @@ shared_examples_for 'methods' do
   describe '.authenticate!' do
     before do
       @request = stub_login_request(:body => "grant_type=password&client_id=client_id&client_secret=" \
-        "client_secret&username=foo&password=barsecurity_token")
-        .to_return(:status => 200, :body => fixture(:auth_success_response))
+        "client_secret&username=foo&password=barsecurity_token").
+        to_return(:status => 200, :body => fixture(:auth_success_response))
     end
 
     after do
@@ -449,8 +449,8 @@ shared_examples_for 'methods' do
           :status => 401,
           :with => 'expired_session_response')
         @query_request = stub_login_request(:body => "grant_type=password&client_id=client_id&client_secret=" \
-          "client_secret&username=foo&password=barsecurity_token")
-          .to_return(:status => 200, :body => fixture(:auth_success_response))
+          "client_secret&username=foo&password=barsecurity_token").
+          to_return(:status => 200, :body => fixture(:auth_success_response))
       end
 
       subject { client.query('SELECT some, fields FROM object') }
@@ -476,14 +476,14 @@ shared_examples_for 'methods' do
     let(:cache) { MockCache.new }
 
     before do
-      @query = stub_api_request('query\?q=SELECT%20some,%20fields%20FROM%20object')
-        .with(:headers => { 'Authorization' => "OAuth #{oauth_token}" })
-        .to_return(:status => 401, :body => fixture('expired_session_response')).then
-        .to_return(:status => 200, :body => fixture('sobject/query_success_response'))
+      @query = stub_api_request('query\?q=SELECT%20some,%20fields%20FROM%20object').
+        with(:headers => { 'Authorization' => "OAuth #{oauth_token}" }).
+        to_return(:status => 401, :body => fixture('expired_session_response')).then.
+        to_return(:status => 200, :body => fixture('sobject/query_success_response'))
 
       @login = stub_login_request(:body => "grant_type=password&client_id=client_id&client_secret=" \
-        "client_secret&username=foo&password=barsecurity_token")
-        .to_return(:status => 200, :body => fixture(:auth_success_response))
+        "client_secret&username=foo&password=barsecurity_token").
+        to_return(:status => 200, :body => fixture(:auth_success_response))
     end
 
     after do
