@@ -4,7 +4,7 @@ describe Restforce::Middleware::Logger do
   let(:app)        { double('app')            }
   let(:env)        { { }  }
   let(:logger)     { double('logger') }
-  let(:options)    { { host: 'login.salesforce.com', client_secret: 'foo', password: 'bar' } }
+  let(:options)    { { :host => 'login.salesforce.com', :client_secret => 'foo', :password => 'bar' } }
   let(:middleware) { described_class.new app, logger, options }
 
   describe 'logging' do

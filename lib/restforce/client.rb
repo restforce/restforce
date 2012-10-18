@@ -129,7 +129,7 @@ module Restforce
     # Returns a Restforce::Collection if Restforce.configuration.mashify is true.
     # Returns an Array of Hash for each record in the result if Restforce.configuration.mashify is false.
     def query(soql)
-      response = api_get 'query', q: soql
+      response = api_get 'query', :q => soql
       mashify? ? response.body : response.body['records']
     end
     
@@ -150,7 +150,7 @@ module Restforce
     # Returns a Restforce::Collection if Restforce.configuration.mashify is true.
     # Returns an Array of Hash for each record in the result if Restforce.configuration.mashify is false.
     def search(sosl)
-      response = api_get 'search', q: sosl
+      response = api_get 'search', :q => sosl
       response.body
     end
     

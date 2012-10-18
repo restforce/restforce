@@ -11,7 +11,7 @@ describe Restforce::Middleware::Mashify do
   end
 
   context 'when the body contains a records key' do
-    let(:env) { { body: JSON.parse(fixture('sobject/query_success_response')) } }
+    let(:env) { { :body => JSON.parse(fixture('sobject/query_success_response')) } }
 
     it 'converts the response body into a restforce collection' do
       env[:body].should be_a Restforce::Collection
@@ -19,7 +19,7 @@ describe Restforce::Middleware::Mashify do
   end
 
   context 'when the body does not contain records' do
-    let(:env) { { body: { 'foo' => 'bar' } } }
+    let(:env) { { :body => { 'foo' => 'bar' } } }
 
     it 'does not touch the body' do
       env[:body].foo.should eq 'bar'

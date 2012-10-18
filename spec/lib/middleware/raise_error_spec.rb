@@ -3,7 +3,7 @@ require 'spec_helper'
 describe Restforce::Middleware::RaiseError do
   let(:app)        { double('app') }
   let(:body)       { fixture('sobject/query_error_response') }
-  let(:env)        { { status: status, body: body } }
+  let(:env)        { { :status => status, :body => body } }
   let(:middleware) { described_class.new app }
 
   describe '.on_complete' do
