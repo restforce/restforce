@@ -425,7 +425,7 @@ shared_examples_for 'methods' do
     subject { client.send(:faye) }
 
     context 'with missing oauth token' do
-      let(:instance_url) { 'foobar' }
+      let(:instance_url) { 'http://foobar' }
       let(:oauth_token) { nil }
       specify { expect { subject }.to raise_error RuntimeError, 'OAuth token missing. Call .authenticate! first.' }
     end
@@ -436,7 +436,7 @@ shared_examples_for 'methods' do
     end
 
     context 'with oauth token and instance url' do
-      let(:instance_url) { 'foo' }
+      let(:instance_url) { 'http://foobar' }
       let(:oauth_token) { 'bar' }
       specify { expect { subject }.to_not raise_error }
     end
