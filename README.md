@@ -280,6 +280,10 @@ Restforce supports the [Streaming API](http://wiki.developerforce.com/page/Getti
 pub/sub with Salesforce a trivial task:
 
 ```ruby
+# Restforce uses faye as the underlying implementation for CometD. I recommend
+# using faye 0.8.3.
+require 'faye'
+
 # Initialize a client with your username/password/oauth token/etc.
 client = Restforce.new
 
