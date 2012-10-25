@@ -168,8 +168,7 @@ _See also: http://www.salesforce.com/us/developer/docs/api_rest/Content/dome_sob
 
 ### update(sobject, attrs)
 
-Takes an sobject name and a hash of attributes to update a record. The
-'Id' field is required to update. Returns true if the record was successfully
+Takes an sobject name and a hash of attributes to update a record. An 'Id' key is required in attrs (either a string or symbol). Returns true if the record was successfully
 updated.
 
 ```ruby
