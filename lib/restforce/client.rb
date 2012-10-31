@@ -394,7 +394,6 @@ module Restforce
     def username_password?
       @options[:username] &&
         @options[:password] &&
-        @options[:security_token] &&
         @options[:client_id] &&
         @options[:client_secret]
     end
