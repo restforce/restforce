@@ -1,7 +1,6 @@
 require 'faraday'
 require 'faraday_middleware'
 require 'json'
-require 'faye'
 
 require 'openssl'
 require 'base64'
