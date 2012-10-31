@@ -28,7 +28,7 @@ shared_context 'basic client' do
   end
 
   let(:password_options) do
-    base_options.merge(:oauth_token => nil, :refresh_token => nil, :instance_url => nil)
+    base_options.merge(:oauth_token => nil, :refresh_token => nil, :instance_url => nil, :security_token => nil)
   end
 
   let(:client_options) { base_options }
