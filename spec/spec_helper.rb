@@ -3,6 +3,7 @@ SimpleCov.start
 
 require 'bundler/setup'
 Bundler.require :default, :test
+require 'faye'
 
 require 'webmock/rspec'
 
