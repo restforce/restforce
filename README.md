@@ -98,6 +98,14 @@ Restforce.configure do |config|
 end
 ```
 
+### Bang methods
+
+All the CRUD methods (create, update, upsert, destroy) have equivalent methods with 
+a ! at the end (create!, update!, upsert!, destroy!), which can be used if you need
+to do some custom error handling. The bang methods will raise exceptions, while the 
+non-bang methods will return false in the event that an exception is raised. This
+works similarly to ActiveRecord.
+
 * * *
 
 ### query(soql)
