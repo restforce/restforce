@@ -440,7 +440,7 @@ shared_examples_for 'methods' do
       let(:oauth_token) { 'bar' }
       specify { expect { subject }.to_not raise_error }
     end
-  end
+  end unless RUBY_PLATFORM == 'java'
 
   describe 'authentication retries' do
     context 'when retries reaches 0' do

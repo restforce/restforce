@@ -24,5 +24,5 @@ Gem::Specification.new do |gem|
   gem.add_development_dependency 'rspec'
   gem.add_development_dependency 'webmock'
   gem.add_development_dependency 'simplecov'
-  gem.add_development_dependency 'faye', '0.8.3'
+  gem.add_development_dependency 'faye', '0.8.3' unless RUBY_PLATFORM == 'java'
 end
