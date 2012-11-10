@@ -31,10 +31,12 @@ module Restforce
     #
     # Returns the Hash context if the message is valid.
     def decode_signed_request(message, client_secret)
-      encryped_secret, payload = message.split('.')
+      signature, payload = message.split('.')
+      signature = Base64.decode64(signature)
       digest = OpenSSL::Digest::Digest.new('sha256')
-      signature = Base64.encode64(OpenSSL::HMAC.hexdigest(digest, client_secret, payload))
-      JSON.parse(Base64.decode64(payload)) if encryped_secret == signature
+      hmac = OpenSSL::HMAC.digest(digest, client_secret, payload)
+      return nil if signature != hmac
+      JSON.parse(Base64.decode64(payload))
     end
   end
 

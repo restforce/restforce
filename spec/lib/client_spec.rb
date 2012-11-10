@@ -378,7 +378,7 @@ shared_examples_for 'methods' do
       let(:data) { Base64.encode64('{ "key": "value" }') }
       let(:message) do
         digest = OpenSSL::Digest::Digest.new('sha256')
-        signature = Base64.encode64(OpenSSL::HMAC.hexdigest(digest, client_secret, data))
+        signature = Base64.encode64(OpenSSL::HMAC.digest(digest, client_secret, data))
         "#{signature}.#{data}"
       end
 
