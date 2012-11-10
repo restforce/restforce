@@ -372,6 +372,10 @@ ActiveSupport::Notifications.subscribe('request.faraday') do |name, start, finis
 end
 ```
 
+## Force.com Canvas
+
+You can use Restforce to decode signed requests from Salesforce. See [the example app](https://gist.github.com/4052312).
+
 ## Contributing
 
 1. Fork it
