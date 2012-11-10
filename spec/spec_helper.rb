@@ -3,7 +3,7 @@ SimpleCov.start
 
 require 'bundler/setup'
 Bundler.require :default, :test
-require 'faye'
+require 'faye' unless RUBY_PLATFORM == 'java'
 
 require 'webmock/rspec'
 
