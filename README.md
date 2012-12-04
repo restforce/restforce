@@ -294,9 +294,6 @@ require 'faye'
 # Initialize a client with your username/password/oauth token/etc.
 client = Restforce.new
 
-# Force an authentication request.
-client.authenticate!
-
 # Create a PushTopic for subscribing to Account changes.
 client.create! 'PushTopic', {
   ApiVersion: '23.0',
