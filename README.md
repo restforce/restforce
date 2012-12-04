@@ -98,7 +98,7 @@ Restforce.configure do |config|
 end
 ```
 
-### Bang methods
+### Bang! methods
 
 All the CRUD methods (create, update, upsert, destroy) have equivalent methods with 
 a ! at the end (create!, update!, upsert!, destroy!), which can be used if you need
