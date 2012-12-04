@@ -15,7 +15,7 @@ It attempts to solve a couple of key issues that the databasedotcom gem has been
 * A clean and modular architecture using [Faraday middleware](https://github.com/technoweenie/faraday)
 * Support for decoding [Force.com Canvas](http://www.salesforce.com/us/developer/docs/platform_connectpre/canvas_framework.pdf) signed requests. (NEW!)
 
-[Documentation](http://rubydoc.info/gems/restforce/frames)
+[Documentation](http://rubydoc.info/gems/restforce/frames) | [Changelog](http://revision.io/restforce)
 
 ## Installation
 
