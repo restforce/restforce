@@ -59,7 +59,10 @@ describe Restforce::SObject do
     context 'when an Id is present' do
       before do
         hash.merge!(:Id => '001D000000INjVe')
-        @request = stub_api_request 'sobjects/Whizbang/001D000000INjVe', :method => :patch, :body => "{\"Checkbox_Label\":false,\"Text_Label\":\"Hi there!\",\"Date_Label\":\"2010-01-01\",\"DateTime_Label\":\"2011-07-07T00:37:00.000+0000\",\"Picklist_Multiselect_Label\":\"four;six\"}"
+        @request = stub_api_request 'sobjects/Whizbang/001D000000INjVe',
+          :method => :patch,
+          :body => "{\"Checkbox_Label\":false,\"Text_Label\":\"Hi there!\",\"Date_Label\":\"2010-01-01\"," +
+          "\"DateTime_Label\":\"2011-07-07T00:37:00.000+0000\",\"Picklist_Multiselect_Label\":\"four;six\"}"
       end
 
       after do
@@ -67,6 +70,26 @@ describe Restforce::SObject do
       end
 
       specify { expect { subject }.to_not raise_error }
+    end
+  end
+
+  describe '.save!' do
+    subject { sobject.save! }
+
+    context 'when an exception is raised' do
+      before do
+        hash.merge!(:Id => '001D000000INjVe')
+        @request = stub_api_request 'sobjects/Whizbang/001D000000INjVe',
+          :with => 'sobject/delete_error_response',
+          :method => :patch,
+          :status => 404
+      end
+
+      after do
+        @request.should have_been_requested
+      end
+
+      specify { expect { subject }.to raise_error Faraday::Error::ResourceNotFound }
     end
   end
 
@@ -91,9 +114,30 @@ describe Restforce::SObject do
     end
   end
 
+  describe '.destroy!' do
+    subject { sobject.destroy! }
+
+    context 'when an exception is raised' do
+      before do
+        hash.merge!(:Id => '001D000000INjVe')
+        @request = stub_api_request 'sobjects/Whizbang/001D000000INjVe',
+          :with => 'sobject/delete_error_response',
+          :method => :delete,
+          :status => 404
+      end
+
+      after do
+        @request.should have_been_requested
+      end
+
+      specify { expect { subject }.to raise_error Faraday::Error::ResourceNotFound }
+    end
+  end
+
   describe '.describe' do
     before do
-      @request = stub_api_request 'sobjects/Whizbang/describe', :with => 'sobject/sobject_describe_success_response'
+      @request = stub_api_request 'sobjects/Whizbang/describe',
+        :with => 'sobject/sobject_describe_success_response'
     end
 
     after do

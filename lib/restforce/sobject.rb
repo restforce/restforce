@@ -22,6 +22,11 @@ module Restforce
       @client.update(sobject_type, attrs)
     end
 
+    def save!
+      ensure_id
+      @client.update!(sobject_type, attrs)
+    end
+
     # Public: Destroy this record.
     #
     # Examples
@@ -31,6 +36,11 @@ module Restforce
     def destroy
       ensure_id
       @client.destroy(sobject_type, self.Id)
+    end
+
+    def destroy!
+      ensure_id
+      @client.destroy!(sobject_type, self.Id)
     end
 
     # Public: Returns a hash representation of this object with the attributes
