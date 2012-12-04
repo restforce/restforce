@@ -14,6 +14,13 @@ module Restforce
         @options.delete(:perform_caching)
       end
 
+    private
+
+      # Internal: Cache to use for the caching middleware
+      def cache
+        @options[:cache]
+      end
+
     end
   end
 end

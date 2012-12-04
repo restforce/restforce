@@ -89,11 +89,6 @@ module Restforce
         end
       end
 
-      # Internal: Cache to use for the caching middleware
-      def cache
-        @options[:cache]
-      end
-
       # Internal: Returns true if the middlware stack includes the
       # Restforce::Middleware::Mashify middleware.
       def mashify?
