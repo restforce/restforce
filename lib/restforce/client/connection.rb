@@ -42,11 +42,6 @@ module Restforce
         middleware.handlers.index(Restforce::Middleware::Mashify)
       end
 
-      # Internal: Errors that should be rescued from in non-bang methods
-      def exceptions
-        [Faraday::Error::ClientError]
-      end
-
     end
   end
 end

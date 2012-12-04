@@ -247,6 +247,11 @@ module Restforce
         "/services/data/v#{@options[:api_version]}/#{path}"
       end
 
+      # Internal: Errors that should be rescued from in non-bang methods
+      def exceptions
+        [Faraday::Error::ClientError]
+      end
+
     end
   end
 end
