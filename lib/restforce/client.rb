@@ -67,6 +67,7 @@ module Restforce
     #   # Initialize a new client without using any authentication middleware:
     #   Restforce::Client.new :oauth_token => 'access token',
     #     :instance_url => 'https://na1.salesforce.com'
+    #
     def initialize(opts = {})
       raise 'Please specify a hash of options' unless opts.is_a?(Hash)
       @options = Hash[OPTIONS.map { |option| [option, Restforce.configuration.send(option)] }]
