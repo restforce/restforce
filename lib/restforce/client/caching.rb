@@ -8,10 +8,10 @@ module Restforce
       #
       # Returns the result of the block
       def without_caching(&block)
-        @options[:perform_caching] = false
+        @options[:use_cache] = false
         block.call
       ensure
-        @options.delete(:perform_caching)
+        @options.delete(:use_cache)
       end
 
     private

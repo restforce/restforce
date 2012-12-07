@@ -2,7 +2,12 @@ module Restforce
   class Middleware::Caching < FaradayMiddleware::Caching
 
     def call(env)
-      perform_caching? ? super : @app.call(env)
+      expire(cache_key(env)) unless use_cache?
+      super
+    end
+
+    def expire(key)
+      cache.delete(key) if cache
     end
 
     # We don't want to cache requests for different clients, so append the
@@ -11,8 +16,8 @@ module Restforce
       super(env) + env[:request_headers][Restforce::Middleware::Authorization::AUTH_HEADER].gsub(/\s/, '')
     end
 
-    def perform_caching?
-      !@options.has_key?(:perform_caching) || @options[:perform_caching]
+    def use_cache?
+      !@options.has_key?(:use_cache) || @options[:use_cache]
     end
 
   end
