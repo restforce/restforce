@@ -1,5 +1,23 @@
 require 'spec_helper'
 
+class MockCache
+  def initialize
+    @storage = {}
+  end
+
+  def fetch(key, &block)
+    @storage[key] || begin
+      block.call.tap do |result|
+        @storage[key] = result
+      end
+    end
+  end
+
+  def delete(key)
+    @storage.delete(key)
+  end
+end
+
 shared_examples_for 'methods' do
   describe '#new' do
     context 'without options passed in' do
@@ -405,12 +423,13 @@ shared_examples_for 'methods' do
   end
 
   describe '.without_caching' do
-    let(:cache) { double('cache') }
+    let(:cache) { MockCache.new }
 
     before do
       @request = stub_api_request 'query\?q=SELECT%20some,%20fields%20FROM%20object',
         :with => 'sobject/query_success_response'
-      cache.should_receive(:fetch).never
+      cache.should_receive(:delete).and_call_original
+      cache.should_receive(:fetch).and_call_original
     end
 
     after do
@@ -453,20 +472,6 @@ shared_examples_for 'methods' do
   end
 
   describe '.query with caching' do
-    class MockCache
-      def initialize
-        @storage = {}
-      end
-
-      def fetch(key, &block)
-        @storage[key] || begin
-          block.call.tap do |result|
-            @storage[key] = result
-          end
-        end
-      end
-    end
-
     let(:cache) { MockCache.new }
 
     before do

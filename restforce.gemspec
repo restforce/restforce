@@ -21,7 +21,7 @@ Gem::Specification.new do |gem|
   gem.add_dependency 'json', '~> 1.7.5'
   gem.add_dependency 'hashie', '~> 1.2.0'
 
-  gem.add_development_dependency 'rspec'
+  gem.add_development_dependency 'rspec', '~> 2.12.0'
   gem.add_development_dependency 'webmock'
   gem.add_development_dependency 'simplecov'
   gem.add_development_dependency 'faye', '0.8.3' unless RUBY_PLATFORM == 'java'
