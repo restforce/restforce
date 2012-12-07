@@ -6,11 +6,7 @@ class MockCache
   end
 
   def fetch(key, &block)
-    @storage[key] || begin
-      block.call.tap do |result|
-        @storage[key] = result
-      end
-    end
+    @storage[key] ||= block.call
   end
 
   def delete(key)
