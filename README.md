@@ -9,9 +9,10 @@ It attempts to solve a couple of key issues that the databasedotcom gem has been
 * Support for parent-to-child relationships.
 * Support for aggregate queries.
 * Remove the need to materialize constants.
-* Support for the Streaming API
+* Support for the [Streaming API](#streaming)
 * Support for blob data types.
 * Support for GZIP compression.
+* Support for [custom Apex REST endpoints](#custom-apex-rest-endpoints).
 * A clean and modular architecture using [Faraday middleware](https://github.com/technoweenie/faraday)
 * Support for decoding [Force.com Canvas](http://www.salesforce.com/us/developer/docs/platform_connectpre/canvas_framework.pdf) signed requests. (NEW!)
 
@@ -281,6 +282,36 @@ _See also: http://www.salesforce.com/us/developer/docs/api_rest/Content/dome_sob
 
 * * *
 
+### Custom Apex REST endpoints
+
+You can use Restforce to interact with your custom REST endpoints, by using
+`.get`, `.put`, `.patch`, `.post`, and `.delete`.
+
+For example, if you had the followin Apex REST endpoint on Salesforce:
+
+```apex
+@RestResource(urlMapping='/FieldCase/*')
+global class RESTCaseController {
+  @HttpGet
+  global static List<Case> getOpenCases() {
+    String companyName = RestContext.request.params.get('company');
+    Account company = [ Select ID, Name, Email__c, BillingState from Account where Name = :companyName];
+
+    List<Case> cases = [SELECT Id, Subject, Status, OwnerId, Owner.Name from Case WHERE AccountId = :company.Id];
+    return cases;
+  }
+}
+```
+
+Then you could query the cases using Restforce:
+
+```ruby
+client.get '/services/apexrest/FieldCase', :company => 'GenePoint'
+# => #<Restforce::Collection ...>
+```
+
+* * *
+
 ### Streaming
 
 Restforce supports the [Streaming API](http://wiki.developerforce.com/page/Getting_Started_with_the_Force.com_Streaming_API), and makes implementing
@@ -292,7 +323,11 @@ pub/sub with Salesforce a trivial task:
 require 'faye'
 
 # Initialize a client with your username/password/oauth token/etc.
-client = Restforce.new
+client = Restforce.new :username => 'foo',
+  :password       => 'bar',
+  :security_token => 'security token'
+  :client_id      => 'client_id',
+  :client_secret  => 'client_secret'
 
 # Create a PushTopic for subscribing to Account changes.
 client.create! 'PushTopic', {
