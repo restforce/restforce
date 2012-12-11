@@ -287,7 +287,7 @@ _See also: http://www.salesforce.com/us/developer/docs/api_rest/Content/dome_sob
 You can use Restforce to interact with your custom REST endpoints, by using
 `.get`, `.put`, `.patch`, `.post`, and `.delete`.
 
-For example, if you had the followin Apex REST endpoint on Salesforce:
+For example, if you had the following Apex REST endpoint on Salesforce:
 
 ```apex
 @RestResource(urlMapping='/FieldCase/*')
