@@ -1,10 +1,12 @@
 # Restforce [![travis-ci](https://secure.travis-ci.org/ejholmes/restforce.png)](https://secure.travis-ci.org/ejholmes/restforce) [![Code Climate](https://codeclimate.com/badge.png)](https://codeclimate.com/github/ejholmes/restforce)
 
 Restforce is a ruby gem for the [Salesforce REST api](http://www.salesforce.com/us/developer/docs/api_rest/index.htm).
-It's meant to be a lighter weight alternative to the [databasedotcom gem](https://github.com/heroku/databasedotcom).
+It's meant to be a lighter weight alternative to the [databasedotcom gem](https://github.com/heroku/databasedotcom) that offers
+greater flexibility and more advanced functionality.
 
-It attempts to solve a couple of key issues that the databasedotcom gem has been unable to solve:
+Features include:
 
+* A clean and modular architecture using [Faraday middleware](https://github.com/technoweenie/faraday) and [Hashie::Mash](https://github.com/intridea/hashie/tree/v1.2.0)'d responses.
 * Support for interacting with multiple users from different orgs.
 * Support for parent-to-child relationships.
 * Support for aggregate queries.
@@ -13,7 +15,6 @@ It attempts to solve a couple of key issues that the databasedotcom gem has been
 * Support for blob data types.
 * Support for GZIP compression.
 * Support for [custom Apex REST endpoints](#custom-apex-rest-endpoints).
-* A clean and modular architecture using [Faraday middleware](https://github.com/technoweenie/faraday)
 * Support for decoding [Force.com Canvas](http://www.salesforce.com/us/developer/docs/platform_connectpre/canvas_framework.pdf) signed requests. (NEW!)
 
 [Documentation](http://rubydoc.info/gems/restforce/frames) | [Changelog](http://revision.io/restforce)
