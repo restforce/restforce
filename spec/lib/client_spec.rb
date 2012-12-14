@@ -285,14 +285,11 @@ shared_examples_for 'methods' do
         expect(@request).to have_been_requested
       end
 
-      context 'with symbol external Id key' do
-        subject { client.upsert!('Account', 'External__c', :External__c => 'foobar', :Name => 'Foobar') }
-        it { should eq 'foo' }
-      end
-
-      context 'with string external Id key' do
-        subject { client.upsert!('Account', 'External__c', 'External__c' => 'foobar', 'Name' => 'Foobar') }
-        it { should eq 'foo' }
+      [:External__c, 'External__c'].each do |key|
+        context "with #{key.inspect} as the external id" do
+          subject { client.upsert!('Account', 'External__c', key => 'foobar', :Name => 'Foobar') }
+          it { should eq 'foo' }
+        end
       end
     end
   end
