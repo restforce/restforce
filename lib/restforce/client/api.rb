@@ -1,6 +1,9 @@
+require 'restforce/client/verbs'
+
 module Restforce
   class Client
     module API
+      extend Restforce::Client::Verbs
 
       # Public: Get the names of all sobjects on the org.
       #
@@ -192,29 +195,6 @@ module Restforce
         true
       end
 
-      def self.handle_verbs(*verbs)
-        verbs.each do |verb|
-          define_method verb do |*args|
-            retries = @options[:authentication_retries]
-            begin
-              connection.send(verb, *args)
-            rescue Restforce::UnauthorizedError
-              if retries > 0
-                retries -= 1
-                connection.url_prefix = @options[:instance_url]
-                retry
-              end
-              raise
-            end
-          end
-
-          define_method :"api_#{verb}" do |*args|
-            args[0] = api_path(args[0])
-            send(verb, *args)
-          end
-        end
-      end
-
       # Public: Helper methods for performing arbitrary actions against the API using
       # various HTTP verbs.
       #
@@ -237,7 +217,7 @@ module Restforce
       #   client.api_delete 'sobjects/Account/001D000000INjVe'
       #
       # Returns the Faraday::Response.
-      handle_verbs :get, :post, :put, :delete, :patch
+      define_verbs :get, :post, :put, :delete, :patch
 
     private
 
