@@ -241,19 +241,11 @@ shared_examples_for 'methods' do
         expect(@request).to have_been_requested
       end
 
-      context 'with symbol Id key' do
-        subject { client.update('Account', :Id => '001D000000INjVe', :Name => 'Foobar') }
-        it { should be_true }
-      end
-
-      context 'with string Id key' do
-        subject { client.update('Account', 'Id' => '001D000000INjVe', 'Name' => 'Foobar') }
-        it { should be_true }
-      end
-
-      context 'with a lower case id' do
-        subject { client.update('Account', 'id' => '001D000000INjVe', 'Name' => 'Foobar') }
-        it { should be_true }
+      [:Id, :id, 'Id', 'id'].each do |key|
+        context "with #{key.inspect} as the key" do
+          subject { client.update('Account', key => '001D000000INjVe', :Name => 'Foobar') }
+          it { should be_true }
+        end
       end
     end
   end
