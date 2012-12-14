@@ -30,10 +30,10 @@ module Restforce
       #
       # Returns nil.
       def define_verb(verb)
-        define_method verb do |*args|
+        define_method verb do |*args, &block|
           retries = @options[:authentication_retries]
           begin
-            connection.send(verb, *args)
+            connection.send(verb, *args, &block)
           rescue Restforce::UnauthorizedError
             if retries > 0
               retries -= 1
@@ -57,9 +57,9 @@ module Restforce
       #
       # Returns nil.
       def define_api_verb(verb)
-        define_method :"api_#{verb}" do |*args|
+        define_method :"api_#{verb}" do |*args, &block|
           args[0] = api_path(args[0])
-          send(verb, *args)
+          send(verb, *args, &block)
         end
       end
 
