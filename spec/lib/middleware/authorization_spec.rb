@@ -12,6 +12,6 @@ describe Restforce::Middleware::Authorization do
   end
 
   it 'adds the oauth token to the headers' do
-    env[:request_headers]['Authorization'].should eq 'OAuth token'
+    expect(env[:request_headers]['Authorization']).to eq 'OAuth token'
   end
 end

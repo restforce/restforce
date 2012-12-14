@@ -28,7 +28,7 @@ describe Restforce do
         Restforce.configure do |config|
           config.send("#{attr}=", 'foobar')
         end
-        Restforce.configuration.send(attr).should eq 'foobar'
+        expect(Restforce.configuration.send(attr)).to eq 'foobar'
       end
     end
   end

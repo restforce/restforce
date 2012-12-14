@@ -17,7 +17,7 @@ end
 shared_examples_for 'methods' do
   describe '#new' do
     context 'without options passed in' do
-      it 'should not raise an exception' do
+      it 'does not raise an exception' do
         expect {
           described_class.new
         }.to_not raise_error
@@ -25,7 +25,7 @@ shared_examples_for 'methods' do
     end
 
     context 'with a non-hash value' do
-      it 'should raise an exception' do
+      it 'raises an exception' do
         expect {
           described_class.new 'foo'
         }.to raise_error, 'Please specify a hash of options'
@@ -73,7 +73,7 @@ shared_examples_for 'methods' do
     end
 
     after do
-      @request.should have_been_requested
+      expect(@request).to have_been_requested
     end
 
     subject { client.list_sobjects }
@@ -89,7 +89,7 @@ shared_examples_for 'methods' do
       end
 
       after do
-        @request.should have_been_requested
+        expect(@request).to have_been_requested
       end
 
       subject { client.describe }
@@ -103,7 +103,7 @@ shared_examples_for 'methods' do
       end
 
       after do
-        @request.should have_been_requested
+        expect(@request).to have_been_requested
       end
 
       subject { client.describe('Whizbang') }
@@ -118,7 +118,7 @@ shared_examples_for 'methods' do
     end
 
     after do
-      @request.should have_been_requested
+      expect(@request).to have_been_requested
     end
 
     subject { client.query('SELECT some, fields FROM object') }
@@ -132,7 +132,7 @@ shared_examples_for 'methods' do
     end
 
     after do
-      @request.should have_been_requested
+      expect(@request).to have_been_requested
     end
 
     subject { client.search('FIND {bar}') }
@@ -147,7 +147,7 @@ shared_examples_for 'methods' do
     end
 
     after do
-      @request.should have_been_requested
+      expect(@request).to have_been_requested
     end
 
     subject { client.org_id }
@@ -164,7 +164,7 @@ shared_examples_for 'methods' do
       end
 
       after do
-        @request.should have_been_requested
+        expect(@request).to have_been_requested
       end
 
       subject { client.create('Account', :Name => 'Foobar') }
@@ -180,7 +180,7 @@ shared_examples_for 'methods' do
       end
 
       after do
-        @request.should have_been_requested
+        expect(@request).to have_been_requested
       end
 
       subject { client.create('Account', :Name => 'Foobar', :Blob => Restforce::UploadIO.new(File.expand_path('../../fixtures/blob.jpg', __FILE__), 'image/jpeg')) }
@@ -199,7 +199,7 @@ shared_examples_for 'methods' do
       end
 
       after do
-        @request.should have_been_requested
+        expect(@request).to have_been_requested
       end
 
       subject { client.update!('Account', :Id => '001D000000INjVe', :Name => 'Foobar') }
@@ -223,7 +223,7 @@ shared_examples_for 'methods' do
       end
 
       after do
-        @request.should have_been_requested
+        expect(@request).to have_been_requested
       end
 
       subject { client.update('Account', :Id => '001D000000INjVe', :Name => 'Foobar') }
@@ -238,7 +238,7 @@ shared_examples_for 'methods' do
       end
 
       after do
-        @request.should have_been_requested
+        expect(@request).to have_been_requested
       end
 
       context 'with symbol Id key' do
@@ -262,7 +262,7 @@ shared_examples_for 'methods' do
       end
 
       after do
-        @request.should have_been_requested
+        expect(@request).to have_been_requested
       end
 
       context 'with symbol external Id key' do
@@ -285,7 +285,7 @@ shared_examples_for 'methods' do
       end
 
       after do
-        @request.should have_been_requested
+        expect(@request).to have_been_requested
       end
 
       context 'with symbol external Id key' do
@@ -312,7 +312,7 @@ shared_examples_for 'methods' do
       end
 
       after do
-        @request.should have_been_requested
+        expect(@request).to have_been_requested
       end
 
       specify { expect { subject }.to raise_error Faraday::Error::ResourceNotFound }
@@ -324,7 +324,7 @@ shared_examples_for 'methods' do
       end
 
       after do
-        @request.should have_been_requested
+        expect(@request).to have_been_requested
       end
 
       it { should be_true }
@@ -343,7 +343,7 @@ shared_examples_for 'methods' do
       end
 
       after do
-        @request.should have_been_requested
+        expect(@request).to have_been_requested
       end
 
       it { should be_false }
@@ -355,7 +355,7 @@ shared_examples_for 'methods' do
       end
 
       after do
-        @request.should have_been_requested
+        expect(@request).to have_been_requested
       end
 
       it { should be_true }
@@ -370,7 +370,7 @@ shared_examples_for 'methods' do
     end
 
     after do
-      @request.should have_been_requested
+      expect(@request).to have_been_requested
     end
 
     subject { client.authenticate! }
@@ -429,7 +429,7 @@ shared_examples_for 'methods' do
     end
 
     after do
-      @request.should have_been_requested
+      expect(@request).to have_been_requested
     end
 
     subject { client.without_caching { client.query('SELECT some, fields FROM object') } }
@@ -482,8 +482,8 @@ shared_examples_for 'methods' do
     end
 
     after do
-      @query.should have_been_made.times(2)
-      @login.should have_been_made
+      expect(@query).to have_been_made.times(2)
+      expect(@login).to have_been_made
     end
 
     subject { client.query('SELECT some, fields FROM object') }
@@ -512,12 +512,12 @@ describe 'with mashify middleware' do
         end
 
         after do
-          @requests.each { |request| request.should have_been_requested }
+          @requests.each { |request| expect(request).to have_been_requested }
         end
 
         subject { client.query('SELECT some, fields FROM object').next_page }
         it { should be_a Restforce::Collection }
-        specify { subject.first.Text_Label.should eq 'Last Page' }
+        specify { expect(subject.first.Text_Label).to eq 'Last Page' }
       end
     end
   end

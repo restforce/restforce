@@ -24,7 +24,7 @@ describe Restforce::Middleware::Gzip do
     context 'when :compress is false' do
       it 'does not add the Accept-Encoding header' do
         middleware.call(env)
-        env[:request_headers]['Accept-Encoding'].should be_nil
+        expect(env[:request_headers]['Accept-Encoding']).to be_nil
       end
     end
 
@@ -35,7 +35,7 @@ describe Restforce::Middleware::Gzip do
 
       it 'adds the Accept-Encoding header' do
         middleware.call(env)
-        env[:request_headers]['Accept-Encoding'].should eq 'gzip'
+        expect(env[:request_headers]['Accept-Encoding']).to eq 'gzip'
       end
     end
   end
@@ -52,7 +52,7 @@ describe Restforce::Middleware::Gzip do
 
     it 'decompresses the response body' do
       middleware.call(env)
-      env[:body].should eq fixture('sobject/query_success_response')
+      expect(env[:body]).to eq fixture('sobject/query_success_response')
     end
   end
 

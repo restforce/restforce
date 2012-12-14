@@ -6,9 +6,7 @@ describe Restforce::Mash do
 
     context 'when array' do
       let(:input) { [{ :foo => 'hello' }, { :bar => 'world' }] }
-      it 'mashifys each child object' do
-        subject.each { |obj| obj.should be_a Restforce::Mash }
-      end
+      it { should be_all { |obj| expect(obj).to be_a Restforce::Mash } }
     end
   end
 

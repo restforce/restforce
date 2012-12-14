@@ -15,12 +15,12 @@ describe Restforce::Collection do
       its(:size)       { should eq 1 }
       its(:total_size) { should eq 1 }
       its(:next_page_url)  { should be_nil }
-      specify { subject.instance_variable_get(:@client).should eq client }
+      specify { expect(subject.instance_variable_get(:@client)).to eq client }
 
       describe 'each record' do
         it 'should be a Restforce::SObject' do
           records.each do |record|
-            record.should be_a Restforce::SObject
+            expect(record).to be_a Restforce::SObject
           end
         end
       end
@@ -35,7 +35,7 @@ describe Restforce::Collection do
       its(:size)       { should eq 1 }
       its(:total_size) { should eq 2 }
       its(:next_page_url)  { should eq '/services/data/v24.0/query/01gD' }
-      specify { subject.instance_variable_get(:@client).should eq client }
+      specify { expect(subject.instance_variable_get(:@client)).to eq client }
 
       describe '.next_page' do
         before do

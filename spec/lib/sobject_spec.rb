@@ -28,13 +28,9 @@ describe Restforce::SObject do
         it { should be_a Restforce::Collection }
 
         describe 'each child' do
-          it 'should be a Restforce::SObject' do
-            sobject.Whizbangs__r.each { |sobject| sobject.should be_a Restforce::SObject }
-          end
-
-          it 'should set the client' do
-            sobject.Whizbangs__r.each { |sobject| sobject.should have_client client }
-          end
+          subject { sobject.Whizbangs__r }
+          it { should be_all { |sobject| expect(sobject).to be_a Restforce::SObject } }
+          it { should be_all { |sobject| expect(sobject).to have_client client } }
         end
       end
 
@@ -66,7 +62,7 @@ describe Restforce::SObject do
       end
 
       after do
-        @request.should have_been_requested
+        expect(@request).to have_been_requested
       end
 
       specify { expect { subject }.to_not raise_error }
@@ -86,7 +82,7 @@ describe Restforce::SObject do
       end
 
       after do
-        @request.should have_been_requested
+        expect(@request).to have_been_requested
       end
 
       specify { expect { subject }.to raise_error Faraday::Error::ResourceNotFound }
@@ -107,7 +103,7 @@ describe Restforce::SObject do
       end
 
       after do
-        @request.should have_been_requested
+        expect(@request).to have_been_requested
       end
 
       specify { expect { subject }.to_not raise_error }
@@ -127,7 +123,7 @@ describe Restforce::SObject do
       end
 
       after do
-        @request.should have_been_requested
+        expect(@request).to have_been_requested
       end
 
       specify { expect { subject }.to raise_error Faraday::Error::ResourceNotFound }
@@ -141,7 +137,7 @@ describe Restforce::SObject do
     end
 
     after do
-      @request.should have_been_requested
+      expect(@request).to have_been_requested
     end
 
     subject { sobject.describe }
