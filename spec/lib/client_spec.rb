@@ -250,6 +250,11 @@ shared_examples_for 'methods' do
         subject { client.update('Account', 'Id' => '001D000000INjVe', 'Name' => 'Foobar') }
         it { should be_true }
       end
+
+      context 'with a lower case id' do
+        subject { client.update('Account', 'id' => '001D000000INjVe', 'Name' => 'Foobar') }
+        it { should be_true }
+      end
     end
   end
 

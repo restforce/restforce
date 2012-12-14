@@ -159,7 +159,7 @@ module Restforce
       # Returns true if the sobject was successfully updated, raises an error
       # otherwise.
       def update!(sobject, attrs)
-        id = attrs.has_key?(:Id) ? attrs.delete(:Id) : attrs.delete('Id')
+        id = attrs.delete(attrs.keys.find { |k| k.to_s.downcase == 'id' })
         raise 'Id field missing.' unless id
         api_patch "sobjects/#{sobject}/#{id}", attrs
         true
