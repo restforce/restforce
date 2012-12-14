@@ -5,6 +5,30 @@ module Restforce
     module API
       extend Restforce::Client::Verbs
 
+      # Public: Helper methods for performing arbitrary actions against the API using
+      # various HTTP verbs.
+      #
+      # Examples
+      #
+      #   # Perform a get request
+      #   client.get '/services/data/v24.0/sobjects'
+      #   client.api_get 'sobjects'
+      #
+      #   # Perform a post request
+      #   client.post '/services/data/v24.0/sobjects/Account', { ... }
+      #   client.api_post 'sobjects/Account', { ... }
+      #
+      #   # Perform a put request
+      #   client.put '/services/data/v24.0/sobjects/Account/001D000000INjVe', { ... }
+      #   client.api_put 'sobjects/Account/001D000000INjVe', { ... }
+      #
+      #   # Perform a delete request
+      #   client.delete '/services/data/v24.0/sobjects/Account/001D000000INjVe'
+      #   client.api_delete 'sobjects/Account/001D000000INjVe'
+      #
+      # Returns the Faraday::Response.
+      define_verbs :get, :post, :put, :delete, :patch
+
       # Public: Get the names of all sobjects on the org.
       #
       # Examples
@@ -194,30 +218,6 @@ module Restforce
         api_delete "sobjects/#{sobject}/#{id}"
         true
       end
-
-      # Public: Helper methods for performing arbitrary actions against the API using
-      # various HTTP verbs.
-      #
-      # Examples
-      #
-      #   # Perform a get request
-      #   client.get '/services/data/v24.0/sobjects'
-      #   client.api_get 'sobjects'
-      #
-      #   # Perform a post request
-      #   client.post '/services/data/v24.0/sobjects/Account', { ... }
-      #   client.api_post 'sobjects/Account', { ... }
-      #
-      #   # Perform a put request
-      #   client.put '/services/data/v24.0/sobjects/Account/001D000000INjVe', { ... }
-      #   client.api_put 'sobjects/Account/001D000000INjVe', { ... }
-      #
-      #   # Perform a delete request
-      #   client.delete '/services/data/v24.0/sobjects/Account/001D000000INjVe'
-      #   client.api_delete 'sobjects/Account/001D000000INjVe'
-      #
-      # Returns the Faraday::Response.
-      define_verbs :get, :post, :put, :delete, :patch
 
     private
 
