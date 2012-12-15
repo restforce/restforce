@@ -33,16 +33,16 @@ module Restforce
 
     def create_multipart(env, params)
       boundary = env[:request][:boundary]
-
       parts = []
-      skip  = []
-      params.each do |key, value|
-        if value.respond_to? :content_type
-          parts << Faraday::Parts::Part.new(boundary, key.to_s, value); skip << key
-        end
+
+      # Fields
+      parts << Faraday::Parts::Part.new(boundary, 'entity_content', params.reject { |k,v| v.respond_to? :content_type }.to_json)
+
+      # Files
+      params.each do |k,v|
+        parts << Faraday::Parts::Part.new(boundary, k.to_s, v) if v.respond_to? :content_type
       end
-      parts << Faraday::Parts::Part.new(boundary, 'entity_content', params.reject { |key, _| skip.include? key }.to_json)
-      parts.reverse!
+
       parts << Faraday::Parts::EpiloguePart.new(boundary)
 
       body = Faraday::CompositeReadIO.new(parts)
