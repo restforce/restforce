@@ -285,7 +285,7 @@ shared_examples_for 'methods' do
         expect(@request).to have_been_requested
       end
 
-      [:External__c, 'External__c'].each do |key|
+      [:External__c, 'External__c', :external__c, 'external__c'].each do |key|
         context "with #{key.inspect} as the external id" do
           subject { client.upsert!('Account', 'External__c', key => 'foobar', :Name => 'Foobar') }
           it { should eq 'foo' }
