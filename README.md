@@ -10,7 +10,6 @@ Features include:
 * Support for interacting with multiple users from different orgs.
 * Support for parent-to-child relationships.
 * Support for aggregate queries.
-* Remove the need to materialize constants.
 * Support for the [Streaming API](#streaming)
 * Support for blob data types.
 * Support for GZIP compression.
