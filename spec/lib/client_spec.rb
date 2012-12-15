@@ -50,31 +50,22 @@ shared_examples_for 'methods' do
 
     context 'without required options for authentication middleware to be provided' do
       let(:client_options) { {} }
-
       it { should be_nil }
     end
 
     context 'with username, password, security token, client id and client secret provided' do
       let(:client_options) { password_options }
-
       it { should eq Restforce::Middleware::Authentication::Password }
     end
 
     context 'with refresh token, client id and client secret provided' do
       let(:client_options) { oauth_options }
-
       it { should eq Restforce::Middleware::Authentication::Token }
     end
   end
 
   describe '.list_sobjects' do
-    before do
-      @request = stub_api_request :sobjects, :with => 'sobject/describe_sobjects_success_response'
-    end
-
-    after do
-      expect(@request).to have_been_requested
-    end
+    requests :sobjects, :with => 'sobject/describe_sobjects_success_response'
 
     subject { client.list_sobjects }
     it { should be_an Array }
@@ -83,28 +74,14 @@ shared_examples_for 'methods' do
 
   describe '.describe' do
     context 'with no arguments' do
-      before do
-        @request = stub_api_request :sobjects,
-          :with => 'sobject/describe_sobjects_success_response'
-      end
-
-      after do
-        expect(@request).to have_been_requested
-      end
+      requests :sobjects, :with => 'sobject/describe_sobjects_success_response'
 
       subject { client.describe }
       it { should be_an Array }
     end
 
     context 'with an argument' do
-      before do
-        @request = stub_api_request 'sobjects/Whizbang/describe',
-          :with => 'sobject/sobject_describe_success_response'
-      end
-
-      after do
-        expect(@request).to have_been_requested
-      end
+      requests 'sobjects/Whizbang/describe', :with => 'sobject/sobject_describe_success_response'
 
       subject { client.describe('Whizbang') }
       its(['name']) { should eq 'Whizbang' }
@@ -112,28 +89,14 @@ shared_examples_for 'methods' do
   end
 
   describe '.query' do
-    before do
-      @request = stub_api_request 'query\?q=SELECT%20some,%20fields%20FROM%20object',
-        :with => 'sobject/query_success_response'
-    end
-
-    after do
-      expect(@request).to have_been_requested
-    end
+    requests 'query\?q=SELECT%20some,%20fields%20FROM%20object', :with => 'sobject/query_success_response'
 
     subject { client.query('SELECT some, fields FROM object') }
     it { should be_an Array }
   end
 
   describe '.search' do
-    before do
-      @request = stub_api_request 'search\?q=FIND%20%7Bbar%7D',
-        :with => 'sobject/search_success_response'
-    end
-
-    after do
-      expect(@request).to have_been_requested
-    end
+    requests 'search\?q=FIND%20%7Bbar%7D', :with => 'sobject/search_success_response'
 
     subject { client.search('FIND {bar}') }
     it { should be_an Array }
@@ -141,14 +104,7 @@ shared_examples_for 'methods' do
   end
 
   describe '.org_id' do
-    before do
-      @request = stub_api_request 'query\?q=select%20id%20from%20Organization',
-        :with => 'sobject/org_query_response'
-    end
-
-    after do
-      expect(@request).to have_been_requested
-    end
+    requests 'query\?q=select%20id%20from%20Organization', :with => 'sobject/org_query_response'
 
     subject { client.org_id }
     it { should eq '00Dx0000000BV7z' }
@@ -156,32 +112,20 @@ shared_examples_for 'methods' do
 
   describe '.create' do
     context 'without multipart' do
-      before do
-        @request = stub_api_request 'sobjects/Account',
-          :with => 'sobject/create_success_response',
-          :method => :post,
-          :body => "{\"Name\":\"Foobar\"}"
-      end
-
-      after do
-        expect(@request).to have_been_requested
-      end
+      requests 'sobjects/Account',
+        :with => 'sobject/create_success_response',
+        :method => :post,
+        :body => "{\"Name\":\"Foobar\"}"
 
       subject { client.create('Account', :Name => 'Foobar') }
       it { should eq 'some_id' }
     end
 
     context 'with multipart' do
-      before do
-        @request = stub_api_request 'sobjects/Account',
-          :with => 'sobject/create_success_response',
-          :method => :post,
-          :body => %r(----boundary_string\r\nContent-Disposition: form-data; name=\"entity_content\";\r\nContent-Type: application/json\r\n\r\n{\"Name\":\"Foobar\"}\r\n----boundary_string\r\nContent-Disposition: form-data; name=\"Blob\"; filename=\"blob.jpg\"\r\nContent-Length: 42171\r\nContent-Type: image/jpeg\r\nContent-Transfer-Encoding: binary)
-      end
-
-      after do
-        expect(@request).to have_been_requested
-      end
+      requests 'sobjects/Account',
+        :with => 'sobject/create_success_response',
+        :method => :post,
+        :body => %r(----boundary_string\r\nContent-Disposition: form-data; name=\"entity_content\";\r\nContent-Type: application/json\r\n\r\n{\"Name\":\"Foobar\"}\r\n----boundary_string\r\nContent-Disposition: form-data; name=\"Blob\"; filename=\"blob.jpg\"\r\nContent-Length: 42171\r\nContent-Type: image/jpeg\r\nContent-Transfer-Encoding: binary)
 
       subject { client.create('Account', :Name => 'Foobar', :Blob => Restforce::UploadIO.new(File.expand_path('../../fixtures/blob.jpg', __FILE__), 'image/jpeg')) }
       it { should eq 'some_id' }
@@ -190,17 +134,11 @@ shared_examples_for 'methods' do
 
   describe '.update!' do
     context 'with invalid Id' do
-      before do
-        @request = stub_api_request 'sobjects/Account/001D000000INjVe',
-          :with => 'sobject/delete_error_response',
-          :method => :patch,
-          :body => "{\"Name\":\"Foobar\"}",
-          :status => 404
-      end
-
-      after do
-        expect(@request).to have_been_requested
-      end
+      requests 'sobjects/Account/001D000000INjVe',
+        :with => 'sobject/delete_error_response',
+        :method => :patch,
+        :body => "{\"Name\":\"Foobar\"}",
+        :status => 404
 
       subject { client.update!('Account', :Id => '001D000000INjVe', :Name => 'Foobar') }
       specify { expect { subject }.to raise_error Faraday::Error::ResourceNotFound }
@@ -214,32 +152,20 @@ shared_examples_for 'methods' do
     end
 
     context 'with invalid Id' do
-      before do
-        @request = stub_api_request 'sobjects/Account/001D000000INjVe',
-          :with => 'sobject/delete_error_response',
-          :method => :patch,
-          :body => "{\"Name\":\"Foobar\"}",
-          :status => 404
-      end
-
-      after do
-        expect(@request).to have_been_requested
-      end
+      requests 'sobjects/Account/001D000000INjVe',
+        :with => 'sobject/delete_error_response',
+        :method => :patch,
+        :body => "{\"Name\":\"Foobar\"}",
+        :status => 404
 
       subject { client.update('Account', :Id => '001D000000INjVe', :Name => 'Foobar') }
       it { should be_false }
     end
 
     context 'with success' do
-      before do
-        @request = stub_api_request 'sobjects/Account/001D000000INjVe',
-          :method => :patch,
-          :body => "{\"Name\":\"Foobar\"}"
-      end
-
-      after do
-        expect(@request).to have_been_requested
-      end
+      requests 'sobjects/Account/001D000000INjVe',
+        :method => :patch,
+        :body => "{\"Name\":\"Foobar\"}"
 
       [:Id, :id, 'Id', 'id'].each do |key|
         context "with #{key.inspect} as the key" do
@@ -252,15 +178,9 @@ shared_examples_for 'methods' do
 
   describe '.upsert!' do
     context 'when updated' do
-      before do
-        @request = stub_api_request 'sobjects/Account/External__c/foobar',
-          :method => :patch,
-          :body => "{\"Name\":\"Foobar\"}"
-      end
-
-      after do
-        expect(@request).to have_been_requested
-      end
+      requests 'sobjects/Account/External__c/foobar',
+        :method => :patch,
+        :body => "{\"Name\":\"Foobar\"}"
 
       context 'with symbol external Id key' do
         subject { client.upsert!('Account', 'External__c', :External__c => 'foobar', :Name => 'Foobar') }
@@ -274,16 +194,10 @@ shared_examples_for 'methods' do
     end
 
     context 'when created' do
-      before do
-        @request = stub_api_request 'sobjects/Account/External__c/foobar',
-          :method => :patch,
-          :body => "{\"Name\":\"Foobar\"}",
-          :with => 'sobject/upsert_created_success_response'
-      end
-
-      after do
-        expect(@request).to have_been_requested
-      end
+      requests 'sobjects/Account/External__c/foobar',
+        :method => :patch,
+        :body => "{\"Name\":\"Foobar\"}",
+        :with => 'sobject/upsert_created_success_response'
 
       [:External__c, 'External__c', :external__c, 'external__c'].each do |key|
         context "with #{key.inspect} as the external id" do
@@ -298,28 +212,16 @@ shared_examples_for 'methods' do
     subject { client.destroy!('Account', '001D000000INjVe') }
 
     context 'with invalid Id' do
-      before do
-        @request = stub_api_request 'sobjects/Account/001D000000INjVe',
-          :with => 'sobject/delete_error_response',
-          :method => :delete,
-          :status => 404
-      end
-
-      after do
-        expect(@request).to have_been_requested
-      end
+      requests 'sobjects/Account/001D000000INjVe',
+        :with => 'sobject/delete_error_response',
+        :method => :delete,
+        :status => 404
 
       specify { expect { subject }.to raise_error Faraday::Error::ResourceNotFound }
     end
 
     context 'with success' do
-      before do 
-        @request = stub_api_request 'sobjects/Account/001D000000INjVe', :method => :delete
-      end
-
-      after do
-        expect(@request).to have_been_requested
-      end
+      requests 'sobjects/Account/001D000000INjVe', :method => :delete
 
       it { should be_true }
     end
@@ -329,28 +231,16 @@ shared_examples_for 'methods' do
     subject { client.destroy('Account', '001D000000INjVe') }
 
     context 'with invalid Id' do
-      before do
-        @request = stub_api_request 'sobjects/Account/001D000000INjVe',
-          :with => 'sobject/delete_error_response',
-          :method => :delete,
-          :status => 404
-      end
-
-      after do
-        expect(@request).to have_been_requested
-      end
+      requests 'sobjects/Account/001D000000INjVe',
+        :with => 'sobject/delete_error_response',
+        :method => :delete,
+        :status => 404
 
       it { should be_false }
     end
 
     context 'with success' do
-      before do 
-        @request = stub_api_request 'sobjects/Account/001D000000INjVe', :method => :delete
-      end
-
-      after do
-        expect(@request).to have_been_requested
-      end
+      requests 'sobjects/Account/001D000000INjVe', :method => :delete
 
       it { should be_true }
     end
@@ -413,19 +303,15 @@ shared_examples_for 'methods' do
   end
 
   describe '.without_caching' do
-    let(:cache) { MockCache.new }
+    requests 'query\?q=SELECT%20some,%20fields%20FROM%20object',
+      :with => 'sobject/query_success_response'
 
     before do
-      @request = stub_api_request 'query\?q=SELECT%20some,%20fields%20FROM%20object',
-        :with => 'sobject/query_success_response'
       cache.should_receive(:delete).and_call_original
       cache.should_receive(:fetch).and_call_original
     end
 
-    after do
-      expect(@request).to have_been_requested
-    end
-
+    let(:cache) { MockCache.new }
     subject { client.without_caching { client.query('SELECT some, fields FROM object') } }
     it { should be_an Array }
   end
@@ -498,16 +384,8 @@ describe 'with mashify middleware' do
 
     describe '.query' do
       context 'with pagination' do
-        before do
-          @requests = [].tap do |requests|
-            requests << stub_api_request('query\?q', :with => 'sobject/query_paginated_first_page_response')
-            requests << stub_api_request('query/01gD', :with => 'sobject/query_paginated_last_page_response')
-          end
-        end
-
-        after do
-          @requests.each { |request| expect(request).to have_been_requested }
-        end
+        requests 'query\?q', :with => 'sobject/query_paginated_first_page_response'
+        requests 'query/01gD', :with => 'sobject/query_paginated_last_page_response'
 
         subject { client.query('SELECT some, fields FROM object').next_page }
         it { should be_a Restforce::Collection }
