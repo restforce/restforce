@@ -18,11 +18,8 @@ describe Restforce::Collection do
       specify { expect(subject.instance_variable_get(:@client)).to eq client }
 
       describe 'each record' do
-        it 'should be a Restforce::SObject' do
-          records.each do |record|
-            expect(record).to be_a Restforce::SObject
-          end
-        end
+        subject { records }
+        it { should be_all { |record| expect(record).to be_a Restforce::SObject } }
       end
     end
 
