@@ -53,16 +53,13 @@ describe Restforce::SObject do
     end
 
     context 'when an Id is present' do
+      requests 'sobjects/Whizbang/001D000000INjVe',
+        :method => :patch,
+        :with_body => "{\"Checkbox_Label\":false,\"Text_Label\":\"Hi there!\",\"Date_Label\":\"2010-01-01\"," +
+        "\"DateTime_Label\":\"2011-07-07T00:37:00.000+0000\",\"Picklist_Multiselect_Label\":\"four;six\"}"
+
       before do
         hash.merge!(:Id => '001D000000INjVe')
-        @request = stub_api_request 'sobjects/Whizbang/001D000000INjVe',
-          :method => :patch,
-          :body => "{\"Checkbox_Label\":false,\"Text_Label\":\"Hi there!\",\"Date_Label\":\"2010-01-01\"," +
-          "\"DateTime_Label\":\"2011-07-07T00:37:00.000+0000\",\"Picklist_Multiselect_Label\":\"four;six\"}"
-      end
-
-      after do
-        expect(@request).to have_been_requested
       end
 
       specify { expect { subject }.to_not raise_error }
@@ -73,16 +70,13 @@ describe Restforce::SObject do
     subject { sobject.save! }
 
     context 'when an exception is raised' do
+      requests 'sobjects/Whizbang/001D000000INjVe',
+        :fixture => 'sobject/delete_error_response',
+        :method => :patch,
+        :status => 404
+
       before do
         hash.merge!(:Id => '001D000000INjVe')
-        @request = stub_api_request 'sobjects/Whizbang/001D000000INjVe',
-          :with => 'sobject/delete_error_response',
-          :method => :patch,
-          :status => 404
-      end
-
-      after do
-        expect(@request).to have_been_requested
       end
 
       specify { expect { subject }.to raise_error Faraday::Error::ResourceNotFound }
@@ -97,13 +91,10 @@ describe Restforce::SObject do
     end
 
     context 'when an Id is present' do
+      requests 'sobjects/Whizbang/001D000000INjVe', :method => :delete
+
       before do 
         hash.merge!(:Id => '001D000000INjVe')
-        @request = stub_api_request 'sobjects/Whizbang/001D000000INjVe', :method => :delete
-      end
-
-      after do
-        expect(@request).to have_been_requested
       end
 
       specify { expect { subject }.to_not raise_error }
@@ -114,16 +105,13 @@ describe Restforce::SObject do
     subject { sobject.destroy! }
 
     context 'when an exception is raised' do
+      requests 'sobjects/Whizbang/001D000000INjVe',
+        :fixture => 'sobject/delete_error_response',
+        :method => :delete,
+        :status => 404
+
       before do
         hash.merge!(:Id => '001D000000INjVe')
-        @request = stub_api_request 'sobjects/Whizbang/001D000000INjVe',
-          :with => 'sobject/delete_error_response',
-          :method => :delete,
-          :status => 404
-      end
-
-      after do
-        expect(@request).to have_been_requested
       end
 
       specify { expect { subject }.to raise_error Faraday::Error::ResourceNotFound }
@@ -131,14 +119,8 @@ describe Restforce::SObject do
   end
 
   describe '.describe' do
-    before do
-      @request = stub_api_request 'sobjects/Whizbang/describe',
-        :with => 'sobject/sobject_describe_success_response'
-    end
-
-    after do
-      expect(@request).to have_been_requested
-    end
+    requests 'sobjects/Whizbang/describe',
+      :fixture => 'sobject/sobject_describe_success_response'
 
     subject { sobject.describe }
     it { should be_a Hash }

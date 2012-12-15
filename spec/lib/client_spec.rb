@@ -65,7 +65,7 @@ shared_examples_for 'methods' do
   end
 
   describe '.list_sobjects' do
-    requests :sobjects, :with => 'sobject/describe_sobjects_success_response'
+    requests :sobjects, :fixture => 'sobject/describe_sobjects_success_response'
 
     subject { client.list_sobjects }
     it { should be_an Array }
@@ -74,14 +74,14 @@ shared_examples_for 'methods' do
 
   describe '.describe' do
     context 'with no arguments' do
-      requests :sobjects, :with => 'sobject/describe_sobjects_success_response'
+      requests :sobjects, :fixture => 'sobject/describe_sobjects_success_response'
 
       subject { client.describe }
       it { should be_an Array }
     end
 
     context 'with an argument' do
-      requests 'sobjects/Whizbang/describe', :with => 'sobject/sobject_describe_success_response'
+      requests 'sobjects/Whizbang/describe', :fixture => 'sobject/sobject_describe_success_response'
 
       subject { client.describe('Whizbang') }
       its(['name']) { should eq 'Whizbang' }
@@ -89,14 +89,14 @@ shared_examples_for 'methods' do
   end
 
   describe '.query' do
-    requests 'query\?q=SELECT%20some,%20fields%20FROM%20object', :with => 'sobject/query_success_response'
+    requests 'query\?q=SELECT%20some,%20fields%20FROM%20object', :fixture => 'sobject/query_success_response'
 
     subject { client.query('SELECT some, fields FROM object') }
     it { should be_an Array }
   end
 
   describe '.search' do
-    requests 'search\?q=FIND%20%7Bbar%7D', :with => 'sobject/search_success_response'
+    requests 'search\?q=FIND%20%7Bbar%7D', :fixture => 'sobject/search_success_response'
 
     subject { client.search('FIND {bar}') }
     it { should be_an Array }
@@ -104,7 +104,7 @@ shared_examples_for 'methods' do
   end
 
   describe '.org_id' do
-    requests 'query\?q=select%20id%20from%20Organization', :with => 'sobject/org_query_response'
+    requests 'query\?q=select%20id%20from%20Organization', :fixture => 'sobject/org_query_response'
 
     subject { client.org_id }
     it { should eq '00Dx0000000BV7z' }
@@ -113,9 +113,9 @@ shared_examples_for 'methods' do
   describe '.create' do
     context 'without multipart' do
       requests 'sobjects/Account',
-        :with => 'sobject/create_success_response',
         :method => :post,
-        :body => "{\"Name\":\"Foobar\"}"
+        :with_body => "{\"Name\":\"Foobar\"}",
+      :fixture => 'sobject/create_success_response'
 
       subject { client.create('Account', :Name => 'Foobar') }
       it { should eq 'some_id' }
@@ -123,9 +123,9 @@ shared_examples_for 'methods' do
 
     context 'with multipart' do
       requests 'sobjects/Account',
-        :with => 'sobject/create_success_response',
         :method => :post,
-        :body => %r(----boundary_string\r\nContent-Disposition: form-data; name=\"entity_content\";\r\nContent-Type: application/json\r\n\r\n{\"Name\":\"Foobar\"}\r\n----boundary_string\r\nContent-Disposition: form-data; name=\"Blob\"; filename=\"blob.jpg\"\r\nContent-Length: 42171\r\nContent-Type: image/jpeg\r\nContent-Transfer-Encoding: binary)
+        :with_body => %r(----boundary_string\r\nContent-Disposition: form-data; name=\"entity_content\";\r\nContent-Type: application/json\r\n\r\n{\"Name\":\"Foobar\"}\r\n----boundary_string\r\nContent-Disposition: form-data; name=\"Blob\"; filename=\"blob.jpg\"\r\nContent-Length: 42171\r\nContent-Type: image/jpeg\r\nContent-Transfer-Encoding: binary),
+        :fixture => 'sobject/create_success_response'
 
       subject { client.create('Account', :Name => 'Foobar', :Blob => Restforce::UploadIO.new(File.expand_path('../../fixtures/blob.jpg', __FILE__), 'image/jpeg')) }
       it { should eq 'some_id' }
@@ -135,10 +135,10 @@ shared_examples_for 'methods' do
   describe '.update!' do
     context 'with invalid Id' do
       requests 'sobjects/Account/001D000000INjVe',
-        :with => 'sobject/delete_error_response',
         :method => :patch,
-        :body => "{\"Name\":\"Foobar\"}",
-        :status => 404
+        :with_body => "{\"Name\":\"Foobar\"}",
+        :status => 404,
+        :fixture => 'sobject/delete_error_response'
 
       subject { client.update!('Account', :Id => '001D000000INjVe', :Name => 'Foobar') }
       specify { expect { subject }.to raise_error Faraday::Error::ResourceNotFound }
@@ -153,10 +153,10 @@ shared_examples_for 'methods' do
 
     context 'with invalid Id' do
       requests 'sobjects/Account/001D000000INjVe',
-        :with => 'sobject/delete_error_response',
         :method => :patch,
-        :body => "{\"Name\":\"Foobar\"}",
-        :status => 404
+        :with_body => "{\"Name\":\"Foobar\"}",
+        :status => 404,
+        :fixture => 'sobject/delete_error_response'
 
       subject { client.update('Account', :Id => '001D000000INjVe', :Name => 'Foobar') }
       it { should be_false }
@@ -165,7 +165,7 @@ shared_examples_for 'methods' do
     context 'with success' do
       requests 'sobjects/Account/001D000000INjVe',
         :method => :patch,
-        :body => "{\"Name\":\"Foobar\"}"
+        :with_body => "{\"Name\":\"Foobar\"}"
 
       [:Id, :id, 'Id', 'id'].each do |key|
         context "with #{key.inspect} as the key" do
@@ -180,7 +180,7 @@ shared_examples_for 'methods' do
     context 'when updated' do
       requests 'sobjects/Account/External__c/foobar',
         :method => :patch,
-        :body => "{\"Name\":\"Foobar\"}"
+        :with_body => "{\"Name\":\"Foobar\"}"
 
       context 'with symbol external Id key' do
         subject { client.upsert!('Account', 'External__c', :External__c => 'foobar', :Name => 'Foobar') }
@@ -196,8 +196,8 @@ shared_examples_for 'methods' do
     context 'when created' do
       requests 'sobjects/Account/External__c/foobar',
         :method => :patch,
-        :body => "{\"Name\":\"Foobar\"}",
-        :with => 'sobject/upsert_created_success_response'
+        :with_body => "{\"Name\":\"Foobar\"}",
+        :fixture => 'sobject/upsert_created_success_response'
 
       [:External__c, 'External__c', :external__c, 'external__c'].each do |key|
         context "with #{key.inspect} as the external id" do
@@ -213,7 +213,7 @@ shared_examples_for 'methods' do
 
     context 'with invalid Id' do
       requests 'sobjects/Account/001D000000INjVe',
-        :with => 'sobject/delete_error_response',
+        :fixture => 'sobject/delete_error_response',
         :method => :delete,
         :status => 404
 
@@ -232,7 +232,7 @@ shared_examples_for 'methods' do
 
     context 'with invalid Id' do
       requests 'sobjects/Account/001D000000INjVe',
-        :with => 'sobject/delete_error_response',
+        :fixture => 'sobject/delete_error_response',
         :method => :delete,
         :status => 404
 
@@ -248,7 +248,7 @@ shared_examples_for 'methods' do
 
   describe '.authenticate!' do
     before do
-      @request = stub_login_request(:body => "grant_type=password&client_id=client_id&client_secret=" \
+      @request = stub_login_request(:with_body => "grant_type=password&client_id=client_id&client_secret=" \
         "client_secret&username=foo&password=barsecurity_token").
         to_return(:status => 200, :body => fixture(:auth_success_response))
     end
@@ -304,7 +304,7 @@ shared_examples_for 'methods' do
 
   describe '.without_caching' do
     requests 'query\?q=SELECT%20some,%20fields%20FROM%20object',
-      :with => 'sobject/query_success_response'
+      :fixture => 'sobject/query_success_response'
 
     before do
       cache.should_receive(:delete).and_call_original
@@ -336,8 +336,8 @@ shared_examples_for 'methods' do
       before do
         @auth_request = stub_api_request('query\?q=SELECT%20some,%20fields%20FROM%20object',
           :status => 401,
-          :with => 'expired_session_response')
-        @query_request = stub_login_request(:body => "grant_type=password&client_id=client_id&client_secret=" \
+          :fixture => 'expired_session_response')
+        @query_request = stub_login_request(:with_body => "grant_type=password&client_id=client_id&client_secret=" \
           "client_secret&username=foo&password=barsecurity_token").
           to_return(:status => 200, :body => fixture(:auth_success_response))
       end
@@ -356,7 +356,7 @@ shared_examples_for 'methods' do
         to_return(:status => 401, :body => fixture('expired_session_response')).then.
         to_return(:status => 200, :body => fixture('sobject/query_success_response'))
 
-      @login = stub_login_request(:body => "grant_type=password&client_id=client_id&client_secret=" \
+      @login = stub_login_request(:with_body => "grant_type=password&client_id=client_id&client_secret=" \
         "client_secret&username=foo&password=barsecurity_token").
         to_return(:status => 200, :body => fixture(:auth_success_response))
     end
@@ -384,8 +384,8 @@ describe 'with mashify middleware' do
 
     describe '.query' do
       context 'with pagination' do
-        requests 'query\?q', :with => 'sobject/query_paginated_first_page_response'
-        requests 'query/01gD', :with => 'sobject/query_paginated_last_page_response'
+        requests 'query\?q', :fixture => 'sobject/query_paginated_first_page_response'
+        requests 'query/01gD', :fixture => 'sobject/query_paginated_last_page_response'
 
         subject { client.query('SELECT some, fields FROM object').next_page }
         it { should be_a Restforce::Collection }

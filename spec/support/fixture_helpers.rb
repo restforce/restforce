@@ -5,23 +5,18 @@ module FixtureHelpers
       options = {
         :method => :get,
         :status => 200,
-        :api_version => '24.0',
-        :with => nil
+        :api_version => '24.0'
       }.merge(options)
 
       stub = stub_request(options[:method], %r{/services/data/v#{options[:api_version]}/#{endpoint}})
-      stub = stub.with(:body => options[:body]) if options[:body] && !RUBY_VERSION.match(/^1.8/)
-      stub = stub.to_return(:status => options[:status], :body => fixture(options[:with])) if options[:with]
+      stub = stub.with(:body => options[:with_body]) if options[:with_body] && !RUBY_VERSION.match(/^1.8/)
+      stub = stub.to_return(:status => options[:status], :body => fixture(options[:fixture])) if options[:fixture]
       stub
     end
 
     def stub_login_request(options={})
-      options = {
-        :body => nil
-      }.merge(options)
-
       stub = stub_request(:post, "https://login.salesforce.com/services/oauth2/token")
-      stub = stub.with(:body => options[:body]) if options[:body] && !RUBY_VERSION.match(/^1.8/)
+      stub = stub.with(:body => options[:with_body]) if options[:with_body] && !RUBY_VERSION.match(/^1.8/)
       stub
     end
 
