@@ -115,7 +115,7 @@ shared_examples_for 'methods' do
       requests 'sobjects/Account',
         :method => :post,
         :with_body => "{\"Name\":\"Foobar\"}",
-      :fixture => 'sobject/create_success_response'
+        :fixture => 'sobject/create_success_response'
 
       subject { client.create('Account', :Name => 'Foobar') }
       it { should eq 'some_id' }
