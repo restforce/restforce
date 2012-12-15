@@ -191,7 +191,7 @@ module Restforce
       # Returns the Id of the newly created record if the record was created.
       # Raises an error if something bad happens.
       def upsert!(sobject, field, attrs)
-        external_id = attrs.has_key?(field.to_sym) ? attrs.delete(field.to_sym) : attrs.delete(field.to_s)
+        external_id = attrs.delete(attrs.keys.find { |k| k.to_s.downcase == field.to_s.downcase })
         response = api_patch "sobjects/#{sobject}/#{field.to_s}/#{external_id}", attrs
         (response.body && response.body['id']) ? response.body['id'] : true
       end
