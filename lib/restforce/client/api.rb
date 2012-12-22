@@ -219,6 +219,18 @@ module Restforce
         true
       end
 
+      # Public: Finds a single record and returns all fields.
+      #
+      # sobject - The String name of the sobject.
+      # id      - The id of the record. If field is specified, id should be the id
+      #           of the external field.
+      # field   - External ID field to use (default: nil).
+      #
+      # Returns the Restforce::SObject sobject record.
+      def find(sobject, id, field=nil)
+        api_get(field ? "sobjects/#{sobject}/#{field}/#{id}" : "sobjects/#{sobject}/#{id}").body
+      end
+
     private
 
       # Internal: Returns a path to an api endpoint
