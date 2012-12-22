@@ -246,6 +246,24 @@ shared_examples_for 'methods' do
     end
   end
 
+  describe '.find' do
+    context 'with no external id passed' do
+      requests 'sobjects/Account/001D000000INjVe',
+        :fixture => 'sobject/sobject_find_success_response'
+
+      subject { client.find('Account', '001D000000INjVe') }
+      it { should be_a Hash }
+    end
+
+    context 'when an external id is passed' do
+      requests 'sobjects/Account/External_Field__c/1234',
+        :fixture => 'sobject/sobject_find_success_response'
+
+      subject { client.find('Account', '1234', 'External_Field__c') }
+      it { should be_a Hash }
+    end
+  end
+
   describe '.authenticate!' do
     before do
       @request = stub_login_request(:with_body => "grant_type=password&client_id=client_id&client_secret=" \

@@ -139,6 +139,25 @@ _See also: http://www.salesforce.com/us/developer/docs/api_rest/Content/dome_que
 
 * * *
 
+### find(sobject, id, field=nil)
+
+Finds the record with the specified id and the specified sobject type and
+returns all fields for the sobject. An external id field can be used instead
+of the default Id field by specifiying the name of the external id field as the
+last parameter.
+
+```ruby
+client.find('Account', '001D000000INjVe')
+# => #<Restforce::SObject Id="001D000000INjVe" Name="Test" LastModifiedBy="005G0000002f8FHIAY" ... >
+
+client.find('Account', '1234', 'Some_External_Id_Field__c')
+# => #<Restforce::SObject Id="001D000000INjVe" Name="Test" LastModifiedBy="005G0000002f8FHIAY" ... >
+```
+
+_See also: http://www.salesforce.com/us/developer/docs/api_rest/Content/resources_sobject_upsert.htm_
+
+* * *
+
 ### search(sosl)
 
 Performs a sosl query and returns the result. The result will be a
