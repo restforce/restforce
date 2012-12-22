@@ -361,9 +361,18 @@ shared_examples_for 'methods' do
     end
 
     describe '.subcribe', :eventmachine => true do
-      it 'subscribes to the pushtopic' do
-        client.faye.should_receive(:subscribe).with('/topic/PushTopic')
-        client.subscribe('PushTopic')
+      context 'when given a single pushtopic' do
+        it 'subscribes to the pushtopic' do
+          client.faye.should_receive(:subscribe).with(['/topic/PushTopic'])
+          client.subscribe('PushTopic')
+        end
+      end
+
+      context 'when given an array of pushtopics' do
+        it 'subscribes to each pushtopic' do
+          client.faye.should_receive(:subscribe).with(['/topic/PushTopic1', '/topic/PushTopic2'])
+          client.subscribe(['PushTopic1', 'PushTopic2'])
+        end
       end
     end
   end
