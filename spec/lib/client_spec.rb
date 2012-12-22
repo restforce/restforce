@@ -334,20 +334,39 @@ shared_examples_for 'methods' do
     it { should be_an Array }
   end
 
-  describe '.faye' do
-    subject { client.send(:faye) }
+  unless RUBY_PLATFORM == 'java'
+    describe '.faye' do
+      subject { client.faye }
 
-    context 'with missing instance url' do
-      let(:instance_url) { nil }
-      specify { expect { subject }.to raise_error RuntimeError, 'Instance URL missing. Call .authenticate! first.' }
+      context 'with missing instance url' do
+        let(:instance_url) { nil }
+        specify { expect { subject }.to raise_error RuntimeError, 'Instance URL missing. Call .authenticate! first.' }
+      end
+
+      context 'with oauth token and instance url' do
+        let(:instance_url) { 'http://foobar' }
+        let(:oauth_token) { 'bar' }
+        specify { expect { subject }.to_not raise_error }
+      end
+
+      context 'when the connection goes down' do
+        it 'should reauthenticate' do
+          access_token = double('access token')
+          access_token.stub(:access_token).and_return('token')
+          client.should_receive(:authenticate!).and_return(access_token)
+          client.faye.should_receive(:set_header).with('Authorization', "OAuth token")
+          client.faye.trigger('transport:down')
+        end
+      end
     end
 
-    context 'with oauth token and instance url' do
-      let(:instance_url) { 'http://foobar' }
-      let(:oauth_token) { 'bar' }
-      specify { expect { subject }.to_not raise_error }
+    describe '.subcribe' do
+      it 'subscribes to the pushtopic' do
+        client.faye.should_receive(:subscribe).with('/topic/PushTopic')
+        client.subscribe('PushTopic')
+      end
     end
-  end unless RUBY_PLATFORM == 'java'
+  end
 
   describe 'authentication retries' do
     context 'when retries reaches 0' do
