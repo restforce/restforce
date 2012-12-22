@@ -335,7 +335,7 @@ shared_examples_for 'methods' do
   end
 
   unless RUBY_PLATFORM == 'java'
-    describe '.faye' do
+    describe '.faye', :eventmachine => true do
       subject { client.faye }
 
       context 'with missing instance url' do
@@ -344,7 +344,7 @@ shared_examples_for 'methods' do
       end
 
       context 'with oauth token and instance url' do
-        let(:instance_url) { 'http://foobar' }
+        let(:instance_url) { 'http://google.com' }
         let(:oauth_token) { 'bar' }
         specify { expect { subject }.to_not raise_error }
       end
@@ -360,7 +360,7 @@ shared_examples_for 'methods' do
       end
     end
 
-    describe '.subcribe' do
+    describe '.subcribe', :eventmachine => true do
       it 'subscribes to the pushtopic' do
         client.faye.should_receive(:subscribe).with('/topic/PushTopic')
         client.subscribe('PushTopic')
