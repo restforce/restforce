@@ -5,7 +5,7 @@ module FixtureHelpers
       options = {
         :method => :get,
         :status => 200,
-        :api_version => '24.0'
+        :api_version => Restforce.configuration.api_version
       }.merge(options)
 
       stub = stub_request(options[:method], %r{/services/data/v#{options[:api_version]}/#{endpoint}})

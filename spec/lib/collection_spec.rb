@@ -31,7 +31,7 @@ describe Restforce::Collection do
       it               { should respond_to :each }
       its(:size)       { should eq 1 }
       its(:total_size) { should eq 2 }
-      its(:next_page_url)  { should eq '/services/data/v24.0/query/01gD' }
+      its(:next_page_url)  { should eq "/services/data/v#{Restforce.configuration.api_version}/query/01gD" }
       specify { expect(subject.instance_variable_get(:@client)).to eq client }
 
       describe '.next_page' do

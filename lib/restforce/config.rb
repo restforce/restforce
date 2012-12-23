@@ -67,7 +67,7 @@ module Restforce
     attr_accessor :compress
 
     def initialize
-      @api_version            ||= '24.0'
+      @api_version            ||= '26.0'
       @host                   ||= 'login.salesforce.com'
       @authentication_retries ||= 3
     end
