@@ -4,13 +4,12 @@ module Restforce
 
       # Public: Subscribe to a PushTopic
       #
-      # channel - The name of the PushTopic channel to subscribe to.
-      # block   - A block to run when a new message is received.
+      # channels - The name of the PushTopic channel(s) to subscribe to.
+      # block    - A block to run when a new message is received.
       #
       # Returns a Faye::Subscription
-      def subscribe(channel, &block)
-        channels = channel.is_a?(Array) ? channel : [channel]
-        faye.subscribe channels.map { |channel| "/topic/#{channel}" }, &block
+      def subscribe(channels, &block)
+        faye.subscribe Array(channels).map { |channel| "/topic/#{channel}" }, &block
       end
 
       # Public: Faye client to use for subscribing to PushTopics
