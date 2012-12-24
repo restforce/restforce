@@ -27,7 +27,7 @@ module Restforce
       #   client.api_delete 'sobjects/Account/001D000000INjVe'
       #
       # Returns the Faraday::Response.
-      define_verbs :get, :post, :put, :delete, :patch
+      define_verbs :get, :post, :put, :delete, :patch, :head
 
       # Public: Get the names of all sobjects on the org.
       #
