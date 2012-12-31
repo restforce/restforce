@@ -66,9 +66,35 @@ module Restforce
     # Set to true if you want responses from Salesforce to be gzip compressed.
     attr_accessor :compress
 
-    def initialize
-      @api_version            ||= '26.0'
-      @host                   ||= 'login.salesforce.com'
+    def api_version
+      @api_version ||= '26.0'
+    end
+
+    def username
+      @username ||= ENV['SALESFORCE_USERNAME']
+    end
+
+    def password
+      @password ||= ENV['SALESFORCE_PASSWORD']
+    end
+
+    def security_token
+      @security_token ||= ENV['SALESFORCE_SECURITY_TOKEN']
+    end
+
+    def client_id
+      @client_id ||= ENV['SALESFORCE_CLIENT_ID']
+    end
+
+    def client_secret
+      @client_secret ||= ENV['SALESFORCE_CLIENT_SECRET']
+    end
+
+    def host
+      @host ||= 'login.salesforce.com'
+    end
+
+    def authentication_retries
       @authentication_retries ||= 3
     end
 

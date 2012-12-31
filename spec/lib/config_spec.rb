@@ -1,6 +1,14 @@
 require 'spec_helper'
 
 describe Restforce do
+  before do
+    ENV['SALESFORCE_USERNAME']       = nil
+    ENV['SALESFORCE_PASSWORD']       = nil
+    ENV['SALESFORCE_SECURITY_TOKEN'] = nil
+    ENV['SALESFORCE_CLIENT_ID']      = nil
+    ENV['SALESFORCE_CLIENT_SECRET']  = nil
+  end
+
   after do
     Restforce.instance_variable_set :@configuration, nil
   end
@@ -18,6 +26,30 @@ describe Restforce do
        :oauth_token, :refresh_token, :instance_url, :compress].each do |attr|
         its(attr) { should be_nil }
       end
+    end
+
+    context 'when environment variables are defined' do
+      before do
+        ENV['SALESFORCE_USERNAME']       = 'foo'
+        ENV['SALESFORCE_PASSWORD']       = 'bar'
+        ENV['SALESFORCE_SECURITY_TOKEN'] = 'foobar'
+        ENV['SALESFORCE_CLIENT_ID']      = 'client id'
+        ENV['SALESFORCE_CLIENT_SECRET']  = 'client secret'
+      end
+
+      after do
+        ENV.delete('SALESFORCE_USERNAME')
+        ENV.delete('SALESFORCE_PASSWORD')
+        ENV.delete('SALESFORCE_SECURITY_TOKEN')
+        ENV.delete('SALESFORCE_CLIENT_ID')
+        ENV.delete('SALESFORCE_CLIENT_SECRET')
+      end
+
+      its(:username)       { should eq 'foo' }
+      its(:password)       { should eq 'bar'}
+      its(:security_token) { should eq 'foobar' }
+      its(:client_id)      { should eq 'client id' }
+      its(:client_secret)  { should eq 'client secret' }
     end
   end
 
