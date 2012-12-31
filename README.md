@@ -81,6 +81,21 @@ client = Restforce.new :username => 'foo',
   :client_secret  => 'client_secret'
 ```
 
+You can also set the username, password, security token, client id and client
+secret in environment variables:
+
+```bash
+export SALESFORCE_USERNAME="username"
+export SALESFORCE_PASSWORD="password"
+export SALESFORCE_SECURITY_TOKEN="security token"
+export SALESFORCE_CLIENT_ID="client id"
+export SALESFORCE_CLIENT_SECRET="client secret"
+```
+
+```ruby
+client = Restforce.new
+```
+
 #### Sandbox Orgs
 
 You can connect to sandbox orgs by specifying a host. The default host is
@@ -96,8 +111,8 @@ You can set any of the options passed into Restforce.new globally:
 
 ```ruby
 Restforce.configure do |config|
-  config.client_id     = ENV['SALESFORCE_CLIENT_ID']
-  config.client_secret = ENV['SALESFORCE_CLIENT_SECRET']
+  config.client_id     = 'foo'
+  config.client_secret = 'bar'
 end
 ```
 
