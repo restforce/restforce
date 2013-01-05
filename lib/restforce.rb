@@ -7,15 +7,18 @@ require 'base64'
 
 require 'restforce/version'
 require 'restforce/config'
-require 'restforce/mash'
-require 'restforce/collection'
-require 'restforce/sobject'
-require 'restforce/upload_io'
-require 'restforce/client'
-
-require 'restforce/middleware'
 
 module Restforce
+  autoload :Collection, 'restforce/collection'
+  autoload :Middleware, 'restforce/middleware'
+  autoload :UploadIO,   'restforce/upload_io'
+  autoload :SObject,    'restforce/sobject'
+  autoload :Client,     'restforce/client'
+  autoload :Mash,       'restforce/mash'
+
+  AuthenticationError = Class.new(StandardError)
+  UnauthorizedError   = Class.new(StandardError)
+
   class << self
     # Alias for Restforce::Client.new
     #
@@ -39,9 +42,6 @@ module Restforce
       JSON.parse(Base64.decode64(payload))
     end
   end
-
-  class AuthenticationError < StandardError; end
-  class UnauthorizedError < StandardError; end
 
   # Add .tap method in Ruby 1.8
   module CoreExtensions
