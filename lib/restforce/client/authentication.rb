@@ -4,7 +4,7 @@ module Restforce
 
       # Public: Force an authentication
       def authenticate!
-        raise 'No authentication middleware present' unless authentication_middleware
+        raise AuthenticationError, 'No authentication middleware present' unless authentication_middleware
         middleware = authentication_middleware.new nil, self, @options
         middleware.authenticate!
       end

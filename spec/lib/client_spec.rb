@@ -265,19 +265,31 @@ shared_examples_for 'methods' do
   end
 
   describe '.authenticate!' do
-    before do
-      @request = stub_login_request(:with_body => "grant_type=password&client_id=client_id&client_secret=" \
-        "client_secret&username=foo&password=barsecurity_token").
-        to_return(:status => 200, :body => fixture(:auth_success_response))
-    end
-
-    after do
-      expect(@request).to have_been_requested
-    end
-
     subject { client.authenticate! }
-    specify { expect { subject }.to_not raise_error }
-    it { should be_a Hash }
+
+    context 'when successful' do
+      before do
+        @request = stub_login_request(:with_body => "grant_type=password&client_id=client_id&client_secret=" \
+          "client_secret&username=foo&password=barsecurity_token").
+          to_return(:status => 200, :body => fixture(:auth_success_response))
+      end
+
+      after do
+        expect(@request).to have_been_requested
+      end
+
+      it { should be_a Hash }
+    end
+
+    context 'when no authentication middleware is present' do
+      before do
+        client.stub(:authentication_middleware).and_return(nil)
+      end
+
+      it 'should raise an exception' do
+        expect { subject }.to raise_error Restforce::AuthenticationError, 'No authentication middleware present'
+      end
+    end
   end
 
   describe '.cache' do
