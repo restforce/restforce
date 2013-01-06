@@ -116,14 +116,17 @@ module Restforce
       
       # Public: Insert a new record.
       #
+      # sobject - String name of the sobject.
+      # attrs   - Hash of attributes to set on the new record.
+      #
       # Examples
       #
       #   # Add a new account
       #   client.create('Account', Name: 'Foobar Inc.')
       #   # => '0016000000MRatd'
       #
-      # Returns the String Id of the newly created sobject. Returns false if
-      # something bad happens
+      # Returns the String Id of the newly created sobject.
+      # Returns false if something bad happens.
       def create(*args)
         create!(*args)
       rescue *exceptions
@@ -131,10 +134,19 @@ module Restforce
       end
       alias_method :insert, :create
 
-      # See .create
+      # Public: Insert a new record.
       #
-      # Returns the String Id of the newly created sobject. Raises an error if
-      # something bad happens.
+      # sobject - String name of the sobject.
+      # attrs   - Hash of attributes to set on the new record.
+      #
+      # Examples
+      #
+      #   # Add a new account
+      #   client.create!('Account', Name: 'Foobar Inc.')
+      #   # => '0016000000MRatd'
+      #
+      # Returns the String Id of the newly created sobject.
+      # Raises exceptions if an error is returned from Salesforce.
       def create!(sobject, attrs)
         api_post("sobjects/#{sobject}", attrs).body['id']
       end
@@ -142,22 +154,34 @@ module Restforce
 
       # Public: Update a record.
       #
+      # sobject - String name of the sobject.
+      # attrs   - Hash of attributes to set on the record.
+      #
       # Examples
       #
       #   # Update the Account with Id '0016000000MRatd'
       #   client.update('Account', Id: '0016000000MRatd', Name: 'Whizbang Corp')
       #
-      # Returns true if the sobject was successfully updated, false otherwise.
+      # Returns true if the sobject was successfully updated.
+      # Returns false if there was an error.
       def update(*args)
         update!(*args)
       rescue *exceptions
         false
       end
 
-      # See .update
+      # Public: Update a record.
       #
-      # Returns true if the sobject was successfully updated, raises an error
-      # otherwise.
+      # sobject - String name of the sobject.
+      # attrs   - Hash of attributes to set on the record.
+      #
+      # Examples
+      #
+      #   # Update the Account with Id '0016000000MRatd'
+      #   client.update!('Account', Id: '0016000000MRatd', Name: 'Whizbang Corp')
+      #
+      # Returns true if the sobject was successfully updated.
+      # Raises an exception if an error is returned from Salesforce.
       def update!(sobject, attrs)
         id = attrs.delete(attrs.keys.find { |k| k.to_s.downcase == 'id' })
         raise 'Id field missing.' unless id
@@ -165,7 +189,7 @@ module Restforce
         true
       end
 
-      # Public: Update or Create a record based on an external ID
+      # Public: Update or create a record based on an external ID
       #
       # sobject - The name of the sobject to created.
       # field   - The name of the external Id field to match against.
@@ -185,11 +209,20 @@ module Restforce
         false
       end
 
-      # See .upsert
+      # Public: Update or create a record based on an external ID
+      #
+      # sobject - The name of the sobject to created.
+      # field   - The name of the external Id field to match against.
+      # attrs   - Hash of attributes for the record.
+      #
+      # Examples
+      #
+      #   # Update the record with external ID of 12
+      #   client.upsert!('Account', 'External__c', External__c: 12, Name: 'Foobar')
       #
       # Returns true if the record was found and updated.
       # Returns the Id of the newly created record if the record was created.
-      # Raises an error if something bad happens.
+      # Raises an exception if an error is returned from Salesforce.
       def upsert!(sobject, field, attrs)
         external_id = attrs.delete(attrs.keys.find { |k| k.to_s.downcase == field.to_s.downcase })
         response = api_patch "sobjects/#{sobject}/#{field.to_s}/#{external_id}", attrs
@@ -198,22 +231,34 @@ module Restforce
 
       # Public: Delete a record.
       #
+      # sobject - String name of the sobject.
+      # id      - The Salesforce ID of the record.
+      #
       # Examples
       #
       #   # Delete the Account with Id '0016000000MRatd'
-      #   client.delete('Account', '0016000000MRatd')
+      #   client.destroy('Account', '0016000000MRatd')
       #
-      # Returns true if the sobject was successfully deleted, false otherwise.
+      # Returns true if the sobject was successfully deleted.
+      # Returns false if an error is returned from Salesforce.
       def destroy(*args)
         destroy!(*args)
       rescue *exceptions
         false
       end
 
-      # See .destroy
+      # Public: Delete a record.
       #
-      # Returns true of the sobject was successfully deleted, raises an error
-      # otherwise.
+      # sobject - String name of the sobject.
+      # id      - The Salesforce ID of the record.
+      #
+      # Examples
+      #
+      #   # Delete the Account with Id '0016000000MRatd'
+      #   client.destroy('Account', '0016000000MRatd')
+      #
+      # Returns true of the sobject was successfully deleted.
+      # Raises an exception if an error is returned from Salesforce.
       def destroy!(sobject, id)
         api_delete "sobjects/#{sobject}/#{id}"
         true
