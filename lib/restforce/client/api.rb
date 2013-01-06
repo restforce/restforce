@@ -57,7 +57,7 @@ module Restforce
       #   # => { ... }
       #
       # Returns the Hash representation of the describe call.
-      def describe(sobject=nil)
+      def describe(sobject = nil)
         if sobject
           api_get("sobjects/#{sobject.to_s}/describe").body
         else
@@ -124,8 +124,8 @@ module Restforce
       #
       # Returns the String Id of the newly created sobject. Returns false if
       # something bad happens
-      def create(sobject, attrs)
-        create!(sobject, attrs)
+      def create(*args)
+        create!(*args)
       rescue *exceptions
         false
       end
@@ -148,8 +148,8 @@ module Restforce
       #   client.update('Account', Id: '0016000000MRatd', Name: 'Whizbang Corp')
       #
       # Returns true if the sobject was successfully updated, false otherwise.
-      def update(sobject, attrs)
-        update!(sobject, attrs)
+      def update(*args)
+        update!(*args)
       rescue *exceptions
         false
       end
@@ -179,8 +179,8 @@ module Restforce
       # Returns true if the record was found and updated.
       # Returns the Id of the newly created record if the record was created.
       # Returns false if something bad happens.
-      def upsert(sobject, field, attrs)
-        upsert!(sobject, field, attrs)
+      def upsert(*args)
+        upsert!(*args)
       rescue *exceptions
         false
       end
@@ -204,8 +204,8 @@ module Restforce
       #   client.delete('Account', '0016000000MRatd')
       #
       # Returns true if the sobject was successfully deleted, false otherwise.
-      def destroy(sobject, id)
-        destroy!(sobject, id)
+      def destroy(*args)
+        destroy!(*args)
       rescue *exceptions
         false
       end
