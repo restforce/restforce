@@ -19,7 +19,7 @@ module Restforce
 
       # Internal: Internal faraday connection where all requests go through
       def connection
-        @connection ||= Faraday.new(@options[:instance_url]) do |builder|
+        @connection ||= Faraday.new(@options[:instance_url], connection_options) do |builder|
           # Parses JSON into Hashie::Mash structures.
           builder.use      Restforce::Middleware::Mashify, self, @options
           # Handles multipart file uploads for blobs.
@@ -47,6 +47,13 @@ module Restforce
 
           builder.adapter  Faraday.default_adapter
         end
+      end
+
+      # Internal: Faraday Connection options
+      def connection_options
+        { :request => {
+            :timeout => @options[:timeout],
+            :open_timeout => @options[:timeout] } }
       end
 
       # Internal: Returns true if the middlware stack includes the
