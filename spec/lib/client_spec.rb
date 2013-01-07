@@ -299,26 +299,6 @@ shared_examples_for 'methods' do
     it { should eq cache }
   end
 
-  describe '.decode_signed_request' do
-    subject { client.decode_signed_request(message) }
-
-    context 'when the message is valid' do
-      let(:data) { Base64.encode64('{ "key": "value" }') }
-      let(:message) do
-        digest = OpenSSL::Digest::Digest.new('sha256')
-        signature = Base64.encode64(OpenSSL::HMAC.digest(digest, client_secret, data))
-        "#{signature}.#{data}"
-      end
-
-      it { should eq('key' => 'value') }
-    end
-
-    context 'when the message is invalid' do
-      let(:message) { 'foobar.awdkjkj' }
-      it { should be_nil }
-    end
-  end
-
   describe '.middleware' do
     subject { client.middleware }
     it { should eq client.send(:connection).builder }
