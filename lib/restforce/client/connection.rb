@@ -45,8 +45,12 @@ module Restforce
           # Compress/Decompress the request/response
           builder.use      Restforce::Middleware::Gzip, self, @options
 
-          builder.adapter  Faraday.default_adapter
+          builder.adapter  adapter
         end
+      end
+
+      def adapter
+        Restforce.configuration.adapter
       end
 
       # Internal: Faraday Connection options
