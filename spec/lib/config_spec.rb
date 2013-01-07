@@ -22,6 +22,7 @@ describe Restforce do
       its(:api_version)            { should eq '26.0' }
       its(:host)                   { should eq 'login.salesforce.com' }
       its(:authentication_retries) { should eq 3 }
+      its(:adapter)                { should eq Faraday.default_adapter }
       [:username, :password, :security_token, :client_id, :client_secret,
        :oauth_token, :refresh_token, :instance_url, :compress, :timeout].each do |attr|
         its(attr) { should be_nil }
