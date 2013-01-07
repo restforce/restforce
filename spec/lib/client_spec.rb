@@ -369,6 +369,13 @@ shared_examples_for 'methods' do
     end
   end
 
+  describe '.decode_signed_request' do
+    it 'proxies to Restforce::SignedRequest' do
+      Restforce::SignedRequest.should_receive(:decode).with('foo', client_secret)
+      client.decode_signed_request('foo')
+    end
+  end
+
   describe 'authentication retries' do
     context 'when retries reaches 0' do
       before do
