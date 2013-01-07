@@ -66,6 +66,9 @@ module Restforce
     # Set to true if you want responses from Salesforce to be gzip compressed.
     attr_accessor :compress
 
+    # Faraday request read/open timeout.
+    attr_accessor :timeout
+
     def api_version
       @api_version ||= '26.0'
     end

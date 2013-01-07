@@ -15,7 +15,8 @@ module Restforce
     include Restforce::Client::API
 
     OPTIONS = [:username, :password, :security_token, :client_id, :client_secret, :host, :compress,
-       :api_version, :oauth_token, :refresh_token, :instance_url, :cache, :authentication_retries]
+       :api_version, :oauth_token, :refresh_token, :instance_url, :cache, :authentication_retries,
+       :timeout]
 
     # Public: Creates a new client instance
     #
@@ -47,6 +48,7 @@ module Restforce
     #                                  before raising an exception (default: 3).
     #
     #        :compress               - Set to true to have Salesforce compress the response (default: false).
+    #        :timeout                - Faraday connection request read/open timeout. (default: nil).
     #
     # Examples
     #
