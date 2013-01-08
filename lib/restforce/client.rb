@@ -75,5 +75,9 @@ module Restforce
       @options = Hash[OPTIONS.map { |option| [option, Restforce.configuration.send(option)] }]
       @options.merge! opts
     end
+
+    def inspect
+      "#<#{self.class} @options=#{@options.inspect}>"
+    end
   end
 end
