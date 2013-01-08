@@ -69,6 +69,9 @@ module Restforce
     # Faraday request read/open timeout.
     attr_accessor :timeout
 
+    # Faraday adapter to use. Defaults to Faraday.default_adapter.
+    attr_accessor :adapter
+
     def api_version
       @api_version ||= '26.0'
     end
@@ -99,6 +102,10 @@ module Restforce
 
     def authentication_retries
       @authentication_retries ||= 3
+    end
+
+    def adapter
+      @adapter ||= Faraday.default_adapter
     end
 
     def logger
