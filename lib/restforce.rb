@@ -25,8 +25,9 @@ module Restforce
       Restforce::Client.new(options)
     end
 
-    def decode_signed_request(signed_request, client_secret)
-      SignedRequest.decode(signed_request, client_secret)
+    # Helper for decoding signed requests.
+    def decode_signed_request(*args)
+      SignedRequest.decode(*args)
     end
   end
 
