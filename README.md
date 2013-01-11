@@ -16,6 +16,7 @@ Features include:
 * Support for blob data types.
 * Support for GZIP compression.
 * Support for [custom Apex REST endpoints](#custom-apex-rest-endpoints).
+* Support for dependent picklists.
 * Support for decoding [Force.com Canvas](http://www.salesforce.com/us/developer/docs/platform_connectpre/canvas_framework.pdf) signed requests. (NEW!)
 
 [Documentation](http://rubydoc.info/gems/restforce/frames) | [Changelog](https://github.com/ejholmes/restforce/tree/master/CHANGELOG.md)
@@ -271,6 +272,29 @@ client.describe('Account')
 ```
 
 _See also: http://www.salesforce.com/us/developer/docs/api_rest/Content/dome_describeGlobal.htm, http://www.salesforce.com/us/developer/docs/api_rest/Content/dome_sobject_describe.htm_
+
+* * *
+
+### picklist\_values(sobject, field, options = {})
+
+Takes the name of an sobject and the name of a picklist field and returns the
+valid picklist values for that field.
+
+If a :valid\_for key is specified in the options, it will filter the picklist
+values to only return picklist values that are valid for the controlling
+picklist field.
+
+
+```ruby
+client.picklist_values('Account', 'Type')
+# => [#<Restforce::Mash label="Prospect" value="Prospect">]
+
+# Given a custom object named Automobile__c with picklist fields
+# Model__c and Make__c, where Model__c depends on the value of
+# Make__c.
+client.picklist_values('Automobile__c', 'Model__c', :valid_for => 'Honda')
+# => [#<Restforce::Mash label="Civic" value="Civic">, ... ]
+```
 
 * * *
 

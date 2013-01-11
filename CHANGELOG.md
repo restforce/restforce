@@ -1,6 +1,14 @@
 ## Unreleased
 
-* Added CHANGELOG.md
+*   Added `picklist_values` method.
+
+    Example
+
+        client.picklist_values('Account', 'Type')
+
+        client.picklist_values('Automobile__c', 'Model__c', :valid_for => 'Honda')
+
+*   Added CHANGELOG.md
 
 ## 1.0.4 (Jan 8, 2013)
 
