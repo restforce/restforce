@@ -1,6 +1,7 @@
 require 'restforce/client/connection'
 require 'restforce/client/authentication'
 require 'restforce/client/streaming'
+require 'restforce/client/picklists'
 require 'restforce/client/caching'
 require 'restforce/client/canvas'
 require 'restforce/client/api'
@@ -10,6 +11,7 @@ module Restforce
     include Restforce::Client::Connection
     include Restforce::Client::Authentication
     include Restforce::Client::Streaming
+    include Restforce::Client::Picklists
     include Restforce::Client::Caching
     include Restforce::Client::Canvas
     include Restforce::Client::API
