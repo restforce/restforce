@@ -1,11 +1,5 @@
 require 'spec_helper'
 
-RSpec::Matchers.define :have_client do |expected|
-  match do |actual|
-    actual.instance_variable_get(:@client) == expected
-  end
-end
-
 describe Restforce::SObject do
   include_context 'basic client'
 

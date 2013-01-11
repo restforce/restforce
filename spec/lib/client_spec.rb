@@ -1,25 +1,5 @@
 require 'spec_helper'
 
-RSpec::Matchers.define :include_picklist_values do |expected|
-  match do |actual|
-    actual.all? { |picklist_value| expected.include? picklist_value['value'] }
-  end
-end
-
-class MockCache
-  def initialize
-    @storage = {}
-  end
-
-  def fetch(key, &block)
-    @storage[key] ||= block.call
-  end
-
-  def delete(key)
-    @storage.delete(key)
-  end
-end
-
 shared_examples_for 'methods' do
   describe '#new' do
     context 'without options passed in' do
