@@ -1,4 +1,4 @@
-## Unreleased
+## 1.0.5 (Jan 11, 2013)
 
 *   Added `picklist_values` method.
 
