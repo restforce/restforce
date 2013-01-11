@@ -10,7 +10,7 @@ module Restforce
       # Restforce::Mash objects.
       def build(val, client)
         if val.is_a?(Array)
-          val.collect { |e| self.klass(e).new(e, client) }
+          val.collect { |val| self.build(val, client) }
         elsif val.is_a?(Hash)
           self.klass(val).new(val, client)
         else
