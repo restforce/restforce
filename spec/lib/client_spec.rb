@@ -1,5 +1,11 @@
 require 'spec_helper'
 
+RSpec::Matchers.define :include_picklist_values do |expected|
+  match do |actual|
+    actual.all? { |picklist_value| expected.include? picklist_value['value'] }
+  end
+end
+
 class MockCache
   def initialize
     @storage = {}
@@ -261,6 +267,42 @@ shared_examples_for 'methods' do
 
       subject { client.find('Account', '1234', 'External_Field__c') }
       it { should be_a Hash }
+    end
+  end
+
+  describe '.picklist_values' do
+    requests 'sobjects/Account/describe',
+      :fixture => 'sobject/sobject_describe_success_response'
+
+    context 'when given a picklist field' do
+      subject { client.picklist_values('Account', 'Picklist_Field') }
+      it { should be_an Array }
+      its(:length) { should eq 3 }
+      it { should include_picklist_values ['one', 'two', 'three'] }
+    end
+
+    context 'when given a multipicklist field' do
+      subject { client.picklist_values('Account', 'Picklist_Multiselect_Field') }
+      it { should be_an Array }
+      its(:length) { should eq 3 }
+      it { should include_picklist_values ['four', 'five', 'six'] }
+    end
+
+    describe 'dependent picklists' do
+      context 'when given a picklist field that has a dependency' do
+        subject { client.picklist_values('Account', 'Dependent_Picklist_Field', :valid_for => 'one') }
+        it { should be_an Array }
+        its(:length) { should eq 2 }
+        it { should include_picklist_values ['seven', 'eight'] }
+        it { should_not include_picklist_values ['nine'] }
+      end
+
+      context 'when given a picklist field that does not have a dependency' do
+        subject { client.picklist_values('Account', 'Picklist_Field', :valid_for => 'one') }
+        it 'raises an exception' do
+          expect { subject }.to raise_error(/Picklist_Field is not a dependent picklist/)
+        end
+      end
     end
   end
 
