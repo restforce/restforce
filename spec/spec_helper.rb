@@ -15,7 +15,7 @@ Dir[File.join(File.dirname(__FILE__), "support/**/*.rb")].each {|f| require f}
 
 RSpec.configure do |config|
   config.before do
-    EventMachine.stub(:connect)
+    EventMachine.stub(:connect) if defined?(EventMachine)
   end
 
   config.around :eventmachine => true do |example|
