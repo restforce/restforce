@@ -127,10 +127,7 @@ works similarly to ActiveRecord.
 
 * * *
 
-### query(soql)
-
-Performs a soql query and returns the result. The result will be a
-[Restforce::Collection][], which can be iterated over.
+### query
 
 ```ruby
 accounts = client.query("select Id, Something__c from Account where Id = 'someid'")
@@ -153,16 +150,7 @@ account.destroy
 # => true
 ```
 
-_See also: http://www.salesforce.com/us/developer/docs/api_rest/Content/dome_query.htm_
-
-* * *
-
-### find(sobject, id, field=nil)
-
-Finds the record with the specified id and the specified sobject type and
-returns all fields for the sobject. An external id field can be used instead
-of the default Id field by specifiying the name of the external id field as the
-last parameter.
+### find
 
 ```ruby
 client.find('Account', '001D000000INjVe')
@@ -172,14 +160,7 @@ client.find('Account', '1234', 'Some_External_Id_Field__c')
 # => #<Restforce::SObject Id="001D000000INjVe" Name="Test" LastModifiedBy="005G0000002f8FHIAY" ... >
 ```
 
-_See also: http://www.salesforce.com/us/developer/docs/api_rest/Content/resources_sobject_upsert.htm_
-
-* * *
-
-### search(sosl)
-
-Performs a sosl query and returns the result. The result will be a
-[Restforce::Collection][].
+### search
 
 ```ruby
 # Find all occurrences of 'bar'
@@ -191,16 +172,7 @@ client.search('FIND {genepoint} RETURNING Account (Name)').map(&:Name)
 # => ['GenePoint']
 ```
 
-_See also: http://www.salesforce.com/us/developer/docs/api_rest/Content/dome_search.htm_
-
-* * *
-
-### create(sobject, attrs)
-
-_Alias: insert_
-
-Takes an sobject name and a hash of attributes to create a record. Returns the
-Id of the newly created reocrd if the record was successfully created.
+### create
 
 ```ruby
 # Add a new account
@@ -208,14 +180,7 @@ client.create('Account', Name: 'Foobar Inc.')
 # => '0016000000MRatd'
 ```
 
-_See also: http://www.salesforce.com/us/developer/docs/api_rest/Content/dome_sobject_create.htm_
-
-* * *
-
-### update(sobject, attrs)
-
-Takes an sobject name and a hash of attributes to update a record. An 'Id' key is required in attrs (either a string or symbol). Returns true if the record was successfully
-updated.
+### update
 
 ```ruby
 # Update the Account with Id '0016000000MRatd'
@@ -223,28 +188,14 @@ client.update('Account', Id: '0016000000MRatd', Name: 'Whizbang Corp')
 # => true
 ```
 
-_See also: http://www.salesforce.com/us/developer/docs/api_rest/Content/dome_update_fields.htm_
-
-* * *
-
-### upsert(sobject, field, attrs)
-
-Takes an sobject name, an external id field, and a hash of attributes and
-either inserts or updates the record depending on the existince of the record.
-Returns true if the record was updated or the Id of the record if the record was
-created.
+### upsert
 
 ```ruby
 # Update the record with external ID of 12
 client.upsert('Account', 'External__c', External__c: 12, Name: 'Foobar')
 ```
 
-_See also: http://www.salesforce.com/us/developer/docs/api_rest/Content/dome_upsert.htm_
-
-### destroy(sobject, id)
-
-Takes an sobject name and an Id and deletes the record. Returns true if the
-record was successfully deleted.
+### destroy
 
 ```ruby
 # Delete the Account with Id '0016000000MRatd'
@@ -252,14 +203,7 @@ client.destroy('Account', '0016000000MRatd')
 # => true
 ```
 
-_See also: http://www.salesforce.com/us/developer/docs/api_rest/Content/dome_delete_record.htm_
-
-* * *
-
-### describe(sobject)
-
-If no parameter is given, it will return the global describe. If the name of an
-sobject is given, it will return the describe for that sobject.
+### describe
 
 ```ruby
 # get the global describe for all sobjects
@@ -271,18 +215,7 @@ client.describe('Account')
 # => { ... }
 ```
 
-_See also: http://www.salesforce.com/us/developer/docs/api_rest/Content/dome_describeGlobal.htm, http://www.salesforce.com/us/developer/docs/api_rest/Content/dome_sobject_describe.htm_
-
-* * *
-
-### picklist\_values(sobject, field, options = {})
-
-Takes the name of an sobject and the name of a picklist field and returns the
-valid picklist values for that field.
-
-If a :valid\_for key is specified in the options, it will filter the picklist
-values to only return picklist values that are valid for the controlling
-picklist field.
+### picklist\_values
 
 
 ```ruby
