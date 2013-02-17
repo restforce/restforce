@@ -49,6 +49,10 @@ module Restforce
       self.to_hash.reject { |key, _| key =~ /.*__r/ || key =~ /^attributes$/ }
     end
 
+    def to_sparam
+      self.Id
+    end
+
   private
 
     def ensure_id

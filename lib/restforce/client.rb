@@ -78,6 +78,20 @@ module Restforce
       @options.merge! opts
     end
 
+    def instance_url
+      authenticate! unless @options[:instance_url]
+      @options[:instance_url]
+    end
+
+    # Public: Returns a url to the resource.
+    #
+    # resource - A record that responds to to_sparam or a String/Fixnum.
+    #
+    # Returns the url to the resource.
+    def url(resource)
+      "#{instance_url}/#{(resource.respond_to?(:to_sparam) ? resource.to_sparam : resource)}"
+    end
+
     def inspect
       "#<#{self.class} @options=#{@options.inspect}>"
     end
