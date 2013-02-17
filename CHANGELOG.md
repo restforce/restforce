@@ -1,3 +1,19 @@
+## HEAD
+
+*   Added `url` method.
+
+    Example
+
+        # Url to a record id
+        client.url('0013000000rRz')
+        # => https://na1.salesforce.com/0013000000rRz
+
+        # Url to an object that responds to `to_sparam`
+        record = Struct.new(:to_sparam).new('0013000000rRz')
+        client.url('0013000000rRz')
+        # => https://na1.salesforce.com/0013000000rRz
+
+
 ## 1.0.5 (Jan 11, 2013)
 
 *   Added `picklist_values` method.
