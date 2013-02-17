@@ -31,6 +31,25 @@ shared_examples_for 'methods' do
     its([:security_token]) { should eq security_token }
   end
 
+  describe '.instance_url' do
+    subject { client.instance_url }
+    it { should eq 'https://na1.salesforce.com' }
+  end
+
+  describe '.url' do
+    subject { client.url(resource) }
+
+    context 'when given something that responds to to_sparam' do
+      let(:resource) { Struct.new(:to_sparam).new('1234') }
+      it { should eq 'https://na1.salesforce.com/1234' }
+    end
+
+    context 'when given a string' do
+      let(:resource) { '4321' }
+      it { should eq 'https://na1.salesforce.com/4321' }
+    end
+  end
+
   describe '.authentication_middleware' do
     subject { client.send :authentication_middleware }
 
