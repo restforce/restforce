@@ -1,4 +1,4 @@
-## HEAD
+## 1.0.6 (Feb 16, 2013)
 
 *   Added `url` method.
 
