@@ -10,7 +10,7 @@ module FixtureHelpers
 
       stub = stub_request(options[:method], %r{/services/data/v#{options[:api_version]}/#{endpoint}})
       stub = stub.with(:body => options[:with_body]) if options[:with_body] && !RUBY_VERSION.match(/^1.8/)
-      stub = stub.to_return(:status => options[:status], :body => fixture(options[:fixture])) if options[:fixture]
+      stub = stub.to_return(:status => options[:status], :body => fixture(options[:fixture]), :headers => { 'Content-Type' => 'application/json'}) if options[:fixture]
       stub
     end
 

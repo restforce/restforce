@@ -275,6 +275,17 @@ _See also: http://www.salesforce.com/us/developer/docs/api_rest/Content/dome_sob
 
 * * *
 
+### Downloading Attachments
+
+Restforce also makes it incredibly easy to download Attachments:
+
+```ruby
+attachment = client.query('select Id, Name, Body from Attachment').first
+File.open(attachment.Name, 'wb') { |f| f.write(attachment.Body) }
+```
+
+* * *
+
 ### Custom Apex REST endpoints
 
 You can use Restforce to interact with your custom REST endpoints, by using

@@ -1,3 +1,12 @@
+## HEAD
+
+*   Added ability to download attachments easily.
+
+    Example
+
+        attachment = client.query('select Id, Name, Body from Attachment').first
+        File.open(attachment.Name, 'wb') { |f| f.write(attachment.Body) }
+
 ## 1.0.6 (Feb 16, 2013)
 
 *   Added `url` method.

@@ -33,7 +33,7 @@ module Restforce
           # Ensures the instance url is set.
           builder.use      Restforce::Middleware::InstanceURL, self, @options
           # Parses returned JSON response into a hash.
-          builder.response :json
+          builder.response :json, :content_type => /\bjson$/
           # Caches GET requests.
           builder.use      Restforce::Middleware::Caching, cache, @options if cache
           # Follows 30x redirects.
