@@ -56,7 +56,8 @@ module Restforce
   private
 
     def ensure_id
-      raise 'You need to query the Id for the record first.' unless self.Id?
+      return true if self.Id?
+      raise 'You need to query the Id for the record first.'
     end
 
   end

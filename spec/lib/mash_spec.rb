@@ -19,8 +19,13 @@ describe Restforce::Mash do
     end
 
     context 'when the hash has an "attributes" key' do
-      let(:input) { { 'attributes' => nil } }
+      let(:input) { { 'attributes' => { 'type' => 'Account' } } }
       it { should eq Restforce::SObject }
+
+      context 'when the sobject type is an Attachment' do
+        let(:input) { { 'attributes' => { 'type' => 'Attachment' } } }
+        it { should eq Restforce::Attachment }
+      end
     end
 
     context 'else' do

@@ -26,9 +26,13 @@ module Restforce
           # of sobject records.
           Restforce::Collection
         elsif val.has_key? 'attributes'
-          # When the hash contains an attributes key, it should be considered an
-          # sobject record
-          Restforce::SObject
+          if val['attributes']['type'] == 'Attachment'
+            Restforce::Attachment
+          else
+            # When the hash contains an attributes key, it should be considered an
+            # sobject record
+            Restforce::SObject
+          end
         else
           # Fallback to a standard Restforce::Mash for everything else
           Restforce::Mash

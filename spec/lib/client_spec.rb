@@ -439,8 +439,8 @@ shared_examples_for 'methods' do
     before do
       @query = stub_api_request('query\?q=SELECT%20some,%20fields%20FROM%20object').
         with(:headers => { 'Authorization' => "OAuth #{oauth_token}" }).
-        to_return(:status => 401, :body => fixture('expired_session_response')).then.
-        to_return(:status => 200, :body => fixture('sobject/query_success_response'))
+        to_return(:status => 401, :body => fixture('expired_session_response'), :headers => { 'Content-Type' => 'application/json' }).then.
+        to_return(:status => 200, :body => fixture('sobject/query_success_response'), :headers => { 'Content-Type' => 'application/json' })
 
       @login = stub_login_request(:with_body => "grant_type=password&client_id=client_id&client_secret=" \
         "client_secret&username=foo&password=barsecurity_token").
