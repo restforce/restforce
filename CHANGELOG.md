@@ -1,4 +1,4 @@
-## HEAD
+## 1.1.0 (Mar 3, 2013)
 
 *   Added ability to download attachments easily.
 
