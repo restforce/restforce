@@ -9,6 +9,7 @@ module Restforce
   autoload :SignedRequest, 'restforce/signed_request'
   autoload :Collection,    'restforce/collection'
   autoload :Middleware,    'restforce/middleware'
+  autoload :Attachment,    'restforce/attachment'
   autoload :UploadIO,      'restforce/upload_io'
   autoload :SObject,       'restforce/sobject'
   autoload :Client,        'restforce/client'
