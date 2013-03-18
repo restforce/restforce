@@ -46,6 +46,9 @@ module Restforce
           builder.use      Restforce::Middleware::Gzip, self, @options
 
           builder.adapter  adapter
+
+          builder.proxy = :proxy_uri if :proxy_uri
+
         end
       end
 
