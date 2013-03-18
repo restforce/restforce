@@ -47,8 +47,6 @@ module Restforce
 
           builder.adapter  adapter
 
-          builder.proxy = :proxy_uri if :proxy_uri
-
         end
       end
 
@@ -60,7 +58,9 @@ module Restforce
       def connection_options
         { :request => {
             :timeout => @options[:timeout],
-            :open_timeout => @options[:timeout] } }
+            :open_timeout => @options[:timeout] }, 
+          :proxy => @options[:proxy_uri]
+        }
       end
 
       # Internal: Returns true if the middlware stack includes the
