@@ -18,7 +18,7 @@ module Restforce
 
     OPTIONS = [:username, :password, :security_token, :client_id, :client_secret, :host, :compress,
        :api_version, :oauth_token, :refresh_token, :instance_url, :cache, :authentication_retries,
-       :timeout]
+       :timeout, :proxy_uri]
 
     # Public: Creates a new client instance
     #
@@ -51,6 +51,8 @@ module Restforce
     #
     #        :compress               - Set to true to have Salesforce compress the response (default: false).
     #        :timeout                - Faraday connection request read/open timeout. (default: nil).
+    #
+    #        :proxy_uri              - Proxy URI: 'http://proxy.example.com:port' or 'http://user@pass:proxy.example.com:port'
     #
     # Examples
     #
