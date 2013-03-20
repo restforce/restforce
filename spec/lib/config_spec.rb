@@ -7,7 +7,6 @@ describe Restforce do
     ENV['SALESFORCE_SECURITY_TOKEN'] = nil
     ENV['SALESFORCE_CLIENT_ID']      = nil
     ENV['SALESFORCE_CLIENT_SECRET']  = nil
-    ENV['PROXY_URI']  = nil
   end
 
   after do
@@ -25,7 +24,7 @@ describe Restforce do
       its(:authentication_retries) { should eq 3 }
       its(:adapter)                { should eq Faraday.default_adapter }
       [:username, :password, :security_token, :client_id, :client_secret,
-       :oauth_token, :refresh_token, :instance_url, :compress, :timeout, :proxy_uri].each do |attr|
+       :oauth_token, :refresh_token, :instance_url, :compress, :timeout].each do |attr|
         its(attr) { should be_nil }
       end
     end
@@ -37,7 +36,6 @@ describe Restforce do
         ENV['SALESFORCE_SECURITY_TOKEN'] = 'foobar'
         ENV['SALESFORCE_CLIENT_ID']      = 'client id'
         ENV['SALESFORCE_CLIENT_SECRET']  = 'client secret'
-        ENV['PROXY_URI']  = 'http://proxy.example.com:1234'
       end
 
       after do
@@ -46,7 +44,6 @@ describe Restforce do
         ENV.delete('SALESFORCE_SECURITY_TOKEN')
         ENV.delete('SALESFORCE_CLIENT_ID')
         ENV.delete('SALESFORCE_CLIENT_SECRET')
-        ENV.delete['PROXY_URI'] 
       end
 
       its(:username)       { should eq 'foo' }
@@ -54,13 +51,12 @@ describe Restforce do
       its(:security_token) { should eq 'foobar' }
       its(:client_id)      { should eq 'client id' }
       its(:client_secret)  { should eq 'client secret' }
-      its(:proxy_uri)  { should eq 'http://proxy.example.com:1234' }
     end
   end
 
   describe '#configure' do
     [:username, :password, :security_token, :client_id, :client_secret, :compress, :timeout,
-     :oauth_token, :refresh_token, :instance_url, :api_version, :host, :authentication_retries, :proxy_uri].each do |attr|
+     :oauth_token, :refresh_token, :instance_url, :api_version, :host, :authentication_retries].each do |attr|
       it "allows #{attr} to be set" do
         Restforce.configure do |config|
           config.send("#{attr}=", 'foobar')

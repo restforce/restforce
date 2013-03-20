@@ -29,7 +29,6 @@ shared_examples_for 'methods' do
     its([:username])       { should eq username       }
     its([:password])       { should eq password       }
     its([:security_token]) { should eq security_token }
-    its([:proxy_uri]) { should eq security_token }
   end
 
   describe '.instance_url' do
@@ -49,11 +48,6 @@ shared_examples_for 'methods' do
       let(:resource) { '4321' }
       it { should eq 'https://na1.salesforce.com/4321' }
     end
-  end
-
-  describe '.proxy_uri' do
-    subject { client.proxy_uri }
-    it { should eq 'http://proxy.example.com:123'}
   end
 
   describe '.authentication_middleware' do
