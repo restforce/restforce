@@ -72,6 +72,8 @@ module Restforce
     # Faraday adapter to use. Defaults to Faraday.default_adapter.
     attr_accessor :adapter
 
+    attr_accessor :proxy_uri
+
     def api_version
       @api_version ||= '26.0'
     end
@@ -94,6 +96,10 @@ module Restforce
 
     def client_secret
       @client_secret ||= ENV['SALESFORCE_CLIENT_SECRET']
+    end
+
+    def proxy_uri
+      @proxy_uri ||= ENV['PROXY_URI']
     end
 
     def host
