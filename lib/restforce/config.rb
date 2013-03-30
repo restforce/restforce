@@ -97,9 +97,11 @@ module Restforce
     def client_secret
       @client_secret ||= ENV['SALESFORCE_CLIENT_SECRET']
     end
+
     def proxy_uri
       @proxy_uri ||= ENV['PROXY_URI']
     end
+
     def host
       @host ||= 'login.salesforce.com'
     end

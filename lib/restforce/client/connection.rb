@@ -46,7 +46,6 @@ module Restforce
           builder.use      Restforce::Middleware::Gzip, self, @options
 
           builder.adapter  adapter
-
         end
       end
 
