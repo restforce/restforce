@@ -1,3 +1,5 @@
+require 'generator' if RUBY_VERSION =~ /\A1\.8/
+
 module Restforce
   class Collection
     include Enumerable
@@ -6,37 +8,35 @@ module Restforce
     # request Salesforce for the next page of results.
     def initialize(hash, client)
       @client = client
-      @size = hash['totalSize']
+      @page = hash
+    end
 
-      @pages = Enumerator.new do |ps|
-        ps << hash
-        next_page_url = hash['nextRecordsUrl']
-        until next_page_url.nil?
-          response = @client.get(next_page_url)
-          ps << response.body
-          next_page_url = response['nextRecordsUrl']
-        end
-      end
+    # Yeild each value on each page.
+    def each
+      @page['records'].each { |record| yield SObject.new(record, @client) }
+
+      next_page.each { |record| yield record } if has_next_page?
     end
 
     # Return the size of the Collection without making any additional requests.
     def size
-      @size
+      @page['totalSize']
     end
     alias_method :length, :size
 
-    # Yeild each value on each page.
-    def each
-      @pages.each do |page|
-        Restforce::Mash.build(page['records'], @client).each do |record|
-          yield record
-        end
-      end
+    # Return the current and all of the following pages.
+    def pages
+      [@page] + (has_next_page? ? next_page.pages : [])
     end
 
-    # Cache to_a so that we don't have to make the same request twice.
-    def to_a
-      @to_a ||= super
+    # Returns true if there is a pointer to the next page.
+    def has_next_page?
+      !@page['nextRecordsUrl'].nil?
+    end
+
+    # Returns the next page if it's available, nil otherwise.
+    def next_page
+      @next_page ||= @client.get(@page['nextRecordsUrl']).body if has_next_page?
     end
   end
 end

@@ -11,8 +11,9 @@ describe Restforce::Collection do
         described_class.new(JSON.parse(fixture('sobject/query_success_response')), client)
       end
 
-      it         { should respond_to :each }
-      its(:size) { should eq 1 }
+      it                   { should respond_to :each }
+      its(:size)           { should eq 1 }
+      its(:has_next_page?) { should be_false }
       specify { expect(subject.instance_variable_get(:@client)).to eq client }
 
       describe 'each record' do
@@ -24,7 +25,6 @@ describe Restforce::Collection do
     context 'with pagination' do
       let(:first_page) { JSON.parse(fixture('sobject/query_paginated_first_page_response')) }
       let(:next_page) { JSON.parse(fixture('sobject/query_paginated_last_page_response')) }
-      let(:response) { mock(:body => next_page) }
       let(:records) { described_class.new(first_page, client) }
 
       it { should respond_to :each }
@@ -39,11 +39,12 @@ describe Restforce::Collection do
 
       context 'when all of the values are being requested' do
         before do
-          response.should_receive(:[]).with('nextRecordsUrl').and_return(nil)
-          client.should_receive(:get).with(first_page['nextRecordsUrl']).and_return(response)
+          client.stub(:get).and_return(Faraday::Response.new(:body => Restforce::Collection.new(next_page, client)))
         end
 
+        its(:has_next_page?) { should be_true }
         it { should be_all { |record| expect(record).to be_a Restforce::SObject } }
+        specify { subject.next_page.should be_a Restforce::Collection }
       end
     end
   end

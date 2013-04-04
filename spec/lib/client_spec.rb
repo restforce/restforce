@@ -473,7 +473,7 @@ describe 'with mashify middleware' do
         requests 'query\?q', :fixture => 'sobject/query_paginated_first_page_response'
         requests 'query/01gD', :fixture => 'sobject/query_paginated_last_page_response'
 
-        subject { client.query('SELECT some, fields FROM object').instance_variable_get(:@pages).to_a.last }
+        subject { client.query('SELECT some, fields FROM object').next_page }
         it { should be_a Restforce::Collection }
         specify { expect(subject.first.Text_Label).to eq 'Last Page' }
       end
