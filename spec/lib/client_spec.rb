@@ -97,7 +97,7 @@ shared_examples_for 'methods' do
     requests 'query\?q=SELECT%20some,%20fields%20FROM%20object', :fixture => 'sobject/query_success_response'
 
     subject { client.query('SELECT some, fields FROM object') }
-    it { should be_an Array }
+    it { should be_an Enumerable }
   end
 
   describe '.search' do
@@ -364,7 +364,7 @@ shared_examples_for 'methods' do
 
     let(:cache) { MockCache.new }
     subject { client.without_caching { client.query('SELECT some, fields FROM object') } }
-    it { should be_an Array }
+    it { should be_an Enumerable }
   end
 
   unless RUBY_PLATFORM == 'java'
@@ -453,7 +453,7 @@ shared_examples_for 'methods' do
     end
 
     subject { client.query('SELECT some, fields FROM object') }
-    it { should be_an Array }
+    it { should be_an Enumerable }
   end
 end
 
@@ -473,7 +473,7 @@ describe 'with mashify middleware' do
         requests 'query\?q', :fixture => 'sobject/query_paginated_first_page_response'
         requests 'query/01gD', :fixture => 'sobject/query_paginated_last_page_response'
 
-        subject { client.query('SELECT some, fields FROM object').next_page }
+        subject { client.query('SELECT some, fields FROM object').instance_variable_get(:@pages).to_a.last }
         it { should be_a Restforce::Collection }
         specify { expect(subject.first.Text_Label).to eq 'Last Page' }
       end

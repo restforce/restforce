@@ -11,10 +11,8 @@ describe Restforce::Collection do
         described_class.new(JSON.parse(fixture('sobject/query_success_response')), client)
       end
 
-      it               { should respond_to :each }
-      its(:size)       { should eq 1 }
-      its(:total_size) { should eq 1 }
-      its(:next_page_url)  { should be_nil }
+      it         { should respond_to :each }
+      its(:size) { should eq 1 }
       specify { expect(subject.instance_variable_get(:@client)).to eq client }
 
       describe 'each record' do
@@ -24,23 +22,28 @@ describe Restforce::Collection do
     end
 
     context 'with pagination' do
-      let(:records) do
-        described_class.new(JSON.parse(fixture('sobject/query_paginated_first_page_response')), client)
-      end
+      let(:first_page) { JSON.parse(fixture('sobject/query_paginated_first_page_response')) }
+      let(:next_page) { JSON.parse(fixture('sobject/query_paginated_last_page_response')) }
+      let(:response) { mock(:body => next_page) }
+      let(:records) { described_class.new(first_page, client) }
 
-      it               { should respond_to :each }
-      its(:size)       { should eq 1 }
-      its(:total_size) { should eq 2 }
-      its(:next_page_url)  { should eq "/services/data/v#{Restforce.configuration.api_version}/query/01gD" }
+      it { should respond_to :each }
       specify { expect(subject.instance_variable_get(:@client)).to eq client }
 
-      describe '.next_page' do
+      context 'when only values from the first page are being requested' do
+        before { client.should_not_receive(:get) }
+
+        its(:size) { should eq 2 }
+        its(:first) { should be_an_instance_of Restforce::SObject }
+      end
+
+      context 'when all of the values are being requested' do
         before do
-          client.should_receive(:get).and_return(Faraday::Response.new(:body => Restforce::Collection.new({'records' => []}, client)))
+          response.should_receive(:[]).with('nextRecordsUrl').and_return(nil)
+          client.should_receive(:get).with(first_page['nextRecordsUrl']).and_return(response)
         end
 
-        subject { records.next_page }
-        it { should be_a Restforce::Collection }
+        it { should be_all { |record| expect(record).to be_a Restforce::SObject } }
       end
     end
   end
