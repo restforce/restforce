@@ -407,16 +407,18 @@ client = Restforce.new.query('select Id, Name from Account')
 
 Another awesome feature about restforce is that, because it is based on
 Faraday, you can insert your own middleware. For example, if you were using
-Restforce in a rails app, you can setup custom logging using
-ActiveSupport::Notifications:
+Restforce in a rails app, you can setup custom logging to
+[Librato](https://github.com/librato/librato-rails) using ActiveSupport::Notifications:
 
 ```ruby
 client = Restforce.new
 client.middleware.insert_after Restforce::Middleware::InstanceURL, FaradayMiddleware::Instrumentation
 
 # config/initializers/notifications.rb
-ActiveSupport::Notifications.subscribe('request.faraday') do |name, start, finish, id, payload|  
-  Rails.logger.debug(['notification:', name, "#{(finish - start) * 1000}ms", payload[:status]].join(" "))  
+ActiveSupport::Notifications.subscribe('request.faraday') do |*args|
+  event = ActiveSupport::Notifications::Event.new(*args)
+  Librato.increment 'api.request.total'
+  Librato.timing 'api.request.time', event.duration
 end
 ```
 
