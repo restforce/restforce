@@ -42,6 +42,7 @@ describe Restforce::Collection do
           client.stub(:get).and_return(Faraday::Response.new(:body => Restforce::Collection.new(next_page, client)))
         end
 
+        its(:pages)          { should be_all { |page| expect(page).to be_a Restforce::Collection } }
         its(:has_next_page?) { should be_true }
         it { should be_all { |record| expect(record).to be_a Restforce::SObject } }
         specify { subject.next_page.should be_a Restforce::Collection }
