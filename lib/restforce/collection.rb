@@ -11,7 +11,7 @@ module Restforce
       @raw_page = hash
     end
 
-    # Yeild each value on each page.
+    # Yield each value on each page.
     def each
       @raw_page['records'].each { |record| yield SObject.new(record, @client) }
 
@@ -34,7 +34,7 @@ module Restforce
       !@raw_page['nextRecordsUrl'].nil?
     end
 
-    # Returns the next page if it's available, nil otherwise.
+    # Returns the next page as a Restforce::Collection if it's available, nil otherwise.
     def next_page
       @next_page ||= @client.get(@raw_page['nextRecordsUrl']).body if has_next_page?
     end
