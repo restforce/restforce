@@ -22,8 +22,8 @@ module Restforce
     # Alias for Restforce::Client.new
     #
     # Shamelessly pulled from https://github.com/pengwynn/octokit/blob/master/lib/octokit.rb
-    def new(options = {})
-      Restforce::Client.new(options)
+    def new(options = {}, &block)
+      Restforce::Client.new(options, &block)
     end
 
     # Helper for decoding signed requests.

@@ -74,6 +74,7 @@ module Restforce
       raise 'Please specify a hash of options' unless opts.is_a?(Hash)
       @options = Hash[Restforce.configuration.options.map { |option| [option, Restforce.configuration.send(option)] }]
       @options.merge! opts
+      yield builder if block_given?
     end
 
     def instance_url

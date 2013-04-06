@@ -17,6 +17,16 @@ shared_examples_for 'methods' do
         }.to raise_error, 'Please specify a hash of options'
       end
     end
+
+    it 'yields the builder to the block' do
+      called = false
+      block = proc do |builder|
+        expect(builder).to be_a Faraday::Builder
+        called = true
+      end
+      described_class.new &block
+      expect(called).to be_true
+    end
   end
 
   describe '@options' do

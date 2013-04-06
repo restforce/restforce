@@ -14,6 +14,7 @@ module Restforce
       def middleware
         connection.builder
       end
+      alias_method :builder, :middleware
 
     private
 

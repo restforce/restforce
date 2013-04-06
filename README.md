@@ -411,9 +411,10 @@ Restforce in a rails app, you can setup custom reporting to
 [Librato](https://github.com/librato/librato-rails) using ActiveSupport::Notifications:
 
 ```ruby
-client = Restforce.new
-client.middleware.insert_after Restforce::Middleware::InstanceURL,
-  FaradayMiddleware::Instrumentation, name: 'request.salesforce'
+client = Restforce.new do |builder|
+  builder.insert_after Restforce::Middleware::InstanceURL,
+    FaradayMiddleware::Instrumentation, name: 'request.salesforce'
+end
 
 # config/initializers/notifications.rb
 ActiveSupport::Notifications.subscribe('request.salesforce') do |*args|
