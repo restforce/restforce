@@ -1,5 +1,3 @@
-require 'generator' if RUBY_VERSION =~ /\A1\.8/
-
 module Restforce
   class Collection
     include Enumerable
