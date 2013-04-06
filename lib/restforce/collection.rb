@@ -11,7 +11,7 @@ module Restforce
 
     # Yield each value on each page.
     def each
-      @raw_page['records'].each { |record| yield SObject.new(record, @client) }
+      @raw_page['records'].each { |record| yield Restforce::Mash.build(record, @client) }
 
       next_page.each { |record| yield record } if has_next_page?
     end
