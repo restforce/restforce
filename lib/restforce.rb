@@ -15,8 +15,10 @@ module Restforce
   autoload :Client,        'restforce/client'
   autoload :Mash,          'restforce/mash'
 
-  AuthenticationError = Class.new(StandardError)
-  UnauthorizedError   = Class.new(StandardError)
+  ClientError         = Class.new(Faraday::Error::ClientError)
+  AuthenticationError = Class.new(ClientError)
+  UnauthorizedError   = Class.new(ClientError)
+  ResourceNotFound    = Class.new(ClientError)
 
   class << self
     # Alias for Restforce::Client.new

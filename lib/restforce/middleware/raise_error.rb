@@ -4,11 +4,11 @@ module Restforce
       @env = env
       case env[:status]
       when 404
-        raise Faraday::Error::ResourceNotFound, message
+        raise Restforce::ResourceNotFound, message
       when 401
         raise Restforce::UnauthorizedError, message
       when 400...600
-        raise Faraday::Error::ClientError, message
+        raise Restforce::ClientError, message
       end
     end
 

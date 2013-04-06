@@ -73,7 +73,7 @@ describe Restforce::SObject do
         hash.merge!(:Id => '001D000000INjVe')
       end
 
-      specify { expect { subject }.to raise_error Faraday::Error::ResourceNotFound }
+      specify { expect { subject }.to raise_error Restforce::ResourceNotFound }
     end
   end
 
@@ -108,7 +108,7 @@ describe Restforce::SObject do
         hash.merge!(:Id => '001D000000INjVe')
       end
 
-      specify { expect { subject }.to raise_error Faraday::Error::ResourceNotFound }
+      specify { expect { subject }.to raise_error Restforce::ResourceNotFound }
     end
   end
 

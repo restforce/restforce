@@ -146,7 +146,7 @@ shared_examples_for 'methods' do
         :fixture => 'sobject/delete_error_response'
 
       subject { client.update!('Account', :Id => '001D000000INjVe', :Name => 'Foobar') }
-      specify { expect { subject }.to raise_error Faraday::Error::ResourceNotFound }
+      specify { expect { subject }.to raise_error Restforce::ResourceNotFound }
     end
   end
 
@@ -222,7 +222,7 @@ shared_examples_for 'methods' do
         :method => :delete,
         :status => 404
 
-      specify { expect { subject }.to raise_error Faraday::Error::ResourceNotFound }
+      specify { expect { subject }.to raise_error Restforce::ResourceNotFound }
     end
 
     context 'with success' do
