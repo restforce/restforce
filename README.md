@@ -395,7 +395,7 @@ end
 
 * * *
 
-### Logging/Debugging
+### Logging/Debugging/Instrumenting
 
 You can easily inspect what Restforce is sending/receiving by setting
 `Restforce.log = true`.
@@ -407,18 +407,19 @@ client = Restforce.new.query('select Id, Name from Account')
 
 Another awesome feature about restforce is that, because it is based on
 Faraday, you can insert your own middleware. For example, if you were using
-Restforce in a rails app, you can setup custom logging to
+Restforce in a rails app, you can setup custom reporting to
 [Librato](https://github.com/librato/librato-rails) using ActiveSupport::Notifications:
 
 ```ruby
 client = Restforce.new
-client.middleware.insert_after Restforce::Middleware::InstanceURL, FaradayMiddleware::Instrumentation
+client.middleware.insert_after Restforce::Middleware::InstanceURL,
+  FaradayMiddleware::Instrumentation, name: 'request.salesforce'
 
 # config/initializers/notifications.rb
-ActiveSupport::Notifications.subscribe('request.faraday') do |*args|
+ActiveSupport::Notifications.subscribe('request.salesforce') do |*args|
   event = ActiveSupport::Notifications::Event.new(*args)
-  Librato.increment 'api.request.total'
-  Librato.timing 'api.request.time', event.duration
+  Librato.increment 'api.salesforce.request.total'
+  Librato.timing 'api.salesforce.request.time', event.duration
 end
 ```
 
