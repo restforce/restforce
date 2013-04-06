@@ -97,7 +97,7 @@ shared_examples_for 'methods' do
     requests 'query\?q=SELECT%20some,%20fields%20FROM%20object', :fixture => 'sobject/query_success_response'
 
     subject { client.query('SELECT some, fields FROM object') }
-    it { should be_an Array }
+    it { should be_an Enumerable }
   end
 
   describe '.search' do
@@ -364,7 +364,7 @@ shared_examples_for 'methods' do
 
     let(:cache) { MockCache.new }
     subject { client.without_caching { client.query('SELECT some, fields FROM object') } }
-    it { should be_an Array }
+    it { should be_an Enumerable }
   end
 
   unless RUBY_PLATFORM == 'java'
@@ -453,7 +453,7 @@ shared_examples_for 'methods' do
     end
 
     subject { client.query('SELECT some, fields FROM object') }
-    it { should be_an Array }
+    it { should be_an Enumerable }
   end
 end
 
