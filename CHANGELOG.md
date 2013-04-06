@@ -1,3 +1,11 @@
+## 1.3.0 (Apr 6, 2013)
+
+*   Added support for lazily traversing paginated collections #61 by @nahiluhmot.
+
+## 1.2.0 (Mar 30, 2013)
+
+*   Added support for proxies #60 by @wazoo.
+
 ## 1.1.0 (Mar 3, 2013)
 
 *   Added ability to download attachments easily.
