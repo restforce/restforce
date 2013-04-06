@@ -16,10 +16,6 @@ module Restforce
     include Restforce::Client::Canvas
     include Restforce::Client::API
 
-    OPTIONS = [:username, :password, :security_token, :client_id, :client_secret, :host, :compress,
-       :api_version, :oauth_token, :refresh_token, :instance_url, :cache, :authentication_retries,
-       :timeout, :proxy_uri]
-
     # Public: Creates a new client instance
     #
     # opts - A hash of options to be passed in (default: {}).
@@ -76,7 +72,7 @@ module Restforce
     #
     def initialize(opts = {})
       raise 'Please specify a hash of options' unless opts.is_a?(Hash)
-      @options = Hash[OPTIONS.map { |option| [option, Restforce.configuration.send(option)] }]
+      @options = Hash[Restforce.configuration.options.map { |option| [option, Restforce.configuration.send(option)] }]
       @options.merge! opts
     end
 

@@ -37,85 +37,70 @@ module Restforce
   end
 
   class Configuration
-    attr_accessor :api_version
+    class << self
+      attr_accessor :options
+
+      def option(name, options = {})
+        default = options.fetch(:default, nil)
+        attr_accessor name
+        define_method name do
+          instance_variable_get(:"@#{name}") ||
+            instance_variable_set(:"@#{name}", default.respond_to?(:call) ? default.call : default)
+        end if default
+        self.options ||= []
+        self.options << name
+      end
+    end
+
+    option :api_version, :default => '26.0'
+
     # The username to use during login.
-    attr_accessor :username
+    option :username, :default => lambda { ENV['SALESFORCE_USERNAME'] }
+
     # The password to use during login.
-    attr_accessor :password
+    option :password, :default => lambda { ENV['SALESFORCE_PASSWORD'] }
+
     # The security token to use during login.
-    attr_accessor :security_token
+    option :security_token, :default => lambda { ENV['SALESFORCE_SECURITY_TOKEN'] }
+
     # The OAuth client id
-    attr_accessor :client_id
+    option :client_id, :default => lambda { ENV['SALESFORCE_CLIENT_ID'] }
+
     # The OAuth client secret
-    attr_accessor :client_secret
+    option :client_secret, :default => lambda { ENV['SALESFORCE_CLIENT_SECRET'] }
+
     # Set this to true if you're authenticating with a Sandbox instance.
     # Defaults to false.
-    attr_accessor :host
+    option :host, :default => 'login.salesforce.com'
 
-    attr_accessor :oauth_token
-    attr_accessor :refresh_token
-    attr_accessor :instance_url
+    option :oauth_token
+    option :refresh_token
+    option :instance_url
 
     # Set this to an object that responds to read, write and fetch and all GET
     # requests will be cached.
-    attr_accessor :cache
+    option :cache
 
     # The number of times reauthentication should be tried before failing.
-    attr_accessor :authentication_retries
+    option :authentication_retries, :default => 3
 
     # Set to true if you want responses from Salesforce to be gzip compressed.
-    attr_accessor :compress
+    option :compress
 
     # Faraday request read/open timeout.
-    attr_accessor :timeout
+    option :timeout
 
     # Faraday adapter to use. Defaults to Faraday.default_adapter.
-    attr_accessor :adapter
+    option :adapter, :default => lambda { Faraday.default_adapter }
 
-    attr_accessor :proxy_uri
-
-    def api_version
-      @api_version ||= '26.0'
-    end
-
-    def username
-      @username ||= ENV['SALESFORCE_USERNAME']
-    end
-
-    def password
-      @password ||= ENV['SALESFORCE_PASSWORD']
-    end
-
-    def security_token
-      @security_token ||= ENV['SALESFORCE_SECURITY_TOKEN']
-    end
-
-    def client_id
-      @client_id ||= ENV['SALESFORCE_CLIENT_ID']
-    end
-
-    def client_secret
-      @client_secret ||= ENV['SALESFORCE_CLIENT_SECRET']
-    end
-
-    def proxy_uri
-      @proxy_uri ||= ENV['PROXY_URI']
-    end
-
-    def host
-      @host ||= 'login.salesforce.com'
-    end
-
-    def authentication_retries
-      @authentication_retries ||= 3
-    end
-
-    def adapter
-      @adapter ||= Faraday.default_adapter
-    end
+    option :proxy_uri, :default => lambda { ENV['PROXY_URI'] }
 
     def logger
       @logger ||= ::Logger.new STDOUT
+    end
+
+    def options
+      self.class.options
     end
   end
 end
