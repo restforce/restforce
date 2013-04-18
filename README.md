@@ -118,6 +118,7 @@ You can connect to sandbox orgs by specifying a host. The default host is
 ```ruby
 client = Restforce.new :host => 'test.salesforce.com'
 ```
+The host can also be set with the environment variable SALESFORCE_HOST.
 
 #### Global configuration
 

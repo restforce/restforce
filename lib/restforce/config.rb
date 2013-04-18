@@ -101,7 +101,7 @@ module Restforce
 
     # Set this to true if you're authenticating with a Sandbox instance.
     # Defaults to false.
-    option :host, :default => 'login.salesforce.com'
+    option :host, :default => lambda { ENV['SALESFORCE_HOST'] || 'login.salesforce.com' }
 
     option :oauth_token
     option :refresh_token
