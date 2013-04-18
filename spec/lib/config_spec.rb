@@ -38,6 +38,7 @@ describe Restforce do
         ENV['SALESFORCE_CLIENT_ID']      = 'client id'
         ENV['SALESFORCE_CLIENT_SECRET']  = 'client secret'
         ENV['PROXY_URI']                 = 'proxy'
+        ENV['SALESFORCE_HOST']           = 'test.host.com'
       end
 
       after do
@@ -47,6 +48,7 @@ describe Restforce do
         ENV.delete('SALESFORCE_CLIENT_ID')
         ENV.delete('SALESFORCE_CLIENT_SECRET')
         ENV.delete('PROXY_URI')
+        ENV.delete('SALESFORCE_HOST')
       end
 
       its(:username)       { should eq 'foo' }
@@ -55,6 +57,7 @@ describe Restforce do
       its(:client_id)      { should eq 'client id' }
       its(:client_secret)  { should eq 'client secret' }
       its(:proxy_uri)      { should eq 'proxy' }
+      its(:host)           { should eq 'test.host.com' }
     end
   end
 
