@@ -11,12 +11,12 @@ describe Restforce::Middleware::RaiseError do
 
     context 'when the status code is 404' do
       let(:status) { 404 }
-      specify { expect { subject }.to raise_error Faraday::Error::ResourceNotFound, 'INVALID_FIELD: error_message' }
+      specify { expect { subject }.to raise_error Restforce::ResourceNotFound, 'INVALID_FIELD: error_message' }
     end
 
     context 'when the status code is 400' do
       let(:status) { 400 }
-      specify { expect { subject }.to raise_error Faraday::Error::ClientError, 'INVALID_FIELD: error_message' }
+      specify { expect { subject }.to raise_error Restforce::ClientError, 'INVALID_FIELD: error_message' }
     end
 
     context 'when the status code is 401' do
