@@ -7,12 +7,12 @@ module Restforce
       APIS = [:data, :tooling]
 
       def api
-        @options[:api] ||= APIS.first
+        options[:api] ||= APIS.first
       end
 
       def api=(api)
         raise "Valid API's: #{APIS.inspect}" unless APIS.include? api
-        @options[:api] = api
+        options[:api] = api
       end
 
       # Public: Helper methods for performing arbitrary actions against the API using
@@ -299,7 +299,7 @@ module Restforce
       end
 
       def data_api_path(path)
-        "/services/data/v#{@options[:api_version]}/#{path}"
+        "/services/data/v#{options[:api_version]}/#{path}"
       end
 
       def tooling_api_path(path)

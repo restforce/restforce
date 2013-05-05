@@ -31,13 +31,13 @@ module Restforce
       # Returns nil.
       def define_verb(verb)
         define_method verb do |*args, &block|
-          retries = @options[:authentication_retries]
+          retries = options[:authentication_retries]
           begin
             connection.send(verb, *args, &block)
           rescue Restforce::UnauthorizedError
             if retries > 0
               retries -= 1
-              connection.url_prefix = @options[:instance_url]
+              connection.url_prefix = options[:instance_url]
               retry
             end
             raise

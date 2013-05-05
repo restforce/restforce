@@ -8,17 +8,17 @@ module Restforce
       #
       # Returns the result of the block
       def without_caching(&block)
-        @options[:use_cache] = false
+        options[:use_cache] = false
         block.call
       ensure
-        @options.delete(:use_cache)
+        options.delete(:use_cache)
       end
 
     private
 
       # Internal: Cache to use for the caching middleware
       def cache
-        @options[:cache]
+        options[:cache]
       end
 
     end

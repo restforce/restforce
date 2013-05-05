@@ -2,6 +2,8 @@ module Restforce
   module Concerns
     module Base
 
+      attr_reader :options
+
       # Public: Creates a new client instance
       #
       # opts - A hash of options to be passed in (default: {}).
@@ -64,8 +66,8 @@ module Restforce
       end
 
       def instance_url
-        authenticate! unless @options[:instance_url]
-        @options[:instance_url]
+        authenticate! unless options[:instance_url]
+        options[:instance_url]
       end
 
       def inspect

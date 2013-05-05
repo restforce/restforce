@@ -29,8 +29,8 @@ shared_examples_for 'methods' do
     end
   end
 
-  describe '@options' do
-    subject { client.instance_variable_get :@options }
+  describe '.options' do
+    subject { client.send :options }
 
     its([:oauth_token])    { should eq oauth_token    }
     its([:refresh_token])  { should eq refresh_token  }
@@ -517,7 +517,7 @@ describe 'without mashify middleware' do
   describe Restforce::Client do
     include_context 'basic client'
     include_examples 'methods'
-    
+
     describe '.mashify?' do
       subject { client.send :mashify? }
 
