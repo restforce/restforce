@@ -1,22 +1,13 @@
-require 'restforce/client/base'
-require 'restforce/client/connection'
-require 'restforce/client/authentication'
-require 'restforce/client/streaming'
-require 'restforce/client/picklists'
-require 'restforce/client/caching'
-require 'restforce/client/canvas'
-require 'restforce/client/api'
+require 'restforce/abstract_client'
+require 'restforce/concerns/streaming'
+require 'restforce/concerns/picklists'
+require 'restforce/concerns/canvas'
 
 module Restforce
-  class Client
-    include Restforce::Client::Base
-    include Restforce::Client::Connection
-    include Restforce::Client::Authentication
-    include Restforce::Client::Streaming
-    include Restforce::Client::Picklists
-    include Restforce::Client::Caching
-    include Restforce::Client::Canvas
-    include Restforce::Client::API
+  class Client < AbstractClient
+    include Restforce::Concerns::Streaming
+    include Restforce::Concerns::Picklists
+    include Restforce::Concerns::Canvas
 
     # Public: Returns a url to the resource.
     #

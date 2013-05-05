@@ -1,5 +1,5 @@
 module Restforce
-  class Client
+  module Concerns
     module Authentication
 
       # Public: Force an authentication

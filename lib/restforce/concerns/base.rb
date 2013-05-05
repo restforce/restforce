@@ -1,5 +1,5 @@
 module Restforce
-  class Client
+  module Concerns
     module Base
 
       # Public: Creates a new client instance

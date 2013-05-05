@@ -1,9 +1,9 @@
-require 'restforce/client/verbs'
+require 'restforce/concerns/verbs'
 
 module Restforce
-  class Client
+  module Concerns
     module API
-      extend Restforce::Client::Verbs
+      extend Restforce::Concerns::Verbs
       APIS = [:data, :tooling]
 
       def api
@@ -51,7 +51,7 @@ module Restforce
       def list_sobjects
         describe.collect { |sobject| sobject['name'] }
       end
-      
+
       # Public: Returns a detailed describe result for the specified sobject
       #
       # sobject - Stringish name of the sobject (default: nil).
@@ -86,7 +86,7 @@ module Restforce
       def org_id
         query('select id from Organization').first['Id']
       end
-      
+
       # Public: Executs a SOQL query and returns the result.
       #
       # soql - A SOQL expression.
@@ -103,7 +103,7 @@ module Restforce
         response = api_get 'query', :q => soql
         mashify? ? response.body : response.body['records']
       end
-      
+
       # Public: Perform a SOSL search
       #
       # sosl - A SOSL expression.
@@ -123,7 +123,7 @@ module Restforce
       def search(sosl)
         api_get('search', :q => sosl).body
       end
-      
+
       # Public: Insert a new record.
       #
       # sobject - String name of the sobject.

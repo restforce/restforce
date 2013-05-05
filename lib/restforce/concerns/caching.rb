@@ -1,5 +1,5 @@
 module Restforce
-  class Client
+  module Concerns
     module Caching
 
       # Public: Runs the block with caching disabled.

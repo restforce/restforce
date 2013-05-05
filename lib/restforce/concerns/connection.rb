@@ -1,5 +1,5 @@
 module Restforce
-  class Client
+  module Concerns
     module Connection
 
       # Public: The Faraday::Builder instance used for the middleware stack. This
@@ -58,7 +58,7 @@ module Restforce
       def connection_options
         { :request => {
             :timeout => @options[:timeout],
-            :open_timeout => @options[:timeout] }, 
+            :open_timeout => @options[:timeout] },
           :proxy => @options[:proxy_uri]
         }
       end

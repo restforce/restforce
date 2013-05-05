@@ -1,5 +1,5 @@
 module Restforce
-  class Client
+  module Concerns
     module Streaming
 
       # Public: Subscribe to a PushTopic

@@ -1,5 +1,5 @@
 module Restforce
-  class Client
+  module Concerns
     module Canvas
 
       def decode_signed_request(signed_request)

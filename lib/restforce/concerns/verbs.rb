@@ -1,5 +1,5 @@
 module Restforce
-  class Client
+  module Concerns
     module Verbs
 
       # Internal: Define methods to handle a verb.
@@ -51,7 +51,7 @@ module Restforce
       # verb - Symbol name of the verb (e.g. :get).
       #
       # Examples
-      #   
+      #
       #   define_api_verb :get
       #   # => api_get 'sobjects'
       #
