@@ -1,12 +1,9 @@
 require 'spec_helper'
 
 describe Restforce::SObject do
-  include_context 'basic client'
-
-  let(:hash) { JSON.parse(fixture('sobject/query_success_response'))['records'].first }
-  let(:sobject) do
-    described_class.new(hash, client)
-  end
+  let(:client)  { double('Client') }
+  let(:hash)    { JSON.parse(fixture('sobject/query_success_response'))['records'].first }
+  let(:sobject) { described_class.new(hash, client) }
 
   describe '#new' do
     context 'with valid options' do
@@ -47,33 +44,21 @@ describe Restforce::SObject do
     end
 
     context 'when an Id is present' do
-      requests 'sobjects/Whizbang/001D000000INjVe',
-        :method => :patch,
-        :with_body => "{\"Checkbox_Label\":false,\"Text_Label\":\"Hi there!\",\"Date_Label\":\"2010-01-01\"," +
-        "\"DateTime_Label\":\"2011-07-07T00:37:00.000+0000\",\"Picklist_Multiselect_Label\":\"four;six\"}"
-
-      before do
+      it 'delegates to client.update' do
         hash.merge!(:Id => '001D000000INjVe')
+        client.should_receive(:update)
+        subject
       end
-
-      specify { expect { subject }.to_not raise_error }
     end
   end
 
   describe '.save!' do
     subject { sobject.save! }
 
-    context 'when an exception is raised' do
-      requests 'sobjects/Whizbang/001D000000INjVe',
-        :fixture => 'sobject/delete_error_response',
-        :method => :patch,
-        :status => 404
-
-      before do
-        hash.merge!(:Id => '001D000000INjVe')
-      end
-
-      specify { expect { subject }.to raise_error Faraday::Error::ResourceNotFound }
+    it 'delegates to client.update!' do
+      hash.merge!(:Id => '001D000000INjVe')
+      client.should_receive(:update!)
+      subject
     end
   end
 
@@ -85,13 +70,11 @@ describe Restforce::SObject do
     end
 
     context 'when an Id is present' do
-      requests 'sobjects/Whizbang/001D000000INjVe', :method => :delete
-
-      before do 
+      it 'delegates to client.destroy' do
         hash.merge!(:Id => '001D000000INjVe')
+        client.should_receive(:destroy)
+        subject
       end
-
-      specify { expect { subject }.to_not raise_error }
     end
   end
 
@@ -99,24 +82,20 @@ describe Restforce::SObject do
     subject { sobject.destroy! }
 
     context 'when an exception is raised' do
-      requests 'sobjects/Whizbang/001D000000INjVe',
-        :fixture => 'sobject/delete_error_response',
-        :method => :delete,
-        :status => 404
-
-      before do
+      it 'delegates to client.destroy!' do
         hash.merge!(:Id => '001D000000INjVe')
+        client.should_receive(:destroy!)
+        subject
       end
-
-      specify { expect { subject }.to raise_error Faraday::Error::ResourceNotFound }
     end
   end
 
   describe '.describe' do
-    requests 'sobjects/Whizbang/describe',
-      :fixture => 'sobject/sobject_describe_success_response'
-
     subject { sobject.describe }
-    it { should be_a Hash }
+
+    it 'delegates to client.describe' do
+      client.should_receive(:describe).with('Whizbang')
+      subject
+    end
   end
 end
