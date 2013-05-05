@@ -28,8 +28,9 @@ module Restforce
     autoload :API,            'restforce/concerns/api'
   end
 
-  AuthenticationError = Class.new(StandardError)
-  UnauthorizedError   = Class.new(StandardError)
+  Error               = Class.new(StandardError)
+  AuthenticationError = Class.new(Error)
+  UnauthorizedError   = Class.new(Error)
 
   class << self
     # Alias for Restforce::Client.new
