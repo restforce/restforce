@@ -285,15 +285,7 @@ module Restforce
       #   api_path('sobjects')
       #   # => '/services/data/v24.0/sobjects'
       def api_path(path)
-<<<<<<< HEAD
-        send(:"#{api}_api_path", path)
-      end
-
-      def data_api_path(path)
         "/services/data/v#{options[:api_version]}/#{path}"
-=======
-        "/services/data/v#{@options[:api_version]}/#{path}"
->>>>>>> Revert "Merge branch 'tooling'"
       end
 
       # Internal: Errors that should be rescued from in non-bang methods
