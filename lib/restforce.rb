@@ -6,14 +6,27 @@ require 'restforce/version'
 require 'restforce/config'
 
 module Restforce
-  autoload :SignedRequest, 'restforce/signed_request'
-  autoload :Collection,    'restforce/collection'
-  autoload :Middleware,    'restforce/middleware'
-  autoload :Attachment,    'restforce/attachment'
-  autoload :UploadIO,      'restforce/upload_io'
-  autoload :SObject,       'restforce/sobject'
-  autoload :Client,        'restforce/client'
-  autoload :Mash,          'restforce/mash'
+  autoload :AbstractClient, 'restforce/abstract_client'
+  autoload :SignedRequest,  'restforce/signed_request'
+  autoload :Collection,     'restforce/collection'
+  autoload :Middleware,     'restforce/middleware'
+  autoload :Attachment,     'restforce/attachment'
+  autoload :UploadIO,       'restforce/upload_io'
+  autoload :SObject,        'restforce/sobject'
+  autoload :Client,         'restforce/client'
+  autoload :Mash,           'restforce/mash'
+
+  module Concerns
+    autoload :Authentication, 'restforce/concerns/authentication'
+    autoload :Connection,     'restforce/concerns/connection'
+    autoload :Picklists,      'restforce/concerns/picklists'
+    autoload :Streaming,      'restforce/concerns/streaming'
+    autoload :Caching,        'restforce/concerns/caching'
+    autoload :Canvas,         'restforce/concerns/canvas'
+    autoload :Verbs,          'restforce/concerns/verbs'
+    autoload :Base,           'restforce/concerns/base'
+    autoload :API,            'restforce/concerns/api'
+  end
 
   AuthenticationError = Class.new(StandardError)
   UnauthorizedError   = Class.new(StandardError)

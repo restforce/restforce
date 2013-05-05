@@ -1,8 +1,3 @@
-require 'restforce/abstract_client'
-require 'restforce/concerns/streaming'
-require 'restforce/concerns/picklists'
-require 'restforce/concerns/canvas'
-
 module Restforce
   class Client < AbstractClient
     include Restforce::Concerns::Streaming
