@@ -41,6 +41,24 @@ shared_examples_for 'methods' do
     its([:security_token]) { should eq security_token }
   end
 
+  describe '.api' do
+    context 'by default' do
+      subject { client.api }
+      it { should eq :data }
+    end
+
+    context 'when set to tooling' do
+      subject { client.api=:tooling }
+      it { should eq :tooling }
+    end
+
+    context 'when passed as param to options' do
+      let(:client_options) { base_options.merge(:api => :tooling) }
+      subject { client.api }
+      it { should eq :tooling }
+    end
+  end
+
   describe '.instance_url' do
     subject { client.instance_url }
     it { should eq 'https://na1.salesforce.com' }
