@@ -1,102 +1,6 @@
 require 'spec_helper'
 
-shared_examples_for 'methods' do
-  describe '#new' do
-    context 'without options passed in' do
-      it 'does not raise an exception' do
-        expect {
-          described_class.new
-        }.to_not raise_error
-      end
-    end
-
-    context 'with a non-hash value' do
-      it 'raises an exception' do
-        expect {
-          described_class.new 'foo'
-        }.to raise_error, 'Please specify a hash of options'
-      end
-    end
-
-    it 'yields the builder to the block' do
-      called = false
-      block = proc do |builder|
-        expect(builder).to be_a Faraday::Builder
-        called = true
-      end
-      described_class.new &block
-      expect(called).to be_true
-    end
-  end
-
-  describe '.options' do
-    subject { client.send :options }
-
-    its([:oauth_token])    { should eq oauth_token    }
-    its([:refresh_token])  { should eq refresh_token  }
-    its([:client_id])      { should eq client_id      }
-    its([:client_secret])  { should eq client_secret  }
-    its([:username])       { should eq username       }
-    its([:password])       { should eq password       }
-    its([:security_token]) { should eq security_token }
-  end
-
-  describe '.api' do
-    context 'by default' do
-      subject { client.api }
-      it { should eq :data }
-    end
-
-    context 'when set to tooling' do
-      subject { client.api=:tooling }
-      it { should eq :tooling }
-    end
-
-    context 'when passed as param to options' do
-      let(:client_options) { base_options.merge(:api => :tooling) }
-      subject { client.api }
-      it { should eq :tooling }
-    end
-  end
-
-  describe '.instance_url' do
-    subject { client.instance_url }
-    it { should eq 'https://na1.salesforce.com' }
-  end
-
-  describe '.url' do
-    subject { client.url(resource) }
-
-    context 'when given something that responds to to_sparam' do
-      let(:resource) { Struct.new(:to_sparam).new('1234') }
-      it { should eq 'https://na1.salesforce.com/1234' }
-    end
-
-    context 'when given a string' do
-      let(:resource) { '4321' }
-      it { should eq 'https://na1.salesforce.com/4321' }
-    end
-  end
-
-  describe '.authentication_middleware' do
-    subject { client.send :authentication_middleware }
-
-    context 'without required options for authentication middleware to be provided' do
-      let(:client_options) { {} }
-      it { should be_nil }
-    end
-
-    context 'with username, password, security token, client id and client secret provided' do
-      let(:client_options) { password_options }
-      it { should eq Restforce::Middleware::Authentication::Password }
-    end
-
-    context 'with refresh token, client id and client secret provided' do
-      let(:client_options) { oauth_options }
-      it { should eq Restforce::Middleware::Authentication::Token }
-    end
-  end
-
+shared_examples_for Restforce::AbstractClient do
   describe '.list_sobjects' do
     requests :sobjects, :fixture => 'sobject/describe_sobjects_success_response'
 
@@ -181,7 +85,7 @@ shared_examples_for 'methods' do
   describe '.update' do
     context 'with missing Id' do
       subject { client.update('Account', :Name => 'Foobar') }
-      specify { expect { subject }.to raise_error RuntimeError, 'Id field missing.' }
+      specify { expect { subject }.to raise_error ArgumentError, 'Id field missing from attrs.' }
     end
 
     context 'with invalid Id' do
@@ -297,42 +201,6 @@ shared_examples_for 'methods' do
     end
   end
 
-  describe '.picklist_values' do
-    requests 'sobjects/Account/describe',
-      :fixture => 'sobject/sobject_describe_success_response'
-
-    context 'when given a picklist field' do
-      subject { client.picklist_values('Account', 'Picklist_Field') }
-      it { should be_an Array }
-      its(:length) { should eq 3 }
-      it { should include_picklist_values ['one', 'two', 'three'] }
-    end
-
-    context 'when given a multipicklist field' do
-      subject { client.picklist_values('Account', 'Picklist_Multiselect_Field') }
-      it { should be_an Array }
-      its(:length) { should eq 3 }
-      it { should include_picklist_values ['four', 'five', 'six'] }
-    end
-
-    describe 'dependent picklists' do
-      context 'when given a picklist field that has a dependency' do
-        subject { client.picklist_values('Account', 'Dependent_Picklist_Field', :valid_for => 'one') }
-        it { should be_an Array }
-        its(:length) { should eq 2 }
-        it { should include_picklist_values ['seven', 'eight'] }
-        it { should_not include_picklist_values ['nine'] }
-      end
-
-      context 'when given a picklist field that does not have a dependency' do
-        subject { client.picklist_values('Account', 'Picklist_Field', :valid_for => 'one') }
-        it 'raises an exception' do
-          expect { subject }.to raise_error(/Picklist_Field is not a dependent picklist/)
-        end
-      end
-    end
-  end
-
   describe '.authenticate!' do
     subject { client.authenticate! }
 
@@ -361,26 +229,6 @@ shared_examples_for 'methods' do
     end
   end
 
-  describe '.cache' do
-    let(:cache) { double('cache') }
-
-    subject { client.send :cache }
-    it { should eq cache }
-  end
-
-  describe '.middleware' do
-    subject { client.middleware }
-    it { should eq client.send(:connection).builder }
-
-    context 'adding middleware' do
-      before do
-        client.middleware.use FaradayMiddleware::Instrumentation
-      end
-
-      its(:handlers) { should include FaradayMiddleware::Instrumentation }
-    end
-  end
-
   describe '.without_caching' do
     requests 'query\?q=SELECT%20some,%20fields%20FROM%20object',
       :fixture => 'sobject/query_success_response'
@@ -393,56 +241,6 @@ shared_examples_for 'methods' do
     let(:cache) { MockCache.new }
     subject { client.without_caching { client.query('SELECT some, fields FROM object') } }
     it { should be_an Enumerable }
-  end
-
-  unless RUBY_PLATFORM == 'java'
-    describe '.faye', :eventmachine => true do
-      subject { client.faye }
-
-      context 'with missing instance url' do
-        let(:instance_url) { nil }
-        specify { expect { subject }.to raise_error RuntimeError, 'Instance URL missing. Call .authenticate! first.' }
-      end
-
-      context 'with oauth token and instance url' do
-        let(:instance_url) { 'http://google.com' }
-        let(:oauth_token) { 'bar' }
-        specify { expect { subject }.to_not raise_error }
-      end
-
-      context 'when the connection goes down' do
-        it 'should reauthenticate' do
-          access_token = double('access token')
-          access_token.stub(:access_token).and_return('token')
-          client.should_receive(:authenticate!).and_return(access_token)
-          client.faye.should_receive(:set_header).with('Authorization', "OAuth token")
-          client.faye.trigger('transport:down')
-        end
-      end
-    end
-
-    describe '.subcribe', :eventmachine => true do
-      context 'when given a single pushtopic' do
-        it 'subscribes to the pushtopic' do
-          client.faye.should_receive(:subscribe).with(['/topic/PushTopic'])
-          client.subscribe('PushTopic')
-        end
-      end
-
-      context 'when given an array of pushtopics' do
-        it 'subscribes to each pushtopic' do
-          client.faye.should_receive(:subscribe).with(['/topic/PushTopic1', '/topic/PushTopic2'])
-          client.subscribe(['PushTopic1', 'PushTopic2'])
-        end
-      end
-    end
-  end
-
-  describe '.decode_signed_request' do
-    it 'proxies to Restforce::SignedRequest' do
-      Restforce::SignedRequest.should_receive(:decode).with('foo', client_secret)
-      client.decode_signed_request('foo')
-    end
   end
 
   describe 'authentication retries' do
@@ -485,16 +283,9 @@ shared_examples_for 'methods' do
   end
 end
 
-describe 'with mashify middleware' do
-  describe Restforce::Client do
-    include_context 'basic client'
-    include_examples 'methods'
-
-    describe '.mashify?' do
-      subject { client.send :mashify? }
-
-      it { should be_true }
-    end
+describe Restforce::AbstractClient do
+  describe 'with mashify' do
+    it_behaves_like Restforce::AbstractClient
 
     describe '.query' do
       context 'with pagination' do
@@ -507,21 +298,8 @@ describe 'with mashify middleware' do
       end
     end
   end
-end
 
-describe 'without mashify middleware' do
-  before do
-    client.middleware.delete(Restforce::Middleware::Mashify)
-  end
-
-  describe Restforce::Client do
-    include_context 'basic client'
-    include_examples 'methods'
-
-    describe '.mashify?' do
-      subject { client.send :mashify? }
-
-      it { should be_false }
-    end
+  describe 'without mashify', :mashify => false do
+    it_behaves_like Restforce::AbstractClient
   end
 end

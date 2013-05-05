@@ -29,7 +29,7 @@ module Restforce
 
     # Internal: The params to post to the OAuth service.
     def params
-      raise 'not implemented'
+      raise NotImplementedError
     end
 
     # Internal: Faraday connection to use when sending an authentication request.

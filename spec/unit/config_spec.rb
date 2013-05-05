@@ -32,23 +32,14 @@ describe Restforce do
 
     context 'when environment variables are defined' do
       before do
-        ENV['SALESFORCE_USERNAME']       = 'foo'
-        ENV['SALESFORCE_PASSWORD']       = 'bar'
-        ENV['SALESFORCE_SECURITY_TOKEN'] = 'foobar'
-        ENV['SALESFORCE_CLIENT_ID']      = 'client id'
-        ENV['SALESFORCE_CLIENT_SECRET']  = 'client secret'
-        ENV['PROXY_URI']                 = 'proxy'
-        ENV['SALESFORCE_HOST']           = 'test.host.com'
-      end
-
-      after do
-        ENV.delete('SALESFORCE_USERNAME')
-        ENV.delete('SALESFORCE_PASSWORD')
-        ENV.delete('SALESFORCE_SECURITY_TOKEN')
-        ENV.delete('SALESFORCE_CLIENT_ID')
-        ENV.delete('SALESFORCE_CLIENT_SECRET')
-        ENV.delete('PROXY_URI')
-        ENV.delete('SALESFORCE_HOST')
+        { 'SALESFORCE_USERNAME'       => 'foo',
+          'SALESFORCE_PASSWORD'       => 'bar',
+          'SALESFORCE_SECURITY_TOKEN' => 'foobar',
+          'SALESFORCE_CLIENT_ID'      => 'client id',
+          'SALESFORCE_CLIENT_SECRET'  => 'client secret',
+          'PROXY_URI'                 => 'proxy',
+          'SALESFORCE_HOST'           => 'test.host.com' }.
+        each { |var, value| ENV.stub(:[]).with(var).and_return(value) }
       end
 
       its(:username)       { should eq 'foo' }
@@ -83,24 +74,20 @@ describe Restforce do
   end
 
   describe '#log' do
-    after do
-      Restforce.log = false
-    end
-
     context 'with logging disabled' do
       before do
-        Restforce.log = false
-        Restforce.configuration.logger.should_not_receive(:debug)
+        Restforce.stub :log? => false
       end
 
       it 'doesnt log anytning' do
+        Restforce.configuration.logger.should_not_receive(:debug)
         Restforce.log 'foobar'
       end
     end
-    
+
     context 'with logging enabled' do
       before do
-        Restforce.log = true
+        Restforce.stub :log? => true
         Restforce.configuration.logger.should_receive(:debug).with('foobar')
       end
 
