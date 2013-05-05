@@ -429,22 +429,6 @@ end
 
 You can use Restforce to decode signed requests from Salesforce. See [the example app](https://gist.github.com/4052312).
 
-
-## Tooling API
-
-To use the [Tooling API](http://www.salesforce.com/us/developer/docs/api_toolingpre/api_tooling.pdf), just pass in an optional parameter when initializing a new client:
-
-```ruby
-client = Restforce.new(:api => :tooling)
-client.list_sobjects
-```
-
-You can also toggle the api after the fact like so:
-
-```ruby
-client.api= :tooling
-```
-
 ## Contributing
 
 1. Fork it
