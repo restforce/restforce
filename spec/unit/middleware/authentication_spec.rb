@@ -2,13 +2,12 @@ require 'spec_helper'
 
 describe Restforce::Middleware::Authentication do
   let(:options) do
-   { :host => 'login.salesforce.com',
-     :authentication_retries => retries }
- end
+    { :host => 'login.salesforce.com',
+      :authentication_retries => retries }
+  end
 
   describe '.authenticate!' do
     subject { lambda { middleware.authenticate! }}
-
     it      { should raise_error NotImplementedError }
   end
 
