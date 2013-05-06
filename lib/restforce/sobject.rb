@@ -57,7 +57,7 @@ module Restforce
 
     def ensure_id
       return true if self.Id?
-      raise 'You need to query the Id for the record first.'
+      raise ArgumentError, 'You need to query the Id for the record first.'
     end
 
   end

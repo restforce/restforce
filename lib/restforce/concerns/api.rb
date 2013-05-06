@@ -194,7 +194,7 @@ module Restforce
       # Raises an exception if an error is returned from Salesforce.
       def update!(sobject, attrs)
         id = attrs.delete(attrs.keys.find { |k| k.to_s.downcase == 'id' })
-        raise 'Id field missing.' unless id
+        raise ArgumentError, 'Id field missing from attrs.' unless id
         api_patch "sobjects/#{sobject}/#{id}", attrs
         true
       end

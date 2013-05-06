@@ -1,3 +1,21 @@
+module MiddlewareExampleGroup
+  def self.included(base)
+    base.class_eval do
+      let(:app)            { double('@app', :call => nil)            }
+      let(:env)            { { :request_headers => {}, :response_headers => {} } }
+      let(:retries)        { 3 }
+      let(:options)        { { } }
+      let(:client)         { double(Restforce::Client) }
+      subject(:middleware) { described_class.new app, client, options }
+    end
+  end
+
+  RSpec.configure do |config|
+    config.include self,
+      :example_group => { :file_path => %r{spec/unit/middleware} }
+  end
+end
+
 shared_examples_for 'authentication middleware' do
   describe '.authenticate!' do
     after do
@@ -28,6 +46,5 @@ shared_examples_for 'authentication middleware' do
         }.to raise_error Restforce::AuthenticationError, /^invalid_grant: .*/
       end
     end
-
   end
 end
