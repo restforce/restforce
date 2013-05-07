@@ -28,6 +28,10 @@ module Restforce
     autoload :API,            'restforce/concerns/api'
   end
 
+  module Data
+    autoload :Client, 'restforce/data/client'
+  end
+
   module Tooling
     autoload :Client, 'restforce/tooling/client'
   end
@@ -37,7 +41,7 @@ module Restforce
   UnauthorizedError   = Class.new(Error)
 
   class << self
-    # Alias for Restforce::Client.new
+    # Alias for Restforce::Data::Client.new
     #
     # Shamelessly pulled from https://github.com/pengwynn/octokit/blob/master/lib/octokit.rb
     def new(*args)
@@ -45,7 +49,7 @@ module Restforce
     end
 
     def data(*args)
-      Restforce::Client.new(*args)
+      Restforce::Data::Client.new(*args)
     end
 
     def tooling(*args)

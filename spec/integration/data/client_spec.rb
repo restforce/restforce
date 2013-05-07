@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-shared_examples_for Restforce::Client do
+shared_examples_for Restforce::Data::Client do
   describe '.picklist_values' do
     requests 'sobjects/Account/describe',
       :fixture => 'sobject/sobject_describe_success_response'
@@ -79,7 +79,7 @@ shared_examples_for Restforce::Client do
   end
 end
 
-describe Restforce::Client do
+describe Restforce::Data::Client do
   describe 'with mashify' do
     it_behaves_like Restforce::Client
   end

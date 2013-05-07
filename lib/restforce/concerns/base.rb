@@ -37,27 +37,6 @@ module Restforce
       #        :timeout                - Faraday connection request read/open timeout. (default: nil).
       #
       #        :proxy_uri              - Proxy URI: 'http://proxy.example.com:port' or 'http://user@pass:proxy.example.com:port'
-      #
-      # Examples
-      #
-      #   # Initialize a new client using password authentication:
-      #   Restforce::Client.new :username => 'user',
-      #     :password => 'pass',
-      #     :security_token => 'security token',
-      #     :client_id => 'client id',
-      #     :client_secret => 'client secret'
-      #
-      #   # Initialize a new client using oauth authentication:
-      #   Restforce::Client.new :oauth_token => 'access token',
-      #     :refresh_token => 'refresh token',
-      #     :instance_url => 'https://na1.salesforce.com',
-      #     :client_id => 'client id',
-      #     :client_secret => 'client secret'
-      #
-      #   # Initialize a new client without using any authentication middleware:
-      #   Restforce::Client.new :oauth_token => 'access token',
-      #     :instance_url => 'https://na1.salesforce.com'
-      #
       def initialize(opts = {})
         raise ArgumentError, 'Please specify a hash of options' unless opts.is_a?(Hash)
         @options = Hash[Restforce.configuration.options.map { |option| [option, Restforce.configuration.send(option)] }]

@@ -5,7 +5,7 @@ module MiddlewareExampleGroup
       let(:env)            { { :request_headers => {}, :response_headers => {} } }
       let(:retries)        { 3 }
       let(:options)        { { } }
-      let(:client)         { double(Restforce::Client) }
+      let(:client)         { double(Restforce::AbstractClient) }
       subject(:middleware) { described_class.new app, client, options }
     end
   end

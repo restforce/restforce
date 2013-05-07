@@ -1,7 +1,7 @@
 require 'spec_helper'
 
 describe Restforce::Collection do
-  let(:client) { double(Restforce::Client) }
+  let(:client) { double(Restforce::AbstractClient) }
 
   describe '#new' do
     context 'without pagination' do
