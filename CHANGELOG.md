@@ -1,3 +1,7 @@
+## HEAD
+
+*   Added support for the tooling API.
+
 ## 1.3.0 (Apr 6, 2013)
 
 *   Added support for lazily traversing paginated collections #61 by @nahiluhmot.
@@ -59,7 +63,7 @@
 *   The http connection read/open timeout is now configurabled.
 
     Example:
-    
+
         Restforce.configure do |config|
           config.timeout = 300
         end
