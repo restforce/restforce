@@ -57,7 +57,7 @@ describe Restforce::SObject do
   end
 
   describe '.describe' do
-    subject { -> { sobject.describe } }
+    subject { lambda { sobject.describe } }
 
     before do
       client.should_receive(:describe).with('Whizbang')

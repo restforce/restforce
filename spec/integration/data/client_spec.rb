@@ -37,7 +37,7 @@ shared_examples_for Restforce::Data::Client do
     end
   end
 
-  describe '.faye', :eventmachine => true do
+  describe '.faye', :event_machine => true do
     subject { client.faye }
 
     context 'with missing instance url' do
@@ -62,7 +62,7 @@ shared_examples_for Restforce::Data::Client do
     end
   end
 
-  describe '.subcribe', :eventmachine => true do
+  describe '.subcribe', :event_machine => true do
     context 'when given a single pushtopic' do
       it 'subscribes to the pushtopic' do
         client.faye.should_receive(:subscribe).with(['/topic/PushTopic'])
