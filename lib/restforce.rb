@@ -28,6 +28,10 @@ module Restforce
     autoload :API,            'restforce/concerns/api'
   end
 
+  module Tooling
+    autoload :Client, 'restforce/tooling/client'
+  end
+
   Error               = Class.new(StandardError)
   AuthenticationError = Class.new(Error)
   UnauthorizedError   = Class.new(Error)
@@ -36,8 +40,16 @@ module Restforce
     # Alias for Restforce::Client.new
     #
     # Shamelessly pulled from https://github.com/pengwynn/octokit/blob/master/lib/octokit.rb
-    def new(options = {}, &block)
-      Restforce::Client.new(options, &block)
+    def new(*args)
+      data(*args)
+    end
+
+    def data(*args)
+      Restforce::Client.new(*args)
+    end
+
+    def tooling(*args)
+      Restforce::Tooling::Client.new(*args)
     end
 
     # Helper for decoding signed requests.

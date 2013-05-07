@@ -4,16 +4,6 @@ module Restforce
   module Concerns
     module API
       extend Restforce::Concerns::Verbs
-      APIS = [:data, :tooling]
-
-      def api
-        options[:api] ||= APIS.first
-      end
-
-      def api=(api)
-        raise "Valid API's: #{APIS.inspect}" unless APIS.include? api
-        options[:api] = api
-      end
 
       # Public: Helper methods for performing arbitrary actions against the API using
       # various HTTP verbs.
@@ -295,15 +285,7 @@ module Restforce
       #   api_path('sobjects')
       #   # => '/services/data/v24.0/sobjects'
       def api_path(path)
-        send(:"#{api}_api_path", path)
-      end
-
-      def data_api_path(path)
         "/services/data/v#{options[:api_version]}/#{path}"
-      end
-
-      def tooling_api_path(path)
-        data_api_path("tooling/#{path}")
       end
 
       # Internal: Errors that should be rescued from in non-bang methods

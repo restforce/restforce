@@ -133,9 +133,9 @@ end
 
 ### Bang! methods
 
-All the CRUD methods (create, update, upsert, destroy) have equivalent methods with 
+All the CRUD methods (create, update, upsert, destroy) have equivalent methods with
 a ! at the end (create!, update!, upsert!, destroy!), which can be used if you need
-to do some custom error handling. The bang methods will raise exceptions, while the 
+to do some custom error handling. The bang methods will raise exceptions, while the
 non-bang methods will return false in the event that an exception is raised. This
 works similarly to ActiveRecord.
 
@@ -429,20 +429,13 @@ end
 
 You can use Restforce to decode signed requests from Salesforce. See [the example app](https://gist.github.com/4052312).
 
-
 ## Tooling API
 
-To use the [Tooling API](http://www.salesforce.com/us/developer/docs/api_toolingpre/api_tooling.pdf), just pass in an optional parameter when initializing a new client:
+To use the [Tooling API](http://www.salesforce.com/us/developer/docs/api_toolingpre/api_tooling.pdf),
+call `Restforce.tooling` instead of `Restforce.new`:
 
 ```ruby
-client = Restforce.new(:api => :tooling)
-client.list_sobjects
-```
-
-You can also toggle the api after the fact like so:
-
-```ruby
-client.api= :tooling
+client = Restforce.tooling(...)
 ```
 
 ## Contributing
