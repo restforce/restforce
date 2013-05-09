@@ -4,7 +4,7 @@ module Restforce
 
       private
 
-        def api_path
+        def api_path(path)
           super("tooling/#{path}")
         end
 
