@@ -77,15 +77,15 @@ shared_examples_for Restforce::AbstractClient do
         :status => 404,
         :fixture => 'sobject/delete_error_response'
 
-      subject { client.update!('Account', :Id => '001D000000INjVe', :Name => 'Foobar') }
-      specify { expect { subject }.to raise_error Faraday::Error::ResourceNotFound }
+      subject { lambda { client.update!('Account', :Id => '001D000000INjVe', :Name => 'Foobar') } }
+      it { should raise_error Faraday::Error::ResourceNotFound }
     end
   end
 
   describe '.update' do
     context 'with missing Id' do
-      subject { client.update('Account', :Name => 'Foobar') }
-      specify { expect { subject }.to raise_error ArgumentError, 'Id field missing from attrs.' }
+      subject { lambda { client.update('Account', :Name => 'Foobar') } }
+      it { should raise_error ArgumentError, 'Id field missing from attrs.' }
     end
 
     context 'with invalid Id' do
@@ -146,7 +146,7 @@ shared_examples_for Restforce::AbstractClient do
   end
 
   describe '.destroy!' do
-    subject { client.destroy!('Account', '001D000000INjVe') }
+    subject(:destroy!) { client.destroy!('Account', '001D000000INjVe') }
 
     context 'with invalid Id' do
       requests 'sobjects/Account/001D000000INjVe',
@@ -154,7 +154,8 @@ shared_examples_for Restforce::AbstractClient do
         :method => :delete,
         :status => 404
 
-      specify { expect { subject }.to raise_error Faraday::Error::ResourceNotFound }
+      subject { lambda { destroy! } }
+      it { should raise_error Faraday::Error::ResourceNotFound }
     end
 
     context 'with success' do
@@ -202,7 +203,7 @@ shared_examples_for Restforce::AbstractClient do
   end
 
   describe '.authenticate!' do
-    subject { client.authenticate! }
+    subject(:authenticate!) { client.authenticate! }
 
     context 'when successful' do
       before do
@@ -223,9 +224,8 @@ shared_examples_for Restforce::AbstractClient do
         client.stub(:authentication_middleware).and_return(nil)
       end
 
-      it 'should raise an exception' do
-        expect { subject }.to raise_error Restforce::AuthenticationError, 'No authentication middleware present'
-      end
+      subject { lambda { authenticate! } }
+      it { should raise_error Restforce::AuthenticationError, 'No authentication middleware present'}
     end
   end
 
@@ -254,8 +254,8 @@ shared_examples_for Restforce::AbstractClient do
           to_return(:status => 200, :body => fixture(:auth_success_response))
       end
 
-      subject { client.query('SELECT some, fields FROM object') }
-      specify { expect { subject }.to raise_error Restforce::UnauthorizedError }
+      subject { lambda { client.query('SELECT some, fields FROM object') } }
+      it { should raise_error Restforce::UnauthorizedError }
     end
   end
 
@@ -289,12 +289,13 @@ describe Restforce::AbstractClient do
 
     describe '.query' do
       context 'with pagination' do
+        subject { client.query('SELECT some, fields FROM object').next_page }
+
         requests 'query\?q', :fixture => 'sobject/query_paginated_first_page_response'
         requests 'query/01gD', :fixture => 'sobject/query_paginated_last_page_response'
 
-        subject { client.query('SELECT some, fields FROM object').next_page }
         it { should be_a Restforce::Collection }
-        specify { expect(subject.first.Text_Label).to eq 'Last Page' }
+        its('first.Text_Label') { should eq 'Last Page'}
       end
     end
   end
