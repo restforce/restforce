@@ -34,7 +34,7 @@ module Restforce
 
     # Internal: Faraday connection to use when sending an authentication request.
     def connection
-      @connection ||= Faraday.new(:url => "https://#{@options[:host]}") do |builder|
+      @connection ||= Faraday.new(faraday_options) do |builder|
         builder.use Restforce::Middleware::Mashify, nil, @options
         builder.response :json
         builder.use Restforce::Middleware::Logger, Restforce.configuration.logger, @options if Restforce.log?
@@ -58,6 +58,12 @@ module Restforce
           "#{k}=#{v}"
         end.join('&')
       end
+    end
+
+  private
+    def faraday_options
+      { :url   => "https://#{@options[:host]}",
+        :proxy => @options[:proxy_uri] }.reject { |k, v| v.nil? }
     end
   end
 end

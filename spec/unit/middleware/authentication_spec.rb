@@ -3,6 +3,7 @@ require 'spec_helper'
 describe Restforce::Middleware::Authentication do
   let(:options) do
     { :host => 'login.salesforce.com',
+      :proxy_uri => 'https://not-a-real-site.com',
       :authentication_retries => retries }
   end
 
@@ -37,7 +38,8 @@ describe Restforce::Middleware::Authentication do
   describe '.connection' do
     subject(:connection) { middleware.connection }
 
-    its(:url_prefix)     { should eq URI.parse('https://login.salesforce.com') }
+    its(:url_prefix)     { should eq(URI.parse('https://login.salesforce.com')) }
+    its(:proxy)          { should eq({ :uri => URI.parse('https://not-a-real-site.com') }) }
 
     describe '.builder' do
       subject(:builder) { connection.builder }
