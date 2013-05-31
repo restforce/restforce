@@ -77,7 +77,7 @@ If you prefer to use a username and password to authenticate:
 ```ruby
 client = Restforce.new :username => 'foo',
   :password       => 'bar',
-  :security_token => 'security token'
+  :security_token => 'security token',
   :client_id      => 'client_id',
   :client_secret  => 'client_secret'
 ```
@@ -103,7 +103,7 @@ You can specify a http proxy using the :proxy_uri option, as follows:
 ```ruby
 client = Restforce.new :username => 'foo',
   :password       => 'bar',
-  :security_token => 'security token'
+  :security_token => 'security token',
   :client_id      => 'client_id',
   :client_secret  => 'client_secret',
   :proxy_uri      => 'http://proxy.example.com:123'
