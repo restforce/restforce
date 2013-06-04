@@ -147,7 +147,7 @@ works similarly to ActiveRecord.
 accounts = client.query("select Id, Something__c from Account where Id = 'someid'")
 # => #<Restforce::Collection >
 
-account = records.first
+account = accounts.first
 # => #<Restforce::SObject >
 
 account.sobject_type
