@@ -1,6 +1,8 @@
-## HEAD
+## 1.4.0 (Jun 9, 2013)
 
 *   Added support for the tooling API.
+*   Fixed a bug with EMSynchrony adapter.
+*   Added proxy support.
 
 ## 1.3.0 (Apr 6, 2013)
 
