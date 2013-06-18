@@ -22,5 +22,11 @@ describe Restforce::Middleware::RaiseError do
       let(:status) { 401 }
       it { should raise_error Restforce::UnauthorizedError, 'INVALID_FIELD: error_message' }
     end
+
+    context 'when the status code is 413' do
+      let(:status) { 413 }
+      let(:body) { '' } #Zero length response
+      it { should raise_error Faraday::Error::ClientError, 'HTTP 413 - Request Entity Too Large' }
+    end
   end
 end

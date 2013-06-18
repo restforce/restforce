@@ -7,6 +7,8 @@ module Restforce
         raise Faraday::Error::ResourceNotFound, message
       when 401
         raise Restforce::UnauthorizedError, message
+      when 413
+        raise Faraday::Error::ClientError, "HTTP 413 - Request Entity Too Large", env[:response]
       when 400...600
         raise Faraday::Error::ClientError, message
       end
