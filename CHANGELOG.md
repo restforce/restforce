@@ -1,3 +1,7 @@
+## 1.4.1 (Jun 18, 2013)
+
+*   Fixed a bug with HTTP 413 responses #75 @patronmanager
+
 ## 1.4.0 (Jun 9, 2013)
 
 *   Added support for the tooling API.
