@@ -24,7 +24,7 @@ module Restforce
 
     # Return array of the elements on the current page
     def current_page
-      @raw_page['records'].collect { |record| Restforce::Mash.build(record, @client) }
+      first(@raw_page['records'].size)
     end
 
     # Return the current and all of the following pages.
