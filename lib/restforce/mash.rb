@@ -46,6 +46,10 @@ module Restforce
       deep_update(source_hash) if source_hash
       default ? super(default) : super(&blk)
     end
+
+    def dup
+      self.class.new(self, @client, self.default)
+    end
   
     def convert_value(val, duping=false)
       case val
