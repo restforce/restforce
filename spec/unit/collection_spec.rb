@@ -37,7 +37,7 @@ describe Restforce::Collection do
       context 'when all of the values are being requested' do
         before do
           client.stub(:get).
-            and_return(stub :body => Restforce::Collection.new(next_page, client))
+            and_return(double(:body => Restforce::Collection.new(next_page, client)))
         end
 
         its(:pages)          { should be_all { |page| expect(page).to be_a Restforce::Collection } }
