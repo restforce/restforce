@@ -2,7 +2,7 @@ module Restforce
   class SObject < Restforce::Mash
 
     def sobject_type
-      self.attributes.type
+      self.attributes['type']
     end
 
     # Public: Get the describe for this sobject type
