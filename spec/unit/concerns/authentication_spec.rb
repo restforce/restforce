@@ -22,7 +22,7 @@ describe Restforce::Concerns::Authentication do
         authentication_middleware.
           should_receive(:new).
           with(nil, client, client.options).
-          and_return(stub(:authenticate! => 'foo'))
+          and_return(double(:authenticate! => 'foo'))
         expect(result).to eq 'foo'
       end
     end
