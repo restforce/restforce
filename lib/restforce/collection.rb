@@ -22,6 +22,11 @@ module Restforce
     end
     alias_method :length, :size
 
+    # Return array of the elements on the current page
+    def current_page
+      first(@raw_page['records'].size)
+    end
+
     # Return the current and all of the following pages.
     def pages
       [self] + (has_next_page? ? next_page.pages : [])

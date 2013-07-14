@@ -32,6 +32,8 @@ describe Restforce::Collection do
 
         its(:size)  { should eq 2 }
         its(:first) { should be_a Restforce::SObject }
+        its(:current_page) { should be_a Array }
+        its(:current_page) { should have(1).element }
       end
 
       context 'when all of the values are being requested' do
