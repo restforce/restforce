@@ -37,6 +37,28 @@ describe Restforce::Concerns::API do
     end
   end
 
+  describe '.describe_layouts' do
+    subject(:describe_layouts) { client.describe_layouts('Whizbang') }
+
+    it 'returns the layouts for the sobject' do
+      client.should_receive(:api_get).
+        with('sobjects/Whizbang/describe/layouts').
+        and_return(response)
+      expect(describe_layouts).to eq response.body
+    end
+
+    context 'when given the id of a layout' do
+      subject(:describe_layouts) { client.describe_layouts('Whizbang', '012E0000000RHEp') }
+
+      it 'returns the describe for the specified layout' do
+        client.should_receive(:api_get).
+          with('sobjects/Whizbang/describe/layouts/012E0000000RHEp').
+          and_return(response)
+        expect(describe_layouts).to eq response.body
+      end
+    end
+  end
+
   describe '.org_id' do
     subject(:org_id) { client.org_id }
 

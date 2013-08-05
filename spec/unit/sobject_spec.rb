@@ -65,4 +65,22 @@ describe Restforce::SObject do
 
     it { should_not raise_error }
   end
+
+  describe '.describe_layouts' do
+    let(:layout_id) { nil }
+    subject { lambda { sobject.describe_layouts } }
+
+    before do
+      client.should_receive(:describe_layouts).with('Whizbang', layout_id)
+    end
+
+    it { should_not raise_error }
+
+    context 'when a layout Id is specified' do
+      let(:layout_id) { '012E0000000RHEp' }
+      subject { lambda { sobject.describe_layouts(layout_id) } }
+
+      it { should_not raise_error }
+    end
+  end
 end

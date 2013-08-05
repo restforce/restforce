@@ -229,6 +229,18 @@ client.describe('Account')
 # => { ... }
 ```
 
+### describe_layouts
+
+```ruby
+# get layouts for an sobject type
+client.describe_layout('Account')
+# => { ... }
+
+# get the details for a specific layout
+client.describe_layouts('Account', '012E0000000RHEp')
+# => { ... }
+```
+
 ### picklist\_values
 
 
