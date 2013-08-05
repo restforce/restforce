@@ -65,6 +65,30 @@ module Restforce
         end
       end
 
+      # Public: Returns a detailed description of the Page Layout for the
+      # specified sobject type, or URIs for layouts if the sobject has
+      # multiple Record Types.
+      #
+      # This resource was introduced in version 28.0.
+      #
+      # Examples:
+      #  # get the layouts for the sobject
+      #  client.describe_layouts('Account')
+      #  # => { ... }
+      #
+      #  # get the layout for the specified Id for the sobject
+      #  client.describe_layouts('Account', '012E0000000RHEp')
+      #  # => { ... }
+      #
+      # Returns the Hash representation of the describe_layouts result
+      def describe_layouts(sobject, layout_id = nil)
+        if layout_id
+          api_get("sobjects/#{sobject.to_s}/describe/layouts/#{layout_id}").body
+        else
+          api_get("sobjects/#{sobject.to_s}/describe/layouts").body
+        end
+      end
+
       # Public: Get the current organization's Id.
       #
       # Examples
