@@ -10,6 +10,11 @@ module Restforce
       @client.describe(sobject_type)
     end
 
+    # Public: Describe layouts for this sobject type
+    def describe_layouts(layout_id = nil)
+      @client.describe_layouts(sobject_type, layout_id)
+    end
+
     # Public: Persist the attributes to Salesforce.
     #
     # Examples
