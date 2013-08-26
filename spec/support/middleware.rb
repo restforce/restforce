@@ -6,6 +6,8 @@ module MiddlewareExampleGroup
       let(:retries)        { 3 }
       let(:options)        { { } }
       let(:client)         { double(Restforce::AbstractClient) }
+      let(:auth_callback)  { double(Proc) }
+      let(:success_response) { Restforce::Mash.new(JSON.parse(fixture(:auth_success_response))) }
       subject(:middleware) { described_class.new app, client, options }
     end
   end
@@ -25,15 +27,26 @@ shared_examples_for 'authentication middleware' do
     context 'when successful' do
       let!(:request) { success_request }
 
-      before do
-        middleware.authenticate!
-      end
-
       describe '@options' do
         subject { options }
 
+        before do
+          middleware.authenticate!
+        end
+
         its([:instance_url]) { should eq 'https://na1.salesforce.com' }
         its([:oauth_token])  { should eq '00Dx0000000BV7z!AR8AQAxo9UfVkh8AlV0Gomt9Czx9LjHnSSpwBMmbRcgKFmxOtvxjTrKW19ye6PE3Ds1eQz3z8jr3W7_VbWmEu4Q8TVGSTHxs' }
+      end
+
+      context 'when an authentication_callback is specified' do
+        before(:each) do
+          options.merge!(:authentication_callback => auth_callback)
+        end
+
+        it 'calls the authentication callback with the response body' do
+          auth_callback.should_receive(:call).with(success_response)
+          middleware.authenticate!
+        end
       end
     end
 
@@ -44,6 +57,19 @@ shared_examples_for 'authentication middleware' do
         expect {
           middleware.authenticate!
         }.to raise_error Restforce::AuthenticationError, /^invalid_grant: .*/
+      end
+
+      context 'when an authentication_callback is specified' do
+        before(:each) do
+          options.merge!(:authentication_callback => auth_callback)
+        end
+
+        it 'does not call the authentication callback' do
+          auth_callback.should_not_receive(:call)
+          expect do
+            middleware.authenticate!
+          end.to raise_error
+        end
       end
     end
   end
