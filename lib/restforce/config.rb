@@ -125,6 +125,9 @@ module Restforce
 
     option :proxy_uri, :default => lambda { ENV['PROXY_URI'] }
 
+    # A Proc that is called with the response body after a successful authentication.
+    option :authentication_callback
+
     def logger
       @logger ||= ::Logger.new STDOUT
     end
