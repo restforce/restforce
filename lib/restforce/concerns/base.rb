@@ -37,6 +37,9 @@ module Restforce
       #        :timeout                - Faraday connection request read/open timeout. (default: nil).
       #
       #        :proxy_uri              - Proxy URI: 'http://proxy.example.com:port' or 'http://user@pass:proxy.example.com:port'
+      #
+      #        :authentication_callback
+      #                                - A Proc that is called with the response body after a successful authentication.
       def initialize(opts = {})
         raise ArgumentError, 'Please specify a hash of options' unless opts.is_a?(Hash)
         @options = Hash[Restforce.configuration.options.map { |option| [option, Restforce.configuration.send(option)] }]
