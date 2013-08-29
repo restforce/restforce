@@ -34,6 +34,8 @@ module Restforce
       #                                  before raising an exception (default: 3).
       #
       #        :compress               - Set to true to have Salesforce compress the response (default: false).
+      #        :mashify                - Set to false to skip the conversion of Salesforce responses to
+      #                                  Restforce::Sobjects and Restforce::Collections. (default: nil).
       #        :timeout                - Faraday connection request read/open timeout. (default: nil).
       #
       #        :proxy_uri              - Proxy URI: 'http://proxy.example.com:port' or 'http://user@pass:proxy.example.com:port'

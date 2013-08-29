@@ -39,7 +39,7 @@ module ClientIntegrationExampleGroup
       }
 
     config.before :mashify => false do
-      client.middleware.delete(Restforce::Middleware::Mashify)
+      base_options.merge!(:mashify => false)
     end
   end
 end
