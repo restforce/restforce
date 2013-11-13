@@ -297,7 +297,7 @@ client.create 'Document', FolderId: '00lE0000000FJ6H',
   Body: Base64::encode64(File.read('image.jpg'))
 ```
 
-_See also: http://www.salesforce.com/us/developer/docs/api_rest/Content/dome_sobject_insert_update_blob.htm_
+_See also: [Inserting or updating blob data](http://www.salesforce.com/us/developer/docs/api_rest/Content/dome_sobject_insert_update_blob.htm)_
 
 * * *
 
@@ -379,7 +379,7 @@ EM.run {
 Boom, you're now receiving push notifications when Accounts are
 created/updated.
 
-_See also: http://www.salesforce.com/us/developer/docs/api_streaming/index.htm_
+_See also: [Force.com Streaming API docs](http://www.salesforce.com/us/developer/docs/api_streaming/index.htm)_
 
 * * *
 
