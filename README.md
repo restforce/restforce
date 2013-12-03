@@ -349,7 +349,6 @@ pub/sub with Salesforce a trivial task:
 
 ```ruby
 # Restforce uses faye as the underlying implementation for CometD.
-require 'faye'
 
 # Initialize a client with your username/password/oauth token/etc.
 client = Restforce.new :username => 'foo',
