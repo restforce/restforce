@@ -1,3 +1,5 @@
+require 'faye'
+
 module Restforce
   module Concerns
     module Streaming
