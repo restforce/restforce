@@ -202,6 +202,43 @@ shared_examples_for Restforce::AbstractClient do
     end
   end
 
+  describe '.select' do
+    context 'when no external id is specified' do
+      context 'when no select list is specified' do
+        requests 'sobjects/Account/1234',
+        :fixture => 'sobject/sobject_select_success_response'
+
+        subject { client.select('Account', '1234', nil, nil) }
+        it { should be_a Hash }
+      end
+      context 'when select list is specified' do
+        requests 'sobjects/Account/1234\?fields=External_Field__c',
+        :fixture => 'sobject/sobject_select_success_response'
+
+        subject { client.select('Account', '1234', ['External_Field__c']) }
+        it { should be_a Hash }
+      end
+    end
+
+    context 'when an external id is specified' do
+      context 'when no select list is specified' do
+        requests 'sobjects/Account/External_Field__c/1234',
+        :fixture => 'sobject/sobject_select_success_response'
+
+        subject { client.select('Account', '1234', nil, 'External_Field__c') }
+        it { should be_a Hash }
+      end
+
+      context 'when select list is specified' do
+        requests 'sobjects/Account/External_Field__c/1234\?fields=External_Field__c',
+        :fixture => 'sobject/sobject_select_success_response'
+
+        subject { client.select('Account', '1234', ['External_Field__c'], 'External_Field__c') }
+        it { should be_a Hash }
+      end
+    end
+  end
+
   describe '.authenticate!' do
     subject(:authenticate!) { client.authenticate! }
 
