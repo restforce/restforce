@@ -1,0 +1,8 @@
+{
+  "attributes" : {
+    "type" : "Whizbang",
+    "url" : "/services/data/v20.0/sobjects/Whizbang/23foo"
+  },
+ "External_Field__c" : "1234",
+ "Id" : "23foo"
+}

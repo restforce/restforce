@@ -300,6 +300,23 @@ module Restforce
         api_get(field ? "sobjects/#{sobject}/#{field}/#{id}" : "sobjects/#{sobject}/#{id}").body
       end
 
+      # Public: Finds a single record and returns select fields.
+      #
+      # sobject - The String name of the sobject.
+      # id      - The id of the record. If field is specified, id should be the id
+      #           of the external field.
+      # select  - A String array denoting the fields to select.  If nil or empty array
+      #           is passed, all fields are selected.  
+      # field   - External ID field to use (default: nil).
+      #
+      def select(sobject, id, select, field=nil)
+        path = field ? "sobjects/#{sobject}/#{field}/#{id}" : "sobjects/#{sobject}/#{id}"
+        path << "?fields=#{select.join(",")}" if select && select.any?
+        
+        api_get(path).body
+      end
+
+
     private
 
       # Internal: Returns a path to an api endpoint
