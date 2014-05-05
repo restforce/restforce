@@ -19,7 +19,7 @@ Gem::Specification.new do |gem|
   gem.add_dependency 'faraday_middleware', '>= 0.8.8'
   gem.add_dependency 'json', ['>= 1.7.5', '< 1.9.0']
   gem.add_dependency 'hashie', ['>= 1.2.0', '< 2.1']
-  gem.add_development 'faye' unless RUBY_PLATFORM == 'java'
+  gem.add_dependency 'faye', '~> 0.8' unless RUBY_PLATFORM == 'java'
 
   gem.add_development_dependency 'rspec', '~> 2.14.0'
   gem.add_development_dependency 'webmock', '~> 1.13.0'
