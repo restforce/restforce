@@ -48,7 +48,12 @@ shared_examples_for Restforce::Data::Client do
     context 'with oauth token and instance url' do
       let(:instance_url) { 'http://google.com' }
       let(:oauth_token) { 'bar' }
-      specify { expect { subject }.to_not raise_error }
+
+      it 'should not raise error' do
+        client.stub(:authorize!)
+        client.faye.stub(:set_header).with('Authorization', "OAuth token")
+        expect { subject }.to_not raise_error
+      end
     end
 
     context 'when the connection goes down' do

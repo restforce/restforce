@@ -16,6 +16,7 @@ module Restforce
       def faye
         raise 'Instance URL missing. Call .authenticate! first.' unless options[:instance_url]
         @faye ||= Faye::Client.new("#{options[:instance_url]}/cometd/#{options[:api_version]}").tap do |client|
+          client.set_header 'Authorization', "OAuth #{options[:oauth_token]}"
           client.bind 'transport:down' do
             Restforce.log "[COMETD DOWN]"
             client.set_header 'Authorization', "OAuth #{authenticate!.access_token}"
