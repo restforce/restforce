@@ -3,7 +3,7 @@ require 'spec_helper'
 describe Restforce::SignedRequest do
   let(:client_secret) { 'foo' }
   let(:message) do
-    digest = OpenSSL::Digest::Digest.new('sha256')
+    digest = OpenSSL::Digest.new('sha256')
     signature = Base64.encode64(OpenSSL::HMAC.digest(digest, client_secret, data))
     "#{signature}.#{data}"
   end

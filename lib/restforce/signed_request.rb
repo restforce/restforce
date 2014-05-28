@@ -41,7 +41,7 @@ module Restforce
     end
 
     def digest
-      OpenSSL::Digest::Digest.new('sha256')
+      OpenSSL::Digest.new('sha256')
     end
 
   end
