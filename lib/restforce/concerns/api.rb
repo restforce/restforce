@@ -29,6 +29,19 @@ module Restforce
       # Returns the Faraday::Response.
       define_verbs :get, :post, :put, :delete, :patch, :head
 
+      # Public: Get info about the logged-in user.
+      #
+      # Examples
+      #
+      #   # get the email of the logged-in user
+      #   client.user_info.email
+      #   # => user@example.com
+      #
+      # Returns an Array of String names for each SObject.
+      def user_info
+        get(api_get.body.identity).body
+      end
+
       # Public: Get the names of all sobjects on the org.
       #
       # Examples

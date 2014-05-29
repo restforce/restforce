@@ -3,6 +3,22 @@ require 'spec_helper'
 describe Restforce::Concerns::API do
   let(:response) { double('Faraday::Response', :body => double('Body')) }
 
+  describe '.user_info' do
+    subject(:user_info) { client.user_info }
+
+    it 'returns the user info from identity url' do
+      identity_url = double('identity_url')
+      response.body.stub(:identity).and_return(identity_url)
+      client.should_receive(:api_get).with().and_return(response)
+
+      identity = double('identity')
+      identity.stub(:body).and_return(identity)
+      client.should_receive(:get).with(identity_url).and_return(identity)
+
+      expect(user_info).to eq identity
+    end
+  end
+
   describe '.list_sobjects' do
     subject { client.list_sobjects }
 
