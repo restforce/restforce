@@ -22,7 +22,7 @@ module Restforce
       def connection
         @connection ||= Faraday.new(options[:instance_url], connection_options) do |builder|
           # Parses JSON into Hashie::Mash structures.
-          builder.use      Restforce::Middleware::Mashify, self, options
+          builder.use      Restforce::Middleware::Mashify, self, options unless (options[:mashify] == false)
           # Handles multipart file uploads for blobs.
           builder.use      Restforce::Middleware::Multipart
           # Converts the request into JSON.

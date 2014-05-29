@@ -117,6 +117,10 @@ module Restforce
     # Set to true if you want responses from Salesforce to be gzip compressed.
     option :compress
 
+    # Set to false if you want to skip conversion to Restforce::Sobjects and
+    # Restforce::Collections.
+    option :mashify
+
     # Faraday request read/open timeout.
     option :timeout
 
