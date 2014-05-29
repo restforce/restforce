@@ -267,6 +267,14 @@ client.picklist_values('Automobile__c', 'Model__c', :valid_for => 'Honda')
 # => [#<Restforce::Mash label="Civic" value="Civic">, ... ]
 ```
 
+### user_info
+
+```ruby
+# get info about the logged-in user
+client.user_info
+# => #<Restforce::Mash active=true display_name="Chatty Sassy" email="user@example.com" ... >
+```
+
 * * *
 
 ### authenticate!
