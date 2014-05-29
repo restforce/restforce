@@ -174,6 +174,18 @@ client.find('Account', '1234', 'Some_External_Id_Field__c')
 # => #<Restforce::SObject Id="001D000000INjVe" Name="Test" LastModifiedBy="005G0000002f8FHIAY" ... >
 ```
 
+### select
+
+```ruby
+client.select('Account', '001D000000INjVe', ["Id"])
+# => {"attributes" : {"type" : "Account","url" : "/services/data/v20.0/sobjects/Account/001D000000INjVe"},
+#   "Id" : "001D000000INjVe"}
+
+client.select('Account', '001D000000INjVe', ["Id"], 'Some_External_Id_Field__c')
+# => {"attributes" : {"type" : "Account","url" : "/services/data/v20.0/sobjects/Account/Some_External_Id_Field__c/001D000000INjVe"},
+#   "Id" : "003F000000BGIn3"}
+```
+
 ### search
 
 ```ruby
@@ -255,6 +267,14 @@ client.picklist_values('Automobile__c', 'Model__c', :valid_for => 'Honda')
 # => [#<Restforce::Mash label="Civic" value="Civic">, ... ]
 ```
 
+### user_info
+
+```ruby
+# get info about the logged-in user
+client.user_info
+# => #<Restforce::Mash active=true display_name="Chatty Sassy" email="user@example.com" ... >
+```
+
 * * *
 
 ### authenticate!
@@ -297,7 +317,7 @@ client.create 'Document', FolderId: '00lE0000000FJ6H',
   Body: Base64::encode64(File.read('image.jpg'))
 ```
 
-_See also: http://www.salesforce.com/us/developer/docs/api_rest/Content/dome_sobject_insert_update_blob.htm_
+_See also: [Inserting or updating blob data](http://www.salesforce.com/us/developer/docs/api_rest/Content/dome_sobject_insert_update_blob.htm)_
 
 * * *
 
@@ -379,7 +399,7 @@ EM.run {
 Boom, you're now receiving push notifications when Accounts are
 created/updated.
 
-_See also: http://www.salesforce.com/us/developer/docs/api_streaming/index.htm_
+_See also: [Force.com Streaming API docs](http://www.salesforce.com/us/developer/docs/api_streaming/index.htm)_
 
 * * *
 

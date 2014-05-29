@@ -27,7 +27,7 @@ module Restforce
       return nil if signature != hmac
       JSON.parse(Base64.decode64(payload))
     end
-    
+
   private
     attr_reader :client_secret, :signature, :payload
 
@@ -41,7 +41,15 @@ module Restforce
     end
 
     def digest
-      OpenSSL::Digest::Digest.new('sha256')
+      digest_class.new('sha256')
+    end
+
+    def digest_class
+      if RUBY_VERSION < '2.1'
+        OpenSSL::Digest::Digest
+      else
+        OpenSSL::Digest
+      end
     end
 
   end

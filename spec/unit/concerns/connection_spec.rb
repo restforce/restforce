@@ -13,17 +13,17 @@ describe Restforce::Concerns::Connection do
   end
 
   describe 'private #connection' do
+
     describe ':mashify option' do
+      let(:options) { {:adapter => Faraday.default_adapter} }
+
       before(:each) do
         client.stub(:authentication_middleware)
         client.stub(:cache)
+        client.stub(:options => options)
       end
 
       describe 'with mashify not specified' do
-        before(:each) do
-          client.stub(:options).and_return({})
-        end
-
         it 'includes the Mashify middleware' do
           client.middleware.handlers.index(Restforce::Middleware::Mashify).
               should_not be_nil
@@ -32,7 +32,7 @@ describe Restforce::Concerns::Connection do
 
       describe 'with mashify=true' do
         before(:each) do
-          client.stub(:options).and_return(:mashify => true)
+          options.merge!(:mashify => true)
         end
 
         it 'includes the Mashify middleware' do
@@ -43,7 +43,7 @@ describe Restforce::Concerns::Connection do
 
       describe 'without mashify' do
         before(:each) do
-          client.stub(:options).and_return(:mashify => false)
+          options.merge!(:mashify => false)
         end
 
         it 'does not include the Mashify middleware' do
@@ -52,5 +52,13 @@ describe Restforce::Concerns::Connection do
         end
       end
     end
+  end
+
+  describe '#adapter' do
+    before do
+      client.stub :options => {:adapter => :typhoeus}
+    end
+
+    its(:adapter) { should eq(:typhoeus) }
   end
 end

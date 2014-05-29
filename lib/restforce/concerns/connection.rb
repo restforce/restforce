@@ -51,7 +51,7 @@ module Restforce
       end
 
       def adapter
-        Restforce.configuration.adapter
+        options[:adapter]
       end
 
       # Internal: Faraday Connection options

@@ -29,6 +29,19 @@ module Restforce
       # Returns the Faraday::Response.
       define_verbs :get, :post, :put, :delete, :patch, :head
 
+      # Public: Get info about the logged-in user.
+      #
+      # Examples
+      #
+      #   # get the email of the logged-in user
+      #   client.user_info.email
+      #   # => user@example.com
+      #
+      # Returns an Array of String names for each SObject.
+      def user_info
+        get(api_get.body.identity).body
+      end
+
       # Public: Get the names of all sobjects on the org.
       #
       # Examples
@@ -299,6 +312,23 @@ module Restforce
       def find(sobject, id, field=nil)
         api_get(field ? "sobjects/#{sobject}/#{field}/#{id}" : "sobjects/#{sobject}/#{id}").body
       end
+
+      # Public: Finds a single record and returns select fields.
+      #
+      # sobject - The String name of the sobject.
+      # id      - The id of the record. If field is specified, id should be the id
+      #           of the external field.
+      # select  - A String array denoting the fields to select.  If nil or empty array
+      #           is passed, all fields are selected.  
+      # field   - External ID field to use (default: nil).
+      #
+      def select(sobject, id, select, field=nil)
+        path = field ? "sobjects/#{sobject}/#{field}/#{id}" : "sobjects/#{sobject}/#{id}"
+        path << "?fields=#{select.join(",")}" if select && select.any?
+        
+        api_get(path).body
+      end
+
 
     private
 
