@@ -132,6 +132,9 @@ module Restforce
     # A Proc that is called with the response body after a successful authentication.
     option :authentication_callback
 
+    #Set ssl options
+    option :ssl, :default => {:verify => true}
+
     def logger
       @logger ||= ::Logger.new STDOUT
     end
