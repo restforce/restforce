@@ -55,7 +55,6 @@ module Restforce
         self
       end
 
-    private
       attr_reader :default
       alias_method :default_provided?, :default
 
