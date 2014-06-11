@@ -61,7 +61,7 @@ module Restforce
       def write_attribute
         configuration.send :attr_accessor, name
       end
-
+    private
       def define_method
         our_default = default
         our_name    = name
