@@ -9,8 +9,8 @@ describe Restforce::Middleware::Mashify do
   }
 
   describe '.call' do
-    subject { lambda { middleware.call(env) } }
-
-    it { should change { env[:body] }.to(kind_of(Restforce::Collection)) }
+    it "should change the body to a Restforce::Collection" do
+      expect( middleware.call(env).body ).to be_kind_of(Restforce::Collection)
+    end
   end
 end
