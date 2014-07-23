@@ -1,6 +1,7 @@
 require 'spec_helper'
 
 shared_examples_for Restforce::AbstractClient do
+
   describe '.list_sobjects' do
     requests :sobjects, :fixture => 'sobject/describe_sobjects_success_response'
 
@@ -61,7 +62,7 @@ shared_examples_for Restforce::AbstractClient do
     context 'with multipart' do
       requests 'sobjects/Account',
         :method => :post,
-        :with_body => %r(----boundary_string\r\nContent-Disposition: form-data; name=\"entity_content\";\r\nContent-Type: application/json\r\n\r\n{\"Name\":\"Foobar\"}\r\n----boundary_string\r\nContent-Disposition: form-data; name=\"Blob\"; filename=\"blob.jpg\"\r\nContent-Length: 42171\r\nContent-Type: image/jpeg\r\nContent-Transfer-Encoding: binary),
+        :with_body => %r(----boundary_string\r\nContent-Disposition: form-data; name=\"entity_content\"\r\nContent-Type: application/json\r\n\r\n{\"Name\":\"Foobar\"}\r\n----boundary_string\r\nContent-Disposition: form-data; name=\"Blob\"; filename=\"blob.jpg\"\r\nContent-Length: 42171\r\nContent-Type: image/jpeg\r\nContent-Transfer-Encoding: binary),
         :fixture => 'sobject/create_success_response'
 
       subject { client.create('Account', :Name => 'Foobar', :Blob => Restforce::UploadIO.new(File.expand_path('../../fixtures/blob.jpg', __FILE__), 'image/jpeg')) }
