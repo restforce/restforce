@@ -4,15 +4,9 @@ module Restforce
   class Middleware::Mashify < Restforce::Middleware
 
     def call(env)
-      @env = env
-      response = @app.call(env)
-      env[:body] = Restforce::Mash.build(body, client)
-      response
+      @app.call(env).on_complete do |env|
+        env[:body] = Restforce::Mash.build(env[:body], client)
+      end
     end
-
-    def body
-      @env[:body]
-    end
-  
   end
 end
