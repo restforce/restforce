@@ -16,6 +16,11 @@ module Restforce
       next_page.each { |record| yield record } if has_next_page?
     end
 
+    # Return the size of each page in the collection
+    def page_size
+      @raw_page['records'].size
+    end
+
     # Return the size of the Collection without making any additional requests.
     def size
       @raw_page['totalSize']
