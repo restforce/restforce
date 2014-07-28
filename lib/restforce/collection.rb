@@ -20,6 +20,10 @@ module Restforce
       end
     end
 
+    # Return the size of each page in the collection
+    def page_size
+      @raw_page['records'].size
+    end
 
     # Return the size of the Collection without making any additional requests.
     def size
