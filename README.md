@@ -470,6 +470,13 @@ call `Restforce.tooling` instead of `Restforce.new`:
 client = Restforce.tooling(...)
 ```
 
+## Links
+
+If you need a full Active Record experience, may be you can use
+[ActiveForce](https://github.com/ionia-corporation/active_force) that wraps
+Restforce and adds Associations, Query Building (like AREL), Validations and
+Callbacks.
+
 ## Contributing
 
 1. Fork it
