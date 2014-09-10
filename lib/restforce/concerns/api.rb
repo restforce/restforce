@@ -220,6 +220,7 @@ module Restforce
       # Returns true if the sobject was successfully updated.
       # Raises an exception if an error is returned from Salesforce.
       def update!(sobject, attrs)
+        attrs = attrs.dup
         id = attrs.delete(attrs.keys.find { |k| k.to_s.downcase == 'id' })
         raise ArgumentError, 'Id field missing from attrs.' unless id
         api_patch "sobjects/#{sobject}/#{id}", attrs
