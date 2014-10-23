@@ -430,8 +430,8 @@ end
 
 ### Logging/Debugging/Instrumenting
 
-You can easily inspect what Restforce is sending/receiving by setting
-`Restforce.log = true` and/or updating the logger
+You can easily inspect what Restforce is sending/receiving by updating
+the log level and logger
 
 ```ruby
 Restforce.log = true
