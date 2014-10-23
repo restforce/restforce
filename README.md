@@ -431,10 +431,14 @@ end
 ### Logging/Debugging/Instrumenting
 
 You can easily inspect what Restforce is sending/receiving by setting
-`Restforce.log = true`.
+`Restforce.log = true` and/or updating the logger
 
 ```ruby
 Restforce.log = true
+Restforce.configure do |config|
+  config.logger = Logger.new("/tmp/log/restforce.log")
+end
+
 client = Restforce.new.query('select Id, Name from Account')
 ```
 

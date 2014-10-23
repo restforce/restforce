@@ -55,7 +55,7 @@ describe Restforce do
   describe '#configure' do
     [:username, :password, :security_token, :client_id, :client_secret, :compress, :timeout,
      :oauth_token, :refresh_token, :instance_url, :api_version, :host, :authentication_retries,
-     :proxy_uri, :authentication_callback, :mashify].each do |attr|
+     :proxy_uri, :authentication_callback, :mashify, :logger].each do |attr|
       it "allows #{attr} to be set" do
         Restforce.configure do |config|
           config.send("#{attr}=", 'foobar')
