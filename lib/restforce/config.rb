@@ -133,7 +133,7 @@ module Restforce
     option :authentication_callback
 
     # Set a logger
-    # Defaults of standard out
+    # Defaults to standard out
     option :logger, :default => lambda { ::Logger.new STDOUT }
 
     def options
