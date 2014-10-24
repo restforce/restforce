@@ -437,6 +437,7 @@ the log level and logger
 Restforce.log = true
 Restforce.configure do |config|
   config.logger = Logger.new("/tmp/log/restforce.log")
+  config.log_level = :info # default is :debug
 end
 
 client = Restforce.new.query('select Id, Name from Account')

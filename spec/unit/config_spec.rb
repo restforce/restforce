@@ -55,7 +55,7 @@ describe Restforce do
   describe '#configure' do
     [:username, :password, :security_token, :client_id, :client_secret, :compress, :timeout,
      :oauth_token, :refresh_token, :instance_url, :api_version, :host, :authentication_retries,
-     :proxy_uri, :authentication_callback, :mashify, :logger].each do |attr|
+     :proxy_uri, :authentication_callback, :mashify, :logger, :log_level].each do |attr|
       it "allows #{attr} to be set" do
         Restforce.configure do |config|
           config.send("#{attr}=", 'foobar')
@@ -88,12 +88,21 @@ describe Restforce do
     context 'with logging enabled' do
       before do
         Restforce.stub :log? => true
-        Restforce.configuration.logger.should_receive(:debug).with('foobar')
       end
 
       it 'logs something' do
+        Restforce.configuration.logger.should_receive(:debug).with('foobar')
         Restforce.log 'foobar'
       end
+
+      it 'log in different log level' do
+        Restforce.configure do |config|
+          config.log_level = :info
+        end
+        Restforce.configuration.logger.should_receive(:info).with('foobar')
+        Restforce.log 'foobar'
+      end
+
     end
   end
 end

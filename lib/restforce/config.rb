@@ -32,7 +32,7 @@ module Restforce
 
     def log(message)
       return unless Restforce.log?
-      Restforce.configuration.logger.send :debug, message
+      Restforce.configuration.logger.send Restforce.configuration.log_level, message
     end
   end
 
@@ -135,6 +135,10 @@ module Restforce
     # Set a logger
     # Defaults to standard out
     option :logger, :default => lambda { ::Logger.new STDOUT }
+
+    # Set log level
+    # Defaults to debug
+    option :log_level, :default => lambda { :debug }
 
     def options
       self.class.options
