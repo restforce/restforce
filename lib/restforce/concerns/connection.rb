@@ -59,7 +59,9 @@ module Restforce
         { :request => {
             :timeout => options[:timeout],
             :open_timeout => options[:timeout] },
-          :proxy => options[:proxy_uri]
+          :proxy => options[:proxy_uri],
+          # Salesforce now requires TLS 1.0 encryption, please see #146.
+          :ssl => {:version => 'TLSv1'}
         }
       end
 
