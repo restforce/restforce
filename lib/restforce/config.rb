@@ -132,6 +132,9 @@ module Restforce
     # A Proc that is called with the response body after a successful authentication.
     option :authentication_callback
 
+    # The logger to use during logging. e.g. Logger.new('log/restforce.log')
+    option :logger
+
     def logger
       @logger ||= ::Logger.new STDOUT
     end
