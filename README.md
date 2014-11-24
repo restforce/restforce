@@ -477,6 +477,34 @@ If you need a full Active Record experience, may be you can use
 Restforce and adds Associations, Query Building (like AREL), Validations and
 Callbacks.
 
+## Development
+
+If you want to hack on Restforce locally, we try to make [bootstrapping the project](http://wynnnetherland.com/linked/2013012801/bootstrapping-consistency) as painless as possible. Just clone and run:
+
+```bash
+$ script/bootstrap
+```
+
+This will install project dependencies and get you up and running. If you want to run a Ruby console to poke on Restforce, you can crank one up with:
+
+```bash
+$ script/console
+```
+
+In order to run the specs, use:
+
+```bash
+$ script/test
+```
+
+Alternatively, use Guard which will run the specs on file changes:
+
+```bash
+$ script/guard
+```
+
+Using the scripts in `./script` instead of `bundle exec rspec`, `bundle console`, etc. ensures your dependencies are up-to-date.
+
 ## Contributing
 
 1. Fork it
