@@ -319,16 +319,25 @@ module Restforce
       # id      - The id of the record. If field is specified, id should be the id
       #           of the external field.
       # select  - A String array denoting the fields to select.  If nil or empty array
-      #           is passed, all fields are selected.  
+      #           is passed, all fields are selected.
       # field   - External ID field to use (default: nil).
       #
       def select(sobject, id, select, field=nil)
         path = field ? "sobjects/#{sobject}/#{field}/#{id}" : "sobjects/#{sobject}/#{id}"
         path << "?fields=#{select.join(",")}" if select && select.any?
-        
+
         api_get(path).body
       end
 
+      # Public: Finds recently viewed items for the logged-in user.
+      # limit - An optional limit that specifies the maximum number of records to be returned.
+      #         If this parameter is not specified, the default maximum number of records returned
+      #         is the maximum number of entries in RecentlyViewed, which is 200 records per object.
+      # Returns an array of the recently viewed Restforce::SObject records.
+      def recent(limit = nil)
+        path = limit ? "recent?limit=#{limit}" : "recent"
+        api_get(path).body
+      end
 
     private
 
