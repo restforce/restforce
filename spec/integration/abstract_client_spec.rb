@@ -33,6 +33,17 @@ shared_examples_for Restforce::AbstractClient do
     it { should be_an Enumerable }
   end
 
+  describe '.query_all with supporterd api_version' do
+    before { Restforce.configuration.api_version = "30.0" }
+    after { Restforce.configuration.api_version = "26.0" }
+
+    requests 'queryAll\?q=SELECT%20some,%20fields%20FROM%20object', :fixture => 'sobject/query_success_response'
+    
+    subject { client.query_all('SELECT some, fields FROM object') }
+
+    it { should be_an Enumerable }
+  end
+
   describe '.search' do
     requests 'search\?q=FIND%20%7Bbar%7D', :fixture => 'sobject/search_success_response'
 

@@ -131,6 +131,29 @@ module Restforce
         mashify? ? response.body : response.body['records']
       end
 
+      # Public: Executs a SOQL query and returns the result.  Unlike the Query resource, QueryAll will return 
+      # records that have been deleted because of a merge or delete. QueryAll will also return information 
+      # about archived Task and Event records. QueryAll is available in API version 29.0 and later.
+      #
+      # soql - A SOQL expression.
+      #
+      # Examples
+      #
+      #   # Find the names of all Accounts
+      #   client.query_all('select Name from Account').map(&:Name)
+      #   # => ['Foo Bar Inc.', 'Whizbang Corp']
+      #
+      # Returns a Restforce::Collection if Restforce.configuration.mashify is true.
+      # Returns an Array of Hash for each record in the result if Restforce.configuration.mashify is false.
+      # Raises a Restforce::UnsupportedError if the connected api is less than 29.0
+      def query_all(soql)
+        if Restforce.configuration.api_version.to_f < 29.0
+          raise Restforce::UnsupportedError.new("query_all requires Api version 29.0 or later") 
+        end
+        response = api_get 'queryAll', :q => soql
+        mashify? ? response.body : response.body['records']
+      end
+
       # Public: Perform a SOSL search
       #
       # sosl - A SOSL expression.

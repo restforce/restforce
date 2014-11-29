@@ -122,6 +122,54 @@ describe Restforce::Concerns::API do
     end
   end
 
+  describe '.query_all' do
+    let(:soql)        { 'Select Id from Account' }
+    subject(:results) { client.query_all(soql) }
+
+    context "with supported api_version" do
+      before { Restforce.configuration.api_version = "31.0" }
+      after { Restforce.configuration.api_version = "26.0" }
+
+      context 'with mashify middleware' do
+        before do
+          client.stub :mashify? => true
+        end
+
+        it 'returns the body' do
+          client.should_receive(:api_get).
+            with('queryAll', :q => soql).
+            and_return(response)
+          expect(results).to eq response.body
+        end
+      end
+
+      context 'without mashify middleware' do
+        before do
+          client.stub :mashify? => false
+        end
+
+        it 'returns the records attribute of the body' do
+          records = double('records')
+          response.body.stub(:[]).
+            with('records').
+            and_return(records)
+          client.should_receive(:api_get).
+            with('queryAll', :q => soql).
+            and_return(response)
+          expect(results).to eq records
+        end
+      end
+    end
+
+    context "with unsupported api_version" do
+      before { Restforce.configuration.api_version = "26.0" }
+
+      subject { lambda { client.query_all(soql) } }
+      it { should raise_error Restforce::UnsupportedError, "query_all requires Api version 29.0 or later" }
+    end
+
+  end
+
   describe '.search' do
     let(:sosl)        { 'FIND {bar}' }
     subject(:results) { client.search(sosl) }
