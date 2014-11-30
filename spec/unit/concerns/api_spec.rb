@@ -127,8 +127,8 @@ describe Restforce::Concerns::API do
     subject(:results) { client.query_all(soql) }
 
     context "with supported api_version" do
-      before { Restforce.configuration.api_version = "31.0" }
-      after { Restforce.configuration.api_version = "26.0" }
+      before { Restforce.configuration.send("api_version=", "31.0") }
+      after { Restforce.configuration.send("api_version=", "26.0") }
 
       context 'with mashify middleware' do
         before do
@@ -162,7 +162,7 @@ describe Restforce::Concerns::API do
     end
 
     context "with unsupported api_version" do
-      before { Restforce.configuration.api_version = "26.0" }
+      before { Restforce.configuration.send("api_version=", "26.0") }
 
       subject { lambda { client.query_all(soql) } }
       it { should raise_error Restforce::UnsupportedError, "query_all requires Api version 29.0 or later" }
