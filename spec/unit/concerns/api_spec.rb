@@ -92,6 +92,9 @@ describe Restforce::Concerns::API do
     subject(:results) { client.query(soql) }
 
     context 'with mashify middleware' do
+      let(:headers) { {} }
+      let(:request) { double(:request, headers: headers) }
+
       before do
         client.stub :mashify? => true
       end
@@ -101,6 +104,32 @@ describe Restforce::Concerns::API do
           with('query', :q => soql).
           and_return(response)
         expect(results).to eq response.body
+      end
+
+      it 'does not set the query options header' do
+        expect(client).to receive(:api_get).
+          with('query', :q => soql) do |*args, &block|
+          block.call(request)
+          expect(headers['Sforce-Query-Options']).to be_nil
+
+          response
+        end
+        expect(results).to eq response.body
+      end
+
+      context 'with a batch size' do
+        subject(:results) { client.query(soql, batch_size: 800) }
+
+        it 'sets the query options header' do
+          expect(client).to receive(:api_get).
+            with('query', :q => soql) do |*args, &block|
+            block.call(request)
+            expect(headers['Sforce-Query-Options']).to eq 'batchSize=800'
+
+            response
+          end
+          expect(results).to eq response.body
+        end
       end
     end
 
