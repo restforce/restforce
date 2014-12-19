@@ -57,7 +57,11 @@ module Restforce
       #
       #        :request_headers         - A hash containing custom headers that will be
       #                                   appended to each request
-
+      #
+      #        :authentication_callback - A Proc that is called with the response body after a successful authentication.
+      #        :authentication_wrapper  - A callable that wraps around the authentication action.
+      #                                   It is expected to call the passed block to run the authentication.
+      #                                   Be sure to return the value of the called block.
       def initialize(opts = {})
         raise ArgumentError, 'Please specify a hash of options' unless opts.is_a?(Hash)
 

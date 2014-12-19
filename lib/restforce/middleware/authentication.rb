@@ -21,22 +21,24 @@ module Restforce
 
     # Internal: Performs the authentication and returns the response body.
     def authenticate!
-      response = connection.post '/services/oauth2/token' do |req|
-        req.body = encode_www_form(params)
+      authentication_wrapper.call do
+        response = connection.post '/services/oauth2/token' do |req|
+          req.body = encode_www_form(params)
+        end
+
+        if response.status >= 500
+          raise Restforce::ServerError, error_message(response)
+        elsif response.status != 200
+          raise Restforce::AuthenticationError, error_message(response)
+        end
+
+        @options[:instance_url] = response.body['instance_url']
+        @options[:oauth_token]  = response.body['access_token']
+
+        @options[:authentication_callback]&.call(response.body)
+
+        response.body
       end
-
-      if response.status >= 500
-        raise Restforce::ServerError, error_message(response)
-      elsif response.status != 200
-        raise Restforce::AuthenticationError, error_message(response)
-      end
-
-      @options[:instance_url] = response.body['instance_url']
-      @options[:oauth_token]  = response.body['access_token']
-
-      @options[:authentication_callback]&.call(response.body)
-
-      response.body
     end
 
     # Internal: The params to post to the OAuth service.
@@ -89,6 +91,12 @@ module Restforce
       { url: "https://#{@options[:host]}",
         proxy: @options[:proxy_uri],
         ssl: @options[:ssl] }
+    end
+
+    def authentication_wrapper
+      # Default to a NullObject style proc
+      # Note: Hash#fetch doesn't work here as it doesn't guard against nil
+      @options[:authentication_wrapper].nil? ? ->(&block){block.call} : @options[:authentication_wrapper]
     end
   end
 end
