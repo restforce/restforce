@@ -18,14 +18,17 @@ module Restforce
 
     # Internal: Performs the authentication and returns the response body.
     def authenticate!
-      response = connection.post '/services/oauth2/token' do |req|
-        req.body = encode_www_form(params)
+      auth_proc = Proc.new do
+        response = connection.post '/services/oauth2/token' do |req|
+          req.body = encode_www_form(params)
+        end
+        raise Restforce::AuthenticationError, error_message(response) if response.status != 200
+        @options[:instance_url] = response.body['instance_url']
+        @options[:oauth_token]  = response.body['access_token']
+        @options[:authentication_callback].call(response.body) if @options[:authentication_callback]
+        response.body
       end
-      raise Restforce::AuthenticationError, error_message(response) if response.status != 200
-      @options[:instance_url] = response.body['instance_url']
-      @options[:oauth_token]  = response.body['access_token']
-      @options[:authentication_callback].call(response.body) if @options[:authentication_callback]
-      response.body
+      authentication_wrapper.call(&auth_proc)
     end
 
     # Internal: The params to post to the OAuth service.
@@ -66,6 +69,12 @@ module Restforce
     def faraday_options
       { :url   => "https://#{@options[:host]}",
         :proxy => @options[:proxy_uri] }.reject { |k, v| v.nil? }
+    end
+
+    def authentication_wrapper
+      # Default to a NullObject style proc
+      # Note: Hash#fetch doesn't work here as it doesn't guard against nil
+      @options[:authentication_wrapper].nil? ? ->(&block){block.call} : @options[:authentication_wrapper]
     end
   end
 end
