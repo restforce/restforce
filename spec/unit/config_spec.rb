@@ -96,4 +96,14 @@ describe Restforce do
       end
     end
   end
+
+  describe '.new' do
+    it 'calls its block' do
+      checker = double(:block_checker)
+      expect(checker).to receive(:check!).once
+      Restforce.new do |builder|
+        checker.check!
+      end
+    end
+  end
 end

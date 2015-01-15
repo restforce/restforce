@@ -44,16 +44,16 @@ module Restforce
     # Alias for Restforce::Data::Client.new
     #
     # Shamelessly pulled from https://github.com/pengwynn/octokit/blob/master/lib/octokit.rb
-    def new(*args)
-      data(*args)
+    def new(*args, &block)
+      data(*args, &block)
     end
 
-    def data(*args)
-      Restforce::Data::Client.new(*args)
+    def data(*args, &block)
+      Restforce::Data::Client.new(*args, &block)
     end
 
-    def tooling(*args)
-      Restforce::Tooling::Client.new(*args)
+    def tooling(*args, &block)
+      Restforce::Tooling::Client.new(*args, &block)
     end
 
     # Helper for decoding signed requests.
