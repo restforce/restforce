@@ -1,4 +1,5 @@
 require 'spec_helper'
+require 'active_support/all'
 
 describe Restforce::Concerns::API do
   let(:response) { double('Faraday::Response', :body => double('Body')) }
@@ -229,6 +230,36 @@ describe Restforce::Concerns::API do
         with('sobjects/Whizbang/1234')
       expect(result).to be_true
     end
+  end
+
+  describe '.get_updated_between' do
+      let(:sobject){ 'Account'}
+      let(:startTime){ Time.now }
+      let(:endTime){ Time.now - 10.minutes }
+      subject(:result){ client.get_updated_between(sobject, startTime, endTime)}
+
+
+      it 'should return the value from the api request' do 
+        client.should_receive(:api_get).
+          with("sobjects/Account/updated/?start=#{startTime.utc.iso8601}&end=#{endTime.utc.iso8601}").
+          and_return(response)
+        expect(result).to eq(response.body)
+      end
+  end
+
+    describe '.get_deleted_between' do
+      let(:sobject){ 'Account'}
+      let(:startTime){ Time.now }
+      let(:endTime){ Time.now - 10.minutes }
+      subject(:result){ client.get_deleted_between(sobject, startTime, endTime)}
+
+
+      it 'should return the value from the api request' do 
+        client.should_receive(:api_get).
+          with("sobjects/Account/deleted/?start=#{startTime.utc.iso8601}&end=#{endTime.utc.iso8601}").
+          and_return(response)
+        expect(result).to eq(response.body)
+      end
   end
 
   describe '.find' do
