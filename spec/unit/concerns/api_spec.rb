@@ -1,5 +1,4 @@
 require 'spec_helper'
-require 'active_support/all'
 
 describe Restforce::Concerns::API do
   let(:response) { double('Faraday::Response', :body => double('Body')) }
@@ -234,8 +233,8 @@ describe Restforce::Concerns::API do
 
   describe '.get_updated_between' do
       let(:sobject){ 'Account'}
-      let(:startTime){ Time.now }
-      let(:endTime){ Time.now - 10.minutes }
+      let(:endTime){ Time.now  }
+      let(:startTime){ Time.now - 100}
       subject(:result){ client.get_updated_between(sobject, startTime, endTime)}
 
 
@@ -249,8 +248,8 @@ describe Restforce::Concerns::API do
 
     describe '.get_deleted_between' do
       let(:sobject){ 'Account'}
-      let(:startTime){ Time.now }
-      let(:endTime){ Time.now - 10.minutes }
+      let(:endTime){ Time.now }
+      let(:startTime){ Time.now - 100 }
       subject(:result){ client.get_deleted_between(sobject, startTime, endTime)}
 
 
