@@ -12,6 +12,7 @@ describe Restforce::Collection do
       it                   { should respond_to :each }
       its(:size)           { should eq 1 }
       its(:has_next_page?) { should be_false }
+      its(:next_page_url)  { should be_nil }
       it                   { should have_client client }
 
       describe 'each record' do
@@ -44,6 +45,7 @@ describe Restforce::Collection do
 
         its(:pages)          { should be_all { |page| expect(page).to be_a Restforce::Collection } }
         its(:has_next_page?) { should be_true }
+        its(:next_page_url)  { should eq '/services/data/v26.0/query/01gD' }
         it { should be_all   { |record| expect(record).to be_a Restforce::SObject } }
         its(:next_page)      { should be_a Restforce::Collection }
       end
