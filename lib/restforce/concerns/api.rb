@@ -114,9 +114,10 @@ module Restforce
         query('select id from Organization').first['Id']
       end
 
-      # Public: Executs a SOQL query and returns the result.
+      # Public: Executes a SOQL query and returns the result.
       #
       # soql - A SOQL expression.
+      # options - Hash of options to control the query
       #
       # Examples
       #
@@ -127,11 +128,32 @@ module Restforce
       # Returns a Restforce::Collection if Restforce.configuration.mashify is true.
       # Returns an Array of Hash for each record in the result if Restforce.configuration.mashify is false.
       def query(soql, options = {})
-        batch_size = options[:batch_size]
-        response = api_get 'query', :q => soql do |req|
-          req.headers['Sforce-Query-Options'] = "batchSize=#{batch_size}" if batch_size != nil
+        query_with_options(options) do |request_options|
+          api_get 'query', q: soql, &request_options
         end
-        mashify? ? response.body : response.body['records']
+      end
+
+      # Public: Returns the next batch of a batched query.
+      #
+      # url - The nextRecordsUrl field from the previous batch response.
+      # options - Hash of options to control the query
+      #
+      # Examples
+      #
+      #   # Find the names of all Accounts
+      #   collection = client.query('select Name from Account', batch_size: 1)
+      #   collection.map(&:Name)
+      #   # => ['Foo Bar Inc.']
+      #
+      #   client.query_next_page(collection.next_page_url, batch_size: 1).map(&:Name)
+      #   # => ['Whizbang Corp']
+      #
+      # Returns a Restforce::Collection if Restforce.configuration.mashify is true.
+      # Returns an Array of Hash for each record in the result if Restforce.configuration.mashify is false.
+      def query_next_page(url, options = {})
+        query_with_options(options) do |request_options|
+          get url, &request_options
+        end
       end
 
       # Public: Perform a SOSL search
@@ -350,6 +372,13 @@ module Restforce
         [Faraday::Error::ClientError]
       end
 
+      # Internal: Runs an soql query or query next batch request.
+      def query_with_options(options = {}, &block)
+        batch_size = options[:batch_size]
+        request_options = ->(req){ req.headers['Sforce-Query-Options'] = "batchSize=#{batch_size}" if batch_size != nil }
+        response = block.call(request_options)
+        mashify? ? response.body : response.body['records']
+      end
     end
   end
 end
