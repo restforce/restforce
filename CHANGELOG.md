@@ -1,3 +1,7 @@
+## 1.5.2 (Apr 29, 2015)
+
+*   Better autopagination performance #141 @th7
+
 ## 1.5.1 (Nov 27, 2014)
 
 *   Looser restrictions on hashie gem #123 @zenchild
