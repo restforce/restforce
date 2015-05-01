@@ -139,6 +139,22 @@ module Restforce
         mashify? ? response.body : response.body['records']
       end
 
+      # Public: Explain a SOQL query execution plan
+      #
+      # soql - A SOQL expression.
+      #
+      # Examples
+      #
+      #   # Find the names of all Accounts
+      #   client.explain('select Name from Account')
+      # Returns a Hash in the form {:plans => [Array of plan data]}
+      # See: https://www.salesforce.com/us/developer/docs/api_rest/Content/dome_query_explain.htm
+      def explain(soql)
+        version_guard(30.0) do
+          api_get("query", :explain => soql).body
+        end
+      end
+
       # Public: Perform a SOSL search
       #
       # sosl - A SOSL expression.

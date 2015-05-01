@@ -140,6 +140,26 @@ describe Restforce::Concerns::API do
     end
   end
 
+  describe '.explain' do
+    let(:soql)        { 'Select Id from Account' }
+    subject(:results) { client.explain(soql) }
+
+    it "returns an execute plan for this SOQL" do
+      plans = double("plans")
+      plans.stub(:body).and_return({"plans" => []})
+      client.should_receive(:api_get).
+        with("query", :explain => soql).
+        and_return(plans)
+      client.should_receive(:options).and_return({:api_version => "30.0"})
+      expect(results).to eq({"plans" => []})
+    end
+
+    it "raises an exception if we aren't at version 30.0 or above" do
+      client.should_receive(:options).twice.and_return({:api_version => "24.0"})
+      expect {results}.to raise_error(Restforce::APIVersionError)
+    end
+  end
+
   describe '.search' do
     let(:sosl)        { 'FIND {bar}' }
     subject(:results) { client.search(sosl) }
