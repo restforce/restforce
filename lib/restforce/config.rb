@@ -132,9 +132,8 @@ module Restforce
     # A Proc that is called with the response body after a successful authentication.
     option :authentication_callback
 
-    def logger
-      @logger ||= ::Logger.new STDOUT
-    end
+    # The logger to use for logging information about requests and responses
+    option :logger, :default => lambda { ::Logger.new STDOUT }
 
     def options
       self.class.options
