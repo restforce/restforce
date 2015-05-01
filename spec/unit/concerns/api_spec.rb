@@ -29,6 +29,24 @@ describe Restforce::Concerns::API do
     it { should eq ['foo'] }
   end
 
+  describe '.limits' do
+    subject { client.limits }
+
+    it 'returns the limits for an organization' do
+      limits = double('limits')
+      limits.stub(:body).and_return({})
+      client.should_receive(:api_get).with("limits").and_return(limits)
+      client.should_receive(:options).and_return({:api_version => "29.0"})
+      expect(client.limits).to eq({})
+    end
+
+    it "raises an exception if we aren't at version 29.0 or above" do
+      client.should_receive(:options).twice.and_return({:api_version => "24.0"})
+      expect {client.limits}.to raise_error(Restforce::APIVersionError)
+    end
+
+  end
+
   describe '.describe' do
     subject(:describe) { client.describe }
 
