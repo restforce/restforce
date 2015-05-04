@@ -58,7 +58,8 @@ describe Restforce do
      :proxy_uri, :authentication_callback, :mashify].each do |attr|
       it "allows #{attr} to be set" do
         Restforce.configure do |config|
-          config.send("#{attr}=", 'foobar')
+          #Using eval ensures private properties aren't inadvertently assigned to
+          eval "config.#{attr}= 'foobar'"
         end
         expect(Restforce.configuration.send(attr)).to eq 'foobar'
       end
