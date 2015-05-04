@@ -132,6 +132,11 @@ module Restforce
     # A Proc that is called with the response body after a successful authentication.
     option :authentication_callback
 
+    # A callable that wraps around the authentication action.
+    # It is expected to call the passed block to run the authentication.
+    # Be sure to return the value of the called block.
+    option :authentication_wrapper
+
     def logger
       @logger ||= ::Logger.new STDOUT
     end
