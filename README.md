@@ -108,7 +108,7 @@ client = Restforce.new :username => 'foo',
   :client_secret  => 'client_secret',
   :proxy_uri      => 'http://proxy.example.com:123'
 ```
-This paramter also will accept 'http://user@password:proxy.example.com:123' or using the environemnt variable PROXY_URI.
+This parameter also will accept 'http://user@password:proxy.example.com:123' or using the environment variable PROXY_URI.
 
 #### Sandbox Orgs
 
