@@ -220,9 +220,10 @@ module Restforce
       # Returns true if the sobject was successfully updated.
       # Raises an exception if an error is returned from Salesforce.
       def update!(sobject, attrs)
-        id = attrs.delete(attrs.keys.find { |k| k.to_s.downcase == 'id' })
+        id = attrs.fetch(attrs.keys.find { |k, v| k.to_s.downcase == 'id' }, nil)
         raise ArgumentError, 'Id field missing from attrs.' unless id
-        api_patch "sobjects/#{sobject}/#{id}", attrs
+        attrs_without_id = attrs.reject { |k, v| k.to_s.downcase == "id" }
+        api_patch "sobjects/#{sobject}/#{id}", attrs_without_id
         true
       end
 
@@ -261,8 +262,9 @@ module Restforce
       # Returns the Id of the newly created record if the record was created.
       # Raises an exception if an error is returned from Salesforce.
       def upsert!(sobject, field, attrs)
-        external_id = attrs.delete(attrs.keys.find { |k| k.to_s.downcase == field.to_s.downcase })
-        response = api_patch "sobjects/#{sobject}/#{field.to_s}/#{external_id}", attrs
+        external_id = attrs.fetch(attrs.keys.find { |k, v| k.to_s.downcase == field.to_s.downcase }, nil)
+        attrs_without_field = attrs.reject { |k, v| k.to_s.downcase == field.to_s.downcase }
+        response = api_patch "sobjects/#{sobject}/#{field.to_s}/#{external_id}", attrs_without_field
         (response.body && response.body['id']) ? response.body['id'] : true
       end
 
@@ -319,13 +321,13 @@ module Restforce
       # id      - The id of the record. If field is specified, id should be the id
       #           of the external field.
       # select  - A String array denoting the fields to select.  If nil or empty array
-      #           is passed, all fields are selected.  
+      #           is passed, all fields are selected.
       # field   - External ID field to use (default: nil).
       #
       def select(sobject, id, select, field=nil)
         path = field ? "sobjects/#{sobject}/#{field}/#{id}" : "sobjects/#{sobject}/#{id}"
         path << "?fields=#{select.join(",")}" if select && select.any?
-        
+
         api_get(path).body
       end
 

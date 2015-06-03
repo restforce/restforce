@@ -177,11 +177,11 @@ describe Restforce::Concerns::API do
     subject(:result) { client.update!(sobject, attrs) }
 
     context 'when the id field is present' do
-      let(:attrs) { { :id => '1234' } }
+      let(:attrs) { { :id => '1234', :StageName => "Call Scheduled" } }
 
       it 'sends an HTTP PATCH, and returns true' do
         client.should_receive(:api_patch).
-          with('sobjects/Whizbang/1234', attrs)
+          with('sobjects/Whizbang/1234', { :StageName => "Call Scheduled" })
         expect(result).to be_true
       end
     end
