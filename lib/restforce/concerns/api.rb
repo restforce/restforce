@@ -55,6 +55,14 @@ module Restforce
         describe.collect { |sobject| sobject['name'] }
       end
 
+      # Public: Get info about limits in the connected organization
+      # Returns an Array of String names for each SObject.
+      def limits
+        version_guard(29.0) do
+          api_get("limits").body
+        end
+      end
+
       # Public: Returns a detailed describe result for the specified sobject
       #
       # sobject - Stringish name of the sobject (default: nil).
@@ -347,6 +355,14 @@ module Restforce
       # Internal: Errors that should be rescued from in non-bang methods
       def exceptions
         [Faraday::Error::ClientError]
+      end
+
+      def version_guard(version, &block)
+        if version.to_f <= options[:api_version].to_f
+          yield
+        else
+          raise APIVersionError, "(API Version: #{options[:api_version]}) You must have an api_version of at least #{version} to use this feature."
+        end
       end
 
     end
