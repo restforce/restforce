@@ -13,6 +13,7 @@ describe Restforce::Collection do
       its(:size)           { should eq 1 }
       its(:has_next_page?) { should be_false }
       it                   { should have_client client }
+      its(:page_size)      { should eq 1 }
 
       describe 'each record' do
         it { should be_all { |record| expect(record).to be_a Restforce::SObject } }
@@ -34,6 +35,7 @@ describe Restforce::Collection do
         its(:first) { should be_a Restforce::SObject }
         its(:current_page) { should be_a Array }
         its(:current_page) { should have(1).element }
+        its(:page_size)    { should eq 1 }
       end
 
       context 'when all of the values are being requested' do
