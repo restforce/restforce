@@ -37,7 +37,7 @@ Or install it yourself as:
 
 ## Usage
 
-Restforce is designed with flexibility and ease of use in mind. By default, all api calls will
+Restforce is designed with flexibility and ease of use in mind. By default, all API calls will
 return [Hashie::Mash](https://github.com/intridea/hashie/tree/v1.2.0) objects,
 so you can do things like `client.query('select Id, (select Name from Children__r) from Account').Children__r.first.Name`.
 
@@ -62,7 +62,7 @@ client = Restforce.new :oauth_token => 'oauth token',
 ```
 
 Although the above will work, you'll probably want to take advantage of the
-(re)authentication middleware by specifying a refresh token, client id and client secret:
+(re)authentication middleware by specifying a `refresh_token`, `client_id` and `client_secret`:
 
 ```ruby
 client = Restforce.new :oauth_token => 'oauth token',
@@ -84,7 +84,7 @@ client = Restforce.new :username => 'foo',
   :client_secret  => 'client_secret'
 ```
 
-You can also set the username, password, security token, client id and client
+You can also set the username, password, security token, client ID and client
 secret in environment variables:
 
 ```bash
@@ -98,9 +98,10 @@ export SALESFORCE_CLIENT_SECRET="client secret"
 ```ruby
 client = Restforce.new
 ```
+
 ### Proxy Support
 
-You can specify a http proxy using the :proxy_uri option, as follows:
+You can specify a HTTP proxy using the `proxy_uri` option, as follows, or by setting the `PROXY_URI` environment variable:
 
 ```ruby
 client = Restforce.new :username => 'foo',
@@ -110,7 +111,8 @@ client = Restforce.new :username => 'foo',
   :client_secret  => 'client_secret',
   :proxy_uri      => 'http://proxy.example.com:123'
 ```
-This paramter also will accept 'http://user@password:proxy.example.com:123' or using the environemnt variable PROXY_URI.
+
+You may specify a username and password for the proxy with a URL along the lines of 'http://user@password:proxy.example.com:123'.
 
 #### Sandbox Orgs
 
@@ -120,11 +122,11 @@ You can connect to sandbox orgs by specifying a host. The default host is
 ```ruby
 client = Restforce.new :host => 'test.salesforce.com'
 ```
-The host can also be set with the environment variable SALESFORCE_HOST.
+The host can also be set with the environment variable `SALESFORCE_HOST`.
 
 #### Global configuration
 
-You can set any of the options passed into Restforce.new globally:
+You can set any of the options passed into `Restforce.new` globally:
 
 ```ruby
 Restforce.configure do |config|
@@ -135,8 +137,8 @@ end
 
 ### Bang! methods
 
-All the CRUD methods (create, update, upsert, destroy) have equivalent methods with
-a ! at the end (create!, update!, upsert!, destroy!), which can be used if you need
+All the CRUD methods (`create`, `update`, `upsert`, `destroy`) have equivalent methods with
+a ! at the end (`create!`, `update!`, `upsert!`, `destroy!`), which can be used if you need
 to do some custom error handling. The bang methods will raise exceptions, while the
 non-bang methods will return false in the event that an exception is raised. This
 works similarly to ActiveRecord.
@@ -178,22 +180,12 @@ client.find('Account', '1234', 'Some_External_Id_Field__c')
 
 ### select
 
-Select allows selecting a specific list of fields from a single object.  It requires an external_id lookup, but is often much faster than an arbitrary query.
+`select` allows the fetching of a specific list of fields from a single object.  It requires an `external_id` lookup, but is often much faster than an arbitrary query.
 
-
-to select the Id column, from a record with Id=001D000000INjVe
 ```ruby
-client.select('Account', '001D000000INjVe', ["Id"])
-# => {"attributes" : {"type" : "Account","url" : "/services/data/v20.0/sobjects/Account/001D000000INjVe"},
-#   "Id" : "001D000000INjVe"}
-```
-
-we can also use a custom field for the lookup, as long as it is an external_id field.
-to select the Id column, from a record with Some_External_Id_Field__c=001D000000INjVe
-```ruby
+# Select the `Id` column from a record with `Some_External_Id_Field__c` set to '001D000000INjVe'
 client.select('Account', '001D000000INjVe', ["Id"], 'Some_External_Id_Field__c')
-# => {"attributes" : {"type" : "Account","url" : "/services/data/v20.0/sobjects/Account/Some_External_Id_Field__c/001D000000INjVe"},
-#   "Id" : "003F000000BGIn3"}
+# => {"attributes" : {"type" : "Account","url" : "/services/data/v20.0/sobjects/Account/Some_External_Id_Field__c/001D000000INjVe"}, "Id" : "003F000000BGIn3"}
 ```
 
 ### search
@@ -203,7 +195,7 @@ client.select('Account', '001D000000INjVe', ["Id"], 'Some_External_Id_Field__c')
 client.search('FIND {bar}')
 # => #<Restforce::Collection >
 
-# Find accounts match the term 'genepoint' and return the Name field
+# Find accounts matching the term 'genepoint' and return the `Name` field
 client.search('FIND {genepoint} RETURNING Account (Name)').map(&:Name)
 # => ['GenePoint']
 ```
@@ -219,7 +211,7 @@ client.create('Account', Name: 'Foobar Inc.')
 ### update
 
 ```ruby
-# Update the Account with Id '0016000000MRatd'
+# Update the Account with `Id` '0016000000MRatd'
 client.update('Account', Id: '0016000000MRatd', Name: 'Whizbang Corp')
 # => true
 ```
@@ -227,14 +219,14 @@ client.update('Account', Id: '0016000000MRatd', Name: 'Whizbang Corp')
 ### upsert
 
 ```ruby
-# Update the record with external ID of 12
+# Update the record with external `External__c` external ID set to '12'
 client.upsert('Account', 'External__c', External__c: 12, Name: 'Foobar')
 ```
 
 ### destroy
 
 ```ruby
-# Delete the Account with Id '0016000000MRatd'
+# Delete the Account with `Id` '0016000000MRatd'
 client.destroy('Account', '0016000000MRatd')
 # => true
 ```
@@ -242,11 +234,11 @@ client.destroy('Account', '0016000000MRatd')
 ### describe
 
 ```ruby
-# get the global describe for all sobjects
+# Get the global describe for all sobjects
 client.describe
 # => { ... }
 
-# get the describe for the Account object
+# Get the describe for the Account object
 client.describe('Account')
 # => { ... }
 ```
@@ -254,11 +246,11 @@ client.describe('Account')
 ### describe_layouts
 
 ```ruby
-# get layouts for an sobject type
+# Get layouts for an sobject type
 client.describe_layout('Account')
 # => { ... }
 
-# get the details for a specific layout
+# Get the details for a specific layout by its ID
 client.describe_layouts('Account', '012E0000000RHEp')
 # => { ... }
 ```
@@ -267,12 +259,13 @@ client.describe_layouts('Account', '012E0000000RHEp')
 
 
 ```ruby
+# Fetch picklist value for Account's `Type` field
 client.picklist_values('Account', 'Type')
 # => [#<Restforce::Mash label="Prospect" value="Prospect">]
 
 # Given a custom object named Automobile__c with picklist fields
-# Model__c and Make__c, where Model__c depends on the value of
-# Make__c.
+# `Model__c` and `Make__c`, where options for `Model__c` depends on the value of
+# `Make__c`.
 client.picklist_values('Automobile__c', 'Model__c', :valid_for => 'Honda')
 # => [#<Restforce::Mash label="Civic" value="Civic">, ... ]
 ```
@@ -280,7 +273,7 @@ client.picklist_values('Automobile__c', 'Model__c', :valid_for => 'Honda')
 ### user_info
 
 ```ruby
-# get info about the logged-in user
+# Get info about the logged-in user
 client.user_info
 # => #<Restforce::Mash active=true display_name="Chatty Sassy" email="user@example.com" ... >
 ```
