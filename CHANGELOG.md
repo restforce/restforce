@@ -1,3 +1,12 @@
+## 1.5.3 (Jun 26, 2015)
+
+* Fixed a bug with `update!` and `upsert!` mutating provided attributes (@timrogers)
+* Added note about thread safety to `README.md` (@epbarger)
+* Improved documentation for `select` in `README.md` (@theSteveMitchell)
+* Tweaked and improved consistency of `README.md` (@timrogers)
+* Pass through blocks given to `Restforce.new` (@jxa)
+* Add `#page_size` to `Restforce::Collection` (@theSteveMitchell)
+
 ## 1.5.2 (Apr 29, 2015)
 
 *   Better autopagination performance #141 @th7
