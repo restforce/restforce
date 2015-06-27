@@ -1,3 +1,9 @@
+## 2.0.0 (Jun 27, 2015)
+
+* Drop support for versions of Ruby earlier than 1.9.3, which were [end-of-lifed](https://www.ruby-lang.org/en/news/2014/07/01/eol-for-1-8-7-and-1-9-2/) long ago
+* Take advantages of Ruby 1.9.3 syntax, and drop old Ruby 1.8 shims
+* Enforce code style with [Rubocop](https://github.com/bbatsov/rubocop)
+
 ## 1.5.3 (Jun 26, 2015)
 
 * Fixed a bug with `update!` and `upsert!` mutating provided attributes (@timrogers)

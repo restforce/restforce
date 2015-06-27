@@ -11,7 +11,14 @@ module Restforce
       #
       # Returns the url to the resource.
       def url(resource)
-        "#{instance_url}/#{(resource.respond_to?(:to_sparam) ? resource.to_sparam : resource)}"
+        resource_name_for_url =
+          if resource.respond_to?(:to_sparam)
+            resource.to_sparam
+          else
+            resource
+          end
+
+        "#{instance_url}/#{resource_name_for_url}"
       end
     end
   end

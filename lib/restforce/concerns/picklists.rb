@@ -1,7 +1,6 @@
 module Restforce
   module Concerns
     module Picklists
-
       # Public: Get the available picklist values for a picklist or multipicklist field.
       #
       # sobject - The String name of the sobject.
@@ -27,18 +26,18 @@ module Restforce
         PicklistValues.new(describe(sobject)['fields'], field, options)
       end
 
-    private
+      private
 
       class PicklistValues < Array
-
         def initialize(fields, field, options = {})
-          @fields, @field = fields, field
+          @fields = fields
+          @field = field
           @valid_for = options.delete(:valid_for)
           raise "#{field} is not a dependent picklist" if @valid_for && !dependent?
           replace(picklist_values)
         end
 
-      private
+        private
 
         attr_reader :fields
 
@@ -60,7 +59,8 @@ module Restforce
         end
 
         def controlling_picklist
-          @_controlling_picklist ||= controlling_field['picklistValues'].find { |picklist_entry| picklist_entry['value'] == @valid_for }
+          @_controlling_picklist ||= controlling_field['picklistValues'].
+            find { |picklist_entry| picklist_entry['value'] == @valid_for }
         end
 
         def index
@@ -77,14 +77,14 @@ module Restforce
 
         # Returns true if the picklist entry is valid for the controlling picklist.
         #
-        # See http://www.salesforce.com/us/developer/docs/api/Content/sforce_api_calls_describesobjects_describesobjectresult.htm
+        # See http://www.salesforce.com/us/developer/docs/api/Content/sforce_api_calls_des
+        # cribesobjects_describesobjectresult.htm
         def valid?(picklist_entry)
-          valid_for = picklist_entry['validFor'].ljust(16, 'A').unpack('m').first.unpack('q*')
+          valid_for = picklist_entry['validFor'].ljust(16, 'A').unpack('m').first.
+            unpack('q*')
           (valid_for[index >> 3] & (0x80 >> index % 8)) != 0
         end
-
       end
-
     end
   end
 end

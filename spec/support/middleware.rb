@@ -1,20 +1,24 @@
 module MiddlewareExampleGroup
   def self.included(base)
     base.class_eval do
-      let(:app)            { double('@app', :call => nil)            }
-      let(:env)            { { :request_headers => {}, :response_headers => {} } }
+      let(:app)            { double('@app', call: nil)            }
+      let(:env)            { { request_headers: {}, response_headers: {} } }
       let(:retries)        { 3 }
-      let(:options)        { { } }
+      let(:options)        { {} }
       let(:client)         { double(Restforce::AbstractClient) }
       let(:auth_callback)  { double(Proc) }
-      let(:success_response) { Restforce::Mash.new(JSON.parse(fixture(:auth_success_response))) }
+
+      let(:success_response) do
+        Restforce::Mash.new(JSON.parse(fixture(:auth_success_response)))
+      end
+
       subject(:middleware) { described_class.new app, client, options }
     end
   end
 
   RSpec.configure do |config|
     config.include self,
-      :example_group => { :file_path => %r{spec/unit/middleware} }
+                   example_group: { file_path: %r{spec/unit/middleware} }
   end
 end
 
@@ -35,12 +39,16 @@ shared_examples_for 'authentication middleware' do
         end
 
         its([:instance_url]) { should eq 'https://na1.salesforce.com' }
-        its([:oauth_token])  { should eq '00Dx0000000BV7z!AR8AQAxo9UfVkh8AlV0Gomt9Czx9LjHnSSpwBMmbRcgKFmxOtvxjTrKW19ye6PE3Ds1eQz3z8jr3W7_VbWmEu4Q8TVGSTHxs' }
+
+        its([:oauth_token])  do
+          should eq "00Dx0000000BV7z!AR8AQAxo9UfVkh8AlV0Gomt9Czx9LjHnSSpwBMmbRcgKFmxOtv" \
+                    "xjTrKW19ye6PE3Ds1eQz3z8jr3W7_VbWmEu4Q8TVGSTHxs"
+        end
       end
 
       context 'when an authentication_callback is specified' do
         before(:each) do
-          options.merge!(:authentication_callback => auth_callback)
+          options.merge!(authentication_callback: auth_callback)
         end
 
         it 'calls the authentication callback with the response body' do
@@ -61,7 +69,7 @@ shared_examples_for 'authentication middleware' do
 
       context 'when an authentication_callback is specified' do
         before(:each) do
-          options.merge!(:authentication_callback => auth_callback)
+          options.merge!(authentication_callback: auth_callback)
         end
 
         it 'does not call the authentication callback' do

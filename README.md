@@ -35,6 +35,8 @@ Or install it yourself as:
 
     $ gem install restforce
 
+__As of [version 2.0.0](https://github.com/ejholmes/restforce/blob/master/CHANGELOG.md#200-jun-27-2015), this gem is only compatible with Ruby 1.9.3 and later.__ To use Ruby 1.9.2 and below, you'll need to manually specify that you wish to use version 1.5.3.
+
 ## Usage
 
 Restforce is designed with flexibility and ease of use in mind. By default, all API calls will

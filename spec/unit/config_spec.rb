@@ -43,7 +43,7 @@ describe Restforce do
       end
 
       its(:username)       { should eq 'foo' }
-      its(:password)       { should eq 'bar'}
+      its(:password)       { should eq 'bar' }
       its(:security_token) { should eq 'foobar' }
       its(:client_id)      { should eq 'client id' }
       its(:client_secret)  { should eq 'client secret' }
@@ -53,9 +53,9 @@ describe Restforce do
   end
 
   describe '#configure' do
-    [:username, :password, :security_token, :client_id, :client_secret, :compress, :timeout,
-     :oauth_token, :refresh_token, :instance_url, :api_version, :host, :authentication_retries,
-     :proxy_uri, :authentication_callback, :mashify].each do |attr|
+    [:username, :password, :security_token, :client_id, :client_secret, :compress,
+     :timeout, :oauth_token, :refresh_token, :instance_url, :api_version, :host, :mashify,
+     :authentication_retries, :proxy_uri, :authentication_callback].each do |attr|
       it "allows #{attr} to be set" do
         Restforce.configure do |config|
           config.send("#{attr}=", 'foobar')
@@ -76,7 +76,7 @@ describe Restforce do
   describe '#log' do
     context 'with logging disabled' do
       before do
-        Restforce.stub :log? => false
+        Restforce.stub log?: false
       end
 
       it 'doesnt log anytning' do
@@ -87,7 +87,7 @@ describe Restforce do
 
     context 'with logging enabled' do
       before do
-        Restforce.stub :log? => true
+        Restforce.stub log?: true
         Restforce.configuration.logger.should_receive(:debug).with('foobar')
       end
 

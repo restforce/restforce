@@ -4,7 +4,7 @@ describe Restforce::Concerns::Canvas do
   let(:options) { Hash.new }
 
   before do
-    client.stub :options => options
+    client.stub options: options
   end
 
   describe '.decode_signed_request' do
@@ -12,7 +12,7 @@ describe Restforce::Concerns::Canvas do
     let(:signed_request) { double('Signed Request') }
 
     context 'when the client_secret is set' do
-      let(:options) { { :client_secret => 'secret' } }
+      let(:options) { { client_secret: 'secret' } }
 
       it 'delegates to Restforce::SignedRequest' do
         Restforce::SignedRequest.should_receive(:decode).

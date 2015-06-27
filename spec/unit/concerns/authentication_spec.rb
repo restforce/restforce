@@ -2,14 +2,17 @@ require 'spec_helper'
 
 describe Restforce::Concerns::Authentication do
   describe '.authenticate!' do
-    subject { lambda { client.authenticate! } }
+    subject(:authenticate!) { client.authenticate! }
 
     context 'when there is no authentication middleware' do
       before do
-        client.stub :authentication_middleware => nil
+        client.stub authentication_middleware: nil
       end
 
-      it { should raise_error Restforce::AuthenticationError, 'No authentication middleware present' }
+      it "raises an error" do
+        expect { authenticate! }.to raise_error Restforce::AuthenticationError,
+                                                'No authentication middleware present'
+      end
     end
 
     context 'when there is authentication middleware' do
@@ -17,12 +20,12 @@ describe Restforce::Concerns::Authentication do
       subject(:result) { client.authenticate! }
 
       it 'authenticates using the middleware' do
-        client.stub :authentication_middleware => authentication_middleware
+        client.stub authentication_middleware: authentication_middleware
         client.stub :options
         authentication_middleware.
           should_receive(:new).
           with(nil, client, client.options).
-          and_return(double(:authenticate! => 'foo'))
+          and_return(double(authenticate!: 'foo'))
         expect(result).to eq 'foo'
       end
     end
@@ -33,7 +36,7 @@ describe Restforce::Concerns::Authentication do
 
     context 'when username and password options are provided' do
       before do
-        client.stub :username_password? => true
+        client.stub username_password?: true
       end
 
       it { should eq Restforce::Middleware::Authentication::Password }
@@ -41,8 +44,8 @@ describe Restforce::Concerns::Authentication do
 
     context 'when oauth options are provided' do
       before do
-        client.stub :username_password? => false
-        client.stub :oauth_refresh? => true
+        client.stub username_password?: false
+        client.stub oauth_refresh?: true
       end
 
       it { should eq Restforce::Middleware::Authentication::Token }
@@ -54,15 +57,15 @@ describe Restforce::Concerns::Authentication do
     let(:options) { Hash.new }
 
     before do
-      client.stub :options => options
+      client.stub options: options
     end
 
     context 'when username and password options are provided' do
       let(:options) do
-        { :username      => 'foo',
-          :password      => 'bar',
-          :client_id     => 'client',
-          :client_secret => 'secret' }
+        { username: 'foo',
+          password: 'bar',
+          client_id: 'client',
+          client_secret: 'secret' }
       end
 
       it { should be_true }
@@ -78,14 +81,14 @@ describe Restforce::Concerns::Authentication do
     let(:options) { Hash.new }
 
     before do
-      client.stub :options => options
+      client.stub options: options
     end
 
     context 'when oauth options are provided' do
       let(:options) do
-        { :refresh_token => 'token',
-          :client_id     => 'client',
-          :client_secret => 'secret' }
+        { refresh_token: 'token',
+          client_id: 'client',
+          client_secret: 'secret' }
       end
 
       it { should be_true }

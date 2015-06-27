@@ -1,7 +1,6 @@
 module Restforce
   module Concerns
     module Verbs
-
       # Internal: Define methods to handle a verb.
       #
       # verbs - A list of verbs to define methods for.
@@ -62,7 +61,6 @@ module Restforce
           send(verb, *args, &block)
         end
       end
-
     end
   end
 end

@@ -1,7 +1,6 @@
 module Restforce
   module Concerns
     module Connection
-
       # Public: The Faraday::Builder instance used for the middleware stack. This
       # can be used to insert an custom middleware.
       #
@@ -16,25 +15,31 @@ module Restforce
       end
       alias_method :builder, :middleware
 
-    private
+      private
 
       # Internal: Internal faraday connection where all requests go through
       def connection
-        @connection ||= Faraday.new(options[:instance_url], connection_options) do |builder|
+        @connection ||= Faraday.new(options[:instance_url],
+                                    connection_options) do |builder|
           # Parses JSON into Hashie::Mash structures.
-          builder.use      Restforce::Middleware::Mashify, self, options unless (options[:mashify] == false)
+          unless (options[:mashify] == false)
+            builder.use    Restforce::Middleware::Mashify, self, options
+          end
+
           # Handles multipart file uploads for blobs.
           builder.use      Restforce::Middleware::Multipart
           # Converts the request into JSON.
           builder.request  :json
           # Handles reauthentication for 403 responses.
-          builder.use      authentication_middleware, self, options if authentication_middleware
+          if authentication_middleware
+            builder.use    authentication_middleware, self, options
+          end
           # Sets the oauth token in the headers.
           builder.use      Restforce::Middleware::Authorization, self, options
           # Ensures the instance url is set.
           builder.use      Restforce::Middleware::InstanceURL, self, options
           # Parses returned JSON response into a hash.
-          builder.response :json, :content_type => /\bjson$/
+          builder.response :json, content_type: /\bjson$/
           # Caches GET requests.
           builder.use      Restforce::Middleware::Caching, cache, options if cache
           # Follows 30x redirects.
@@ -42,7 +47,9 @@ module Restforce
           # Raises errors for 40x responses.
           builder.use      Restforce::Middleware::RaiseError
           # Log request/responses
-          builder.use      Restforce::Middleware::Logger, Restforce.configuration.logger, options if Restforce.log?
+          builder.use      Restforce::Middleware::Logger,
+                           Restforce.configuration.logger,
+                           options if Restforce.log?
           # Compress/Decompress the request/response
           builder.use      Restforce::Middleware::Gzip, self, options
 
@@ -56,10 +63,10 @@ module Restforce
 
       # Internal: Faraday Connection options
       def connection_options
-        { :request => {
-            :timeout => options[:timeout],
-            :open_timeout => options[:timeout] },
-          :proxy => options[:proxy_uri]
+        { request: {
+            timeout: options[:timeout],
+            open_timeout: options[:timeout] },
+          proxy: options[:proxy_uri]
         }
       end
 
@@ -68,7 +75,6 @@ module Restforce
       def mashify?
         middleware.handlers.index(Restforce::Middleware::Mashify)
       end
-
     end
   end
 end

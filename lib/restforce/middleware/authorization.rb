@@ -1,5 +1,4 @@
 module Restforce
-
   # Piece of middleware that simply injects the OAuth token into the request
   # headers.
   class Middleware::Authorization < Restforce::Middleware
@@ -13,7 +12,5 @@ module Restforce
     def token
       @options[:oauth_token]
     end
-  
   end
-
 end

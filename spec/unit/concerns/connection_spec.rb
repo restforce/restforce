@@ -6,21 +6,20 @@ describe Restforce::Concerns::Connection do
     let(:builder) { double('Faraday::Builder') }
 
     before do
-      client.stub_chain :connection, :builder => builder
+      client.stub_chain :connection, builder: builder
     end
 
     it { should eq builder }
   end
 
   describe 'private #connection' do
-
     describe ':mashify option' do
-      let(:options) { {:adapter => Faraday.default_adapter} }
+      let(:options) { { adapter: Faraday.default_adapter } }
 
       before(:each) do
         client.stub(:authentication_middleware)
         client.stub(:cache)
-        client.stub(:options => options)
+        client.stub(options: options)
       end
 
       describe 'with mashify not specified' do
@@ -32,7 +31,7 @@ describe Restforce::Concerns::Connection do
 
       describe 'with mashify=true' do
         before(:each) do
-          options.merge!(:mashify => true)
+          options.merge!(mashify: true)
         end
 
         it 'includes the Mashify middleware' do
@@ -43,7 +42,7 @@ describe Restforce::Concerns::Connection do
 
       describe 'without mashify' do
         before(:each) do
-          options.merge!(:mashify => false)
+          options.merge!(mashify: false)
         end
 
         it 'does not include the Mashify middleware' do
@@ -56,7 +55,7 @@ describe Restforce::Concerns::Connection do
 
   describe '#adapter' do
     before do
-      client.stub :options => {:adapter => :typhoeus}
+      client.stub options: { adapter: :typhoeus }
     end
 
     its(:adapter) { should eq(:typhoeus) }

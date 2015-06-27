@@ -1,7 +1,7 @@
 require 'spec_helper'
 
 describe Restforce::Middleware::Gzip do
-  let(:options) { { :oauth_token => 'token' } }
+  let(:options) { { oauth_token: 'token' } }
 
   # Return a gzipped string.
   def gzip(str)

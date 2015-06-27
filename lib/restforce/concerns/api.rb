@@ -72,7 +72,7 @@ module Restforce
       # Returns the Hash representation of the describe call.
       def describe(sobject = nil)
         if sobject
-          api_get("sobjects/#{sobject.to_s}/describe").body
+          api_get("sobjects/#{sobject}/describe").body
         else
           api_get('sobjects').body['sobjects']
         end
@@ -96,9 +96,9 @@ module Restforce
       # Returns the Hash representation of the describe_layouts result
       def describe_layouts(sobject, layout_id = nil)
         if layout_id
-          api_get("sobjects/#{sobject.to_s}/describe/layouts/#{layout_id}").body
+          api_get("sobjects/#{sobject}/describe/layouts/#{layout_id}").body
         else
-          api_get("sobjects/#{sobject.to_s}/describe/layouts").body
+          api_get("sobjects/#{sobject}/describe/layouts").body
         end
       end
 
@@ -125,9 +125,10 @@ module Restforce
       #   # => ['Foo Bar Inc.', 'Whizbang Corp']
       #
       # Returns a Restforce::Collection if Restforce.configuration.mashify is true.
-      # Returns an Array of Hash for each record in the result if Restforce.configuration.mashify is false.
+      # Returns an Array of Hash for each record in the result if
+      # Restforce.configuration.mashify is false.
       def query(soql)
-        response = api_get 'query', :q => soql
+        response = api_get 'query', q: soql
         mashify? ? response.body : response.body['records']
       end
 
@@ -146,9 +147,10 @@ module Restforce
       #   # => ['GenePoint']
       #
       # Returns a Restforce::Collection if Restforce.configuration.mashify is true.
-      # Returns an Array of Hash for each record in the result if Restforce.configuration.mashify is false.
+      # Returns an Array of Hash for each record in the result if
+      # Restforce.configuration.mashify is false.
       def search(sosl)
-        api_get('search', :q => sosl).body
+        api_get('search', q: sosl).body
       end
 
       # Public: Insert a new record.
@@ -262,9 +264,13 @@ module Restforce
       # Returns the Id of the newly created record if the record was created.
       # Raises an exception if an error is returned from Salesforce.
       def upsert!(sobject, field, attrs)
-        external_id = attrs.fetch(attrs.keys.find { |k, v| k.to_s.downcase == field.to_s.downcase }, nil)
-        attrs_without_field = attrs.reject { |k, v| k.to_s.downcase == field.to_s.downcase }
-        response = api_patch "sobjects/#{sobject}/#{field.to_s}/#{external_id}", attrs_without_field
+        external_id = attrs.
+          fetch(attrs.keys.find { |k, v| k.to_s.downcase == field.to_s.downcase }, nil)
+        attrs_without_field = attrs.
+          reject { |k, v| k.to_s.downcase == field.to_s.downcase }
+        response = api_patch "sobjects/#{sobject}/#{field}/#{external_id}",
+                             attrs_without_field
+
         (response.body && response.body['id']) ? response.body['id'] : true
       end
 
@@ -311,8 +317,9 @@ module Restforce
       # field   - External ID field to use (default: nil).
       #
       # Returns the Restforce::SObject sobject record.
-      def find(sobject, id, field=nil)
-        api_get(field ? "sobjects/#{sobject}/#{field}/#{id}" : "sobjects/#{sobject}/#{id}").body
+      def find(sobject, id, field = nil)
+        url = field ? "sobjects/#{sobject}/#{field}/#{id}" : "sobjects/#{sobject}/#{id}"
+        api_get(url).body
       end
 
       # Public: Finds a single record and returns select fields.
@@ -324,15 +331,14 @@ module Restforce
       #           is passed, all fields are selected.
       # field   - External ID field to use (default: nil).
       #
-      def select(sobject, id, select, field=nil)
+      def select(sobject, id, select, field = nil)
         path = field ? "sobjects/#{sobject}/#{field}/#{id}" : "sobjects/#{sobject}/#{id}"
-        path << "?fields=#{select.join(",")}" if select && select.any?
+        path << "?fields=#{select.join(',')}" if select && select.any?
 
         api_get(path).body
       end
 
-
-    private
+      private
 
       # Internal: Returns a path to an api endpoint
       #
@@ -348,7 +354,6 @@ module Restforce
       def exceptions
         [Faraday::Error::ClientError]
       end
-
     end
   end
 end

@@ -21,8 +21,14 @@ describe Restforce::Collection do
     end
 
     context 'with pagination' do
-      let(:first_page)     { JSON.parse(fixture('sobject/query_paginated_first_page_response')) }
-      let(:next_page)      { JSON.parse(fixture('sobject/query_paginated_last_page_response')) }
+      let(:first_page) do
+        JSON.parse(fixture('sobject/query_paginated_first_page_response'))
+      end
+
+      let(:next_page) do
+        JSON.parse(fixture('sobject/query_paginated_last_page_response'))
+      end
+
       subject(:collection) { described_class.new(first_page, client) }
 
       it { should respond_to :each }
@@ -41,10 +47,13 @@ describe Restforce::Collection do
       context 'when all of the values are being requested' do
         before do
           client.stub(:get).
-            and_return(double(:body => Restforce::Collection.new(next_page, client)))
+            and_return(double(body: Restforce::Collection.new(next_page, client)))
         end
 
-        its(:pages)          { should be_all { |page| expect(page).to be_a Restforce::Collection } }
+        its(:pages) do
+          should be_all { |page| expect(page).to be_a Restforce::Collection }
+        end
+
         its(:has_next_page?) { should be_true }
         it { should be_all   { |record| expect(record).to be_a Restforce::SObject } }
         its(:next_page)      { should be_a Restforce::Collection }

@@ -13,6 +13,6 @@ module ConcernsExampleGroup
   end
 
   RSpec.configure do |config|
-    config.include self, :example_group => { :file_path => %r{spec/unit/concerns} }
+    config.include self, example_group: { file_path: %r{spec/unit/concerns} }
   end
 end

@@ -1,7 +1,7 @@
 #!/usr/bin/env rake
 require "bundler/gem_tasks"
 
-task :default => [:spec]
+task default: [:spec]
 
 require 'rspec/core/rake_task'
 desc "Run specs"
