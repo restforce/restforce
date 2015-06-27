@@ -1,7 +1,11 @@
 module ClientIntegrationExampleGroup
   def self.included(base)
     base.class_eval do
-      let(:oauth_token)    { '00Dx0000000BV7z!AR8AQAxo9UfVkh8AlV0Gomt9Czx9LjHnSSpwBMmbRcgKFmxOtvxjTrKW19ye6PE3Ds1eQz3z8jr3W7_VbWmEu4Q8TVGSTHxs' }
+      let(:oauth_token) do
+        '00Dx0000000BV7z!AR8AQAxo9UfVkh8AlV0Gomt9Czx9LjHnSSpwBMmbRcgKFmxOtvxjTrKW19ye6P' \
+        'E3Ds1eQz3z8jr3W7_VbWmEu4Q8TVGSTHxs'
+      end
+
       let(:refresh_token)  { 'refresh' }
       let(:instance_url)   { 'https://na1.salesforce.com' }
       let(:username)       { 'foo'            }
@@ -13,15 +17,15 @@ module ClientIntegrationExampleGroup
 
       let(:base_options) do
         {
-          :oauth_token    => oauth_token,
-          :refresh_token  => refresh_token,
-          :instance_url   => instance_url,
-          :username       => username,
-          :password       => password,
-          :security_token => security_token,
-          :client_id      => client_id,
-          :client_secret  => client_secret,
-          :cache          => cache
+          oauth_token: oauth_token,
+          refresh_token: refresh_token,
+          instance_url: instance_url,
+          username: username,
+          password: password,
+          security_token: security_token,
+          client_id: client_id,
+          client_secret: client_secret,
+          cache: cache
         }
       end
 
@@ -33,13 +37,15 @@ module ClientIntegrationExampleGroup
 
   RSpec.configure do |config|
     config.include self,
-      :example_group => {
-        :describes => lambda { |described| described <= Restforce::AbstractClient },
-        :file_path => %r{spec/integration}
-      }
+                   example_group: {
+                     describes: lambda do |described|
+                       described <= Restforce::AbstractClient
+                     end,
+                     file_path: %r{spec/integration}
+                   }
 
-    config.before :mashify => false do
-      base_options.merge!(:mashify => false)
+    config.before mashify: false do
+      base_options.merge!(mashify: false)
     end
   end
 end

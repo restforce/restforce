@@ -1,33 +1,37 @@
 module FixtureHelpers
   module InstanceMethods
-
-    def stub_api_request(endpoint, options={})
+    def stub_api_request(endpoint, options = {})
       options = {
-        :method => :get,
-        :status => 200,
-        :api_version => Restforce.configuration.api_version
+        method: :get,
+        status: 200,
+        api_version: Restforce.configuration.api_version
       }.merge(options)
 
-      stub = stub_request(options[:method], %r{/services/data/v#{options[:api_version]}/#{endpoint}})
-      stub = stub.with(:body => options[:with_body]) if options[:with_body] && !RUBY_VERSION.match(/^1.8/)
-      stub = stub.to_return(:status => options[:status], :body => fixture(options[:fixture]), :headers => { 'Content-Type' => 'application/json'}) if options[:fixture]
+      stub = stub_request(options[:method],
+                          %r{/services/data/v#{options[:api_version]}/#{endpoint}})
+
+      if options[:fixture]
+        stub = stub.to_return(status: options[:status],
+                              body: fixture(options[:fixture]),
+                              headers: { 'Content-Type' => 'application/json' })
+      end
+
       stub
     end
 
-    def stub_login_request(options={})
+    def stub_login_request(*)
       stub = stub_request(:post, "https://login.salesforce.com/services/oauth2/token")
-      stub = stub.with(:body => options[:with_body]) if options[:with_body] && !RUBY_VERSION.match(/^1.8/)
+
       stub
     end
 
     def fixture(f)
       File.read(File.expand_path("../../fixtures/#{f}.json", __FILE__))
     end
-
   end
 
   module ClassMethods
-    def requests(endpoint, options={})
+    def requests(endpoint, options = {})
       before do
         (@requests ||= []) << stub_api_request(endpoint, options)
       end

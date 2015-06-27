@@ -5,7 +5,7 @@ describe Restforce::Mash do
     subject { described_class.build(input, nil) }
 
     context 'when array' do
-      let(:input) { [{ :foo => 'hello' }, { :bar => 'world' }] }
+      let(:input) { [{ foo: 'hello' }, { bar: 'world' }] }
       it { should be_all { |obj| expect(obj).to be_a Restforce::Mash } }
     end
   end

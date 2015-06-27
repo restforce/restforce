@@ -21,10 +21,18 @@ module Restforce
       response = connection.post '/services/oauth2/token' do |req|
         req.body = encode_www_form(params)
       end
-      raise Restforce::AuthenticationError, error_message(response) if response.status != 200
+
+      if response.status != 200
+        raise Restforce::AuthenticationError, error_message(response)
+      end
+
       @options[:instance_url] = response.body['instance_url']
       @options[:oauth_token]  = response.body['access_token']
-      @options[:authentication_callback].call(response.body) if @options[:authentication_callback]
+
+      if @options[:authentication_callback]
+        @options[:authentication_callback].call(response.body)
+      end
+
       response.body
     end
 
@@ -39,7 +47,11 @@ module Restforce
         builder.use Faraday::Request::UrlEncoded
         builder.use Restforce::Middleware::Mashify, nil, @options
         builder.response :json
-        builder.use Restforce::Middleware::Logger, Restforce.configuration.logger, @options if Restforce.log?
+
+        builder.use Restforce::Middleware::Logger,
+                    Restforce.configuration.logger,
+                    @options if Restforce.log?
+
         builder.adapter Faraday.default_adapter
       end
     end
@@ -56,16 +68,18 @@ module Restforce
         URI.encode_www_form(params)
       else
         params.map do |k, v|
-          k, v = CGI.escape(k.to_s), CGI.escape(v.to_s)
+          k = CGI.escape(k.to_s)
+          v = CGI.escape(v.to_s)
           "#{k}=#{v}"
         end.join('&')
       end
     end
 
-  private
+    private
+
     def faraday_options
-      { :url   => "https://#{@options[:host]}",
-        :proxy => @options[:proxy_uri] }.reject { |k, v| v.nil? }
+      { url: "https://#{@options[:host]}",
+        proxy: @options[:proxy_uri] }.reject { |k, v| v.nil? }
     end
   end
 end

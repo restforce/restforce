@@ -1,7 +1,6 @@
 module Restforce
   module Concerns
     module Caching
-
       # Public: Runs the block with caching disabled.
       #
       # block - A query/describe/etc.
@@ -14,13 +13,12 @@ module Restforce
         options.delete(:use_cache)
       end
 
-    private
+      private
 
       # Internal: Cache to use for the caching middleware
       def cache
         options[:cache]
       end
-
     end
   end
 end

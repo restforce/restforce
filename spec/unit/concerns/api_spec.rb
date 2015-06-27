@@ -1,7 +1,7 @@
 require 'spec_helper'
 
 describe Restforce::Concerns::API do
-  let(:response) { double('Faraday::Response', :body => double('Body')) }
+  let(:response) { double('Faraday::Response', body: double('Body')) }
 
   describe '.user_info' do
     subject(:user_info) { client.user_info }
@@ -9,7 +9,7 @@ describe Restforce::Concerns::API do
     it 'returns the user info from identity url' do
       identity_url = double('identity_url')
       response.body.stub(:identity).and_return(identity_url)
-      client.should_receive(:api_get).with().and_return(response)
+      client.should_receive(:api_get).with.and_return(response)
 
       identity = double('identity')
       identity.stub(:body).and_return(identity)
@@ -23,7 +23,7 @@ describe Restforce::Concerns::API do
     subject { client.list_sobjects }
 
     before do
-      client.stub :describe => [ { 'name' => 'foo' } ]
+      client.stub describe: [{ 'name' => 'foo' }]
     end
 
     it { should eq ['foo'] }
@@ -64,7 +64,9 @@ describe Restforce::Concerns::API do
     end
 
     context 'when given the id of a layout' do
-      subject(:describe_layouts) { client.describe_layouts('Whizbang', '012E0000000RHEp') }
+      subject(:describe_layouts) do
+        client.describe_layouts('Whizbang', '012E0000000RHEp')
+      end
 
       it 'returns the describe for the specified layout' do
         client.should_receive(:api_get).
@@ -79,7 +81,7 @@ describe Restforce::Concerns::API do
     subject(:org_id) { client.org_id }
 
     it 'returns the organization id' do
-      organizations = [ { 'Id' => 'foo' } ]
+      organizations = [{ 'Id' => 'foo' }]
       client.should_receive(:query).
         with('select id from Organization').
         and_return(organizations)
@@ -93,12 +95,12 @@ describe Restforce::Concerns::API do
 
     context 'with mashify middleware' do
       before do
-        client.stub :mashify? => true
+        client.stub mashify?: true
       end
 
       it 'returns the body' do
         client.should_receive(:api_get).
-          with('query', :q => soql).
+          with('query', q: soql).
           and_return(response)
         expect(results).to eq response.body
       end
@@ -106,7 +108,7 @@ describe Restforce::Concerns::API do
 
     context 'without mashify middleware' do
       before do
-        client.stub :mashify? => false
+        client.stub mashify?: false
       end
 
       it 'returns the records attribute of the body' do
@@ -115,7 +117,7 @@ describe Restforce::Concerns::API do
           with('records').
           and_return(records)
         client.should_receive(:api_get).
-          with('query', :q => soql).
+          with('query', q: soql).
           and_return(response)
         expect(results).to eq records
       end
@@ -128,7 +130,7 @@ describe Restforce::Concerns::API do
 
     it 'performs a sosl search' do
       client.should_receive(:api_get).
-        with('search', :q => sosl).
+        with('search', q: sosl).
         and_return(response)
       expect(results).to eq response.body
     end
@@ -177,17 +179,17 @@ describe Restforce::Concerns::API do
     subject(:result) { client.update!(sobject, attrs) }
 
     context 'when the id field is present' do
-      let(:attrs) { { :id => '1234', :StageName => "Call Scheduled" } }
+      let(:attrs) { { id: '1234', StageName: "Call Scheduled" } }
 
       it 'sends an HTTP PATCH, and returns true' do
         client.should_receive(:api_patch).
-          with('sobjects/Whizbang/1234', { :StageName => "Call Scheduled" })
+          with('sobjects/Whizbang/1234', StageName: "Call Scheduled")
         expect(result).to be_true
       end
     end
 
     context 'when the id field is missing from the attrs' do
-      subject { lambda { result }}
+      subject { lambda { result } }
       it { should raise_error ArgumentError, 'Id field missing from attrs.' }
     end
   end

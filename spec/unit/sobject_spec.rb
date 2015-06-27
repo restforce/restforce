@@ -1,8 +1,12 @@
 require 'spec_helper'
 
 describe Restforce::SObject do
-  let(:client)      { double('Client') }
-  let(:hash)        { JSON.parse(fixture('sobject/query_success_response'))['records'].first }
+  let(:client) { double('Client') }
+
+  let(:hash) do
+    JSON.parse(fixture('sobject/query_success_response'))['records'].first
+  end
+
   subject(:sobject) { described_class.new(hash, client) }
 
   describe '#new' do
@@ -34,20 +38,23 @@ describe Restforce::SObject do
     end
   end
 
-  { :save     => :update,
-    :save!    => :update!,
-    :destroy  => :destroy,
-    :destroy! => :destroy! }.each do |method, receiver|
+  { save: :update,
+    save!: :update!,
+    destroy: :destroy,
+    destroy!: :destroy! }.each do |method, receiver|
     describe ".#{method}" do
-      subject { lambda { sobject.send(method) } }
+      subject(:send_method) { sobject.send(method) }
 
       context 'when an Id was not queried' do
-        it { should raise_error ArgumentError, 'You need to query the Id for the record first.' }
+        it "raises an error" do
+          expect { send_method }.to raise_error ArgumentError,
+                                                /need to query the Id for the record/
+        end
       end
 
       context 'when an Id is present' do
         before do
-          hash.merge!(:Id => '001D000000INjVe')
+          hash.merge!(Id: '001D000000INjVe')
           client.should_receive(receiver)
         end
 

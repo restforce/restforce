@@ -28,7 +28,8 @@ module Restforce
       JSON.parse(Base64.decode64(payload))
     end
 
-  private
+    private
+
     attr_reader :client_secret, :signature, :payload
 
     def split_components(signed_request)
@@ -51,6 +52,5 @@ module Restforce
         OpenSSL::Digest
       end
     end
-
   end
 end

@@ -5,7 +5,7 @@ describe Restforce::Concerns::Caching do
     let(:options) { double('Options') }
 
     before do
-      client.stub :options => options
+      client.stub options: options
     end
 
     it 'runs the block with caching disabled' do

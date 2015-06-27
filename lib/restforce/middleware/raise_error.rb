@@ -8,7 +8,8 @@ module Restforce
       when 401
         raise Restforce::UnauthorizedError, message
       when 413
-        raise Faraday::Error::ClientError.new("HTTP 413 - Request Entity Too Large", env[:response])
+        raise Faraday::Error::ClientError.new("HTTP 413 - Request Entity Too Large",
+                                              env[:response])
       when 400...600
         raise Faraday::Error::ClientError.new(message, env[:response])
       end

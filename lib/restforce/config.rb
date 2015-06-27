@@ -45,7 +45,9 @@ module Restforce
       end
 
       def initialize(configuration, name, options = {})
-        @configuration, @name, @options = configuration, name, options
+        @configuration = configuration
+        @name = name
+        @options = options
         @default = options.fetch(:default, nil)
       end
 
@@ -55,7 +57,8 @@ module Restforce
         self
       end
 
-    private
+      private
+
       attr_reader :default
       alias_method :default_provided?, :default
 
@@ -68,7 +71,10 @@ module Restforce
         our_name    = name
         configuration.send :define_method, our_name do
           instance_variable_get(:"@#{our_name}") ||
-            instance_variable_set(:"@#{our_name}", our_default.respond_to?(:call) ? our_default.call : our_default)
+            instance_variable_set(
+              :"@#{our_name}",
+              our_default.respond_to?(:call) ? our_default.call : our_default
+            )
         end
       end
     end
@@ -82,26 +88,26 @@ module Restforce
       end
     end
 
-    option :api_version, :default => '26.0'
+    option :api_version, default: '26.0'
 
     # The username to use during login.
-    option :username, :default => lambda { ENV['SALESFORCE_USERNAME'] }
+    option :username, default: lambda { ENV['SALESFORCE_USERNAME'] }
 
     # The password to use during login.
-    option :password, :default => lambda { ENV['SALESFORCE_PASSWORD'] }
+    option :password, default: lambda { ENV['SALESFORCE_PASSWORD'] }
 
     # The security token to use during login.
-    option :security_token, :default => lambda { ENV['SALESFORCE_SECURITY_TOKEN'] }
+    option :security_token, default: lambda { ENV['SALESFORCE_SECURITY_TOKEN'] }
 
     # The OAuth client id
-    option :client_id, :default => lambda { ENV['SALESFORCE_CLIENT_ID'] }
+    option :client_id, default: lambda { ENV['SALESFORCE_CLIENT_ID'] }
 
     # The OAuth client secret
-    option :client_secret, :default => lambda { ENV['SALESFORCE_CLIENT_SECRET'] }
+    option :client_secret, default: lambda { ENV['SALESFORCE_CLIENT_SECRET'] }
 
     # Set this to true if you're authenticating with a Sandbox instance.
     # Defaults to false.
-    option :host, :default => lambda { ENV['SALESFORCE_HOST'] || 'login.salesforce.com' }
+    option :host, default: lambda { ENV['SALESFORCE_HOST'] || 'login.salesforce.com' }
 
     option :oauth_token
     option :refresh_token
@@ -112,7 +118,7 @@ module Restforce
     option :cache
 
     # The number of times reauthentication should be tried before failing.
-    option :authentication_retries, :default => 3
+    option :authentication_retries, default: 3
 
     # Set to true if you want responses from Salesforce to be gzip compressed.
     option :compress
@@ -125,10 +131,10 @@ module Restforce
     option :timeout
 
     # Faraday adapter to use. Defaults to Faraday.default_adapter.
-    option :adapter, :default => lambda { Faraday.default_adapter }
+    option :adapter, default: lambda { Faraday.default_adapter }
 
     # TODO: Rename this to `SALESFORCE_PROXY_URI` in next major version
-    option :proxy_uri, :default => lambda { ENV['PROXY_URI'] }
+    option :proxy_uri, default: lambda { ENV['PROXY_URI'] }
 
     # A Proc that is called with the response body after a successful authentication.
     option :authentication_callback

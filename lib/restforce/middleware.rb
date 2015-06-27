@@ -13,7 +13,9 @@ module Restforce
     autoload :Gzip,           'restforce/middleware/gzip'
 
     def initialize(app, client, options)
-      @app, @client, @options = app, client, options
+      @app = app
+      @client = client
+      @options = options
     end
 
     # Internal: Proxy to the client.

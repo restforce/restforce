@@ -1,6 +1,5 @@
 module Restforce
   class Attachment < Restforce::SObject
-
     # Public: Returns the body of the attachment.
     #
     # Examples
@@ -12,12 +11,11 @@ module Restforce
       @client.get(super).body
     end
 
-  private
+    private
 
     def ensure_body
       return true if self.Body?
       raise 'You need to query the Body for the record first.'
     end
-
   end
 end
