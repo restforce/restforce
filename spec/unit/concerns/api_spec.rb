@@ -29,6 +29,42 @@ describe Restforce::Concerns::API do
     it { should eq ['foo'] }
   end
 
+  describe '.limits' do
+    subject { client.limits }
+
+    it 'returns the limits for an organization' do
+      limits = double('limits')
+      limits.stub(:body).and_return({})
+      client.should_receive(:api_get).with("limits").and_return(limits)
+      client.should_receive(:options).and_return(api_version: 29.0)
+      expect(client.limits).to eq({})
+    end
+
+    it "raises an exception if we aren't at version 29.0 or above" do
+      client.should_receive(:options).at_least(:once).and_return(api_version: 24.0)
+      expect { client.limits }.to raise_error(Restforce::APIVersionError)
+    end
+  end
+
+  describe '.explain' do
+    let(:soql)        { 'Select Id from Account' }
+    subject(:results) { client.explain(soql) }
+
+    it "returns an execute plan for this SOQL" do
+      plans = double("plans")
+      plans.stub(:body).and_return("plans" => [])
+      client.should_receive(:api_get).with("query", explain: soql).
+        and_return(plans)
+      client.should_receive(:options).and_return(api_version: 30.0)
+      expect(results).to eq("plans" => [])
+    end
+
+    it "raises an exception if we aren't at version 30.0 or above" do
+      client.should_receive(:options).at_least(:once).and_return(api_version: 24.0)
+      expect { results }.to raise_error(Restforce::APIVersionError)
+    end
+  end
+
   describe '.describe' do
     subject(:describe) { client.describe }
 
@@ -56,23 +92,35 @@ describe Restforce::Concerns::API do
   describe '.describe_layouts' do
     subject(:describe_layouts) { client.describe_layouts('Whizbang') }
 
-    it 'returns the layouts for the sobject' do
-      client.should_receive(:api_get).
-        with('sobjects/Whizbang/describe/layouts').
-        and_return(response)
-      expect(describe_layouts).to eq response.body
-    end
+    context "API version where describe_layouts is supported" do
+      before { client.should_receive(:options).and_return(api_version: 28.0) }
 
-    context 'when given the id of a layout' do
-      subject(:describe_layouts) do
-        client.describe_layouts('Whizbang', '012E0000000RHEp')
-      end
-
-      it 'returns the describe for the specified layout' do
+      it 'returns the layouts for the sobject' do
         client.should_receive(:api_get).
-          with('sobjects/Whizbang/describe/layouts/012E0000000RHEp').
+          with('sobjects/Whizbang/describe/layouts').
           and_return(response)
         expect(describe_layouts).to eq response.body
+      end
+
+      context 'when given the id of a layout' do
+        subject(:describe_layouts) do
+          client.describe_layouts('Whizbang', '012E0000000RHEp')
+        end
+
+        it 'returns the describe for the specified layout' do
+          client.should_receive(:api_get).
+            with('sobjects/Whizbang/describe/layouts/012E0000000RHEp').
+            and_return(response)
+          expect(describe_layouts).to eq response.body
+        end
+      end
+    end
+
+    context "an API version where describe_layouts is not supported" do
+      before { client.should_receive(:options).and_return(api_version: 24.0) }
+
+      it "raises a error" do
+        expect { describe_layouts }.to raise_error(Restforce::APIVersionError)
       end
     end
   end

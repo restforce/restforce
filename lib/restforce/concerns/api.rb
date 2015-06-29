@@ -55,6 +55,15 @@ module Restforce
         describe.collect { |sobject| sobject['name'] }
       end
 
+      # Public: Get info about limits in the connected organization
+      #
+      # Only available in version 29.0 and later of the Salesforce API.
+      #
+      # Returns an Array of String names for each SObject.
+      def limits
+        version_guard(29.0) { api_get("limits").body }
+      end
+
       # Public: Returns a detailed describe result for the specified sobject
       #
       # sobject - Stringish name of the sobject (default: nil).
@@ -82,7 +91,7 @@ module Restforce
       # specified sobject type, or URIs for layouts if the sobject has
       # multiple Record Types.
       #
-      # This resource was introduced in version 28.0.
+      # Only available in version 28.0 and later of the Salesforce API.
       #
       # Examples:
       #  # get the layouts for the sobject
@@ -95,10 +104,12 @@ module Restforce
       #
       # Returns the Hash representation of the describe_layouts result
       def describe_layouts(sobject, layout_id = nil)
-        if layout_id
-          api_get("sobjects/#{sobject}/describe/layouts/#{layout_id}").body
-        else
-          api_get("sobjects/#{sobject}/describe/layouts").body
+        version_guard(28.0) do
+          if layout_id
+            api_get("sobjects/#{sobject}/describe/layouts/#{layout_id}").body
+          else
+            api_get("sobjects/#{sobject}/describe/layouts").body
+          end
         end
       end
 
@@ -130,6 +141,24 @@ module Restforce
       def query(soql)
         response = api_get 'query', q: soql
         mashify? ? response.body : response.body['records']
+      end
+
+      # Public: Explain a SOQL query execution plan.
+      #
+      # Only available in version 30.0 and later of the Salesforce API.
+      #
+      # soql - A SOQL expression.
+      #
+      # Examples
+      #
+      #   # Find the names of all Accounts
+      #   client.explain('select Name from Account')
+      #
+      # Returns a Hash in the form {:plans => [Array of plan data]}
+      # See: https://www.salesforce.com/us/developer/docs/api_rest/Content/dome_query_expl
+      #      ain.htm
+      def explain(soql)
+        version_guard(30.0) { api_get("query", explain: soql).body }
       end
 
       # Public: Perform a SOSL search
@@ -363,6 +392,20 @@ module Restforce
       #   # => '/services/data/v24.0/sobjects'
       def api_path(path)
         "/services/data/v#{options[:api_version]}/#{path}"
+      end
+
+      # Internal: Ensures that the `api_version` set for the Restforce client is at least
+      # the provided version before performing a particular action
+      def version_guard(version)
+        if version.to_f <= options[:api_version].to_f
+          yield
+        else
+          raise APIVersionError, "You must set an `api_version` of at least #{version} " \
+                                 "to use this feature in the Salesforce API. Set the " \
+                                 "`api_version` option when configuring the client - " \
+                                 "see https://github.com/ejholmes/restforce/blob/master" \
+                                 "/README.md#api-versions"
+        end
       end
 
       # Internal: Errors that should be rescued from in non-bang methods

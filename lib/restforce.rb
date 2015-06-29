@@ -39,6 +39,7 @@ module Restforce
   Error               = Class.new(StandardError)
   AuthenticationError = Class.new(Error)
   UnauthorizedError   = Class.new(Error)
+  APIVersionError     = Class.new(Error)
 
   class << self
     # Alias for Restforce::Data::Client.new

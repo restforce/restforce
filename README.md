@@ -137,6 +137,28 @@ Restforce.configure do |config|
 end
 ```
 
+### API versions
+
+By default, the gem defaults to using version 26.0 (Winter '13) of the Salesforce API.
+Some more recent API endpoints will not be available without moving to a more recent
+version - if you're trying to use a method that is unavailable with your API version,
+Restforce will raise an `APIVersionError`.
+
+You can change the `api_version` setting from the default either on a per-client basis:
+
+```ruby
+client = Restforce.new api_version: "32.0" # ...
+```
+
+or, you may set it globally for Restofrce as a whole:
+
+```ruby
+Restforce.configure do |config|
+  config.api_version = "32.0"
+  # ...
+end
+```
+
 ### Bang! methods
 
 All the CRUD methods (`create`, `update`, `upsert`, `destroy`) have equivalent methods with
@@ -169,6 +191,19 @@ account.save
 account.destroy
 # => true
 ```
+
+### explain
+
+`explain` takes the same parameters as `query` and returns a query plan in JSON format.
+For the nitty-gritty details on the response meanings visit the
+[Salesforce Query Explain](https://developer.salesforce.com/docs/atlas.en-us.api_rest.meta/api_rest/dome_query_explain.htm) page.
+
+```ruby
+accounts = client.explain("select Id, Something__c from Account where Id = 'someid'")
+# => #<Restforce::Mash >
+```
+
+*Only available in version 30.0 and later of the Salesforce API.*
 
 ### find
 
@@ -257,6 +292,8 @@ client.describe_layouts('Account', '012E0000000RHEp')
 # => { ... }
 ```
 
+*Only available in version 28.0 and later of the Salesforce API.*
+
 ### picklist\_values
 
 
@@ -279,6 +316,22 @@ client.picklist_values('Automobile__c', 'Model__c', :valid_for => 'Honda')
 client.user_info
 # => #<Restforce::Mash active=true display_name="Chatty Sassy" email="user@example.com" ... >
 ```
+
+### limits
+
+`limits` returns the API limits for the currently connected organization. This includes information such as **Daily API calls** and **Daily Bulk API calls**. More information can be found on the
+[Salesforce Limits](https://developer.salesforce.com/docs/atlas.en-us.api_rest.meta/api_rest/resources_limits.htm) page.
+
+```ruby
+# Get the current limit info
+limits = client.limits
+# => #<Restforce::Mash >
+
+limits["DailyApiRequests"]
+# => {"Max"=>15000, "Remaining"=>14746}
+```
+
+*Only available in version 29.0 and later of the Salesforce API.*
 
 * * *
 
