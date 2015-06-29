@@ -1,3 +1,15 @@
+## 2.1.0 (Jun 29, 2015)
+
+* Added support for `query_all`, `explain` and `limits` API calls (which require a newer `api_version` than the default of 26.0) (@theSteveMitchell, @zenchild)
+* Added support for `recent` API call (@davebrace)
+* Changed `PROXY_URI` environment variable to `SALESFORCE_PROXY_URI` (with warning to `STDOUT` if the old variable is set) (@timrogers)
+* Implemented `version_guard` in `Restforce::Concerns::API` to standardise behaviour of API calls which require a particular version of the Salesforce API (@zenchild)
+* Fixed bug with construction of `Faraday::Error::ClientError` exceptions (@debussyman)
+* Added support for specifying SSL options to be passed to Faraday (@jonathanrico)
+* Added support for specifying a custom logger and log level (@ilyakatz)
+* Improved experience for contributors to the gem with bootstrapping process (@rafalchmiel)
+
+
 ## 2.0.0 (Jun 27, 2015)
 
 * Drop support for versions of Ruby earlier than 1.9.3, which were [end-of-lifed](https://www.ruby-lang.org/en/news/2014/07/01/eol-for-1-8-7-and-1-9-2/) long ago
