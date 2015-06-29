@@ -308,4 +308,25 @@ describe Restforce::Concerns::API do
       end
     end
   end
+
+  describe "#recent" do
+    let(:limit) { nil }
+    subject(:result) { client.recent(limit) }
+
+    context "given no limit is specified" do
+      it "returns the most recently viewed items for the logged-in user" do
+        client.should_receive(:api_get).with('recent').and_return(response)
+        expect(result).to eq response.body
+      end
+    end
+
+    context "given a limit is specified" do
+      let(:limit) { 10 }
+
+      it "returns up to the limit specified results" do
+        client.should_receive(:api_get).with('recent?limit=10').and_return(response)
+        expect(result).to eq response.body
+      end
+    end
+  end
 end
