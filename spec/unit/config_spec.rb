@@ -23,6 +23,7 @@ describe Restforce do
       its(:host)                   { should eq 'login.salesforce.com' }
       its(:authentication_retries) { should eq 3 }
       its(:adapter)                { should eq Faraday.default_adapter }
+      its(:ssl)                    { should eq({}) }
       [:username, :password, :security_token, :client_id, :client_secret,
        :oauth_token, :refresh_token, :instance_url, :compress, :timeout,
        :proxy_uri, :authentication_callback, :mashify].each do |attr|
@@ -55,7 +56,7 @@ describe Restforce do
   describe '#configure' do
     [:username, :password, :security_token, :client_id, :client_secret, :compress,
      :timeout, :oauth_token, :refresh_token, :instance_url, :api_version, :host, :mashify,
-     :authentication_retries, :proxy_uri, :authentication_callback].each do |attr|
+     :authentication_retries, :proxy_uri, :authentication_callback, :ssl].each do |attr|
       it "allows #{attr} to be set" do
         Restforce.configure do |config|
           config.send("#{attr}=", 'foobar')
