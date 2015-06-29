@@ -103,7 +103,7 @@ client = Restforce.new
 
 ### Proxy Support
 
-You can specify a HTTP proxy using the `proxy_uri` option, as follows, or by setting the `PROXY_URI` environment variable:
+You can specify a HTTP proxy using the `proxy_uri` option, as follows, or by setting the `SALESFORCE_PROXY_URI` environment variable:
 
 ```ruby
 client = Restforce.new :username => 'foo',

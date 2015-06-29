@@ -38,7 +38,7 @@ describe Restforce do
           'SALESFORCE_SECURITY_TOKEN' => 'foobar',
           'SALESFORCE_CLIENT_ID'      => 'client id',
           'SALESFORCE_CLIENT_SECRET'  => 'client secret',
-          'PROXY_URI'                 => 'proxy',
+          'SALESFORCE_PROXY_URI'      => 'proxy',
           'SALESFORCE_HOST'           => 'test.host.com' }.
         each { |var, value| ENV.stub(:[]).with(var).and_return(value) }
       end
