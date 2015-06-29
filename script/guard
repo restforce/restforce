@@ -3,7 +3,7 @@
 set -e
 
 echo "===> Bundling..."
-script/bootstrap --quiet
+script/bootstrap
 
 echo "===> Running Guard..."
 bundle exec guard

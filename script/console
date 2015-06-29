@@ -5,7 +5,7 @@ set -e
 dir=`pwd`
 
 echo "===> Bundling..."
-script/bootstrap --quiet
+script/bootstrap
 
 echo "===> Launching console..."
 bundle console

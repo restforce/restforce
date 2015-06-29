@@ -7,3 +7,6 @@ script/bootstrap --quiet
 
 echo "===> Running specs..."
 bundle exec rspec
+
+echo "===> Running Rubocop..."
+bundle exec rubocop
