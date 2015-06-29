@@ -7,6 +7,7 @@ Gem::Specification.new do |gem|
   gem.description   = %q{A lightweight ruby client for the Salesforce REST API.}
   gem.summary       = %q{A lightweight ruby client for the Salesforce REST API.}
   gem.homepage      = "https://github.com/ejholmes/restforce"
+  gem.license       = "MIT"
 
   gem.files         = `git ls-files`.split($\)
   gem.executables   = gem.files.grep(%r{^bin/}).map{ |f| File.basename(f) }
