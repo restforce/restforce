@@ -9,9 +9,9 @@ module Restforce
         raise Restforce::UnauthorizedError, message
       when 413
         raise Faraday::Error::ClientError.new("HTTP 413 - Request Entity Too Large",
-                                              env[:response])
+                                              response_values)
       when 400...600
-        raise Faraday::Error::ClientError.new(message, env[:response])
+        raise Faraday::Error::ClientError.new(message, response_values)
       end
     end
 
@@ -21,6 +21,14 @@ module Restforce
 
     def body
       JSON.parse(@env[:body])
+    end
+
+    def response_values
+      {
+        status: @env[:status],
+        headers: @env[:response_headers],
+        body: @env[:body]
+      }
     end
   end
 end
