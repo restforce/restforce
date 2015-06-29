@@ -338,6 +338,21 @@ module Restforce
         api_get(path).body
       end
 
+      # Public: Finds recently viewed items for the logged-in user.
+      #
+      # limit - An optional limit that specifies the maximum number of records to be
+      #         returned.
+      #         If this parameter is not specified, the default maximum number of records
+      #         returned is the maximum number of entries in RecentlyViewed, which is 200
+      #         records per object.
+      #
+      # Returns an array of the recently viewed Restforce::SObject records.
+      def recent(limit = nil)
+        path = limit ? "recent?limit=#{limit}" : "recent"
+
+        api_get(path).body
+      end
+
       private
 
       # Internal: Returns a path to an api endpoint
