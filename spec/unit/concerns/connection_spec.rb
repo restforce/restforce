@@ -12,6 +12,15 @@ describe Restforce::Concerns::Connection do
     it { should eq builder }
   end
 
+  describe "#connection_options" do
+    let(:options) { { ssl: { verify: false } } }
+    before { client.stub(options: options) }
+
+    it "picks up passed-in SSL options" do
+      expect(client.send(:connection_options)).to include(options)
+    end
+  end
+
   describe 'private #connection' do
     describe ':mashify option' do
       let(:options) { { adapter: Faraday.default_adapter } }
