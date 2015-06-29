@@ -249,7 +249,7 @@ client.describe('Account')
 
 ```ruby
 # Get layouts for an sobject type
-client.describe_layout('Account')
+client.describe_layouts('Account')
 # => { ... }
 
 # Get the details for a specific layout by its ID
