@@ -161,6 +161,30 @@ module Restforce
         version_guard(30.0) { api_get("query", explain: soql).body }
       end
 
+      # Public: Executes a SOQL query and returns the result.  Unlike the Query resource,
+      # QueryAll will return records that have been deleted because of a merge or delete.
+      # QueryAll will also return information about archived Task and Event records.
+      #
+      # Only available in version 29.0 and later of the Salesforce API.
+      #
+      # soql - A SOQL expression.
+      #
+      # Examples
+      #
+      #   # Find the names of all Accounts
+      #   client.query_all('select Name from Account').map(&:Name)
+      #   # => ['Foo Bar Inc.', 'Whizbang Corp']
+      #
+      # Returns a Restforce::Collection if Restforce.configuration.mashify is true.
+      # Returns an Array of Hash for each record in the result if
+      # Restforce.configuration.mashify is false.
+      def query_all(soql)
+        version_guard(29.0) do
+          response = api_get 'queryAll', q: soql
+          mashify? ? response.body : response.body['records']
+        end
+      end
+
       # Public: Perform a SOSL search
       #
       # sosl - A SOSL expression.

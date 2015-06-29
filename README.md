@@ -192,6 +192,16 @@ account.destroy
 # => true
 ```
 
+### query_all
+
+```ruby
+accounts = client.query_all("select Id, Something__c from Account where isDeleted = true")
+# => #<Restforce::Collection >
+
+query_all allows you to include results from your query that Salesforce hides in the default "query" method.  These include soft-deleted records and archived records (e.g. Task and Event records which are usually archived automatically after they are a year old).
+
+*Only available in [version 29.0](#api-versions) and later of the Salesforce API.*
+
 ### explain
 
 `explain` takes the same parameters as `query` and returns a query plan in JSON format.
@@ -203,7 +213,7 @@ accounts = client.explain("select Id, Something__c from Account where Id = 'some
 # => #<Restforce::Mash >
 ```
 
-*Only available in version 30.0 and later of the Salesforce API.*
+*Only available in [version 30.0](#api-versions) and later of the Salesforce API.*
 
 ### find
 
@@ -292,7 +302,7 @@ client.describe_layouts('Account', '012E0000000RHEp')
 # => { ... }
 ```
 
-*Only available in version 28.0 and later of the Salesforce API.*
+*Only available in [version 28.0](#api-versions) and later of the Salesforce API.*
 
 ### picklist\_values
 
@@ -331,7 +341,7 @@ limits["DailyApiRequests"]
 # => {"Max"=>15000, "Remaining"=>14746}
 ```
 
-*Only available in version 29.0 and later of the Salesforce API.*
+*Only available in [version 29.0](#api-versions) and later of the Salesforce API.*
 
 * * *
 

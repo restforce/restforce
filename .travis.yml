@@ -10,3 +10,4 @@ gemfile:
   - Gemfile.travis
 script:
   - bundle exec rubocop
+  - bundle exec rspec spec
