@@ -164,6 +164,17 @@ account.destroy
 # => true
 ```
 
+### explain
+
+`explain` takes the same parameters as `query` and returns a query plan in JSON format.
+For the nitty-gritty details on the response meanings visit the
+[Salesforce Query Explain](https://developer.salesforce.com/docs/atlas.en-us.api_rest.meta/api_rest/dome_query_explain.htm) page.
+
+```ruby
+accounts = client.explain("select Id, Something__c from Account where Id = 'someid'")
+# => #<Restforce::Mash >
+```
+
 ### find
 
 ```ruby
@@ -274,6 +285,21 @@ client.picklist_values('Automobile__c', 'Model__c', :valid_for => 'Honda')
 client.user_info
 # => #<Restforce::Mash active=true display_name="Chatty Sassy" email="user@example.com" ... >
 ```
+
+### limits
+`limits` returns the API limits for the currently connected Organization. This includes information
+such as **Daily API calls** and **Daily Bulk API calls**. More information can be found on the
+[Salesforce Limits](https://developer.salesforce.com/docs/atlas.en-us.api_rest.meta/api_rest/resources_limits.htm) page.
+
+```ruby
+# Get the current limit info
+limits = client.limits
+# => #<Restforce::Mash >
+
+limits["DailyApiRequests"]
+# => {"Max"=>15000, "Remaining"=>14746}
+```
+
 
 * * *
 
