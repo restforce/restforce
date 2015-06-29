@@ -133,7 +133,6 @@ module Restforce
     # Faraday adapter to use. Defaults to Faraday.default_adapter.
     option :adapter, default: lambda { Faraday.default_adapter }
 
-    # TODO: Rename this to `SALESFORCE_PROXY_URI` in next major version
     option :proxy_uri, default: lambda { ENV['SALESFORCE_PROXY_URI'] }
 
     # A Proc that is called with the response body after a successful authentication.
