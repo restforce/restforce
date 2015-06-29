@@ -435,11 +435,19 @@ end
 
 ### Logging/Debugging/Instrumenting
 
-You can easily inspect what Restforce is sending/receiving by setting
-`Restforce.log = true`.
+You can easily inspect what Restforce is sending/receiving by enabling logging, either
+globally (as below) or on a per-client basis.
 
 ```ruby
 Restforce.log = true
+
+# Restforce will log to STDOUT with the `:debug` log level by default, or you can
+# optionally set your own logger and log level
+Restforce.configure do |config|
+  config.logger = Logger.new("/tmp/log/restforce.log")
+  config.log_level = :info
+end
+
 client = Restforce.new.query('select Id, Name from Account')
 ```
 

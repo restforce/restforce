@@ -32,7 +32,7 @@ module Restforce
 
     def log(message)
       return unless Restforce.log?
-      Restforce.configuration.logger.send :debug, message
+      configuration.logger.send(configuration.log_level, message)
     end
   end
 
@@ -142,9 +142,11 @@ module Restforce
     # Set SSL options
     option :ssl, default: {}
 
-    def logger
-      @logger ||= ::Logger.new STDOUT
-    end
+    # Set a logger for when Restforce.log is set to true, defaulting to STDOUT
+    option :logger, default: ::Logger.new(STDOUT)
+
+    # Set a log level for logging when Restforce.log is set to true, defaulting to :debug
+    option :log_level, default: :debug
 
     def options
       self.class.options
