@@ -11,3 +11,5 @@ gemfile:
 script:
   - bundle exec rubocop
   - bundle exec rspec spec
+sudo: false
+cache: bundler
