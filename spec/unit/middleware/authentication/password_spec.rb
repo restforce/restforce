@@ -7,7 +7,8 @@ describe Restforce::Middleware::Authentication::Password do
       password: 'bar',
       security_token: 'security_token',
       client_id: 'client_id',
-      client_secret: 'client_secret' }
+      client_secret: 'client_secret',
+      adapter: :net_http }
   end
 
   it_behaves_like 'authentication middleware' do
