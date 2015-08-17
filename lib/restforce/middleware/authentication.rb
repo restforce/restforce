@@ -52,7 +52,7 @@ module Restforce
                     Restforce.configuration.logger,
                     @options if Restforce.log?
 
-        builder.adapter Faraday.default_adapter
+        builder.adapter @options[:adapter]
       end
     end
 

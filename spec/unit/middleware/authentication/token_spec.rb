@@ -5,7 +5,8 @@ describe Restforce::Middleware::Authentication::Token do
     { host: 'login.salesforce.com',
       refresh_token: 'refresh_token',
       client_id: 'client_id',
-      client_secret: 'client_secret' }
+      client_secret: 'client_secret',
+      adapter: :net_http }
   end
 
   it_behaves_like 'authentication middleware' do

@@ -4,7 +4,8 @@ describe Restforce::Middleware::Authentication do
   let(:options) do
     { host: 'login.salesforce.com',
       proxy_uri: 'https://not-a-real-site.com',
-      authentication_retries: retries }
+      authentication_retries: retries,
+      adapter: :net_http }
   end
 
   describe '.authenticate!' do
@@ -67,6 +68,16 @@ describe Restforce::Middleware::Authentication do
         its(:handlers) {
           should include FaradayMiddleware::ParseJson,
                          Restforce::Middleware::Logger, Faraday::Adapter::NetHttp
+        }
+      end
+
+      context 'with specified adapter' do
+        before do
+          options[:adapter] = :typhoeus
+        end
+
+        its(:handlers) {
+          should include FaradayMiddleware::ParseJson, Faraday::Adapter::Typhoeus
         }
       end
     end
