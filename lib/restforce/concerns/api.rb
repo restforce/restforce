@@ -64,6 +64,12 @@ module Restforce
         version_guard(29.0) { api_get("limits").body }
       end
 
+      def get_updated(sobject, startDateTime, endDateTime)
+        startDateTime = startDateTime.utc.iso8601
+        endDateTime = endDateTime.utc.iso8601
+        api_get("/sobjects/#{sobject}/updated/?start=#{startDateTime}&end=#{endDateTime}").body
+      end
+
       # Public: Returns a detailed describe result for the specified sobject
       #
       # sobject - Stringish name of the sobject (default: nil).

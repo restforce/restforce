@@ -18,6 +18,19 @@ describe Restforce::Concerns::API do
       expect(user_info).to eq identity
     end
   end
+  
+  describe '.get_updated' do
+    let(:startDateTime){ Time.new(2002, 10, 31, 2, 2, 2, "+02:00")}
+    let(:endDateTime){ Time.new(2003, 10, 31, 2, 2, 2, "+02:00") }
+    let(:sobject)    { 'Whizbang' }
+    subject(:results) { client.get_updated(sobject, startDateTime, endDateTime) }
+      it 'returns the body' do
+        client.should_receive(:api_get).
+          with('/sobjects/Whizbang/updated/?start=2002-10-31T00:02:02Z&end=2003-10-31T00:02:02Z').
+          and_return(response)
+        expect(results).to eq response.body
+      end
+  end
 
   describe '.list_sobjects' do
     subject { client.list_sobjects }
