@@ -76,9 +76,7 @@ module Restforce
       # Returns an Array of Hash for each record in the result if
       # Restforce.configuration.mashify is false.
       def get_updated(sobject, startDateTime, endDateTime)
-        startDateTime = startDateTime.utc.iso8601
-        endDateTime = endDateTime.utc.iso8601
-        api_get("/sobjects/#{sobject}/updated/?start=#{startDateTime}&end=#{endDateTime}").body
+        api_get("/sobjects/#{sobject}/updated/?start=#{startDateTime.utc.iso8601}&end=#{endDateTime.utc.iso8601}").body
       end
 
       # Public: Returns a detailed describe result for the specified sobject
