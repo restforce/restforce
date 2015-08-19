@@ -34,6 +34,13 @@ shared_examples_for Restforce::AbstractClient do
     it { should be_an Enumerable }
   end
 
+  describe '.get_updated' do
+    requests 'something',
+            fixture: 'dd'
+    subject { client.get_updated('Whizbang', Time.now, Time.now) }
+    it { should be_an Enumerable }
+  end
+
   describe '.search' do
     requests 'search\?q=FIND%20%7Bbar%7D', fixture: 'sobject/search_success_response'
 
