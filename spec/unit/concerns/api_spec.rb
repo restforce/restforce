@@ -19,6 +19,22 @@ describe Restforce::Concerns::API do
     end
   end
 
+  describe '.get_updated' do
+    let(:start_date_time) { Time.new(2002, 10, 31, 2, 2, 2, "+02:00") }
+    let(:end_date_time) { Time.new(2003, 10, 31, 2, 2, 2, "+02:00") }
+    let(:sobject) { 'Whizbang' }
+    subject(:results) { client.get_updated(sobject, start_date_time, end_date_time) }
+    it 'returns the body' do
+      start_string = '2002-10-31T00:02:02Z'
+      end_string = '2003-10-31T00:02:02Z'
+      url = "/sobjects/Whizbang/updated/?start=#{start_string}&end=#{end_string}"
+      client.should_receive(:api_get).
+        with(url).
+        and_return(response)
+      expect(results).to eq response.body
+    end
+  end
+
   describe '.list_sobjects' do
     subject { client.list_sobjects }
 

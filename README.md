@@ -14,6 +14,7 @@ Features include:
 * Support for parent-to-child relationships.
 * Support for aggregate queries.
 * Support for the [Streaming API](#streaming)
+* Support for the GetUpdated API
 * Support for blob data types.
 * Support for GZIP compression.
 * Support for [custom Apex REST endpoints](#custom-apex-rest-endpoints).
@@ -343,6 +344,18 @@ limits["DailyApiRequests"]
 ```
 
 *Only available in [version 29.0](#api-versions) and later of the Salesforce API.*
+
+* * *
+
+### get_updated
+
+Retrieves the list of individual record IDs that have been updated (added or changed) within the given timespan for the specified object
+
+```ruby
+# Get the ids of all accounts which have been updated in the last day
+client.get_updated('Account', Time.local(2015,8,18) Time.local(2015,8,19))
+# => { ... }
+```
 
 * * *
 

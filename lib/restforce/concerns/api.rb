@@ -64,6 +64,26 @@ module Restforce
         version_guard(29.0) { api_get("limits").body }
       end
 
+      # Public: Gets the IDs of sobjects of type [sobject]
+      # which have changed between startDateTime and endDateTime.
+      #
+      # Examples
+      #
+      #   # get changes for sobject Whizbang between yesterday and today
+      #   startDate = Time.new(2002, 10, 31, 2, 2, 2, "+02:00")
+      #   endDate = Time.new(2002, 11, 1, 2, 2, 2, "+02:00")
+      #   client.get_updated('Whizbang', startDate, endDate)
+      #
+      # Returns a Restforce::Collection if Restforce.configuration.mashify is true.
+      # Returns an Array of Hash for each record in the result if
+      # Restforce.configuration.mashify is false.
+      def get_updated(sobject, start_time, end_time)
+        start_time = start_time.utc.iso8601
+        end_time = end_time.utc.iso8601
+        url = "/sobjects/#{sobject}/updated/?start=#{start_time}&end=#{end_time}"
+        api_get(url).body
+      end
+
       # Public: Returns a detailed describe result for the specified sobject
       #
       # sobject - Stringish name of the sobject (default: nil).
