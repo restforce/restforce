@@ -35,9 +35,10 @@ shared_examples_for Restforce::AbstractClient do
   end
 
   describe '.get_updated' do
-    requests 'something',
-            fixture: 'dd'
-    subject { client.get_updated('Whizbang', Time.now, Time.now) }
+    let(:startDate) { Time.new(2015, 8, 17, 0, 0, 0)  }
+    let(:endDate) { Time.new(2016, 8, 19) }
+    requests 'sobjects/Whizbang/updated/\?end=2016-08-19T05:00:00Z&start=2015-08-17T05:00:00Z', fixture: 'sobject/get_updated_success_response'
+    subject { client.get_updated('Whizbang', startDate, endDate) }
     it { should be_an Enumerable }
   end
 
