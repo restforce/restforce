@@ -1,3 +1,8 @@
+## 2.1.1 (Aug 20, 2015)
+
+* Added support for `get_updated` call (@web-connect)
+* Respect Faraday adapter option in authentication middleware (@stenlarsson)
+
 ## 2.1.0 (Jun 29, 2015)
 
 * Added support for `query_all`, `explain` and `limits` API calls (which require a newer `api_version` than the default of 26.0) (@theSteveMitchell, @zenchild)
