@@ -483,6 +483,8 @@ created/updated.
 
 _See also: [Force.com Streaming API docs](http://www.salesforce.com/us/developer/docs/api_streaming/index.htm)_
 
+*Note:* Restforce's streaming implementation is known to be compatible with version `0.8.9` of the faye gem.
+
 * * *
 
 ### Caching
