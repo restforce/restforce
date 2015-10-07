@@ -18,7 +18,7 @@ module Restforce
     end
 
     def use_cache?
-      !@options.key?(:use_cache) || @options[:use_cache]
+      @options.fetch(:use_cache, true)
     end
   end
 end

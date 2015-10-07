@@ -317,17 +317,20 @@ shared_examples_for Restforce::AbstractClient do
   end
 
   describe '.without_caching' do
-    requests 'query\?q=SELECT%20some,%20fields%20FROM%20object',
-             fixture: 'sobject/query_success_response'
-
-    before do
-      cache.should_receive(:delete).and_call_original
-      cache.should_receive(:fetch).and_call_original
-    end
-
     let(:cache) { MockCache.new }
-    subject { client.without_caching { client.query('SELECT some, fields FROM object') } }
-    it { should be_an Enumerable }
+
+    it 'deletes the cached value before querying the API' do
+      stub = stub_api_request(
+        'query\?q=SELECT%20some,%20fields%20FROM%20object',
+        fixture: 'sobject/query_success_response'
+      )
+      client.query('SELECT some, fields FROM object')
+
+      expect(cache).to receive(:delete).and_call_original.ordered
+      expect(cache).to receive(:read).and_call_original.ordered
+      client.without_caching { client.query('SELECT some, fields FROM object') }
+      expect(stub).to have_been_requested.twice
+    end
   end
 
   describe 'authentication retries' do
