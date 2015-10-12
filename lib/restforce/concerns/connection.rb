@@ -38,14 +38,14 @@ module Restforce
           builder.use      Restforce::Middleware::Authorization, self, options
           # Ensures the instance url is set.
           builder.use      Restforce::Middleware::InstanceURL, self, options
-          # Parses returned JSON response into a hash.
-          builder.response :json, content_type: /\bjson$/
           # Caches GET requests.
           builder.use      Restforce::Middleware::Caching, cache, options if cache
           # Follows 30x redirects.
           builder.use      FaradayMiddleware::FollowRedirects
           # Raises errors for 40x responses.
           builder.use      Restforce::Middleware::RaiseError
+          # Parses returned JSON response into a hash.
+          builder.response :json, content_type: /\bjson$/
           # Log request/responses
           builder.use      Restforce::Middleware::Logger,
                            Restforce.configuration.logger,

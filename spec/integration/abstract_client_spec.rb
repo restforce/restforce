@@ -100,13 +100,22 @@ shared_examples_for Restforce::AbstractClient do
                status: 404,
                fixture: 'sobject/delete_error_response'
 
+      let(:error) do
+        JSON.parse(fixture('sobject/delete_error_response'))
+      end
+
       subject do
         lambda do
           client.update!('Account', Id: '001D000000INjVe', Name: 'Foobar')
         end
       end
 
-      it { should raise_error Faraday::Error::ResourceNotFound }
+      it {
+        should raise_error(
+          Faraday::Error::ResourceNotFound,
+          "#{error.first['errorCode']}: #{error.first['message']}"
+        )
+      }
     end
   end
 
