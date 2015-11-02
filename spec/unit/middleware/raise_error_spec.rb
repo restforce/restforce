@@ -1,7 +1,7 @@
 require 'spec_helper'
 
 describe Restforce::Middleware::RaiseError do
-  let(:body)       { fixture('sobject/query_error_response') }
+  let(:body)       { JSON.parse(fixture('sobject/query_error_response')) }
   let(:env)        { { status: status, body: body } }
   let(:middleware) { described_class.new app }
 
@@ -37,11 +37,20 @@ describe Restforce::Middleware::RaiseError do
 
     context 'when the status code is 413' do
       let(:status) { 413 }
-      let(:body) { '' } # Zero length response
 
       it "raises an error" do
         expect { on_complete }.to raise_error Faraday::Error::ClientError,
                                               'HTTP 413 - Request Entity Too Large'
+      end
+    end
+
+    context 'when status is 400+ and body is a string' do
+      let(:body)   { 'An error occured' }
+      let(:status) { 404 }
+
+      it 'raises an error with a non-existing error code' do
+        expect { on_complete }.to raise_error Faraday::Error::ClientError,
+                                              "(error code missing): #{body}"
       end
     end
   end

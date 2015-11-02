@@ -16,11 +16,18 @@ module Restforce
     end
 
     def message
-      "#{body.first['errorCode']}: #{body.first['message']}"
+      "#{body['errorCode']}: #{body['message']}"
     end
 
     def body
-      JSON.parse(@env[:body])
+      @body = (@env[:body].respond_to?(:first) ? @env[:body].first : @env[:body])
+
+      case @body
+      when Hash
+        @body
+      else
+        { 'errorCode' => '(error code missing)', 'message' => @body }
+      end
     end
 
     def response_values
