@@ -3,6 +3,14 @@ class MockCache
     @storage = {}
   end
 
+  def read(key)
+    @storage[key]
+  end
+
+  def write(key, value)
+    @storage[key] = value
+  end
+
   def fetch(key, &block)
     @storage[key] ||= block.call
   end
