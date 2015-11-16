@@ -116,7 +116,7 @@ client = Restforce.new :username => 'foo',
   :proxy_uri      => 'http://proxy.example.com:123'
 ```
 
-You may specify a username and password for the proxy with a URL along the lines of 'http://user@password:proxy.example.com:123'.
+You may specify a username and password for the proxy with a URL along the lines of 'http://user:password@proxy.example.com:123'.
 
 #### Sandbox Orgs
 
