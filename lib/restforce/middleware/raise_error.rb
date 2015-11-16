@@ -20,7 +20,7 @@ module Restforce
     end
 
     def body
-      @body = (@env[:body].respond_to?(:first) ? @env[:body].first : @env[:body])
+      @body = (@env[:body].is_a?(Array) ? @env[:body].first : @env[:body])
 
       case @body
       when Hash
