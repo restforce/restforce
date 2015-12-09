@@ -61,20 +61,40 @@ It is also important to note that the client object should not be reused across 
 #### OAuth token authentication
 
 ```ruby
-client = Restforce.new :oauth_token => 'oauth token',
+client = Restforce.new :oauth_token => 'access_token',
   :instance_url  => 'instance url'
 ```
 
-Although the above will work, you'll probably want to take advantage of the
-(re)authentication middleware by specifying a `refresh_token`, `client_id` and `client_secret`:
+Although the above will work, you'll probably want to take advantage of the (re)authentication middleware by specifying `refresh_token`, `client_id`, `client_secret`, and `authentication_callback`:
 
 ```ruby
-client = Restforce.new :oauth_token => 'oauth token',
-  :refresh_token => 'refresh token',
-  :instance_url  => 'instance url',
-  :client_id     => 'client_id',
-  :client_secret => 'client_secret'
+client = Restforce.new :oauth_token => 'access_token',
+  :refresh_token           => 'refresh token',
+  :instance_url            => 'instance url',
+  :client_id               => 'client_id',
+  :client_secret           => 'client_secret',
+  :authentication_callback => Proc.new {|x| Rails.logger.debug x.to_s}
 ```
+
+The middleware will use the `refresh_token` automatically to acquire a new `access_token` if the existing `access_token` is invalid.
+
+`authentication_callback` is a proc that handles the response from Salesforce when the `refresh_token` is used to obtain a new `access_token`. This allows the `access_token` to be saved for re-use later, otherwise subsequent API calls will continue the cycle of "auth failure/issue new access_token/auth success".
+
+The proc is passed one argument, a `Hashie::Mash` of the response from the [Salesforce API](https://developer.salesforce.com/docs/atlas.en-us.api_rest.meta/api_rest/intro_understanding_refresh_token_oauth.htm):
+
+```ruby
+{
+    "access_token" => "00Dx0000000BV7z!AR8AQP0jITN80ESEsj5EbaZTFG0RNBaT1cyWk7T5rqoDjoNIWQ2ME_sTZzBjfmOE6zMHq6y8PIW4eWze9JksNEkWUl.Cju7m4",
+       "signature" => "SSSbLO/gBhmmyNUvN18ODBDFYHzakxOMgqYtu+hDPsc=",
+           "scope" => "refresh_token full",
+    "instance_url" => "https://na1.salesforce.com",
+              "id" => "https://login.salesforce.com/id/00Dx0000000BV7z/005x00000012Q9P",
+      "token_type" => "Bearer",
+       "issued_at" => "1278448384422"
+}
+```
+
+The `id` field can be used to [uniquely identify](https://developer.salesforce.com/docs/atlas.en-us.api_rest.meta/api_rest/intro_understanding_refresh_token_oauth.htm) the user that the `access_token` and `refresh_token` belong to.
 
 #### Username/Password authentication
 
