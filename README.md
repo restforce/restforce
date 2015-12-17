@@ -219,6 +219,7 @@ account.destroy
 ```ruby
 accounts = client.query_all("select Id, Something__c from Account where isDeleted = true")
 # => #<Restforce::Collection >
+```
 
 query_all allows you to include results from your query that Salesforce hides in the default "query" method.  These include soft-deleted records and archived records (e.g. Task and Event records which are usually archived automatically after they are a year old).
 
