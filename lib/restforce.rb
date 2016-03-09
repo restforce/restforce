@@ -37,6 +37,7 @@ module Restforce
   end
 
   Error               = Class.new(StandardError)
+  ServerError         = Class.new(Error)
   AuthenticationError = Class.new(Error)
   UnauthorizedError   = Class.new(Error)
   APIVersionError     = Class.new(Error)

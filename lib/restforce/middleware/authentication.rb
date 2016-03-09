@@ -22,7 +22,9 @@ module Restforce
         req.body = encode_www_form(params)
       end
 
-      if response.status != 200
+      if response.status >= 500
+        raise Restforce::ServerError, error_message(response)
+      elsif response.status != 200
         raise Restforce::AuthenticationError, error_message(response)
       end
 
