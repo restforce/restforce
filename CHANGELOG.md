@@ -1,3 +1,8 @@
+## 2.1.3 (Mar 9, 2016)
+
+* Raise a `Restforce::ServerError` when Salesforce responds with a `500` due to an internal error (@greysteil)
+* Improving handling of response body in errors (@kuono)
+
 ## 2.1.2 (Nov 2, 2015)
 
 * Always parse the JSON response before errors are raised to improve exceptions (@kouno)
