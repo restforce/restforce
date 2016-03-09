@@ -374,7 +374,7 @@ Retrieves the list of individual record IDs that have been updated (added or cha
 
 ```ruby
 # Get the ids of all accounts which have been updated in the last day
-client.get_updated('Account', Time.local(2015,8,18) Time.local(2015,8,19))
+client.get_updated('Account', Time.local(2015,8,18), Time.local(2015,8,19))
 # => { ... }
 ```
 
