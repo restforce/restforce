@@ -1,3 +1,7 @@
+## 2.1.2 (Nov 2, 2015)
+
+* Always parse the JSON response before errors are raised to improve exceptions (@kouno)
+
 ## 2.1.1 (Aug 20, 2015)
 
 * Added support for `get_updated` call (@web-connect)
