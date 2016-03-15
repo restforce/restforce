@@ -344,7 +344,11 @@ module Restforce
         response = api_patch "sobjects/#{sobject}/#{field}/#{external_id}",
                              attrs_without_field
 
-        (response.body && response.body['id']) ? response.body['id'] : true
+        if response.body.class == Array
+          raise Restforce::ServerError, "Conflicting resources (#{response.body})."
+        else
+          (response.body && response.body['id']) ? response.body['id'] : true
+        end
       end
 
       # Public: Delete a record.
