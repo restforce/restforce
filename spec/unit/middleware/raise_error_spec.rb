@@ -17,6 +17,15 @@ describe Restforce::Middleware::RaiseError do
       end
     end
 
+    context 'when the status code is 300' do
+      let(:status) { 300 }
+
+      it "raises an error" do
+        expect { on_complete }.to raise_error Faraday::Error::ClientError,
+                                              /300: The external ID provided/
+      end
+    end
+
     context 'when the status code is 400' do
       let(:status) { 400 }
 

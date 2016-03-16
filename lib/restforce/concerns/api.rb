@@ -315,7 +315,8 @@ module Restforce
       #
       # Returns true if the record was found and updated.
       # Returns the Id of the newly created record if the record was created.
-      # Returns false if something bad happens.
+      # Returns false if something bad happens (for example if the external ID matches
+      # multiple resources).
       def upsert(*args)
         upsert!(*args)
       rescue *exceptions
@@ -335,7 +336,9 @@ module Restforce
       #
       # Returns true if the record was found and updated.
       # Returns the Id of the newly created record if the record was created.
-      # Raises an exception if an error is returned from Salesforce.
+      # Raises an exception if an error is returned from Salesforce, including the 300
+      # error returned if the external ID provided matches multiple records (in which
+      # case the conflicting IDs can be found by looking at the response on the error)
       def upsert!(sobject, field, attrs)
         external_id = attrs.
           fetch(attrs.keys.find { |k, v| k.to_s.downcase == field.to_s.downcase }, nil)
