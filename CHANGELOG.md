@@ -1,3 +1,8 @@
+## 2.2.0 (Mar 16, 2016)
+
+* Raise a `Faraday::Error::ClientError` for `300` responses triggered by a conflicting external ID, providing access to the response, which contains an array of the conflicting IDs (@timrogers, @michaelminter)
+* Improve the consistency of `Faraday::Error::ClientError`s raised, so they all have a message with the same format (@timrogers)
+
 ## 2.1.3 (Mar 9, 2016)
 
 * Raise a `Restforce::ServerError` when Salesforce responds with a `500` due to an internal error (@greysteil)
