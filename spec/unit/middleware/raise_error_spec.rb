@@ -49,7 +49,7 @@ describe Restforce::Middleware::RaiseError do
 
       it "raises an error" do
         expect { on_complete }.to raise_error Faraday::Error::ClientError,
-                                              'HTTP 413 - Request Entity Too Large'
+                                              '413: Request Entity Too Large'
       end
     end
 
