@@ -328,6 +328,23 @@ describe Restforce::Concerns::API do
     end
   end
 
+  describe '.upsert! with multi bytes character' do
+    let(:sobject)    { 'Whizbang' }
+    let(:field)      { :External_ID__c }
+    let(:attrs)      { { 'External_ID__c' => "\u{3042}" } }
+    subject(:result) { client.upsert!(sobject, field, attrs) }
+
+    context 'when the record is found and updated' do
+      it 'returns true' do
+        response.body.stub :[]
+        client.should_receive(:api_patch).
+          with('sobjects/Whizbang/External_ID__c/%E3%81%82', {}).
+          and_return(response)
+        expect(result).to be_true
+      end
+    end
+  end
+
   describe '.destroy!' do
     let(:id)         { '1234' }
     let(:sobject)    { 'Whizbang' }
