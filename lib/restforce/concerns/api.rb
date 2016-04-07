@@ -1,3 +1,4 @@
+require 'uri'
 require 'restforce/concerns/verbs'
 
 module Restforce
@@ -344,7 +345,7 @@ module Restforce
           fetch(attrs.keys.find { |k, v| k.to_s.downcase == field.to_s.downcase }, nil)
         attrs_without_field = attrs.
           reject { |k, v| k.to_s.downcase == field.to_s.downcase }
-        response = api_patch "sobjects/#{sobject}/#{field}/#{external_id}",
+        response = api_patch "sobjects/#{sobject}/#{field}/#{URI.encode(external_id)}",
                              attrs_without_field
 
         (response.body && response.body['id']) ? response.body['id'] : true
