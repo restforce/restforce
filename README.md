@@ -56,7 +56,7 @@ If you're using the gem to interact with a single org (maybe you're building som
 salesforce integration internally?) then you should use the username/password
 authentication method.
 
-It is also important to note that the client object should not be reused across different threads, otherwise you may encounter thread-safety issues.
+It is also important to note that the client object should not be reused across different threads, otherwise you may encounter [thread-safety issues](https://www.youtube.com/watch?v=p5zQOkyCACc).
 
 #### OAuth token authentication
 
