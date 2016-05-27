@@ -1,0 +1,11 @@
+{
+    "deletedRecords" :
+    [
+        {
+            "id" : "a00D0000008pQRAIA2",
+            "deletedDate" : "2013-05-07T22:07:19.000+0000"
+        }
+    ],
+    "earliestDateAvailable" : "2013-05-03T15:57:00.000+0000",
+    "latestDateCovered" : "2013-05-08T21:20:00.000+0000"
+}
