@@ -172,7 +172,7 @@ You can change the `api_version` setting from the default either on a per-client
 client = Restforce.new api_version: "32.0" # ...
 ```
 
-or, you may set it globally for Restofrce as a whole:
+or, you may set it globally for Restforce as a whole:
 
 ```ruby
 Restforce.configure do |config|
