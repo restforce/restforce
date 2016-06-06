@@ -380,6 +380,18 @@ client.get_updated('Account', Time.local(2015,8,18), Time.local(2015,8,19))
 
 * * *
 
+### get_deleted
+
+Retrieves the list of IDs and time of deletion for records that have been deleted within the given timespan for the specified object
+
+```ruby
+# Get the list of accounts which have been deleted in the last day
+client.get_deleted('Account', Time.local(2015,8,18), Time.local(2015,8,19))
+# => { ... }
+```
+
+* * *
+
 ### authenticate!
 
 Performs an authentication and returns the response. In general, calling this
