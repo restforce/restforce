@@ -1,3 +1,7 @@
+## 2.2.1 (Jun 6, 2016)
+
+* Added support for `get_deleted` call (@adambird)
+
 ## 2.2.0 (Mar 16, 2016)
 
 * Raise a `Faraday::Error::ClientError` for `300` responses triggered by a conflicting external ID, providing access to the response, which contains an array of the conflicting IDs (@timrogers, @michaelminter)
