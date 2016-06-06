@@ -420,7 +420,7 @@ Using the new [Blob Data](http://www.salesforce.com/us/developer/docs/api_rest/C
 client.create 'Document', FolderId: '00lE0000000FJ6H',
   Description: 'Document test',
   Name: 'My image',
-  Body: Restforce::UploadIO.new(File.expand_path('image.jpg', __FILE__), 'image/jpeg'))
+  Body: Restforce::UploadIO.new(File.expand_path('image.jpg', __FILE__), 'image/jpeg')
 ```
 
 Using base64 encoded data (37.5mb limit):
