@@ -395,7 +395,7 @@ module Restforce
       #
       # Returns the Restforce::SObject sobject record.
       def find(sobject, id, field = nil)
-        url = field ? "sobjects/#{sobject}/#{field}/#{id}" : "sobjects/#{sobject}/#{id}"
+        url = field ? "sobjects/#{sobject}/#{field}/#{URI.encode(id)}" : "sobjects/#{sobject}/#{id}"
         api_get(url).body
       end
 
@@ -409,7 +409,7 @@ module Restforce
       # field   - External ID field to use (default: nil).
       #
       def select(sobject, id, select, field = nil)
-        path = field ? "sobjects/#{sobject}/#{field}/#{id}" : "sobjects/#{sobject}/#{id}"
+        path = field ? "sobjects/#{sobject}/#{field}/#{URI.encode(id)}" : "sobjects/#{sobject}/#{id}"
         path << "?fields=#{select.join(',')}" if select && select.any?
 
         api_get(path).body
