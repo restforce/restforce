@@ -344,6 +344,23 @@ describe Restforce::Concerns::API do
     end
   end
 
+  describe '.upsert! with multi bytes character' do
+    let(:sobject)    { 'Whizbang' }
+    let(:field)      { :External_ID__c }
+    let(:attrs)      { { 'External_ID__c' => "\u{3042}" } }
+    subject(:result) { client.upsert!(sobject, field, attrs) }
+
+    context 'when the record is found and updated' do
+      it 'returns true' do
+        response.body.stub :[]
+        client.should_receive(:api_patch).
+          with('sobjects/Whizbang/External_ID__c/%E3%81%82', {}).
+          and_return(response)
+        expect(result).to be_true
+      end
+    end
+  end
+
   describe '.destroy!' do
     let(:id)         { '1234' }
     let(:sobject)    { 'Whizbang' }
@@ -377,6 +394,17 @@ describe Restforce::Concerns::API do
       it 'returns the full representation of the object' do
         client.should_receive(:api_get).
           with('sobjects/Whizbang/External_ID__c/1234').
+          and_return(response)
+        expect(result).to eq response.body
+      end
+    end
+
+    context 'when an external id which contains multibyte characters is specified' do
+      let(:field) { :External_ID__c }
+      let(:id)    { "\u{3042}" }
+      it 'returns the full representation of the object' do
+        client.should_receive(:api_get).
+          with('sobjects/Whizbang/External_ID__c/%E3%81%82').
           and_return(response)
         expect(result).to eq response.body
       end
@@ -425,6 +453,28 @@ describe Restforce::Concerns::API do
         it 'returns the full representation of the object' do
           client.should_receive(:api_get).
             with('sobjects/Whizbang/External_ID__c/1234?fields=External_ID__c').
+            and_return(response)
+          expect(result).to eq response.body
+        end
+      end
+    end
+
+    context 'when an external id which contains multibyte characters is specified' do
+      let(:field) { :External_ID__c }
+      let(:id) { "\u{3042}" }
+      context 'when no select list is specified' do
+        it 'returns the full representation of the object' do
+          client.should_receive(:api_get).
+            with('sobjects/Whizbang/External_ID__c/%E3%81%82').
+            and_return(response)
+          expect(result).to eq response.body
+        end
+      end
+      context 'when select list is specified' do
+        let(:select) { [:External_ID__c] }
+        it 'returns the full representation of the object' do
+          client.should_receive(:api_get).
+            with('sobjects/Whizbang/External_ID__c/%E3%81%82?fields=External_ID__c').
             and_return(response)
           expect(result).to eq response.body
         end
