@@ -10,20 +10,21 @@ module Restforce
       def batch(halt_on_error: false, &block)
         subrequests = Subrequests.new(options)
         yield(subrequests)
-        properties = {
-          batchRequests: subrequests.requests,
-          haltOnError: halt_on_error
-        }
-        response = api_post('composite/batch', properties.to_json)
-        body = response.body
-        if halt_on_error && body['hasErrors']
+        subrequests.requests.each_slice(25).map do |requests|
+          properties = {
+            batchRequests: requests,
+            haltOnError: halt_on_error
+          }
+          response = api_post('composite/batch', properties.to_json)
+          body = response.body
           results = body['results']
-          last_error_index = results.rindex { |result| result['statusCode'] != 412 }
-          last_error = results[last_error_index]
-          raise BatchAPIError, last_error['result'][0]['errorCode']
-        else
-          response
-        end
+          if halt_on_error && body['hasErrors']
+            last_error_index = results.rindex { |result| result['statusCode'] != 412 }
+            last_error = results[last_error_index]
+            raise BatchAPIError, last_error['result'][0]['errorCode']
+          end
+          results.map(&:compact)
+        end.flatten
       end
 
       def batch!(&block)

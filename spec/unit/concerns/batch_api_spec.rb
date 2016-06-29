@@ -62,14 +62,14 @@ describe Restforce::Concerns::BatchAPI do
   describe '#batch' do
     let(:method) { :batch }
     let(:halt_on_error) { false }
-    let(:response) { double('Faraday::Response', body: double('Body')) }
+    let(:response) { double('Faraday::Response', body: {'results' => []}) }
     it_behaves_like 'batched requests'
   end
 
   describe '#batch!' do
     let(:method) { :batch! }
     let(:halt_on_error) { true }
-    let(:response) { double('Faraday::Response', body: {'hasErrors' => false}) }
+    let(:response) { double('Faraday::Response', body: {'hasErrors' => false, 'results' => []}) }
     it_behaves_like 'batched requests'
   end
 end
