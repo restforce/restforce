@@ -7,6 +7,7 @@ describe Restforce do
     ENV['SALESFORCE_SECURITY_TOKEN'] = nil
     ENV['SALESFORCE_CLIENT_ID']      = nil
     ENV['SALESFORCE_CLIENT_SECRET']  = nil
+    ENV['SALESFORCE_API_VERSION']    = nil
   end
 
   after do
@@ -39,7 +40,8 @@ describe Restforce do
           'SALESFORCE_CLIENT_ID'      => 'client id',
           'SALESFORCE_CLIENT_SECRET'  => 'client secret',
           'SALESFORCE_PROXY_URI'      => 'proxy',
-          'SALESFORCE_HOST'           => 'test.host.com' }.
+          'SALESFORCE_HOST'           => 'test.host.com',
+          'SALESFORCE_API_VERSION'    => '37.0' }.
         each { |var, value| ENV.stub(:[]).with(var).and_return(value) }
       end
 
@@ -50,6 +52,7 @@ describe Restforce do
       its(:client_secret)  { should eq 'client secret' }
       its(:proxy_uri)      { should eq 'proxy' }
       its(:host)           { should eq 'test.host.com' }
+      its(:api_version)    { should eq '37.0' }
     end
   end
 
