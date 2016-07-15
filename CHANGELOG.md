@@ -1,4 +1,4 @@
-# 2.3.0 (Jul 15, 2016)
+## 2.3.0 (Jul 15, 2016)
 
 * Allow the Salesforce API version to be specified with a `SALESFORCE_API_VERSION` environment variable (@jhelbig)
 
