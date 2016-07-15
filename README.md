@@ -39,6 +39,8 @@ Or install it yourself as:
 
 __As of [version 2.0.0](https://github.com/ejholmes/restforce/blob/master/CHANGELOG.md#200-jun-27-2015), this gem is only compatible with Ruby 1.9.3 and later.__ To use Ruby 1.9.2 and below, you'll need to manually specify that you wish to use version 1.5.3.
 
+This gem is versioned using [Semantic Versioning](http://semver.org/), so you can be confident when updating that there will not be breaking changes outside of a major version (following format MAJOR.MINOR.PATCH, so for instance moving from 2.3.0 to 3.0.0 would be allowed to include incompatible API changes). See the [changelog](https://github.com/ejholmes/restforce/tree/master/CHANGELOG.md) for details on what has changed in each version.
+
 ## Usage
 
 Restforce is designed with flexibility and ease of use in mind. By default, all API calls will
