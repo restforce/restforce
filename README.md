@@ -108,8 +108,8 @@ client = Restforce.new :username => 'foo',
   :client_secret  => 'client_secret'
 ```
 
-You can also set the username, password, security token, client ID and client
-secret in environment variables:
+You can also set the username, password, security token, client ID, client
+secret and API version in environment variables:
 
 ```bash
 export SALESFORCE_USERNAME="username"
@@ -117,6 +117,7 @@ export SALESFORCE_PASSWORD="password"
 export SALESFORCE_SECURITY_TOKEN="security token"
 export SALESFORCE_CLIENT_ID="client id"
 export SALESFORCE_CLIENT_SECRET="client secret"
+export SALESFORCE_API_VERSION="37.0"
 ```
 
 ```ruby

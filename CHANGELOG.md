@@ -1,6 +1,12 @@
+# 2.3.0 (Jul 15, 2016)
+
+* Allow the Salesforce API version to be specified with a `SALESFORCE_API_VERSION` environment variable (@jhelbig)
+
 ## 2.2.1 (Jun 6, 2016)
 
 * Added support for `get_deleted` call (@adambird)
+
+*(This should have been a minor version rather than a patch version, following format MAJOR.MINOR.PATCH, since we use [Semantic Versioning](http://semver.org/) and this adds functionality. Sorry! @timrogers)*
 
 ## 2.2.0 (Mar 16, 2016)
 
