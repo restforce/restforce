@@ -26,6 +26,11 @@ describe Restforce::Mash do
         let(:input) { { 'attributes' => { 'type' => 'Attachment' } } }
         it { should eq Restforce::Attachment }
       end
+
+      context 'when the sobject type is a Document' do
+        let(:input) { { 'attributes' => { 'type' => 'Document' } } }
+        it { should eq Restforce::Document }
+      end
     end
 
     context 'else' do
