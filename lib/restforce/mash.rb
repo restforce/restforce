@@ -24,7 +24,7 @@ module Restforce
           # of sobject records.
           Restforce::Collection
         elsif val.key? 'attributes'
-          case(val['attributes']['type'])
+          case (val['attributes']['type'])
           when /^Attachment$/
             Restforce::Attachment
           when /^Document$/
