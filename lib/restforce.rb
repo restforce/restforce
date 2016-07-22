@@ -11,6 +11,7 @@ module Restforce
   autoload :Collection,     'restforce/collection'
   autoload :Middleware,     'restforce/middleware'
   autoload :Attachment,     'restforce/attachment'
+  autoload :Document,       'restforce/document'
   autoload :UploadIO,       'restforce/upload_io'
   autoload :SObject,        'restforce/sobject'
   autoload :Client,         'restforce/client'
