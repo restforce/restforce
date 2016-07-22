@@ -439,13 +439,19 @@ _See also: [Inserting or updating blob data](http://www.salesforce.com/us/develo
 
 * * *
 
-### Downloading Attachments
+### Downloading Attachments and Documents
 
-Restforce also makes it incredibly easy to download Attachments:
+Restforce also makes it incredibly easy to download Attachments or Documents:
 
+##### Attachments
 ```ruby
 attachment = client.query('select Id, Name, Body from Attachment').first
 File.open(attachment.Name, 'wb') { |f| f.write(attachment.Body) }
+```
+##### Documents
+```ruby
+document = client.query('select Id, Name, Body from Document').first
+File.open(document.Name, 'wb') { |f| f.write(document.Body) }
 ```
 
 * * *
