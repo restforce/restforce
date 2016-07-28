@@ -25,9 +25,9 @@ module Restforce
           Restforce::Collection
         elsif val.key? 'attributes'
           case (val['attributes']['type'])
-          when /^Attachment$/
+          when "Attachment"
             Restforce::Attachment
-          when /^Document$/
+          when "Document"
             Restforce::Document
           else
             # When the hash contains an attributes key, it should be considered an
