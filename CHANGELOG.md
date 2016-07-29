@@ -1,3 +1,12 @@
+## 2.3.x (Jul 22, 2016)
+
+* Added ability to download documents (@jhelbig)
+
+    Example
+
+        document = client.query('select Id, Name, Body from Document').first
+        File.open(document.Name, 'wb') { |f| f.write(document.Body) }
+
 ## 2.3.0 (Jul 15, 2016)
 
 * Allow the Salesforce API version to be specified with a `SALESFORCE_API_VERSION` environment variable (@jhelbig)
