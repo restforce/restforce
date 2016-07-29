@@ -1,11 +1,6 @@
-## 2.3.x (Jul 22, 2016)
+## 2.4.0 (Jul 29, 2016)
 
-* Added ability to download documents (@jhelbig)
-
-    Example
-
-        document = client.query('select Id, Name, Body from Document').first
-        File.open(document.Name, 'wb') { |f| f.write(document.Body) }
+* Added ability to download documents attached to records, behaving like attachments (@jhelbig)
 
 ## 2.3.0 (Jul 15, 2016)
 
