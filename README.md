@@ -4,8 +4,6 @@
 ![](https://img.shields.io/gem/dt/restforce.svg)
 
 Restforce is a ruby gem for the [Salesforce REST api](http://www.salesforce.com/us/developer/docs/api_rest/index.htm).
-It's meant to be a lighter weight alternative to the [databasedotcom gem](https://github.com/heroku/databasedotcom) that offers
-greater flexibility and more advanced functionality.
 
 Features include:
 
