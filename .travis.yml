@@ -7,9 +7,13 @@ rvm:
   - 2.3.1
   - jruby-19mode
   - rbx-2
+  - ruby-2.4.0-preview2
 gemfile:
   - Gemfile.travis
 script:
   - bundle exec rubocop
   - bundle exec rspec spec
 sudo: false
+matrix:
+  allow_failures:
+  - rvm: rbx-2
