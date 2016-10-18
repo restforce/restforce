@@ -1,3 +1,7 @@
+## 2.4.1 (Oct 18, 2016)
+
+* Added support for pre-released versions of Ruby 2.4.0 by relaxing the `json` gem dependency (@timrogers, with thanks to @ccutrer)
+
 ## 2.4.0 (Jul 29, 2016)
 
 * Added ability to download documents attached to records, behaving like attachments (@jhelbig)
