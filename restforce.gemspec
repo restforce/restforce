@@ -26,7 +26,7 @@ Gem::Specification.new do |gem|
   if RUBY_VERSION =~ /^1.9/
     gem.add_dependency 'json', ['>= 1.7.5', '< 1.9.0']
   else
-    gem.add_dependency 'json', '>= 2.0.0'
+    gem.add_dependency 'json', '>= 1.7.5'
   end
 
   gem.add_dependency 'hashie', ['>= 1.2.0', '< 4.0']
