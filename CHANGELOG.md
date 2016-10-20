@@ -1,3 +1,7 @@
+## 2.4.2 (Oct 20, 2016)
+
+* Relax `json` dependency for users of Ruby 2.0.0 onwards to allow a much wider range of versions (@timrogers, with thanks to @ccutrer and @janraasch)
+
 ## 2.4.1 (Oct 18, 2016)
 
 * Added support for pre-released versions of Ruby 2.4.0 by relaxing the `json` gem dependency (@timrogers, with thanks to @ccutrer)
