@@ -44,12 +44,12 @@ module Restforce
       end
 
       class ReplayExtension
-        def initialize options
+        def initialize(options)
           @channels = options[:channels]
           @replay = options[:replay]
         end
 
-        def outgoing message, callback
+        def outgoing(message, callback)
           # Leave non-subscribe messages alone
           unless message['channel'] == '/meta/subscribe'
             return callback.call(message)
