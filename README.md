@@ -162,7 +162,7 @@ end
 
 ### API versions
 
-By default, the gem defaults to using version 26.0 (Winter '13) of the Salesforce API.
+By default, the gem defaults to using version 38.0 (Winter '17) of the Salesforce API.
 Some more recent API endpoints will not be available without moving to a more recent
 version - if you're trying to use a method that is unavailable with your API version,
 Restforce will raise an `APIVersionError`.
