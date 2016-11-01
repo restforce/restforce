@@ -61,24 +61,26 @@ It is also important to note that the client object should not be reused across 
 #### OAuth token authentication
 
 ```ruby
-client = Restforce.new :oauth_token => 'access_token',
-  :instance_url  => 'instance url'
+client = Restforce.new(oauth_token: 'access_token',
+                       instance_url: 'instance url',
+                       api_version: '38.0')
 ```
 
 Although the above will work, you'll probably want to take advantage of the (re)authentication middleware by specifying `refresh_token`, `client_id`, `client_secret`, and `authentication_callback`:
 
 ```ruby
-client = Restforce.new :oauth_token => 'access_token',
-  :refresh_token           => 'refresh token',
-  :instance_url            => 'instance url',
-  :client_id               => 'client_id',
-  :client_secret           => 'client_secret',
-  :authentication_callback => Proc.new {|x| Rails.logger.debug x.to_s}
+client = Restforce.new(oauth_token: 'access_token',
+                       refresh_token: 'refresh token',
+                       instance_url: 'instance url',
+                       client_id: 'client_id',
+                       client_secret: 'client_secret',
+                       authentication_callback: Proc.new { |x| Rails.logger.debug x.to_s },
+                       api_version: '38.0')
 ```
 
 The middleware will use the `refresh_token` automatically to acquire a new `access_token` if the existing `access_token` is invalid.
 
-`authentication_callback` is a proc that handles the response from Salesforce when the `refresh_token` is used to obtain a new `access_token`. This allows the `access_token` to be saved for re-use later, otherwise subsequent API calls will continue the cycle of "auth failure/issue new access_token/auth success".
+`authentication_callback` is a proc that handles the response from Salesforce when the `refresh_token` is used to obtain a new `access_token`. This allows the `access_token` to be saved for re-use later - otherwise subsequent API calls will continue the cycle of "auth failure/issue new access_token/auth success".
 
 The proc is passed one argument, a `Hashie::Mash` of the response from the [Salesforce API](https://developer.salesforce.com/docs/atlas.en-us.api_rest.meta/api_rest/intro_understanding_refresh_token_oauth.htm):
 
@@ -101,11 +103,12 @@ The `id` field can be used to [uniquely identify](https://developer.salesforce.c
 If you prefer to use a username and password to authenticate:
 
 ```ruby
-client = Restforce.new :username => 'foo',
-  :password       => 'bar',
-  :security_token => 'security token',
-  :client_id      => 'client_id',
-  :client_secret  => 'client_secret'
+client = Restforce.new(username: 'foo',
+                       password: 'bar',
+                       security_token: 'security token',
+                       client_id: 'client_id',
+                       client_secret: 'client_secret',
+                       api_version: '38.0')
 ```
 
 You can also set the username, password, security token, client ID, client
@@ -117,7 +120,7 @@ export SALESFORCE_PASSWORD="password"
 export SALESFORCE_SECURITY_TOKEN="security token"
 export SALESFORCE_CLIENT_ID="client id"
 export SALESFORCE_CLIENT_SECRET="client secret"
-export SALESFORCE_API_VERSION="37.0"
+export SALESFORCE_API_VERSION="38.0"
 ```
 
 ```ruby
@@ -129,12 +132,13 @@ client = Restforce.new
 You can specify a HTTP proxy using the `proxy_uri` option, as follows, or by setting the `SALESFORCE_PROXY_URI` environment variable:
 
 ```ruby
-client = Restforce.new :username => 'foo',
-  :password       => 'bar',
-  :security_token => 'security token',
-  :client_id      => 'client_id',
-  :client_secret  => 'client_secret',
-  :proxy_uri      => 'http://proxy.example.com:123'
+client = Restforce.new(username: 'foo',
+                       password: 'bar',
+                       security_token: 'security token',
+                       client_id: 'client_id',
+                       client_secret: 'client_secret',
+                       proxy_uri: 'http://proxy.example.com:123',
+                       api_version: '38.0')
 ```
 
 You may specify a username and password for the proxy with a URL along the lines of 'http://user:password@proxy.example.com:123'.
@@ -145,7 +149,7 @@ You can connect to sandbox orgs by specifying a host. The default host is
 'login.salesforce.com':
 
 ```ruby
-client = Restforce.new :host => 'test.salesforce.com'
+client = Restforce.new(host: 'test.salesforce.com')
 ```
 The host can also be set with the environment variable `SALESFORCE_HOST`.
 
@@ -162,25 +166,25 @@ end
 
 ### API versions
 
-By default, the gem defaults to using version 26.0 (Winter '13) of the Salesforce API.
-Some more recent API endpoints will not be available without moving to a more recent
-version - if you're trying to use a method that is unavailable with your API version,
+By default, the gem defaults to using Version 26.0 (Winter '13) of the Salesforce API. This maintains backwards compatibility for existing users.
+
+__We strongly suggest configuring Restforce to use the most recent API version, currently Version 38.0 (Winter '17) to get the best Salesforce API experience__ - for example, some more recently-added API endpoints will not be available without moving to a more recent
+version. If you're trying to use a method that is unavailable with your API version,
 Restforce will raise an `APIVersionError`.
 
-You can change the `api_version` setting from the default either on a per-client basis:
+There are three ways to set the API version:
 
-```ruby
-client = Restforce.new api_version: "32.0" # ...
-```
-
-or, you may set it globally for Restforce as a whole:
+* Passing in an `api_version` option when instantiating `Restforce` (i.e. `Restforce.new(api_version: '38.0')`)
+* Setting the `SALESFORCE_API_VERSION` environment variable (i.e. `export SALESFORCE_API_VERSION="38.0"`)
+* Configuring the version globally with `Restforce.configure`:
 
 ```ruby
 Restforce.configure do |config|
-  config.api_version = "32.0"
+  config.api_version = '38.0'
   # ...
 end
 ```
+
 
 ### Bang! methods
 
@@ -339,7 +343,7 @@ client.picklist_values('Account', 'Type')
 # Given a custom object named Automobile__c with picklist fields
 # `Model__c` and `Make__c`, where options for `Model__c` depends on the value of
 # `Make__c`.
-client.picklist_values('Automobile__c', 'Model__c', :valid_for => 'Honda')
+client.picklist_values('Automobile__c', 'Model__c', valid_for: 'Honda')
 # => [#<Restforce::Mash label="Civic" value="Civic">, ... ]
 ```
 
@@ -418,19 +422,19 @@ info.user_id
 Using the new [Blob Data](http://www.salesforce.com/us/developer/docs/api_rest/Content/dome_sobject_insert_update_blob.htm) api feature (500mb limit):
 
 ```ruby
-client.create 'Document', FolderId: '00lE0000000FJ6H',
-  Description: 'Document test',
-  Name: 'My image',
-  Body: Restforce::UploadIO.new(File.expand_path('image.jpg', __FILE__), 'image/jpeg')
+client.create('Document', FolderId: '00lE0000000FJ6H',
+                          Description: 'Document test',
+                          Name: 'My image',
+                          Body: Restforce::UploadIO.new(File.expand_path('image.jpg', __FILE__), 'image/jpeg')
 ```
 
 Using base64 encoded data (37.5mb limit):
 
 ```ruby
-client.create 'Document', FolderId: '00lE0000000FJ6H',
-  Description: 'Document test',
-  Name: 'My image',
-  Body: Base64::encode64(File.read('image.jpg'))
+client.create('Document', FolderId: '00lE0000000FJ6H',
+                          Description: 'Document test',
+                          Name: 'My image',
+                          Body: Base64::encode64(File.read('image.jpg'))
 ```
 
 _See also: [Inserting or updating blob data](http://www.salesforce.com/us/developer/docs/api_rest/Content/dome_sobject_insert_update_blob.htm)_
@@ -478,7 +482,7 @@ global class RESTCaseController {
 Then you could query the cases using Restforce:
 
 ```ruby
-client.get '/services/apexrest/FieldCase', :company => 'GenePoint'
+client.get('/services/apexrest/FieldCase', company: 'GenePoint')
 # => #<Restforce::Collection ...>
 ```
 
@@ -494,28 +498,27 @@ pub/sub with Salesforce a trivial task:
 require 'faye'
 
 # Initialize a client with your username/password/oauth token/etc.
-client = Restforce.new :username => 'foo',
-  :password       => 'bar',
-  :security_token => 'security token'
-  :client_id      => 'client_id',
-  :client_secret  => 'client_secret'
+client = Restforce.new(username: 'foo',
+                       password: 'bar',
+                       security_token: 'security token'
+                       client_id: 'client_id',
+                       client_secret: 'client_secret')
 
 # Create a PushTopic for subscribing to Account changes.
-client.create! 'PushTopic', {
-  ApiVersion: '23.0',
-  Name: 'AllAccounts',
-  Description: 'All account records',
-  NotifyForOperations: 'All',
-  NotifyForFields: 'All',
-  Query: "select Id from Account"
-}
+client.create!('PushTopic',
+               ApiVersion: '23.0',
+               Name: 'AllAccounts',
+               Description: 'All account records',
+               NotifyForOperations: 'All',
+               NotifyForFields: 'All',
+               Query: "select Id from Account")
 
-EM.run {
+EM.run do
   # Subscribe to the PushTopic.
   client.subscribe 'AllAccounts' do |message|
     puts message.inspect
   end
-}
+end
 ```
 
 Boom, you're now receiving push notifications when Accounts are
@@ -533,7 +536,7 @@ The gem supports easy caching of GET requests (e.g. queries):
 
 ```ruby
 # rails example:
-client = Restforce.new cache: Rails.cache
+client = Restforce.new(cache: Rails.cache)
 
 # or
 Restforce.configure do |config|
