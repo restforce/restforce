@@ -19,10 +19,6 @@ module Restforce
       def cache
         options[:cache]
       end
-
-      def params_to_ignore
-        (super + ["Auth"]).uniq
-      end
     end
   end
 end
