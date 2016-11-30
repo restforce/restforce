@@ -605,6 +605,16 @@ call `Restforce.tooling` instead of `Restforce.new`:
 client = Restforce.tooling(...)
 ```
 
+You can use the Tooling API to add fields to existing objects. For example, add "Twitter Username" to the default "Account" object:
+
+```ruby
+client = Restforce.tooling(...)
+client.create!("CustomField", { 
+  "FullName" => "Account.orgnamespace__twitter_username__c", 
+  "Metadata" => { type: "Text", label: "Twitter Username", length: 15 },
+})
+```
+
 ## Links
 
 If you need a full Active Record experience, may be you can use
