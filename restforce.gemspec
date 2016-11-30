@@ -16,18 +16,12 @@ Gem::Specification.new do |gem|
   gem.require_paths = ["lib"]
   gem.version       = Restforce::VERSION
 
-  gem.required_ruby_version = '>= 1.9.3'
+  gem.required_ruby_version = '>= 2.0'
 
   gem.add_dependency 'faraday', '~> 0.9.0'
   gem.add_dependency 'faraday_middleware', '>= 0.8.8'
 
-  # Ruby 2.4 requires JSON 2.0, but that doesn't work with old pre-2.0.0 versions of Ruby.
-  # See https://github.com/ejholmes/restforce/issues/260.
-  if RUBY_VERSION =~ /^1.9/
-    gem.add_dependency 'json', ['>= 1.7.5', '< 1.9.0']
-  else
-    gem.add_dependency 'json', '>= 1.7.5'
-  end
+  gem.add_dependency 'json', '>= 1.7.5'
 
   gem.add_dependency 'hashie', ['>= 1.2.0', '< 4.0']
 
