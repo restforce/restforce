@@ -1,4 +1,4 @@
-## 2.5.0 (Dec 5, 2016)
+## 2.5.0 (Dec 7, 2016)
 
 * __Deprecate support for Ruby 1.9__, since [official support was dropped nearly two years ago](https://www.ruby-lang.org/en/news/2014/01/10/ruby-1-9-3-will-end-on-2015/), and it's causing problems with keeping our dependencies up to date
 * Securely hash Salesforce credentials used in cache keys, so they aren't stored in the clear (@atmos)
