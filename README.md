@@ -25,7 +25,7 @@ Features include:
 
 Add this line to your application's Gemfile:
 
-    gem 'restforce', '~> 2.4.2'
+    gem 'restforce', '~> 2.5.0'
 
 And then execute:
 
@@ -35,7 +35,7 @@ Or install it yourself as:
 
     $ gem install restforce
 
-__As of [version 2.0.0](https://github.com/ejholmes/restforce/blob/master/CHANGELOG.md#200-jun-27-2015), this gem is only compatible with Ruby 1.9.3 and later.__ To use Ruby 1.9.2 and below, you'll need to manually specify that you wish to use version 1.5.3.
+__As of [version 2.5.0](https://github.com/ejholmes/restforce/blob/master/CHANGELOG.md#250-dec-5-2016), this gem is only compatible with Ruby 2.0.0 and later.__ To use Ruby 1.9.3, you'll need to manually specify that you wish to use version 2.4.2, or 1.5.3 for Ruby 1.9.2 support.
 
 This gem is versioned using [Semantic Versioning](http://semver.org/), so you can be confident when updating that there will not be breaking changes outside of a major version (following format MAJOR.MINOR.PATCH, so for instance moving from 2.3.0 to 3.0.0 would be allowed to include incompatible API changes). See the [changelog](https://github.com/ejholmes/restforce/tree/master/CHANGELOG.md) for details on what has changed in each version.
 
@@ -553,6 +553,8 @@ client.without_caching do
 end
 ```
 
+Caching is done on based on your authentication credentials, so cached responses will not be shared between different Salesforce logins.
+
 * * *
 
 ### Logging/Debugging/Instrumenting
@@ -609,8 +611,8 @@ You can use the Tooling API to add fields to existing objects. For example, add 
 
 ```ruby
 client = Restforce.tooling(...)
-client.create!("CustomField", { 
-  "FullName" => "Account.orgnamespace__twitter_username__c", 
+client.create!("CustomField", {
+  "FullName" => "Account.orgnamespace__twitter_username__c",
   "Metadata" => { type: "Text", label: "Twitter Username", length: 15 },
 })
 ```
