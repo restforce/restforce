@@ -52,6 +52,8 @@ module Restforce
                            options if Restforce.log?
           # Compress/Decompress the request/response
           builder.use      Restforce::Middleware::Gzip, self, options
+          # Inject custom headers into requests
+          builder.use      Restforce::Middleware::CustomHeaders, self, options
 
           builder.adapter  adapter
         end
