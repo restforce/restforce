@@ -25,7 +25,8 @@ module ClientIntegrationExampleGroup
           security_token: security_token,
           client_id: client_id,
           client_secret: client_secret,
-          cache: cache
+          cache: cache,
+          request_headers: { 'x-test-header' => 'Test Header' }
         }
       end
 
