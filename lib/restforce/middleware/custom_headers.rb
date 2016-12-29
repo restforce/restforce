@@ -1,5 +1,6 @@
 module Restforce
-  # Middleware that allows you to specify custom request headers when initializing Restforce client
+  # Middleware that allows you to specify custom request headers
+  # when initializing Restforce client
   class Middleware::CustomHeaders < Restforce::Middleware
     def call(env)
       headers = @options[:request_headers]

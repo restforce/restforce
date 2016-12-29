@@ -1,7 +1,6 @@
 require 'spec_helper'
 
 describe Restforce::Middleware::CustomHeaders do
-
   describe '.call' do
     subject { lambda { middleware.call(env) } }
 
