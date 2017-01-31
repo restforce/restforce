@@ -50,6 +50,10 @@ module Restforce
       #
       #        :authentication_callback - A Proc that is called with the response body
       #                                   after a successful authentication.
+      #
+      #        :request_headers         - A hash containing custom headers that will be
+      #                                   appended to each request
+
       def initialize(opts = {})
         raise ArgumentError, 'Please specify a hash of options' unless opts.is_a?(Hash)
 

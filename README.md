@@ -194,6 +194,23 @@ to do some custom error handling. The bang methods will raise exceptions, while 
 non-bang methods will return false in the event that an exception is raised. This
 works similarly to ActiveRecord.
 
+
+### Custom Headers
+
+Salesforce allows the addition of
+[custom headers](https://developer.salesforce.com/docs/atlas.en-us.api_rest.meta/api_rest/headers.htm)
+in REST API requests to trigger specific logic. In order to pass any custom headers along with API requests,
+you can specify a hash of `:request_headers`  upon client initialization. The example below demonstrates how
+to include the `sforce-auto-assign` header in all client HTTP requests:
+
+```ruby
+client = Restforce.new(oauth_token: 'access_token',
+                       instance_url: 'instance url',
+                       api_version: '38.0',
+                       request_headers: { 'sforce-auto-assign' => 'FALSE' })
+
+```
+
 * * *
 
 ### query
