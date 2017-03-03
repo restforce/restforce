@@ -8,11 +8,8 @@ module Restforce
       #
       # Returns a Faye::Subscription
       def subscribe(channels, options = {}, &block)
-        topics = Array(channels).map do |channel|
-          replay_handlers[channel] = options[:replay]
-          "/topic/#{channel}"
-        end
-        faye.subscribe topics, &block
+        Array(channels).each { |channel| replay_handlers[channel] = options[:replay] }
+        faye.subscribe Array(channels).map { |channel| "/topic/#{channel}" }, &block
       end
 
       # Public: Faye client to use for subscribing to PushTopics
