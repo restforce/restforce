@@ -8,9 +8,8 @@ module Restforce
       #
       # Returns a Faye::Subscription
       def subscribe(channels, options = {}, &block)
-        @replay = options[:replay]
-        @channels = Array(channels)
-        faye.subscribe @channels.map { |channel| "/topic/#{channel}" }, &block
+        Array(channels).each { |channel| replay_handlers[channel] = options[:replay] }
+        faye.subscribe Array(channels).map { |channel| "/topic/#{channel}" }, &block
       end
 
       # Public: Faye client to use for subscribing to PushTopics
@@ -21,32 +20,42 @@ module Restforce
 
         url = "#{options[:instance_url]}/cometd/#{options[:api_version]}"
 
-        unless @faye
-          @faye = Faye::Client.new(url).tap do |client|
-            client.set_header 'Authorization', "OAuth #{options[:oauth_token]}"
+        @faye ||= Faye::Client.new(url).tap do |client|
+          client.set_header 'Authorization', "OAuth #{options[:oauth_token]}"
 
-            client.bind 'transport:down' do
-              Restforce.log "[COMETD DOWN]"
-              client.set_header 'Authorization', "OAuth #{authenticate!.access_token}"
-            end
-
-            client.bind 'transport:up' do
-              Restforce.log "[COMETD UP]"
-            end
+          client.bind 'transport:down' do
+            Restforce.log "[COMETD DOWN]"
+            client.set_header 'Authorization', "OAuth #{authenticate!.access_token}"
           end
 
-          if @replay
-            @faye.add_extension ReplayExtension.new(channels: @channels, replay: @replay)
+          client.bind 'transport:up' do
+            Restforce.log "[COMETD UP]"
           end
+
+          client.add_extension ReplayExtension.new(replay_handlers)
         end
+      end
 
-        @faye
+      def replay_handlers
+        @_replay_handlers ||= {}
       end
 
       class ReplayExtension
-        def initialize(options)
-          @channels = options[:channels]
-          @replay = options[:replay]
+        def initialize(replay_handlers)
+          @replay_handlers = replay_handlers
+        end
+
+        def incoming(message, callback)
+          channel = message.fetch('channel').gsub('/topic/', '')
+          replay_id = message.fetch('data', {}).fetch('event', {})['replayId']
+
+          handler = @replay_handlers[channel]
+          if !replay_id.nil? && !handler.nil? && handler.respond_to?(:[]=)
+            # remember the last replay_id for this channel
+            handler[channel] = replay_id
+          end
+
+          callback.call(message)
         end
 
         def outgoing(message, callback)
@@ -55,16 +64,34 @@ module Restforce
             return callback.call(message)
           end
 
-          # Set the replay value for the each channel
+          channel = message['subscription'].gsub('/topic/', '')
+
+          # Set the replay value for the channel
           message['ext'] ||= {}
-          message['ext']['replay'] = {}
-          @channels.each do |channel|
-            message['ext']['replay']["/topic/#{channel}"] = @replay
-          end
+          message['ext']['replay'] = {
+            "/topic/#{channel}" => replay_id(channel)
+          }
 
           # Carry on and send the message to the server
           callback.call message
         end
+
+        private
+
+        def replay_id(channel)
+          handler = @replay_handlers[channel]
+          case
+          when handler.is_a?(Integer)
+            handler # treat it as a scalar
+          when handler.respond_to?(:[])
+            # Ask for the latest replayId for this channel
+            handler[channel]
+          else
+            # Just pass it along
+            handler
+          end
+        end
+
       end
     end
   end
