@@ -17,7 +17,6 @@ describe Restforce::Concerns::Streaming, event_machine: true do
     end
 
     context "replay_handlers" do
-
       before {
         faye_double.should_receive(:subscribe).at_least(1)
         client.stub faye: faye_double
@@ -42,7 +41,6 @@ describe Restforce::Concerns::Streaming, event_machine: true do
           'channel3' => 3
         )
       end
-
     end
   end
 
@@ -69,7 +67,8 @@ describe Restforce::Concerns::Streaming, event_machine: true do
         faye_double.should_receive(:set_header).with('Authorization', 'OAuth secret2')
         faye_double.should_receive(:bind).with('transport:down').and_yield
         faye_double.should_receive(:bind).with('transport:up').and_yield
-        faye_double.should_receive(:add_extension).with(kind_of(Restforce::Concerns::Streaming::ReplayExtension))
+        faye_double.should_receive(:add_extension).with \
+          kind_of(Restforce::Concerns::Streaming::ReplayExtension)
         subject
       end
     end
@@ -79,7 +78,6 @@ describe Restforce::Concerns::Streaming, event_machine: true do
         expect { subject }.to raise_error
       end
     end
-
   end
 
   describe Restforce::Concerns::Streaming::ReplayExtension do
@@ -129,7 +127,7 @@ describe Restforce::Concerns::Streaming, event_machine: true do
         }
       }
 
-      extension.incoming(message, -> m { })
+      extension.incoming(message, -> m {})
       handler.should eq('channel1' => 42)
     end
 
@@ -142,7 +140,7 @@ describe Restforce::Concerns::Streaming, event_machine: true do
         'data' => {}
       }
 
-      extension.incoming(message, -> m { })
+      extension.incoming(message, -> m {})
       handler.should eq('channel1' => 41)
     end
 
@@ -163,6 +161,5 @@ describe Restforce::Concerns::Streaming, event_machine: true do
     def read_replay(message)
       message.fetch('ext', {})['replay']
     end
-
   end
 end

@@ -91,7 +91,6 @@ module Restforce
             handler
           end
         end
-
       end
     end
   end
