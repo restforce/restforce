@@ -146,11 +146,11 @@ describe Restforce::Concerns::Streaming, event_machine: true do
 
     private
 
-    def subscribe(extension, to:)
+    def subscribe(extension, options = {})
       output = nil
       message = {
         'channel' => '/meta/subscribe',
-        'subscription' => "/topic/#{to}"
+        'subscription' => "/topic/#{options[:to]}"
       }
       extension.outgoing(message, -> m {
         output = m
