@@ -46,16 +46,16 @@ module Restforce
         end
 
         def incoming(message, callback)
-          channel = message.fetch('channel').gsub('/topic/', '')
-          replay_id = message.fetch('data', {}).fetch('event', {})['replayId']
+          callback.call(message).tap do
+            channel = message.fetch('channel').gsub('/topic/', '')
+            replay_id = message.fetch('data', {}).fetch('event', {})['replayId']
 
-          handler = @replay_handlers[channel]
-          if !replay_id.nil? && !handler.nil? && handler.respond_to?(:[]=)
-            # remember the last replay_id for this channel
-            handler[channel] = replay_id
+            handler = @replay_handlers[channel]
+            if !replay_id.nil? && !handler.nil? && handler.respond_to?(:[]=)
+              # remember the last replay_id for this channel
+              handler[channel] = replay_id
+            end
           end
-
-          callback.call(message)
         end
 
         def outgoing(message, callback)
