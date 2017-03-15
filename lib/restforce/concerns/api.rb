@@ -361,12 +361,17 @@ module Restforce
       # error returned if the external ID provided matches multiple records (in which
       # case the conflicting IDs can be found by looking at the response on the error)
       def upsert!(sobject, field, attrs)
-        external_id = attrs.
-          fetch(attrs.keys.find { |k, v| k.to_s.downcase == field.to_s.downcase }, nil)
-        attrs_without_field = attrs.
-          reject { |k, v| k.to_s.downcase == field.to_s.downcase }
-        response = api_patch "sobjects/#{sobject}/#{field}/#{URI.encode(external_id)}",
-                             attrs_without_field
+        external_id =
+          extract_case_insensitive_string_or_symbol_key_from_hash!(attrs, field)
+
+        response =
+          if field.to_s == "Id" && (external_id.nil? || external_id.strip.empty?)
+            version_guard(37.0) do
+              api_post "sobjects/#{sobject}/#{field}", attrs
+            end
+          else
+            api_patch "sobjects/#{sobject}/#{field}/#{URI.encode(external_id)}", attrs
+          end
 
         (response.body && response.body['id']) ? response.body['id'] : true
       end
@@ -482,6 +487,14 @@ module Restforce
                                  "see https://github.com/ejholmes/restforce/blob/master" \
                                  "/README.md#api-versions"
         end
+      end
+
+      def extract_case_insensitive_string_or_symbol_key_from_hash!(hash, key)
+        value = hash.delete(key.to_sym)
+        value ||= hash.delete(key.to_s)
+        value ||= hash.delete(key.to_s.downcase)
+        value ||= hash.delete(key.to_s.downcase.to_sym)
+        value
       end
 
       # Internal: Errors that should be rescued from in non-bang methods

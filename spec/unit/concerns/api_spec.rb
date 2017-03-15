@@ -342,6 +342,41 @@ describe Restforce::Concerns::API do
         expect(result).to eq '4321'
       end
     end
+
+    context 'when using Id as the attribute' do
+      let(:field) { :Id }
+      let(:attrs) { { 'Id' => '4321' } }
+
+      context 'and the value for Id is provided' do
+        it 'returns the id of the record' do
+          response.body.stub(:[]).with('id').and_return('4321')
+          client.should_receive(:api_patch).
+            with('sobjects/Whizbang/Id/4321', {}).
+            and_return(response)
+          expect(result).to eq '4321'
+        end
+      end
+
+      context 'and no value for Id is provided' do
+        let(:attrs) { { 'External_ID__c' => '1234' } }
+
+        it 'uses POST to create the record' do
+          response.body.stub(:[]).with('id').and_return('4321')
+          client.should_receive(:options).and_return(api_version: 38.0)
+          client.should_receive(:api_post).
+            with('sobjects/Whizbang/Id', attrs).
+            and_return(response)
+          expect(result).to eq '4321'
+        end
+
+        it 'guards functionality for unsupported API versions' do
+          client.should_receive(:options).and_return(api_version: 35.0)
+          expect do
+            client.upsert!(sobject, field, attrs)
+          end.to raise_error Restforce::APIVersionError
+        end
+      end
+    end
   end
 
   describe '.upsert! with multi bytes character' do
