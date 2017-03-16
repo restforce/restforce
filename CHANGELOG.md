@@ -1,3 +1,9 @@
+## 2.5.1 (Mar 16, 2017)
+
+* Allow setting custom headers, [required by parts of the Salesforce API](https://developer.salesforce.com/docs/atlas.en-us.api_rest.meta/api_rest/headers.htm), by specifiying a `:request_headers` option when instantiating the client (@moskeyombus)
+* Add support for `upsert`ing using an ID (see the [Salesforce docs](https://developer.salesforce.com/docs/atlas.en-us.api_rest.meta/api_rest/dome_upsert.htm) for more details) (@ecbypi)
+* Relax `faraday` dependency to allow upgrading to Faraday 1.0 (@tinogomes, @alexluke)
+
 ## 2.5.0 (Dec 7, 2016)
 
 * __Deprecate support for Ruby 1.9__, since [official support was dropped nearly two years ago](https://www.ruby-lang.org/en/news/2014/01/10/ruby-1-9-3-will-end-on-2015/), and it's causing problems with keeping our dependencies up to date
