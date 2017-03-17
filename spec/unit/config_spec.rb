@@ -27,7 +27,7 @@ describe Restforce do
       its(:ssl)                    { should eq({}) }
       [:username, :password, :security_token, :client_id, :client_secret,
        :oauth_token, :refresh_token, :instance_url, :compress, :timeout,
-       :proxy_uri, :authentication_callback, :mashify].each do |attr|
+       :proxy_uri, :authentication_callback, :mashify, :request_headers].each do |attr|
         its(attr) { should be_nil }
       end
     end
@@ -59,8 +59,8 @@ describe Restforce do
   describe '#configure' do
     [:username, :password, :security_token, :client_id, :client_secret, :compress,
      :timeout, :oauth_token, :refresh_token, :instance_url, :api_version, :host, :mashify,
-     :authentication_retries, :proxy_uri, :authentication_callback, :ssl, :log_level,
-     :logger].each do |attr|
+     :authentication_retries, :proxy_uri, :authentication_callback, :ssl,
+     :request_headers, :log_level, :logger].each do |attr|
       it "allows #{attr} to be set" do
         Restforce.configure do |config|
           config.send("#{attr}=", 'foobar')

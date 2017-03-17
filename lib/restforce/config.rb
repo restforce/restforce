@@ -141,6 +141,9 @@ module Restforce
     # Set SSL options
     option :ssl, default: {}
 
+    # A Hash that is converted to HTTP headers
+    option :request_headers
+
     # Set a logger for when Restforce.log is set to true, defaulting to STDOUT
     option :logger, default: ::Logger.new(STDOUT)
 
