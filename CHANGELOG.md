@@ -1,8 +1,15 @@
+## 2.5.2 (Apr 3, 2017)
+
+* Ensure `Restforce::Middleware::Logger` is the last Faraday middleware to be called so everything is properly logged (including the effects of the `Gzip` and `CustomHeaders` middlewares which were previously running after it) (@jonnymacs)
+* Suppress [Hashie](https://github.com/intridea/hashie) warnings when using Hashie v3.5.0 or later (see [#295](https://github.com/ejholmes/restforce/pull/295) for details) (@janraasch)
+
 ## 2.5.1 (Mar 16, 2017)
 
 * Allow setting custom headers, [required by parts of the Salesforce API](https://developer.salesforce.com/docs/atlas.en-us.api_rest.meta/api_rest/headers.htm), by specifiying a `:request_headers` option when instantiating the client (@moskeyombus)
 * Add support for `upsert`ing using an ID (see the [Salesforce docs](https://developer.salesforce.com/docs/atlas.en-us.api_rest.meta/api_rest/dome_upsert.htm) for more details) (@ecbypi)
 * Relax `faraday` dependency to allow upgrading to Faraday 1.0 (@tinogomes, @alexluke)
+
+*(This should have been a minor version rather than a patch version, following format MAJOR.MINOR.PATCH, since we use [Semantic Versioning](http://semver.org/) and this adds functionality. Sorry! @timrogers)*
 
 ## 2.5.0 (Dec 7, 2016)
 
