@@ -60,6 +60,22 @@ describe Restforce::Concerns::Connection do
         end
       end
     end
+
+    describe ":logger option" do
+      let(:options) { { adapter: Faraday.default_adapter } }
+
+      before(:each) do
+        client.stub(:authentication_middleware)
+        client.stub(:cache)
+        client.stub(options: options)
+        Restforce.stub(log?: true)
+      end
+
+      it "must always be used last before the Faraday Adapter" do
+        client.middleware.handlers.reverse.index(Restforce::Middleware::Logger).
+          should eq 1
+      end
+    end
   end
 
   describe '#adapter' do
