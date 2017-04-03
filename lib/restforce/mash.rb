@@ -2,6 +2,8 @@ require 'hashie/mash'
 
 module Restforce
   class Mash < Hashie::Mash
+    disable_warnings if respond_to?(:disable_warnings)
+
     class << self
       # Pass in an Array or Hash and it will be recursively converted into the
       # appropriate Restforce::Collection, Restforce::SObject and
