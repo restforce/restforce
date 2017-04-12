@@ -282,116 +282,123 @@ describe Restforce::Concerns::API do
     end
   end
 
-  describe '.create!' do
-    let(:sobject)    { 'Whizbang' }
-    let(:attrs)      { Hash.new }
-    subject(:result) { client.create!(sobject, attrs) }
-
-    it 'send an HTTP POST, and returns the id of the record' do
-      response.body.stub(:[]).with('id').and_return('1234')
-      client.should_receive(:api_post).
-        with('sobjects/Whizbang', attrs).
-        and_return(response)
-      expect(result).to eq '1234'
-    end
-  end
-
-  describe '.update!' do
-    let(:sobject)    { 'Whizbang' }
-    let(:attrs)      { Hash.new }
-    subject(:result) { client.update!(sobject, attrs) }
-
-    context 'when the id field is present' do
-      let(:attrs) { { id: '1234', StageName: "Call Scheduled" } }
-
-      it 'sends an HTTP PATCH, and returns true' do
-        client.should_receive(:api_patch).
-          with('sobjects/Whizbang/1234', StageName: "Call Scheduled")
-        expect(result).to be_true
-      end
+  context 'methods with attrs' do
+    before do
+      attrs.freeze
     end
 
-    context 'when the id field is missing from the attrs' do
-      subject { lambda { result } }
-      it { should raise_error ArgumentError, 'Id field missing from attrs.' }
-    end
-  end
+    describe '.create!' do
+      let(:sobject)    { 'Whizbang' }
+      let(:attrs)      { Hash.new }
+      subject(:result) { client.create!(sobject, attrs) }
 
-  describe '.upsert!' do
-    let(:sobject)    { 'Whizbang' }
-    let(:field)      { :External_ID__c }
-    let(:attrs)      { { 'External_ID__c' => '1234' } }
-    subject(:result) { client.upsert!(sobject, field, attrs) }
-
-    context 'when the record is found and updated' do
-      it 'returns true' do
-        response.body.stub :[]
-        client.should_receive(:api_patch).
-          with('sobjects/Whizbang/External_ID__c/1234', {}).
+      it 'send an HTTP POST, and returns the id of the record' do
+        response.body.stub(:[]).with('id').and_return('1234')
+        client.should_receive(:api_post).
+          with('sobjects/Whizbang', attrs).
           and_return(response)
-        expect(result).to be_true
+        expect(result).to eq '1234'
       end
     end
 
-    context 'when the record is found and created' do
-      it 'returns the id of the record' do
-        response.body.stub(:[]).with('id').and_return('4321')
-        client.should_receive(:api_patch).
-          with('sobjects/Whizbang/External_ID__c/1234', {}).
-          and_return(response)
-        expect(result).to eq '4321'
+    describe '.update!' do
+      let(:sobject)    { 'Whizbang' }
+      let(:attrs)      { Hash.new }
+      subject(:result) { client.update!(sobject, attrs) }
+
+      context 'when the id field is present' do
+        let(:attrs) { { id: '1234', StageName: "Call Scheduled" } }
+
+        it 'sends an HTTP PATCH, and returns true' do
+          client.should_receive(:api_patch).
+            with('sobjects/Whizbang/1234', StageName: "Call Scheduled")
+          expect(result).to be_true
+        end
+      end
+
+      context 'when the id field is missing from the attrs' do
+        subject { lambda { result } }
+        it { should raise_error ArgumentError, 'Id field missing from attrs.' }
       end
     end
 
-    context 'when using Id as the attribute' do
-      let(:field) { :Id }
-      let(:attrs) { { 'Id' => '4321' } }
+    describe '.upsert!' do
+      let(:sobject)    { 'Whizbang' }
+      let(:field)      { :External_ID__c }
+      let(:attrs)      { { 'External_ID__c' => '1234' } }
+      subject(:result) { client.upsert!(sobject, field, attrs) }
 
-      context 'and the value for Id is provided' do
+      context 'when the record is found and updated' do
+        it 'returns true' do
+          response.body.stub :[]
+          client.should_receive(:api_patch).
+            with('sobjects/Whizbang/External_ID__c/1234', {}).
+            and_return(response)
+          expect(result).to be_true
+        end
+      end
+
+      context 'when the record is found and created' do
         it 'returns the id of the record' do
           response.body.stub(:[]).with('id').and_return('4321')
           client.should_receive(:api_patch).
-            with('sobjects/Whizbang/Id/4321', {}).
+            with('sobjects/Whizbang/External_ID__c/1234', {}).
             and_return(response)
           expect(result).to eq '4321'
         end
       end
 
-      context 'and no value for Id is provided' do
-        let(:attrs) { { 'External_ID__c' => '1234' } }
+      context 'when using Id as the attribute' do
+        let(:field) { :Id }
+        let(:attrs) { { 'Id' => '4321' } }
 
-        it 'uses POST to create the record' do
-          response.body.stub(:[]).with('id').and_return('4321')
-          client.should_receive(:options).and_return(api_version: 38.0)
-          client.should_receive(:api_post).
-            with('sobjects/Whizbang/Id', attrs).
-            and_return(response)
-          expect(result).to eq '4321'
+        context 'and the value for Id is provided' do
+          it 'returns the id of the record, and original record still contains id' do
+            response.body.stub(:[]).with('id').and_return('4321')
+            client.should_receive(:api_patch).
+              with('sobjects/Whizbang/Id/4321', {}).
+              and_return(response)
+            expect(result).to eq '4321'
+            expect(attrs).to include('Id' => '4321')
+          end
         end
 
-        it 'guards functionality for unsupported API versions' do
-          client.should_receive(:options).and_return(api_version: 35.0)
-          expect do
-            client.upsert!(sobject, field, attrs)
-          end.to raise_error Restforce::APIVersionError
+        context 'and no value for Id is provided' do
+          let(:attrs) { { 'External_ID__c' => '1234' } }
+
+          it 'uses POST to create the record' do
+            response.body.stub(:[]).with('id').and_return('4321')
+            client.should_receive(:options).and_return(api_version: 38.0)
+            client.should_receive(:api_post).
+              with('sobjects/Whizbang/Id', attrs).
+              and_return(response)
+            expect(result).to eq '4321'
+          end
+
+          it 'guards functionality for unsupported API versions' do
+            client.should_receive(:options).and_return(api_version: 35.0)
+            expect do
+              client.upsert!(sobject, field, attrs)
+            end.to raise_error Restforce::APIVersionError
+          end
         end
       end
     end
-  end
 
-  describe '.upsert! with multi bytes character' do
-    let(:sobject)    { 'Whizbang' }
-    let(:field)      { :External_ID__c }
-    let(:attrs)      { { 'External_ID__c' => "\u{3042}" } }
-    subject(:result) { client.upsert!(sobject, field, attrs) }
+    describe '.upsert! with multi bytes character' do
+      let(:sobject)    { 'Whizbang' }
+      let(:field)      { :External_ID__c }
+      let(:attrs)      { { 'External_ID__c' => "\u{3042}" } }
+      subject(:result) { client.upsert!(sobject, field, attrs) }
 
-    context 'when the record is found and updated' do
-      it 'returns true' do
-        response.body.stub :[]
-        client.should_receive(:api_patch).
-          with('sobjects/Whizbang/External_ID__c/%E3%81%82', {}).
-          and_return(response)
-        expect(result).to be_true
+      context 'when the record is found and updated' do
+        it 'returns true' do
+          response.body.stub :[]
+          client.should_receive(:api_patch).
+            with('sobjects/Whizbang/External_ID__c/%E3%81%82', {}).
+            and_return(response)
+          expect(result).to be_true
+        end
       end
     end
   end
