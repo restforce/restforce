@@ -361,6 +361,7 @@ module Restforce
       # error returned if the external ID provided matches multiple records (in which
       # case the conflicting IDs can be found by looking at the response on the error)
       def upsert!(sobject, field, attrs)
+        attrs = attrs.dup
         external_id =
           extract_case_insensitive_string_or_symbol_key_from_hash!(attrs, field)
 
