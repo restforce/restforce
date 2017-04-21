@@ -318,7 +318,7 @@ describe Restforce::Concerns::API do
 
       context 'when the id field is missing from the attrs' do
         subject { lambda { result } }
-        it { should raise_error ArgumentError, 'Id field missing from attrs.' }
+        it { should raise_error ArgumentError, 'ID field missing from provided attributes' }
       end
     end
 
