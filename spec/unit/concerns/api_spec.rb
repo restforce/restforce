@@ -348,6 +348,14 @@ describe Restforce::Concerns::API do
         end
       end
 
+      context 'when the external id field is missing from the attrs' do
+        let(:attrs) { Hash.new }
+        it 'raises an argument error' do
+          expect { client.upsert!(sobject, field, attrs) }.to raise_error ArgumentError,
+            'Specified external ID field missing from provided attributes'
+        end
+      end
+
       context 'when using Id as the attribute' do
         let(:field) { :Id }
         let(:attrs) { { 'Id' => '4321' } }
