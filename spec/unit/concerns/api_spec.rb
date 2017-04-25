@@ -317,8 +317,10 @@ describe Restforce::Concerns::API do
       end
 
       context 'when the id field is missing from the attrs' do
-        subject { lambda { result } }
-        it { should raise_error ArgumentError, 'ID field missing from provided attributes' }
+        it "raises an error" do
+          expect { client.update!(sobject, attrs) }.
+            to raise_error(ArgumentError, 'ID field missing from provided attributes')
+        end
       end
     end
 
@@ -350,9 +352,11 @@ describe Restforce::Concerns::API do
 
       context 'when the external id field is missing from the attrs' do
         let(:attrs) { Hash.new }
+
         it 'raises an argument error' do
-          expect { client.upsert!(sobject, field, attrs) }.to raise_error ArgumentError,
-            'Specified external ID field missing from provided attributes'
+          expect { client.upsert!(sobject, field, attrs) }.
+            to raise_error ArgumentError, 'Specified external ID field missing from ' \
+                                          'provided attributes'
         end
       end
 
