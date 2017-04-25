@@ -317,7 +317,7 @@ module Restforce
       # Raises an exception if an error is returned from Salesforce.
       def update!(sobject, attrs)
         id = attrs.fetch(attrs.keys.find { |k, v| k.to_s.downcase == 'id' }, nil)
-        raise ArgumentError, 'Id field missing from attrs.' unless id
+        raise ArgumentError, 'ID field missing from provided attributes' unless id
         attrs_without_id = attrs.reject { |k, v| k.to_s.downcase == "id" }
         api_patch "sobjects/#{sobject}/#{id}", attrs_without_id
         true
@@ -364,6 +364,9 @@ module Restforce
         attrs = attrs.dup
         external_id =
           extract_case_insensitive_string_or_symbol_key_from_hash!(attrs, field)
+        if field.to_s != "Id" && (external_id.nil? || external_id.strip.empty?)
+          raise ArgumentError, 'Specified external ID field missing from provided attributes'
+        end
 
         response =
           if field.to_s == "Id" && (external_id.nil? || external_id.strip.empty?)

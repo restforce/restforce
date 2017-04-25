@@ -133,7 +133,7 @@ shared_examples_for Restforce::AbstractClient do
   describe '.update' do
     context 'with missing Id' do
       subject { lambda { client.update('Account', Name: 'Foobar') } }
-      it { should raise_error ArgumentError, 'Id field missing from attrs.' }
+      it { should raise_error ArgumentError, 'ID field missing from provided attributes' }
     end
 
     context 'with invalid Id' do
