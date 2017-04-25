@@ -5,7 +5,8 @@ describe Restforce::Middleware::Authentication do
     { host: 'login.salesforce.com',
       proxy_uri: 'https://not-a-real-site.com',
       authentication_retries: retries,
-      adapter: :net_http }
+      adapter: :net_http,
+      ssl: { version: :TLSv1_2 } }
   end
 
   describe '.authenticate!' do
@@ -80,6 +81,10 @@ describe Restforce::Middleware::Authentication do
           should include FaradayMiddleware::ParseJson, Faraday::Adapter::Typhoeus
         }
       end
+    end
+
+    it "should have SSL config set" do
+      connection.ssl[:version].should eq(:TLSv1_2)
     end
   end
 end
