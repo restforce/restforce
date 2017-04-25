@@ -1,3 +1,10 @@
+## 2.5.3 (April 25, 2017)
+
+* Raise an error where a custom external ID field name is supplied to `upsert` and `upsert!`, but it is missing from the provided attributes (@velveret)
+* Use the Restforce client's configured SSL options for authentication requests (@jvdp)
+* Fix bug where `upsert` and `upsert!` mutate the provided attributes, previously fixed in [v1.5.3](https://github.com/ejholmes/restforce/blob/master/CHANGELOG.md#153-jun-26-2015) (@velveret)
+
+
 ## 2.5.2 (Apr 3, 2017)
 
 * Ensure `Restforce::Middleware::Logger` is the last Faraday middleware to be called so everything is properly logged (including the effects of the `Gzip` and `CustomHeaders` middlewares which were previously running after it) (@jonnymacs)
