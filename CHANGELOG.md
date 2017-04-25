@@ -1,4 +1,4 @@
-## 2.5.3 (April 25, 2017)
+## 2.5.3 (Apr 25, 2017)
 
 * Raise an error where a custom external ID field name is supplied to `upsert` and `upsert!`, but it is missing from the provided attributes (@velveret)
 * Use the Restforce client's configured SSL options for authentication requests (@jvdp)
