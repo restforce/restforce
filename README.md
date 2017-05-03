@@ -473,6 +473,12 @@ document = client.query('select Id, Name, Body from Document').first
 File.open(document.Name, 'wb') { |f| f.write(document.Body) }
 ```
 
+**Note:** The example above is only applicable if your SOQL query returns a single Document record. If more than one record is returned, 
+the Body field contains an URL to retrieve the BLOB content for the first 2000 records returned. Subsequent records contain the BLOB content
+in the Body field. This is confusing and hard to debug. See notes in [Issue #301](https://github.com/ejholmes/restforce/issues/301#issuecomment-298972959) explaining this detail. 
+**Executive Summary:** Don't retrieve the Body field in a SOQL query; instead, use the BLOB retrieval URL documented 
+in [SObject BLOB Retrieve](https://developer.salesforce.com/docs/atlas.en-us.api_rest.meta/api_rest/resources_sobject_blob_retrieve.htm) 
+
 * * *
 
 ### Custom Apex REST endpoints
