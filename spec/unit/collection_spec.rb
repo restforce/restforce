@@ -11,6 +11,7 @@ describe Restforce::Collection do
 
       it                   { should respond_to :each }
       its(:size)           { should eq 1 }
+      its(:empty?)         { should be_false }
       its(:has_next_page?) { should be_false }
       it                   { should have_client client }
       its(:page_size)      { should eq 1 }
@@ -37,8 +38,9 @@ describe Restforce::Collection do
       context 'when only values from the first page are being requested' do
         before { client.should_receive(:get).never }
 
-        its(:size)  { should eq 2 }
-        its(:first) { should be_a Restforce::SObject }
+        its(:size)         { should eq 2 }
+        its(:empty?)       { should be_false }
+        its(:first)        { should be_a Restforce::SObject }
         its(:current_page) { should be_a Array }
         its(:current_page) { should have(1).element }
         its(:page_size)    { should eq 1 }
@@ -58,6 +60,19 @@ describe Restforce::Collection do
         it { should be_all   { |record| expect(record).to be_a Restforce::SObject } }
         its(:next_page)      { should be_a Restforce::Collection }
       end
+    end
+
+    context 'with an empty response' do
+      subject(:collection) do
+        described_class.new(JSON.parse(fixture('sobject/query_empty_response')), client)
+      end
+
+      it                   { should respond_to :each }
+      its(:size)           { should eq 0 }
+      its(:empty?)         { should be_true }
+      its(:has_next_page?) { should be_false }
+      it                   { should have_client client }
+      its(:page_size)      { should eq 0 }
     end
   end
 end
