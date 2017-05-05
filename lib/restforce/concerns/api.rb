@@ -378,7 +378,11 @@ module Restforce
             api_patch "sobjects/#{sobject}/#{field}/#{URI.encode(external_id)}", attrs
           end
 
-        (response.body && response.body['id']) ? response.body['id'] : true
+        if response.body.class == Array
+          raise Restforce::ServerError, "Conflicting resources (#{response.body})."
+        else
+          (response.body && response.body['id']) ? response.body['id'] : true
+        end
       end
 
       # Public: Delete a record.
