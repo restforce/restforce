@@ -28,6 +28,8 @@ module Restforce
       #                                   password and oauth authentication
       #        :client_secret           - The oauth client secret to use.
       #
+      #        :jwt_key                 - The private key for JWT authentication
+      #
       #        :host                    - The String hostname to use during
       #                                   authentication requests
       #                                   (default: 'login.salesforce.com').
