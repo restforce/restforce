@@ -19,6 +19,8 @@ module Restforce
           Restforce::Middleware::Authentication::Password
         elsif oauth_refresh?
           Restforce::Middleware::Authentication::Token
+        elsif jwt?
+          Restforce::Middleware::Authentication::JWTBearer
         end
       end
 
@@ -37,6 +39,14 @@ module Restforce
         options[:refresh_token] &&
           options[:client_id] &&
           options[:client_secret]
+      end
+
+      # Internal: Returns true if jwt bearer token flow should be used for
+      # authentication.
+      def jwt?
+        options[:jwt_key] &&
+          options[:username] &&
+          options[:client_id]
       end
     end
   end
