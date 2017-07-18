@@ -58,7 +58,7 @@ describe Restforce do
 
   describe '#configure' do
     [:username, :password, :security_token, :client_id, :client_secret, :compress,
-     :timeout, :oauth_token, :refresh_token, :instance_url, :api_version, :host, :mashify,
+     :timeout, :oauth_token, :refresh_token, :instance_url, :host, :mashify,
      :authentication_retries, :proxy_uri, :authentication_callback, :ssl,
      :request_headers, :log_level, :logger].each do |attr|
       it "allows #{attr} to be set" do
@@ -67,6 +67,21 @@ describe Restforce do
         end
         expect(Restforce.configuration.send(attr)).to eq 'foobar'
       end
+    end
+
+    it "allows api_version to be set to a valid version" do
+      Restforce.configure do |config|
+        config.send("api_version=", '38.0')
+      end
+      expect(Restforce.configuration.send(:api_version)).to eq '38.0'
+    end
+
+    it "doesn't allow api_version to be set to an invalid version" do
+      expect do
+        Restforce.configure do |config|
+          config.send("api_version=", 38)
+        end
+      end.to raise_error(Restforce::InvalidOptionError, /not a valid API version/)
     end
   end
 

@@ -49,24 +49,27 @@ module Restforce
         @name = name
         @options = options
         @default = options.fetch(:default, nil)
+        @validator = options.fetch(:validator, nil)
       end
 
       def define
         write_attribute
-        define_method if default_provided?
+        define_reader_method if default_provided?
+        define_writer_method if validator_provided?
         self
       end
 
       private
 
-      attr_reader :default
+      attr_reader :default, :validator
       alias_method :default_provided?, :default
+      alias_method :validator_provided?, :validator
 
       def write_attribute
         configuration.send :attr_accessor, name
       end
 
-      def define_method
+      def define_reader_method
         our_default = default
         our_name    = name
         configuration.send :define_method, our_name do
@@ -75,6 +78,15 @@ module Restforce
               :"@#{our_name}",
               our_default.respond_to?(:call) ? our_default.call : our_default
             )
+        end
+      end
+
+      def define_writer_method
+        our_validator = validator
+        our_name      = name
+        configuration.send :define_method, :"#{our_name}=" do |value|
+          our_validator.call(value)
+          instance_variable_set(:"@#{our_name}", value)
         end
       end
     end
@@ -88,7 +100,14 @@ module Restforce
       end
     end
 
-    option :api_version, default: lambda { ENV['SALESFORCE_API_VERSION'] || '26.0' }
+    option :api_version, default: lambda { ENV['SALESFORCE_API_VERSION'] || '26.0' },
+                         validator: (lambda do |value|
+                           return if value =~ /^\d+\.\d$/
+                           raise InvalidOptionError, "'#{value}' is not a valid API " \
+                                                     "version - must be a string " \
+                                                     "representation of a number to " \
+                                                     "one decimal place, e.g. '38.0'"
+                         end)
 
     # The username to use during login.
     option :username, default: lambda { ENV['SALESFORCE_USERNAME'] }
