@@ -16,6 +16,11 @@ Gem::Specification.new do |gem|
   gem.require_paths = ["lib"]
   gem.version       = Restforce::VERSION
 
+  gem.metadata = {
+    'source_code_uri' => 'https://github.com/ejholmes/restforce',
+    'changelog_uri'   => 'https://github.com/ejholmes/restforce/blob/master/CHANGELOG.md'
+  }
+
   gem.required_ruby_version = '>= 2.0'
 
   gem.add_dependency 'faraday', ['>= 0.9.0', '<= 1.0']
