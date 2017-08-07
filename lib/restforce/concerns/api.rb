@@ -364,13 +364,13 @@ module Restforce
         attrs = attrs.dup
         external_id =
           extract_case_insensitive_string_or_symbol_key_from_hash!(attrs, field)
-        if field.to_s != "Id" && (external_id.nil? || external_id.strip.empty?)
+        if field.to_s != "Id" && (external_id.nil? || external_id.blank?)
           raise ArgumentError, 'Specified external ID field missing from provided ' \
                                'attributes'
         end
 
         response =
-          if field.to_s == "Id" && (external_id.nil? || external_id.strip.empty?)
+          if field.to_s == "Id" && (external_id.nil? || external_id.blank?)
             version_guard(37.0) do
               api_post "sobjects/#{sobject}/#{field}", attrs
             end
