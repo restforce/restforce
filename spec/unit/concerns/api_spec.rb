@@ -413,6 +413,23 @@ describe Restforce::Concerns::API do
         end
       end
     end
+
+    describe '.upsert! with Fixnum argument' do
+      let(:sobject)    { 'Whizbang' }
+      let(:field)      { :External_ID__c }
+      let(:attrs)      { { 'External_ID__c' => 1234 } }
+      subject(:result) { client.upsert!(sobject, field, attrs) }
+
+      context 'when the record is found and updated' do
+        it 'returns true' do
+          response.body.stub :[]
+          client.should_receive(:api_patch).
+            with('sobjects/Whizbang/External_ID__c/1234', {}).
+            and_return(response)
+          expect(result).to be_true
+        end
+      end
+    end
   end
 
   describe '.destroy!' do

@@ -363,7 +363,7 @@ module Restforce
       def upsert!(sobject, field, attrs)
         attrs = attrs.dup
         external_id =
-          extract_case_insensitive_string_or_symbol_key_from_hash!(attrs, field)
+          extract_case_insensitive_string_or_symbol_key_from_hash!(attrs, field).to_s
         if field.to_s != "Id" && (external_id.nil? || external_id.strip.empty?)
           raise ArgumentError, 'Specified external ID field missing from provided ' \
                                'attributes'
