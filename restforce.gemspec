@@ -17,8 +17,8 @@ Gem::Specification.new do |gem|
   gem.version       = Restforce::VERSION
 
   gem.metadata = {
-    'source_code_uri' => 'https://github.com/ejholmes/restforce',
-    'changelog_uri'   => 'https://github.com/ejholmes/restforce/blob/master/CHANGELOG.md'
+    'source_code_uri' => 'https://github.com/restforcegem/restforce',
+    'changelog_uri'   => 'https://github.com/restforcegem/restforce/blob/master/CHANGELOG.md'
   }
 
   gem.required_ruby_version = '>= 2.0'
