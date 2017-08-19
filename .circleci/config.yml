@@ -46,10 +46,6 @@ jobs:
     docker:
        - image: circleci/ruby:2.2.7
     steps: *steps
-  build-ruby2110:
-    docker:
-       - image: circleci/ruby:2.1.10
-    steps: *steps
 
 workflows:
   version: 2
@@ -58,4 +54,3 @@ workflows:
       - build-ruby241
       - build-ruby234
       - build-ruby227
-      - build-ruby2110
