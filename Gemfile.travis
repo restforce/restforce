@@ -1,8 +1,0 @@
-source 'https://rubygems.org'
-gemspec
-
-gem 'rake'
-gem 'rack', '~> 1.6.4'
-gem 'faraday', '~> 0.11.0'
-gem 'jruby-openssl', :platforms => :jruby
-gem 'public_suffix', '2.0.3'
