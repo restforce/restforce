@@ -1,0 +1,41 @@
+# Ruby CircleCI 2.0 configuration file
+#
+# Check https://circleci.com/docs/2.0/language-ruby/ for more details
+#
+version: 2
+jobs:
+  build:
+    docker:
+       - image: circleci/ruby:2.4.1
+    working_directory: ~/restforce
+    steps:
+      - checkout
+
+      - run:
+          name: Update Bundler
+          command: gem install bundler
+
+      - run:
+          name: Install dependencies from .gemspec
+          command: bundle install --jobs=4 --retry=3 --path vendor/bundle
+
+      - run:
+          name: Run RSpec tests
+          command: |
+            mkdir /tmp/test-results
+            
+            bundle exec rspec --format progress \
+                            --format RspecJunitFormatter \
+                            --out /tmp/test-results/rspec.xml \
+                            --format progress \
+                            spec/**/*_spec.rb
+
+      - run:
+          name: Check code style with Rubocop
+          command: bundle exec rubocop
+
+      - store_test_results:
+          path: /tmp/test-results
+      - store_artifacts:
+          path: /tmp/test-results
+          destination: test-results
