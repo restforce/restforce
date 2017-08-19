@@ -6,7 +6,7 @@ Gem::Specification.new do |gem|
   gem.email         = ["eric@ejholmes.net", "tim@gocardless.com"]
   gem.description   = %q{A lightweight ruby client for the Salesforce REST API.}
   gem.summary       = %q{A lightweight ruby client for the Salesforce REST API.}
-  gem.homepage      = "http://restforce.org/"
+  gem.homepage      = "https://restforce.org/"
   gem.license       = "MIT"
 
   gem.files         = `git ls-files`.split($\)
@@ -17,8 +17,8 @@ Gem::Specification.new do |gem|
   gem.version       = Restforce::VERSION
 
   gem.metadata = {
-    'source_code_uri' => 'https://github.com/ejholmes/restforce',
-    'changelog_uri'   => 'https://github.com/ejholmes/restforce/blob/master/CHANGELOG.md'
+    'source_code_uri' => 'https://github.com/restforcegem/restforce',
+    'changelog_uri'   => 'https://github.com/restforcegem/restforce/blob/master/CHANGELOG.md'
   }
 
   gem.required_ruby_version = '>= 2.0'

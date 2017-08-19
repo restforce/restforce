@@ -1,6 +1,6 @@
 # Restforce
 
-[![travis-ci](https://travis-ci.org/ejholmes/restforce.png?branch=master)](https://travis-ci.org/ejholmes/restforce) [![Code Climate](https://codeclimate.com/github/ejholmes/restforce.png)](https://codeclimate.com/github/ejholmes/restforce) [![Dependency Status](https://gemnasium.com/ejholmes/restforce.png)](https://gemnasium.com/ejholmes/restforce)
+[![CircleCI](https://circleci.com/gh/restforcegem/restforce.svg?style=svg)](https://circleci.com/gh/restforcegem/restforce) [![Code Climate](https://codeclimate.com/github/restforcegem/restforce.png)](https://codeclimate.com/github/restforcegem/restforce) [![Dependency Status](https://gemnasium.com/restforcegem/restforce.png)](https://gemnasium.com/restforcegem/restforce)
 ![](https://img.shields.io/gem/dt/restforce.svg)
 
 Restforce is a ruby gem for the [Salesforce REST api](http://www.salesforce.com/us/developer/docs/api_rest/index.htm).
@@ -19,7 +19,7 @@ Features include:
 * Support for dependent picklists.
 * Support for decoding [Force.com Canvas](http://www.salesforce.com/us/developer/docs/platform_connectpre/canvas_framework.pdf) signed requests. (NEW!)
 
-[Official Website](http://restforce.org/) | [Documentation](http://rubydoc.info/gems/restforce/frames) | [Changelog](https://github.com/ejholmes/restforce/tree/master/CHANGELOG.md)
+[Official Website](http://restforce.org/) | [Documentation](http://rubydoc.info/gems/restforce/frames) | [Changelog](https://github.com/restforcegem/restforce/tree/master/CHANGELOG.md)
 
 ## Installation
 
@@ -35,11 +35,11 @@ Or install it yourself as:
 
     $ gem install restforce
 
-__As of [version 2.5.0](https://github.com/ejholmes/restforce/blob/master/CHANGELOG.md#250-dec-5-2016), this gem is only compatible with Ruby 2.0.0 and later.__ To use Ruby 1.9.3, you'll need to manually specify that you wish to use version 2.4.2, or 1.5.3 for Ruby 1.9.2 support.
+__As of [version 2.5.0](https://github.com/restforcegem/restforce/blob/master/CHANGELOG.md#250-dec-5-2016), this gem is only compatible with Ruby 2.0.0 and later.__ To use Ruby 1.9.3, you'll need to manually specify that you wish to use version 2.4.2, or 1.5.3 for Ruby 1.9.2 support.
 
 The library is only tested with Ruby 2.2.0 onwards. It may work with Ruby 2.0 and Ruby 2.1, but this is not guaranteed.
 
-This gem is versioned using [Semantic Versioning](http://semver.org/), so you can be confident when updating that there will not be breaking changes outside of a major version (following format MAJOR.MINOR.PATCH, so for instance moving from 2.3.0 to 3.0.0 would be allowed to include incompatible API changes). See the [changelog](https://github.com/ejholmes/restforce/tree/master/CHANGELOG.md) for details on what has changed in each version.
+This gem is versioned using [Semantic Versioning](http://semver.org/), so you can be confident when updating that there will not be breaking changes outside of a major version (following format MAJOR.MINOR.PATCH, so for instance moving from 2.3.0 to 3.0.0 would be allowed to include incompatible API changes). See the [changelog](https://github.com/restforcegem/restforce/tree/master/CHANGELOG.md) for details on what has changed in each version.
 
 ## Usage
 
@@ -477,7 +477,7 @@ File.open(document.Name, 'wb') { |f| f.write(document.Body) }
 
 **Note:** The example above is only applicable if your SOQL query returns a single Document record. If more than one record is returned, 
 the Body field contains an URL to retrieve the BLOB content for the first 2000 records returned. Subsequent records contain the BLOB content
-in the Body field. This is confusing and hard to debug. See notes in [Issue #301](https://github.com/ejholmes/restforce/issues/301#issuecomment-298972959) explaining this detail. 
+in the Body field. This is confusing and hard to debug. See notes in [Issue #301](https://github.com/restforcegem/restforce/issues/301#issuecomment-298972959) explaining this detail. 
 **Executive Summary:** Don't retrieve the Body field in a SOQL query; instead, use the BLOB retrieval URL documented 
 in [SObject BLOB Retrieve](https://developer.salesforce.com/docs/atlas.en-us.api_rest.meta/api_rest/resources_sobject_blob_retrieve.htm) 
 
@@ -653,7 +653,7 @@ Callbacks.
 
 We welcome all contributions - they help us make Restforce the best gem possible.
 
-See our [CONTRIBUTING.md](https://github.com/ejholmes/restforce/blob/master/CONTRIBUTING.md) file for help with getting set up to work on the project locally.
+See our [CONTRIBUTING.md](https://github.com/restforcegem/restforce/blob/master/CONTRIBUTING.md) file for help with getting set up to work on the project locally.
 
 1. Fork it
 2. Create your feature branch (`git checkout -b my-new-feature`)
