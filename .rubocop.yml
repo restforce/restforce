@@ -8,6 +8,7 @@ AllCops:
     - Rakefile
   Exclude:
     - .*/**/*
+    - vendor/**/*
 
 # Limit lines to 80 characters.
 LineLength:

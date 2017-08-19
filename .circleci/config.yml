@@ -1,0 +1,56 @@
+version: 2
+
+references:
+  steps: &steps
+    - checkout
+
+    - run:
+        name: Update Bundler
+        command: gem install bundler
+
+    - run:
+        name: Install dependencies from .gemspec
+        command: bundle install --jobs=4 --retry=3 --path vendor/bundle
+
+    - run:
+        name: Run RSpec tests
+        command: |
+          mkdir /tmp/test-results
+          
+          bundle exec rspec --format progress \
+                          --format RspecJunitFormatter \
+                          --out /tmp/test-results/rspec.xml \
+                          --format progress \
+                          spec/**/*_spec.rb
+
+    - run:
+        name: Check code style with Rubocop
+        command: bundle exec rubocop
+
+    - store_test_results:
+        path: /tmp/test-results
+    - store_artifacts:
+        path: /tmp/test-results
+        destination: test-results
+
+jobs:
+  build-ruby241:
+    docker:
+       - image: circleci/ruby:2.4.1
+    steps: *steps
+  build-ruby234:
+    docker:
+       - image: circleci/ruby:2.3.4
+    steps: *steps
+  build-ruby227:
+    docker:
+       - image: circleci/ruby:2.2.7
+    steps: *steps
+
+workflows:
+  version: 2
+  tests:
+    jobs:
+      - build-ruby241
+      - build-ruby234
+      - build-ruby227
