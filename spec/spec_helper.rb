@@ -3,9 +3,10 @@ SimpleCov.start
 
 require 'bundler/setup'
 Bundler.require :default, :test
-require 'faye' unless RUBY_PLATFORM == 'java'
 
+require 'faye' unless RUBY_PLATFORM == 'java'
 require 'webmock/rspec'
+require 'rspec/its'
 
 WebMock.disable_net_connect!
 
