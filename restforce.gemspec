@@ -6,7 +6,7 @@ Gem::Specification.new do |gem|
   gem.email         = ["eric@ejholmes.net", "tim@gocardless.com"]
   gem.description   = %q{A lightweight ruby client for the Salesforce REST API.}
   gem.summary       = %q{A lightweight ruby client for the Salesforce REST API.}
-  gem.homepage      = "http://restforce.org/"
+  gem.homepage      = "https://restforce.org/"
   gem.license       = "MIT"
 
   gem.files         = `git ls-files`.split($\)
