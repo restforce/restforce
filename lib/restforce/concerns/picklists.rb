@@ -26,8 +26,6 @@ module Restforce
         PicklistValues.new(describe(sobject)['fields'], field, options)
       end
 
-      private
-
       class PicklistValues < Array
         def initialize(fields, field, options = {})
           @fields = fields
