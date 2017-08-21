@@ -63,3 +63,8 @@ Style/MethodName:
 Metrics/BlockLength:
   Exclude:
     - spec/**/*
+
+Metrics/FileName:
+  Exclude:
+    - Gemfile
+    - Guardfile
