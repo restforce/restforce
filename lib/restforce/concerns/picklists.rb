@@ -58,7 +58,9 @@ module Restforce
 
         def controlling_picklist
           @_controlling_picklist ||= controlling_field['picklistValues'].
-                                     find { |picklist_entry| picklist_entry['value'] == @valid_for }
+                                     find do |picklist_entry|
+                                       picklist_entry['value'] == @valid_for
+                                     end
         end
 
         def index
