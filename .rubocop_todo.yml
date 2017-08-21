@@ -29,7 +29,7 @@ Style/AccessorMethodName:
 # Offense count: 164
 # Cop supports --auto-correct.
 # Configuration parameters: EnforcedHashRocketStyle, EnforcedColonStyle, EnforcedLastArgumentHashStyle, SupportedLastArgumentHashStyles.
-Style/AlignHash:
+Layout/AlignHash:
   Enabled: false
 
 # Offense count: 3
@@ -45,7 +45,7 @@ Style/ClassAndModuleChildren:
 
 # Offense count: 21
 # Cop supports --auto-correct.
-Style/ClosingParenthesisIndentation:
+Layout/ClosingParenthesisIndentation:
   Enabled: false
 
 # Offense count: 13
@@ -70,7 +70,7 @@ Style/GuardClause:
 # Offense count: 48
 # Cop supports --auto-correct.
 # Configuration parameters: EnforcedStyle, SupportedStyles.
-Style/IndentHash:
+Layout/IndentHash:
   Enabled: false
 
 # Offense count: 70
@@ -81,7 +81,7 @@ Style/Lambda:
 # Offense count: 577
 # Cop supports --auto-correct.
 # Configuration parameters: EnforcedStyle, SupportedStyles.
-Style/MultilineOperationIndentation:
+Layout/MultilineOperationIndentation:
   Enabled: false
 
 # Offense count: 21
@@ -101,13 +101,13 @@ Style/RedundantSelf:
 
 # Offense count: 28
 # Cop supports --auto-correct.
-Style/SingleSpaceBeforeFirstArg:
+Layout/SpaceBeforeFirstArg:
   Enabled: false
 
 # Offense count: 3
 # Cop supports --auto-correct.
 # Configuration parameters: MultiSpaceAllowedForOperators.
-Style/SpaceAroundOperators:
+Layout/SpaceAroundOperators:
   Enabled: false
 
 # Offense count: 5

@@ -13,7 +13,7 @@ describe Restforce::Middleware::CustomHeaders do
     context 'when :request_headers are not a Hash' do
       let(:options) { { request_headers: 'bad header' } }
 
-      it { should_not change { env[:request_headers] } }
+      it { should_not(change { env[:request_headers] }) }
     end
   end
 end

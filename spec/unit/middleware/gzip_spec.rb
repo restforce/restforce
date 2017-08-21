@@ -29,7 +29,7 @@ describe Restforce::Middleware::Gzip do
     end
 
     context 'when :compress is false' do
-      it { should_not change { env[:request_headers]['Accept-Encoding'] } }
+      it { should_not(change { env[:request_headers]['Accept-Encoding'] }) }
     end
 
     context 'when :compress is true' do
@@ -37,7 +37,7 @@ describe Restforce::Middleware::Gzip do
         options[:compress] = true
       end
 
-      it { should change { env[:request_headers]['Accept-Encoding'] }.to('gzip') }
+      it { should(change { env[:request_headers]['Accept-Encoding'] }.to('gzip')) }
     end
   end
 

@@ -3,7 +3,7 @@
 inherit_from: .rubocop_todo.yml
 
 AllCops:
-  RunRailsCops: false
+  DisplayCopNames: true
   Include:
     - Rakefile
   Exclude:
@@ -49,7 +49,7 @@ Style/SignalException:
   EnforcedStyle: 'only_raise'
 
 # Use trailing rather than leading dots on multi-line call chains
-Style/DotPosition:
+Layout/DotPosition:
   EnforcedStyle: trailing
 
 # Allow non-ASCII characters (e.g. £) in comments
@@ -59,3 +59,13 @@ Style/AsciiComments:
 # Allow method names beginning with capital letters to match Salesforce conventions
 Style/MethodName:
   Enabled: false
+
+Metrics/BlockLength:
+  Exclude:
+    - spec/**/*
+    - restforce.gemspec
+
+Metrics/FileName:
+  Exclude:
+    - Gemfile
+    - Guardfile

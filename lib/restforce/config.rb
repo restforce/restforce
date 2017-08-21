@@ -60,7 +60,7 @@ module Restforce
       private
 
       attr_reader :default
-      alias_method :default_provided?, :default
+      alias default_provided? default
 
       def write_attribute
         configuration.send :attr_accessor, name

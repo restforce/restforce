@@ -1,7 +1,7 @@
 require 'spec_helper'
 
 describe Restforce::Concerns::Canvas do
-  let(:options) { Hash.new }
+  let(:options) { {} }
 
   before do
     client.stub options: options
