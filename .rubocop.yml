@@ -3,7 +3,6 @@
 inherit_from: .rubocop_todo.yml
 
 AllCops:
-  RunRailsCops: false
   Include:
     - Rakefile
   Exclude:
@@ -49,7 +48,7 @@ Style/SignalException:
   EnforcedStyle: 'only_raise'
 
 # Use trailing rather than leading dots on multi-line call chains
-Style/DotPosition:
+Layout/DotPosition:
   EnforcedStyle: trailing
 
 # Allow non-ASCII characters (e.g. £) in comments
