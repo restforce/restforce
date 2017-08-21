@@ -59,3 +59,7 @@ Style/AsciiComments:
 # Allow method names beginning with capital letters to match Salesforce conventions
 Style/MethodName:
   Enabled: false
+
+Metrics/BlockLength:
+  Exclude:
+    - spec/**/*
