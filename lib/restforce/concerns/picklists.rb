@@ -60,7 +60,7 @@ module Restforce
 
         def controlling_picklist
           @_controlling_picklist ||= controlling_field['picklistValues'].
-            find { |picklist_entry| picklist_entry['value'] == @valid_for }
+                                     find { |picklist_entry| picklist_entry['value'] == @valid_for }
         end
 
         def index
@@ -81,7 +81,7 @@ module Restforce
         # cribesobjects_describesobjectresult.htm
         def valid?(picklist_entry)
           valid_for = picklist_entry['validFor'].ljust(16, 'A').unpack('m').first.
-            unpack('q*')
+                      unpack('q*')
           (valid_for[index >> 3] & (0x80 >> index % 8)) != 0
         end
       end

@@ -259,7 +259,7 @@ describe Restforce::Concerns::API do
     end
   end
 
-  [:create, :update, :upsert, :destroy].each do |method|
+  %i[create update upsert destroy].each do |method|
     describe ".#{method}" do
       let(:args)       { [] }
       subject(:result) { client.send(method, *args) }
@@ -289,7 +289,7 @@ describe Restforce::Concerns::API do
 
     describe '.create!' do
       let(:sobject)    { 'Whizbang' }
-      let(:attrs)      { Hash.new }
+      let(:attrs)      { {} }
       subject(:result) { client.create!(sobject, attrs) }
 
       it 'send an HTTP POST, and returns the id of the record' do
@@ -303,7 +303,7 @@ describe Restforce::Concerns::API do
 
     describe '.update!' do
       let(:sobject)    { 'Whizbang' }
-      let(:attrs)      { Hash.new }
+      let(:attrs)      { {} }
       subject(:result) { client.update!(sobject, attrs) }
 
       context 'when the id field is present' do
@@ -351,7 +351,7 @@ describe Restforce::Concerns::API do
       end
 
       context 'when the external id field is missing from the attrs' do
-        let(:attrs) { Hash.new }
+        let(:attrs) { {} }
 
         it 'raises an argument error' do
           expect { client.upsert!(sobject, field, attrs) }.

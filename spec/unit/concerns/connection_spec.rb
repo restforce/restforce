@@ -34,7 +34,7 @@ describe Restforce::Concerns::Connection do
       describe 'with mashify not specified' do
         it 'includes the Mashify middleware' do
           client.middleware.handlers.index(Restforce::Middleware::Mashify).
-              should_not be_nil
+            should_not be_nil
         end
       end
 
@@ -45,7 +45,7 @@ describe Restforce::Concerns::Connection do
 
         it 'includes the Mashify middleware' do
           client.middleware.handlers.index(Restforce::Middleware::Mashify).
-              should_not be_nil
+            should_not be_nil
         end
       end
 
@@ -56,7 +56,7 @@ describe Restforce::Concerns::Connection do
 
         it 'does not include the Mashify middleware' do
           client.middleware.handlers.index(Restforce::Middleware::Mashify).
-              should be_nil
+            should be_nil
         end
       end
     end

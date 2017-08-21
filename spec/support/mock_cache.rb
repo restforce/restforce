@@ -11,8 +11,8 @@ class MockCache
     @storage[key] = value
   end
 
-  def fetch(key, &block)
-    @storage[key] ||= block.call
+  def fetch(key)
+    @storage[key] ||= yield
   end
 
   def delete(key)

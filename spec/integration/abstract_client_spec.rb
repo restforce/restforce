@@ -35,7 +35,7 @@ shared_examples_for Restforce::AbstractClient do
   end
 
   describe '.get_updated' do
-    let(:start_date) { Time.new(2015, 8, 17, 0, 0, 0, "+02:00")  }
+    let(:start_date) { Time.new(2015, 8, 17, 0, 0, 0, "+02:00") }
     let(:end_date) { Time.new(2016, 8, 19, 0, 0, 0, "+02:00") }
     end_string = '2016-08-18T22:00:00Z'
     start_string = '2015-08-16T22:00:00Z'
@@ -46,7 +46,7 @@ shared_examples_for Restforce::AbstractClient do
   end
 
   describe '.get_deleted' do
-    let(:start_date) { Time.new(2015, 8, 17, 0, 0, 0, "+02:00")  }
+    let(:start_date) { Time.new(2015, 8, 17, 0, 0, 0, "+02:00") }
     let(:end_date) { Time.new(2016, 8, 19, 0, 0, 0, "+02:00") }
     end_string = '2016-08-18T22:00:00Z'
     start_string = '2015-08-16T22:00:00Z'
@@ -379,11 +379,11 @@ shared_examples_for Restforce::AbstractClient do
 
     before do
       @query = stub_api_request('query\?q=SELECT%20some,%20fields%20FROM%20object').
-        with(headers: { 'Authorization' => "OAuth #{oauth_token}" }).
-        to_return(status: 401,
+               with(headers: { 'Authorization' => "OAuth #{oauth_token}" }).
+               to_return(status: 401,
                   body: fixture('expired_session_response'),
                   headers: { 'Content-Type' => 'application/json' }).then.
-        to_return(status: 200,
+               to_return(status: 200,
                   body: fixture('sobject/query_success_response'),
                   headers: { 'Content-Type' => 'application/json' })
 

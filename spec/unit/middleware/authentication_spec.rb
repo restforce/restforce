@@ -58,7 +58,7 @@ describe Restforce::Middleware::Authentication do
           should include FaradayMiddleware::ParseJson,
                          Faraday::Adapter::NetHttp
         }
-        its(:handlers) { should_not include Restforce::Middleware::Logger  }
+        its(:handlers) { should_not include Restforce::Middleware::Logger }
       end
 
       context 'with logging enabled' do

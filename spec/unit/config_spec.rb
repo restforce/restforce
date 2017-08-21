@@ -25,9 +25,9 @@ describe Restforce do
       its(:authentication_retries) { should eq 3 }
       its(:adapter)                { should eq Faraday.default_adapter }
       its(:ssl)                    { should eq({}) }
-      [:username, :password, :security_token, :client_id, :client_secret,
-       :oauth_token, :refresh_token, :instance_url, :compress, :timeout,
-       :proxy_uri, :authentication_callback, :mashify, :request_headers].each do |attr|
+      %i[username password security_token client_id client_secret
+         oauth_token refresh_token instance_url compress timeout
+         proxy_uri authentication_callback mashify request_headers].each do |attr|
         its(attr) { should be_nil }
       end
     end
@@ -42,7 +42,7 @@ describe Restforce do
           'SALESFORCE_PROXY_URI'      => 'proxy',
           'SALESFORCE_HOST'           => 'test.host.com',
           'SALESFORCE_API_VERSION'    => '37.0' }.
-        each { |var, value| ENV.stub(:[]).with(var).and_return(value) }
+          each { |var, value| ENV.stub(:[]).with(var).and_return(value) }
       end
 
       its(:username)       { should eq 'foo' }
@@ -57,10 +57,10 @@ describe Restforce do
   end
 
   describe '#configure' do
-    [:username, :password, :security_token, :client_id, :client_secret, :compress,
-     :timeout, :oauth_token, :refresh_token, :instance_url, :api_version, :host, :mashify,
-     :authentication_retries, :proxy_uri, :authentication_callback, :ssl,
-     :request_headers, :log_level, :logger].each do |attr|
+    %i[username password security_token client_id client_secret compress
+       timeout oauth_token refresh_token instance_url api_version host mashify
+       authentication_retries proxy_uri authentication_callback ssl
+       request_headers log_level logger].each do |attr|
       it "allows #{attr} to be set" do
         Restforce.configure do |config|
           config.send("#{attr}=", 'foobar')

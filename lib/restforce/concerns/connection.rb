@@ -13,7 +13,7 @@ module Restforce
       def middleware
         connection.builder
       end
-      alias_method :builder, :middleware
+      alias builder middleware
 
       private
 
@@ -22,7 +22,7 @@ module Restforce
         @connection ||= Faraday.new(options[:instance_url],
                                     connection_options) do |builder|
           # Parses JSON into Hashie::Mash structures.
-          unless (options[:mashify] == false)
+          unless options[:mashify] == false
             builder.use    Restforce::Middleware::Mashify, self, options
           end
 
@@ -51,11 +51,13 @@ module Restforce
           # Inject custom headers into requests
           builder.use      Restforce::Middleware::CustomHeaders, self, options
           # Log request/responses
-          builder.use      Restforce::Middleware::Logger,
-                           Restforce.configuration.logger,
-                           options if Restforce.log?
+          if Restforce.log?
+            builder.use      Restforce::Middleware::Logger,
+                             Restforce.configuration.logger,
+                             options
+          end
 
-          builder.adapter  adapter
+          builder.adapter adapter
         end
       end
 
@@ -67,10 +69,10 @@ module Restforce
       def connection_options
         { request: {
             timeout: options[:timeout],
-            open_timeout: options[:timeout] },
+            open_timeout: options[:timeout]
+},
           proxy: options[:proxy_uri],
-          ssl: options[:ssl]
-        }
+          ssl: options[:ssl] }
       end
 
       # Internal: Returns true if the middlware stack includes the

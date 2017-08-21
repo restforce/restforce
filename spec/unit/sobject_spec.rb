@@ -54,7 +54,7 @@ describe Restforce::SObject do
 
       context 'when an Id is present' do
         before do
-          hash.merge!(Id: '001D000000INjVe')
+          hash[:Id] = '001D000000INjVe'
           client.should_receive(receiver)
         end
 

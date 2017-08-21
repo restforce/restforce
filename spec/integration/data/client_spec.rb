@@ -9,14 +9,14 @@ shared_examples_for Restforce::Data::Client do
       subject { client.picklist_values('Account', 'Picklist_Field') }
       it { should be_an Array }
       its(:length) { should eq 3 }
-      it { should include_picklist_values %w(one two three) }
+      it { should include_picklist_values %w[one two three] }
     end
 
     context 'when given a multipicklist field' do
       subject { client.picklist_values('Account', 'Picklist_Multiselect_Field') }
       it { should be_an Array }
       its(:length) { should eq 3 }
-      it { should include_picklist_values %w(four five six) }
+      it { should include_picklist_values %w[four five six] }
     end
 
     describe 'dependent picklists' do
@@ -29,7 +29,7 @@ shared_examples_for Restforce::Data::Client do
 
         it { should be_an Array }
         its(:length) { should eq 2 }
-        it { should include_picklist_values %w(seven eight) }
+        it { should include_picklist_values %w[seven eight] }
         it { should_not include_picklist_values ['nine'] }
       end
 
@@ -90,7 +90,7 @@ shared_examples_for Restforce::Data::Client do
       it 'subscribes to each pushtopic' do
         client.faye.should_receive(:subscribe).with(['/topic/PushTopic1',
                                                      '/topic/PushTopic2'])
-        client.subscribe(%w(PushTopic1 PushTopic2))
+        client.subscribe(%w[PushTopic1 PushTopic2])
       end
     end
   end

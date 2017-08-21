@@ -50,9 +50,11 @@ module Restforce
         builder.use Restforce::Middleware::Mashify, nil, @options
         builder.response :json
 
-        builder.use Restforce::Middleware::Logger,
-                    Restforce.configuration.logger,
-                    @options if Restforce.log?
+        if Restforce.log?
+          builder.use Restforce::Middleware::Logger,
+                      Restforce.configuration.logger,
+                      @options
+        end
 
         builder.adapter @options[:adapter]
       end
