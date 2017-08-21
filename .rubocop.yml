@@ -63,6 +63,7 @@ Style/MethodName:
 Metrics/BlockLength:
   Exclude:
     - spec/**/*
+    - restforce.gemspec
 
 Metrics/FileName:
   Exclude:
