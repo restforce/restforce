@@ -16,7 +16,7 @@ describe Restforce::Collection do
       its(:page_size)      { should eq 1 }
 
       describe 'each record' do
-        it { should be_all { |record| expect(record).to be_a Restforce::SObject } }
+        it { should(be_all { |record| expect(record).to be_a Restforce::SObject }) }
       end
     end
 
@@ -51,11 +51,11 @@ describe Restforce::Collection do
         end
 
         its(:pages) do
-          should be_all { |page| expect(page).to be_a Restforce::Collection }
+          should(be_all { |page| expect(page).to be_a Restforce::Collection })
         end
 
         its(:has_next_page?) { should be_true }
-        it { should be_all   { |record| expect(record).to be_a Restforce::SObject } }
+        it { should(be_all { |record| expect(record).to be_a Restforce::SObject }) }
         its(:next_page)      { should be_a Restforce::Collection }
       end
     end

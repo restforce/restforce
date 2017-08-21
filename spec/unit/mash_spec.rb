@@ -6,7 +6,7 @@ describe Restforce::Mash do
 
     context 'when array' do
       let(:input) { [{ foo: 'hello' }, { bar: 'world' }] }
-      it { should be_all { |obj| expect(obj).to be_a Restforce::Mash } }
+      it { should(be_all { |obj| expect(obj).to be_a Restforce::Mash }) }
     end
   end
 
