@@ -262,8 +262,8 @@ module Restforce
       # Returns false if something bad happens.
       def create(*args)
         create!(*args)
-      rescue *exceptions
-        false
+      rescue Faraday::ClientError => error
+        raise "#{error.class}: #{error.message}"
       end
       alias insert create
 
