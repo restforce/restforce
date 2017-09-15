@@ -23,7 +23,7 @@ Metrics/PerceivedComplexity:
   Max: 10
 
 # Offense count: 12
-Style/AccessorMethodName:
+Naming/AccessorMethodName:
   Enabled: false
 
 # Offense count: 164
@@ -86,7 +86,7 @@ Layout/MultilineOperationIndentation:
 
 # Offense count: 21
 # Configuration parameters: NamePrefix, NamePrefixBlacklist.
-Style/PredicateName:
+Naming/PredicateName:
   Enabled: false
 
 # Offense count: 4

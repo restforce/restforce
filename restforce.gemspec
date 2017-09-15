@@ -1,5 +1,3 @@
-# -*- encoding: utf-8 -*-
-
 require File.expand_path('../lib/restforce/version', __FILE__)
 
 Gem::Specification.new do |gem|
@@ -34,7 +32,7 @@ Gem::Specification.new do |gem|
   gem.add_development_dependency 'rspec', '~> 2.14.0'
   gem.add_development_dependency 'webmock', '~> 3.0.1'
   gem.add_development_dependency 'simplecov', '~> 0.15.0'
-  gem.add_development_dependency 'rubocop', '~> 0.49.1'
+  gem.add_development_dependency 'rubocop', '~> 0.50.0'
   gem.add_development_dependency 'rspec_junit_formatter', '~> 0.3.0'
   gem.add_development_dependency 'faye' unless RUBY_PLATFORM == 'java'
 end

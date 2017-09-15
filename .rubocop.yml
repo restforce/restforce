@@ -57,7 +57,7 @@ Style/AsciiComments:
   Enabled: false
 
 # Allow method names beginning with capital letters to match Salesforce conventions
-Style/MethodName:
+Naming/MethodName:
   Enabled: false
 
 Metrics/BlockLength:
@@ -65,7 +65,10 @@ Metrics/BlockLength:
     - spec/**/*
     - restforce.gemspec
 
-Metrics/FileName:
+Naming/FileName:
   Exclude:
     - Gemfile
     - Guardfile
+
+Lint/UriEscapeUnescape:
+  Enabled: false
