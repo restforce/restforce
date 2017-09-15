@@ -29,7 +29,8 @@ Gem::Specification.new do |gem|
 
   gem.add_dependency 'hashie', ['>= 1.2.0', '< 4.0']
 
-  gem.add_development_dependency 'rspec', '~> 2.14.0'
+  gem.add_development_dependency 'rspec', '~> 3.6.0'
+  gem.add_development_dependency 'rspec-its', '~> 1.2.0'
   gem.add_development_dependency 'webmock', '~> 3.0.1'
   gem.add_development_dependency 'simplecov', '~> 0.15.0'
   gem.add_development_dependency 'rubocop', '~> 0.50.0'
