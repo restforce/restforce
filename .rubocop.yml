@@ -69,3 +69,6 @@ Naming/FileName:
   Exclude:
     - Gemfile
     - Guardfile
+
+Lint/UriEscapeUnescape:
+  Enabled: false
