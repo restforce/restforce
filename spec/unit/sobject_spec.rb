@@ -58,7 +58,9 @@ describe Restforce::SObject do
           client.should_receive(receiver)
         end
 
-        it { should_not raise_error }
+        it 'does not raise an error' do
+          expect { send_method }.to_not raise_error
+        end
       end
     end
   end
