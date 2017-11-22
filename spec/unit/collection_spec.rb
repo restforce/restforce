@@ -11,7 +11,7 @@ describe Restforce::Collection do
 
       it                   { should respond_to :each }
       its(:size)           { should eq 1 }
-      its(:has_next_page?) { should be false }
+      its(:has_next_page?) { should be_falsey }
       it                   { should have_client client }
       its(:page_size)      { should eq 1 }
 
