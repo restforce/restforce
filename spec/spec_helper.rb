@@ -7,6 +7,8 @@ Bundler.require :default, :test
 require 'faye' unless RUBY_PLATFORM == 'java'
 require 'webmock/rspec'
 require 'rspec/its'
+#NOTE I think this only helps collection_spec.rb:43, might be worth changing spec and removing
+require 'rspec/collection_matchers'
 
 WebMock.disable_net_connect!
 

@@ -144,7 +144,7 @@ shared_examples_for Restforce::AbstractClient do
                fixture: 'sobject/delete_error_response'
 
       subject { client.update('Account', Id: '001D000000INjVe', Name: 'Foobar') }
-      it { should be_false }
+      it { should be_falsey }
     end
 
     context 'with success' do
@@ -158,7 +158,7 @@ shared_examples_for Restforce::AbstractClient do
             client.update('Account', key => '001D000000INjVe', :Name => 'Foobar')
           end
 
-          it { should be_true }
+          it { should be_truthy }
         end
       end
     end
@@ -176,7 +176,7 @@ shared_examples_for Restforce::AbstractClient do
                                                    Name: 'Foobar')
         end
 
-        it { should be_true }
+        it { should be_truthy }
       end
 
       context 'with string external Id key' do
@@ -185,7 +185,7 @@ shared_examples_for Restforce::AbstractClient do
                                                    'Name' => 'Foobar')
         end
 
-        it { should be_true }
+        it { should be_truthy }
       end
     end
 
@@ -224,7 +224,7 @@ shared_examples_for Restforce::AbstractClient do
     context 'with success' do
       requests 'sobjects/Account/001D000000INjVe', method: :delete
 
-      it { should be_true }
+      it { should be_truthy }
     end
   end
 
@@ -237,13 +237,13 @@ shared_examples_for Restforce::AbstractClient do
                method: :delete,
                status: 404
 
-      it { should be_false }
+      it { should be_falsey }
     end
 
     context 'with success' do
       requests 'sobjects/Account/001D000000INjVe', method: :delete
 
-      it { should be_true }
+      it { should be_truthy }
     end
   end
 
