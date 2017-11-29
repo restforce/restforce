@@ -22,11 +22,13 @@ module Restforce
     #   account.Name = 'Foobar'
     #   account.save
     def save
+      ensure_write_access
       ensure_id
       @client.update(sobject_type, attrs)
     end
 
     def save!
+      ensure_write_access
       ensure_id
       @client.update!(sobject_type, attrs)
     end
@@ -38,11 +40,13 @@ module Restforce
     #   account = client.query('select Id, Name from Account').first
     #   account.destroy
     def destroy
+      ensure_write_access
       ensure_id
       @client.destroy(sobject_type, self.Id)
     end
 
     def destroy!
+      ensure_write_access
       ensure_id
       @client.destroy!(sobject_type, self.Id)
     end
@@ -62,6 +66,11 @@ module Restforce
     def ensure_id
       return true if self.Id?
       raise ArgumentError, 'You need to query the Id for the record first.'
+    end
+
+    def ensure_write_access
+      return true unless Restforce.configuration.read_only
+      raise Restforce::UnauthorizedError, 'You are in read only mode.'
     end
   end
 end

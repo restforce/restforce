@@ -150,6 +150,9 @@ module Restforce
     # Set a log level for logging when Restforce.log is set to true, defaulting to :debug
     option :log_level, default: :debug
 
+    # Set to true if you to disable data changes in salesforce
+    option :read_only, default: false
+
     def options
       self.class.options
     end
