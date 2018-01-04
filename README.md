@@ -65,7 +65,7 @@ It is also important to note that the client object should not be reused across 
 ```ruby
 client = Restforce.new(oauth_token: 'access_token',
                        instance_url: 'instance url',
-                       api_version: '38.0')
+                       api_version: '41.0')
 ```
 
 Although the above will work, you'll probably want to take advantage of the (re)authentication middleware by specifying `refresh_token`, `client_id`, `client_secret`, and `authentication_callback`:
@@ -77,7 +77,7 @@ client = Restforce.new(oauth_token: 'access_token',
                        client_id: 'client_id',
                        client_secret: 'client_secret',
                        authentication_callback: Proc.new { |x| Rails.logger.debug x.to_s },
-                       api_version: '38.0')
+                       api_version: '41.0')
 ```
 
 The middleware will use the `refresh_token` automatically to acquire a new `access_token` if the existing `access_token` is invalid.
@@ -110,7 +110,7 @@ client = Restforce.new(username: 'foo',
                        security_token: 'security token',
                        client_id: 'client_id',
                        client_secret: 'client_secret',
-                       api_version: '38.0')
+                       api_version: '41.0')
 ```
 
 You can also set the username, password, security token, client ID, client
@@ -122,7 +122,7 @@ export SALESFORCE_PASSWORD="password"
 export SALESFORCE_SECURITY_TOKEN="security token"
 export SALESFORCE_CLIENT_ID="client id"
 export SALESFORCE_CLIENT_SECRET="client secret"
-export SALESFORCE_API_VERSION="38.0"
+export SALESFORCE_API_VERSION="41.0"
 ```
 
 ```ruby
@@ -140,7 +140,7 @@ client = Restforce.new(username: 'foo',
                        client_id: 'client_id',
                        client_secret: 'client_secret',
                        proxy_uri: 'http://proxy.example.com:123',
-                       api_version: '38.0')
+                       api_version: '41.0')
 ```
 
 You may specify a username and password for the proxy with a URL along the lines of 'http://user:password@proxy.example.com:123'.
@@ -170,19 +170,19 @@ end
 
 By default, the gem defaults to using Version 26.0 (Winter '13) of the Salesforce API. This maintains backwards compatibility for existing users.
 
-__We strongly suggest configuring Restforce to use the most recent API version, currently Version 38.0 (Winter '17) to get the best Salesforce API experience__ - for example, some more recently-added API endpoints will not be available without moving to a more recent
+__We strongly suggest configuring Restforce to use the most recent API version, currently Version 41.0 (Winter '18) to get the best Salesforce API experience__ - for example, some more recently-added API endpoints will not be available without moving to a more recent
 version. If you're trying to use a method that is unavailable with your API version,
 Restforce will raise an `APIVersionError`.
 
 There are three ways to set the API version:
 
-* Passing in an `api_version` option when instantiating `Restforce` (i.e. `Restforce.new(api_version: '38.0')`)
-* Setting the `SALESFORCE_API_VERSION` environment variable (i.e. `export SALESFORCE_API_VERSION="38.0"`)
+* Passing in an `api_version` option when instantiating `Restforce` (i.e. `Restforce.new(api_version: '41.0')`)
+* Setting the `SALESFORCE_API_VERSION` environment variable (i.e. `export SALESFORCE_API_VERSION="41.0"`)
 * Configuring the version globally with `Restforce.configure`:
 
 ```ruby
 Restforce.configure do |config|
-  config.api_version = '38.0'
+  config.api_version = '41.0'
   # ...
 end
 ```
@@ -208,7 +208,7 @@ to include the `sforce-auto-assign` header in all client HTTP requests:
 ```ruby
 client = Restforce.new(oauth_token: 'access_token',
                        instance_url: 'instance url',
-                       api_version: '38.0',
+                       api_version: '41.0',
                        request_headers: { 'sforce-auto-assign' => 'FALSE' })
 
 ```
