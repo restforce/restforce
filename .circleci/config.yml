@@ -34,23 +34,28 @@ references:
         destination: test-results
 
 jobs:
-  build-ruby241:
+  build-ruby250:
     docker:
-       - image: circleci/ruby:2.4.1
+       - image: circleci/ruby:2.5.0
     steps: *steps
-  build-ruby234:
+  build-ruby243:
     docker:
-       - image: circleci/ruby:2.3.4
+       - image: circleci/ruby:2.4.3
     steps: *steps
-  build-ruby227:
+  build-ruby236:
     docker:
-       - image: circleci/ruby:2.2.7
+       - image: circleci/ruby:2.3.6
+    steps: *steps
+  build-ruby229:
+    docker:
+       - image: circleci/ruby:2.2.9
     steps: *steps
 
 workflows:
   version: 2
   tests:
     jobs:
-      - build-ruby241
-      - build-ruby234
-      - build-ruby227
+      - build-ruby250
+      - build-ruby243
+      - build-ruby236
+      - build-ruby229
