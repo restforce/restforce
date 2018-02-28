@@ -27,7 +27,7 @@ describe Restforce::Concerns::API do
     it 'returns the body' do
       start_string = '2002-10-31T00:02:02Z'
       end_string = '2003-10-31T00:02:02Z'
-      url = "/sobjects/Whizbang/updated/?start=#{start_string}&end=#{end_string}"
+      url = "sobjects/Whizbang/updated/?start=#{start_string}&end=#{end_string}"
       client.should_receive(:api_get).
         with(url).
         and_return(response)
@@ -43,7 +43,7 @@ describe Restforce::Concerns::API do
     it 'returns the body' do
       start_string = '2002-10-31T00:02:02Z'
       end_string = '2003-10-31T00:02:02Z'
-      url = "/sobjects/Whizbang/deleted/?start=#{start_string}&end=#{end_string}"
+      url = "sobjects/Whizbang/deleted/?start=#{start_string}&end=#{end_string}"
       client.should_receive(:api_get).
         with(url).
         and_return(response)

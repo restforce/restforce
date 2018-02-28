@@ -81,7 +81,7 @@ module Restforce
       def get_updated(sobject, start_time, end_time)
         start_time = start_time.utc.iso8601
         end_time = end_time.utc.iso8601
-        url = "/sobjects/#{sobject}/updated/?start=#{start_time}&end=#{end_time}"
+        url = "sobjects/#{sobject}/updated/?start=#{start_time}&end=#{end_time}"
         api_get(url).body
       end
 
@@ -101,7 +101,7 @@ module Restforce
       def get_deleted(sobject, start_time, end_time)
         start_time = start_time.utc.iso8601
         end_time = end_time.utc.iso8601
-        url = "/sobjects/#{sobject}/deleted/?start=#{start_time}&end=#{end_time}"
+        url = "sobjects/#{sobject}/deleted/?start=#{start_time}&end=#{end_time}"
         api_get(url).body
       end
 
