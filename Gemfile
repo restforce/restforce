@@ -1,7 +1,7 @@
 source 'https://rubygems.org'
 gemspec
 
-gem 'faraday', '~> 0.13.1'
+gem 'faraday', '~> 0.15.0'
 gem 'jruby-openssl', platforms: :jruby
 gem 'rake'
 
