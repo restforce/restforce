@@ -47,7 +47,9 @@ module Restforce
           # Parses returned JSON response into a hash.
           builder.response :json, content_type: /\bjson$/
           # Compress/Decompress the request/response
-          builder.use      Restforce::Middleware::Gzip, self, options
+          unless adapter == :httpclient
+            builder.use      Restforce::Middleware::Gzip, self, options
+          end
           # Inject custom headers into requests
           builder.use      Restforce::Middleware::CustomHeaders, self, options
           # Log request/responses
