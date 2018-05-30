@@ -64,15 +64,6 @@ module Restforce
       SignedRequest.decode(*args)
     end
   end
-
-  # Add .tap method in Ruby 1.8
-  module CoreExtensions
-    def tap
-      yield self
-      self
-    end
-  end
-  Object.send :include, Restforce::CoreExtensions unless Object.respond_to? :tap
 end
 
 if ENV['PROXY_URI']
