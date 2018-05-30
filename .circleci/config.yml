@@ -38,13 +38,13 @@ jobs:
     docker:
       - image: circleci/ruby:2.4.4
     steps: *steps
-  build-ruby234:
+  build-ruby237:
     docker:
-      - image: circleci/ruby:2.3.4
+      - image: circleci/ruby:2.3.7
     steps: *steps
-  build-ruby227:
+  build-ruby2210:
     docker:
-      - image: circleci/ruby:2.2.7
+      - image: circleci/ruby:2.2.10
     steps: *steps
 
 workflows:
@@ -52,5 +52,5 @@ workflows:
   tests:
     jobs:
       - build-ruby244
-      - build-ruby234
-      - build-ruby227
+      - build-ruby237
+      - build-ruby2210
