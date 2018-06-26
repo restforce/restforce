@@ -187,6 +187,25 @@ module Restforce
         mashify? ? response.body : response.body['records']
       end
 
+      # Public: Returns the next batch of a batched query.
+      #
+      # url - The nextRecordsUrl field from the previous batch response.
+      # options - Hash of options to control the query
+      #
+      # Examples
+      #
+      #   # Find the names of all Accounts
+      #   collection = client.query('select Name from Account')
+      #
+      #   new_collection = client.query_next_page(collection.next_page_url)
+      #
+      # Returns a Restforce::Collection if Restforce.configuration.mashify is true.
+      # Returns an Array of Hash for each record in the result if Restforce.configuration.mashify is false.
+      def query_next_page(url)
+        response = get url
+        mashify? ? response.body : response.body['records']
+      end
+
       # Public: Explain a SOQL query execution plan.
       #
       # Only available in version 30.0 and later of the Salesforce API.
