@@ -767,7 +767,48 @@
       "label" : "three",
       "defaultValue" : false,
       "validFor" : null
-    } ],
+    }, {
+      "value" : "control_four",
+      "active" : true,
+      "label" : "control_four",
+      "defaultValue" : false,
+      "validFor" : null
+    }, {
+      "value" : "control_five",
+      "active" : true,
+      "label" : "control_five",
+      "defaultValue" : false,
+      "validFor" : null
+    }, {
+      "value" : "control_six",
+      "active" : true,
+      "label" : "control_six",
+      "defaultValue" : false,
+      "validFor" : null
+    }, {
+      "value" : "control_seven",
+      "active" : true,
+      "label" : "control_seven",
+      "defaultValue" : false,
+      "validFor" : null
+    }, {
+      "value" : "control_eight",
+      "active" : true,
+      "label" : "control_eight",
+      "defaultValue" : false,
+      "validFor" : null
+    }, {
+      "value" : "control_nine",
+      "active" : true,
+      "label" : "control_nine",
+      "defaultValue" : false,
+      "validFor" : null
+    }, {
+      "value" : "control_ten",
+      "active" : true,
+      "label" : "control_ten",
+      "defaultValue" : false,
+      "validFor" : null}],
     "referenceTo" : [ ],
     "relationshipName" : null,
     "relationshipOrder" : null,
@@ -883,6 +924,12 @@
 	      "label" : "nine",
 	      "defaultValue" : false,
 	      "validFor" : "QAAA"
+	    }, {
+          "value" : "ten",
+	      "active" : true,
+	      "label" : "nine",
+	      "defaultValue" : false,
+	      "validFor" : "AEAA"
 	    } ],
 	    "referenceTo" : [ ],
 	    "relationshipName" : null,
