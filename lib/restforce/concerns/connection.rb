@@ -23,7 +23,7 @@ module Restforce
                                     connection_options) do |builder|
           # Parses JSON into Hashie::Mash structures.
           unless options[:mashify] == false
-            builder.use    Restforce::Middleware::Mashify, self, options
+            builder.use Restforce::Middleware::Mashify, self, options
           end
 
           # Handles multipart file uploads for blobs.
@@ -32,31 +32,31 @@ module Restforce
           builder.request  :json
           # Handles reauthentication for 403 responses.
           if authentication_middleware
-            builder.use    authentication_middleware, self, options
+            builder.use authentication_middleware, self, options
           end
           # Sets the oauth token in the headers.
-          builder.use      Restforce::Middleware::Authorization, self, options
+          builder.use Restforce::Middleware::Authorization, self, options
           # Ensures the instance url is set.
-          builder.use      Restforce::Middleware::InstanceURL, self, options
+          builder.use Restforce::Middleware::InstanceURL, self, options
           # Caches GET requests.
-          builder.use      Restforce::Middleware::Caching, cache, options if cache
+          builder.use Restforce::Middleware::Caching, cache, options if cache
           # Follows 30x redirects.
-          builder.use      FaradayMiddleware::FollowRedirects
+          builder.use FaradayMiddleware::FollowRedirects
           # Raises errors for 40x responses.
-          builder.use      Restforce::Middleware::RaiseError
+          builder.use Restforce::Middleware::RaiseError
           # Parses returned JSON response into a hash.
           builder.response :json, content_type: /\bjson$/
           # Compress/Decompress the request/response
           unless adapter == :httpclient
-            builder.use      Restforce::Middleware::Gzip, self, options
+            builder.use Restforce::Middleware::Gzip, self, options
           end
           # Inject custom headers into requests
-          builder.use      Restforce::Middleware::CustomHeaders, self, options
+          builder.use Restforce::Middleware::CustomHeaders, self, options
           # Log request/responses
           if Restforce.log?
-            builder.use      Restforce::Middleware::Logger,
-                             Restforce.configuration.logger,
-                             options
+            builder.use Restforce::Middleware::Logger,
+                        Restforce.configuration.logger,
+                        options
           end
 
           builder.adapter adapter
@@ -72,7 +72,7 @@ module Restforce
         { request: {
             timeout: options[:timeout],
             open_timeout: options[:timeout]
-},
+          },
           proxy: options[:proxy_uri],
           ssl: options[:ssl] }
       end
