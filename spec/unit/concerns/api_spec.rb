@@ -316,6 +316,16 @@ describe Restforce::Concerns::API do
         end
       end
 
+      context 'when the id field contains special characters' do
+        let(:attrs) { { id: '1234/?abc', StageName: "Call Scheduled" } }
+
+        it 'sends an HTTP PATCH, and encodes the ID' do
+          client.should_receive(:api_patch).
+            with('sobjects/Whizbang/1234%2F%3Fabc', StageName: "Call Scheduled")
+          expect(result).to be_true
+        end
+      end
+
       context 'when the id field is missing from the attrs' do
         it "raises an error" do
           expect { client.update!(sobject, attrs) }.
@@ -442,6 +452,16 @@ describe Restforce::Concerns::API do
         with('sobjects/Whizbang/1234')
       expect(result).to be_true
     end
+
+    context 'when the id field contains special characters' do
+      let(:id) { '1234/?abc' }
+
+      it 'sends an HTTP delete, and encodes the ID' do
+        client.should_receive(:api_delete).
+          with('sobjects/Whizbang/1234%2F%3Fabc')
+        expect(result).to be_true
+      end
+    end
   end
 
   describe '.find' do
@@ -476,6 +496,16 @@ describe Restforce::Concerns::API do
       it 'returns the full representation of the object' do
         client.should_receive(:api_get).
           with('sobjects/Whizbang/External_ID__c/%E3%81%82').
+          and_return(response)
+        expect(result).to eq response.body
+      end
+    end
+
+    context 'when an internal ID which contains special characters is specified' do
+      let(:id)    { "1234/?abc" }
+      it 'returns the full representation of the object' do
+        client.should_receive(:api_get).
+          with('sobjects/Whizbang/1234%2F%3Fabc').
           and_return(response)
         expect(result).to eq response.body
       end
@@ -549,6 +579,16 @@ describe Restforce::Concerns::API do
             and_return(response)
           expect(result).to eq response.body
         end
+      end
+    end
+
+    context 'when an internal ID which contains special characters is specified' do
+      let(:id)    { "1234/?abc" }
+      it 'returns the full representation of the object' do
+        client.should_receive(:api_get).
+          with('sobjects/Whizbang/1234%2F%3Fabc').
+          and_return(response)
+        expect(result).to eq response.body
       end
     end
   end
