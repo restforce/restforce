@@ -147,7 +147,7 @@ module Restforce
       def describe_layouts(sobject, layout_id = nil)
         version_guard(28.0) do
           if layout_id
-            api_get("sobjects/#{sobject}/describe/layouts/#{layout_id}").body
+            api_get("sobjects/#{sobject}/describe/layouts/#{CGI.escape(layout_id)}").body
           else
             api_get("sobjects/#{sobject}/describe/layouts").body
           end
@@ -319,7 +319,7 @@ module Restforce
         id = attrs.fetch(attrs.keys.find { |k, v| k.to_s.casecmp('id').zero? }, nil)
         raise ArgumentError, 'ID field missing from provided attributes' unless id
         attrs_without_id = attrs.reject { |k, v| k.to_s.casecmp("id").zero? }
-        api_patch "sobjects/#{sobject}/#{id}", attrs_without_id
+        api_patch "sobjects/#{sobject}/#{CGI.escape(id)}", attrs_without_id
         true
       end
 
@@ -375,7 +375,7 @@ module Restforce
               api_post "sobjects/#{sobject}/#{field}", attrs
             end
           else
-            api_patch "sobjects/#{sobject}/#{field}/#{URI.encode(external_id)}", attrs
+            api_patch "sobjects/#{sobject}/#{field}/#{CGI.escape(external_id)}", attrs
           end
 
         response.body && response.body['id'] ? response.body['id'] : true
@@ -412,7 +412,7 @@ module Restforce
       # Returns true of the sobject was successfully deleted.
       # Raises an exception if an error is returned from Salesforce.
       def destroy!(sobject, id)
-        api_delete "sobjects/#{sobject}/#{id}"
+        api_delete "sobjects/#{sobject}/#{CGI.escape(id)}"
         true
       end
 
@@ -426,9 +426,9 @@ module Restforce
       # Returns the Restforce::SObject sobject record.
       def find(sobject, id, field = nil)
         url = if field
-                "sobjects/#{sobject}/#{field}/#{URI.encode(id)}"
+                "sobjects/#{sobject}/#{field}/#{CGI.escape(id)}"
               else
-                "sobjects/#{sobject}/#{id}"
+                "sobjects/#{sobject}/#{CGI.escape(id)}"
               end
         api_get(url).body
       end
@@ -444,9 +444,9 @@ module Restforce
       #
       def select(sobject, id, select, field = nil)
         path = if field
-                 "sobjects/#{sobject}/#{field}/#{URI.encode(id)}"
+                 "sobjects/#{sobject}/#{field}/#{CGI.escape(id)}"
                else
-                 "sobjects/#{sobject}/#{id}"
+                 "sobjects/#{sobject}/#{CGI.escape(id)}"
                end
         path << "?fields=#{select.join(',')}" if select && select.any?
 
