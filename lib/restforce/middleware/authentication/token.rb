@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module Restforce
   # Authentication middleware used if oauth_token and refresh_token are set
   class Middleware::Authentication::Token < Restforce::Middleware::Authentication

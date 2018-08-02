@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module Restforce
   class Attachment < Restforce::SObject
     # Public: Returns the body of the attachment.

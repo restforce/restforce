@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module Restforce
   class SObject < Restforce::Mash
     def sobject_type

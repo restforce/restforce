@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module Restforce
   class Middleware::RaiseError < Faraday::Response::Middleware
     def on_complete(env)
