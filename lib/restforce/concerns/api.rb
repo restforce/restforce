@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'uri'
 require 'restforce/concerns/verbs'
 
@@ -378,7 +380,7 @@ module Restforce
             api_patch "sobjects/#{sobject}/#{field}/#{CGI.escape(external_id)}", attrs
           end
 
-        response.body && response.body['id'] ? response.body['id'] : true
+        response&.body&.fetch('id', nil) ? response.body['id'] : true
       end
 
       # Public: Delete a record.
@@ -448,7 +450,8 @@ module Restforce
                else
                  "sobjects/#{sobject}/#{CGI.escape(id)}"
                end
-        path << "?fields=#{select.join(',')}" if select && select.any?
+
+        path = "#{path}?fields=#{select.join(',')}" if select&.any?
 
         api_get(path).body
       end

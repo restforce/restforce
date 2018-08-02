@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module Restforce
   module Concerns
     module Picklists
@@ -82,7 +84,7 @@ module Restforce
         def valid?(picklist_entry)
           valid_for = picklist_entry['validFor'].ljust(16, 'A').unpack('m').first.
                       unpack('C*')
-          (valid_for[index >> 3] & (0x80 >> index % 8)) > 0
+          (valid_for[index >> 3] & (0x80 >> index % 8)).positive?
         end
       end
     end

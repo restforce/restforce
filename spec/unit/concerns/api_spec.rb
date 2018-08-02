@@ -344,7 +344,7 @@ describe Restforce::Concerns::API do
 
       context 'when the record is found and updated' do
         it 'returns true' do
-          response.body.stub :[]
+          response.stub(:body) { {} }
           client.should_receive(:api_patch).
             with('sobjects/Whizbang/External_ID__c/1234', {}).
             and_return(response)
@@ -354,7 +354,7 @@ describe Restforce::Concerns::API do
 
       context 'when the record is found and created' do
         it 'returns the id of the record' do
-          response.body.stub(:[]).with('id').and_return('4321')
+          response.stub(:body) { { "id" => "4321" } }
           client.should_receive(:api_patch).
             with('sobjects/Whizbang/External_ID__c/1234', {}).
             and_return(response)
@@ -378,7 +378,7 @@ describe Restforce::Concerns::API do
 
         context 'and the value for Id is provided' do
           it 'returns the id of the record, and original record still contains id' do
-            response.body.stub(:[]).with('id').and_return('4321')
+            response.stub(:body) { { "id" => "4321" } }
             client.should_receive(:api_patch).
               with('sobjects/Whizbang/Id/4321', {}).
               and_return(response)
@@ -391,7 +391,7 @@ describe Restforce::Concerns::API do
           let(:attrs) { { 'External_ID__c' => '1234' } }
 
           it 'uses POST to create the record' do
-            response.body.stub(:[]).with('id').and_return('4321')
+            response.stub(:body) { { "id" => "4321" } }
             client.should_receive(:options).and_return(api_version: 38.0)
             client.should_receive(:api_post).
               with('sobjects/Whizbang/Id', attrs).
@@ -417,7 +417,7 @@ describe Restforce::Concerns::API do
 
       context 'when the record is found and updated' do
         it 'returns true' do
-          response.body.stub :[]
+          response.stub(:body) { {} }
           client.should_receive(:api_patch).
             with('sobjects/Whizbang/External_ID__c/%E3%81%82', {}).
             and_return(response)
@@ -434,7 +434,7 @@ describe Restforce::Concerns::API do
 
       context 'when the record is found and updated' do
         it 'returns true' do
-          response.body.stub :[]
+          response.stub(:body) { {} }
           client.should_receive(:api_patch).
             with('sobjects/Whizbang/External_ID__c/1234', {}).
             and_return(response)

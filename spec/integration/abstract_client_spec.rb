@@ -170,7 +170,8 @@ shared_examples_for Restforce::AbstractClient do
     context 'when updated' do
       requests 'sobjects/Account/External__c/foobar',
                method: :patch,
-               with_body: "{\"Name\":\"Foobar\"}"
+               with_body: "{\"Name\":\"Foobar\"}",
+               fixture: "sobject/upsert_updated_success_response"
 
       context 'with symbol external Id key' do
         subject do
