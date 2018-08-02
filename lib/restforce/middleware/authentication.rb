@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module Restforce
   # Faraday middleware that allows for on the fly authentication of requests.
   # When a request fails (a status of 401 is returned), the middleware
@@ -31,9 +33,7 @@ module Restforce
       @options[:instance_url] = response.body['instance_url']
       @options[:oauth_token]  = response.body['access_token']
 
-      if @options[:authentication_callback]
-        @options[:authentication_callback].call(response.body)
-      end
+      @options[:authentication_callback]&.call(response.body)
 
       response.body
     end

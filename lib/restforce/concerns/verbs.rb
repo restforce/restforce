@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module Restforce
   module Concerns
     module Verbs
@@ -34,7 +36,7 @@ module Restforce
           begin
             connection.send(verb, *args, &block)
           rescue Restforce::UnauthorizedError
-            if retries > 0
+            if retries.positive?
               retries -= 1
               connection.url_prefix = options[:instance_url]
               retry

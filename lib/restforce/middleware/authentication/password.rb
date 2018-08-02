@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module Restforce
   # Authentication middleware used if username and password flow is used
   class Middleware::Authentication::Password < Restforce::Middleware::Authentication

@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module FixtureHelpers
   module InstanceMethods
     def stub_api_request(endpoint, options = {})

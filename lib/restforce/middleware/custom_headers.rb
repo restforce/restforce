@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module Restforce
   # Middleware that allows you to specify custom request headers
   # when initializing Restforce client

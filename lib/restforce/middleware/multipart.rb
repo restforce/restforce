@@ -1,7 +1,9 @@
+# frozen_string_literal: true
+
 module Restforce
   class Middleware::Multipart < Faraday::Request::UrlEncoded
-    self.mime_type = 'multipart/form-data'.freeze
-    DEFAULT_BOUNDARY  = "--boundary_string".freeze
+    self.mime_type = 'multipart/form-data'
+    DEFAULT_BOUNDARY  = "--boundary_string"
     JSON_CONTENT_TYPE = { "Content-Type" => "application/json" }.freeze
 
     def call(env)

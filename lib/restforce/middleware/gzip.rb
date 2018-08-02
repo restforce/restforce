@@ -1,11 +1,13 @@
+# frozen_string_literal: true
+
 require 'zlib'
 
 module Restforce
   # Middleware to uncompress GZIP compressed responses from Salesforce.
   class Middleware::Gzip < Restforce::Middleware
-    ACCEPT_ENCODING_HEADER  = 'Accept-Encoding'.freeze
-    CONTENT_ENCODING_HEADER = 'Content-Encoding'.freeze
-    ENCODING                = 'gzip'.freeze
+    ACCEPT_ENCODING_HEADER  = 'Accept-Encoding'
+    CONTENT_ENCODING_HEADER = 'Content-Encoding'
+    ENCODING                = 'gzip'
 
     def call(env)
       env[:request_headers][ACCEPT_ENCODING_HEADER] = ENCODING if @options[:compress]

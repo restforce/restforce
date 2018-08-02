@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module Restforce
   module Data
     class Client < AbstractClient

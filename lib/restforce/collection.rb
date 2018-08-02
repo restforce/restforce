@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module Restforce
   class Collection
     include Enumerable

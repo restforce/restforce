@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module Restforce
   # Base class that all middleware can extend. Provides some convenient helper
   # functions.

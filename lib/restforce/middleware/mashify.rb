@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module Restforce
   # Middleware the converts sobject records from JSON into Restforce::SObject objects
   # and collections of records into Restforce::Collection objects.

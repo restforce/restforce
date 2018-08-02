@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module Restforce
   class Middleware::Caching < FaradayMiddleware::Caching
     def call(env)
@@ -6,7 +8,7 @@ module Restforce
     end
 
     def expire(key)
-      cache.delete(key) if cache
+      cache&.delete(key)
     end
 
     # We don't want to cache requests for different clients, so append the
