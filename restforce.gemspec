@@ -20,7 +20,7 @@ Gem::Specification.new do |gem|
     'changelog_uri'   => 'https://github.com/restforce/restforce/blob/master/CHANGELOG.md'
   }
 
-  gem.required_ruby_version = '>= 2.0'
+  gem.required_ruby_version = '>= 2.3'
 
   gem.add_dependency 'faraday', '<= 1.0', '>= 0.9.0'
   gem.add_dependency 'faraday_middleware', ['>= 0.8.8', '<= 1.0']
