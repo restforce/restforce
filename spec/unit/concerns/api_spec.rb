@@ -350,6 +350,16 @@ describe Restforce::Concerns::API do
             and_return(response)
           expect(result).to be_true
         end
+
+        context 'and the response body is a string' do
+          it 'returns true' do
+            response.stub(:body) { '' }
+            client.should_receive(:api_patch).
+              with('sobjects/Whizbang/External_ID__c/1234', {}).
+              and_return(response)
+            expect(result).to be_true
+          end
+        end
       end
 
       context 'when the record is found and created' do

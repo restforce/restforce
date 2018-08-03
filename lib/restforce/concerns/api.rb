@@ -380,7 +380,7 @@ module Restforce
             api_patch "sobjects/#{sobject}/#{field}/#{CGI.escape(external_id)}", attrs
           end
 
-        response&.body&.fetch('id', nil) ? response.body['id'] : true
+        response.body.respond_to?(:fetch) ? response.body.fetch('id', true) : true
       end
 
       # Public: Delete a record.
