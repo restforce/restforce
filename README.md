@@ -547,7 +547,102 @@ end
 Boom, you're now receiving push notifications when Accounts are
 created/updated.
 
-_See also: [Force.com Streaming API docs](http://www.salesforce.com/us/developer/docs/api_streaming/index.htm)_
+#### Replaying Events
+
+Since API version 37.0, Salesforce stores events for 24 hours and they can be
+replayed if your application experienced some downtime.
+
+In order to replay past events, all you need to do is specify the last known
+event ID when subscribing and you will receive all events that happened since
+that event ID:
+
+```ruby
+EM.run {
+  # Subscribe to the PushTopic.
+  client.subscribe 'AllAccounts', replay: 10 do |message|
+    puts message.inspect
+  end
+}
+```
+
+In this specific case you will see events with replay ID 11, 12 and so on.
+
+There are two magic values for the replay ID accepted by Salesforce:
+
+* `-2`, for getting all the events that appeared in the last 24 hours
+* `-1`, for getting only newer events
+
+**Warning**: Only use a replay ID of a event from the last 24 hours otherwise
+Salesforce will not send anything, including newer events. If in doubt, use one
+of the two magic replay IDs mentioned above. 
+
+You might want to store the replay ID in some sort of datastore so you can 
+access it, for example between application restarts. In that case, there is the
+option of passing a custom replay handler which responds to `[]` and `[]=`.
+
+Below is a sample replay handler that stores the replay ID for each channel in
+memory using a Hash, stores a timestamp and has some rudimentary logic that 
+will use one of the magic IDs depending on the value of the timestamp:
+
+```ruby
+class SimpleReplayHander
+
+  MAX_AGE = 86_400 # 24 hours
+
+  INIT_REPLAY_ID = -1
+  DEFAULT_REPLAY_ID = -2
+
+  def initialize
+    @channels = {}
+    @last_modified = nil
+  end
+
+  # This method is called during the initial subscribe phase
+  # in order to send the correct replay ID.
+  def [](channel)
+    if @last_modified.nil?
+      puts "[#{channel}] No timestamp defined, sending magic replay ID #{INIT_REPLAY_ID}"
+
+      INIT_REPLAY_ID
+    elsif old_replay_id?
+      puts "[#{channel}] Old timestamp, sending magic replay ID #{DEFAULT_REPLAY_ID}"
+
+      DEFAULT_REPLAY_ID
+    else
+      @channels[channel]
+    end
+  end
+
+  def []=(channel, replay_id)
+    puts "[#{channel}] Writing replay ID: #{replay_id}"
+
+    @last_modified = Time.now
+    @channels[channel] = replay_id
+  end
+
+  def old_replay_id?
+    @last_modified.is_a?(Time) && Time.now - @last_modified > MAX_AGE
+  end
+end
+```
+
+In order to use it, simply pass the object as the value of the `replay` option
+of the subscription:
+
+```ruby
+EM.run {
+  # Subscribe to the PushTopic and use the custom replay handler to store any
+  # received replay ID.
+  client.subscribe 'AllAccounts', replay: SimpleReplayHandler.new do |message|
+    puts message.inspect
+  end
+}
+``` 
+
+_See also_: 
+
+* [Force.com Streaming API docs](http://www.salesforce.com/us/developer/docs/api_streaming/index.htm)
+* [Message Durability docs](https://developer.salesforce.com/docs/atlas.en-us.api_streaming.meta/api_streaming/using_streaming_api_durability.htm)
 
 *Note:* Restforce's streaming implementation is known to be compatible with version `0.8.9` of the faye gem.
 
