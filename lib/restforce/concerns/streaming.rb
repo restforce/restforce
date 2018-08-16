@@ -9,7 +9,8 @@ module Restforce
       # block    - A block to run when a new message is received.
       #
       # Returns a Faye::Subscription
-      def subscribe(channels, &block)
+      def subscribe(channels, options = {}, &block)
+        Array(channels).each { |channel| replay_handlers[channel] = options[:replay] }
         faye.subscribe Array(channels).map { |channel| "/topic/#{channel}" }, &block
       end
 
@@ -31,6 +32,65 @@ module Restforce
 
           client.bind 'transport:up' do
             Restforce.log "[COMETD UP]"
+          end
+
+          client.add_extension ReplayExtension.new(replay_handlers)
+        end
+      end
+
+      def replay_handlers
+        @_replay_handlers ||= {}
+      end
+
+      class ReplayExtension
+        def initialize(replay_handlers)
+          @replay_handlers = replay_handlers
+        end
+
+        def incoming(message, callback)
+          callback.call(message).tap do
+            channel = message.fetch('channel').gsub('/topic/', '')
+            replay_id = message.fetch('data', {}).fetch('event', {})['replayId']
+
+            handler = @replay_handlers[channel]
+            if !replay_id.nil? && !handler.nil? && handler.respond_to?(:[]=)
+              # remember the last replay_id for this channel
+              handler[channel] = replay_id
+            end
+          end
+        end
+
+        def outgoing(message, callback)
+          # Leave non-subscribe messages alone
+          unless message['channel'] == '/meta/subscribe'
+            return callback.call(message)
+          end
+
+          channel = message['subscription'].gsub('/topic/', '')
+
+          # Set the replay value for the channel
+          message['ext'] ||= {}
+          message['ext']['replay'] = {
+            "/topic/#{channel}" => replay_id(channel)
+          }
+
+          # Carry on and send the message to the server
+          callback.call message
+        end
+
+        private
+
+        def replay_id(channel)
+          handler = @replay_handlers[channel]
+          case
+          when handler.is_a?(Integer)
+            handler # treat it as a scalar
+          when handler.respond_to?(:[])
+            # Ask for the latest replayId for this channel
+            handler[channel]
+          else
+            # Just pass it along
+            handler
           end
         end
       end
