@@ -82,10 +82,9 @@ module Restforce
 
         def replay_id(channel)
           handler = @replay_handlers[channel]
-          case
-          when handler.is_a?(Integer)
+          if handler.is_a?(Integer)
             handler # treat it as a scalar
-          when handler.respond_to?(:[])
+          elsif handler.respond_to?(:[])
             # Ask for the latest replayId for this channel
             handler[channel]
           else

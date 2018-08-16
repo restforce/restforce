@@ -35,8 +35,8 @@ describe Restforce::Concerns::Streaming, event_machine: true do
       end
 
       it 'replaces earlier handlers in subsequent calls' do
-        client.subscribe(%w(channel1 channel2), replay: 2, &subscribe_block)
-        client.subscribe(%w(channel2 channel3), replay: 3, &subscribe_block)
+        client.subscribe(%w[channel1 channel2], replay: 2, &subscribe_block)
+        client.subscribe(%w[channel2 channel3], replay: 3, &subscribe_block)
         client.replay_handlers.should eq(
           'channel1' => 2,
           'channel2' => 3,
@@ -129,7 +129,7 @@ describe Restforce::Concerns::Streaming, event_machine: true do
         }
       }
 
-      extension.incoming(message, -> m {})
+      extension.incoming(message, ->(m) {})
       handler.should eq('channel1' => 42)
     end
 
@@ -142,7 +142,7 @@ describe Restforce::Concerns::Streaming, event_machine: true do
         'data' => {}
       }
 
-      extension.incoming(message, -> m {})
+      extension.incoming(message, ->(m) {})
       handler.should eq('channel1' => 41)
     end
 
@@ -154,7 +154,7 @@ describe Restforce::Concerns::Streaming, event_machine: true do
         'channel' => '/meta/subscribe',
         'subscription' => "/topic/#{options[:to]}"
       }
-      extension.outgoing(message, -> m {
+      extension.outgoing(message, ->(m) {
         output = m
       })
       output
