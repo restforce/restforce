@@ -1,3 +1,7 @@
+## 3.1.0 (Aug 16, 2018)
+
+* Add support for replaying missed messages when using the Salesforce Streaming API (@andreimaxim, @drteeth, @panozzaj)
+
 ## 3.0.1 (Aug 4, 2018)
 
 * Fix `NoMethodError` when upserting an existing record (@opti)
