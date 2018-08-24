@@ -127,6 +127,15 @@ export SALESFORCE_API_VERSION="41.0"
 client = Restforce.new
 ```
 
+#### JWT Bearer Token
+ If you prefer to use a [JWT Bearer Token](https://developer.salesforce.com/page/Digging_Deeper_into_OAuth_2.0_on_Force.com#Obtaining_an_Access_Token_using_a_JWT_Bearer_Token) to authenticate:
+ ```ruby
+client = Restforce.new(username: 'foo',
+                       client_id: 'client_id',
+                       instance_url: 'instance_url',
+                       jwt_key: '/path/to/private/key',
+                       api_version: '41.0')
+```
 ### Proxy Support
 
 You can specify a HTTP proxy using the `proxy_uri` option, as follows, or by setting the `SALESFORCE_PROXY_URI` environment variable:
