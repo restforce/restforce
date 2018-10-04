@@ -523,7 +523,7 @@ require 'faye'
 # Initialize a client with your username/password/oauth token/etc.
 client = Restforce.new(username: 'foo',
                        password: 'bar',
-                       security_token: 'security token'
+                       security_token: 'security token',
                        client_id: 'client_id',
                        client_secret: 'client_secret')
 
