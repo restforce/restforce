@@ -209,6 +209,24 @@ shared_examples_for Restforce::AbstractClient do
         end
       end
     end
+
+    context 'when created with a space in the id' do
+      requests 'sobjects/Account/External__c/foo%20bar',
+               method: :patch,
+               with_body: "{\"Name\":\"Foobar\"}",
+               fixture: 'sobject/upsert_created_success_response'
+
+      [:External__c, 'External__c', :external__c, 'external__c'].each do |key|
+        context "with #{key.inspect} as the external id" do
+          subject do
+            client.upsert!('Account', 'External__c', key => 'foo bar',
+                                                     :Name => 'Foobar')
+          end
+
+          it { should eq 'foo' }
+        end
+      end
+    end
   end
 
   describe '.destroy!' do
@@ -226,6 +244,13 @@ shared_examples_for Restforce::AbstractClient do
 
     context 'with success' do
       requests 'sobjects/Account/001D000000INjVe', method: :delete
+
+      it { should be_true }
+    end
+
+    context 'with a space in the id' do
+      subject(:destroy!) { client.destroy!('Account', '001D000000 INjVe') }
+      requests 'sobjects/Account/001D000000%20INjVe', method: :delete
 
       it { should be_true }
     end
@@ -266,6 +291,14 @@ shared_examples_for Restforce::AbstractClient do
       subject { client.find('Account', '1234', 'External_Field__c') }
       it { should be_a Hash }
     end
+
+    context 'with a space in an external id' do
+      requests 'sobjects/Account/External_Field__c/12%2034',
+               fixture: 'sobject/sobject_find_success_response'
+
+      subject { client.find('Account', '12 34', 'External_Field__c') }
+      it { should be_a Hash }
+    end
   end
 
   describe '.select' do
@@ -282,6 +315,14 @@ shared_examples_for Restforce::AbstractClient do
                  fixture: 'sobject/sobject_select_success_response'
 
         subject { client.select('Account', '1234', ['External_Field__c']) }
+        it { should be_a Hash }
+      end
+
+      context 'with a space in the id' do
+        requests 'sobjects/Account/12%2034',
+                 fixture: 'sobject/sobject_select_success_response'
+
+        subject { client.select('Account', '12 34', nil, nil) }
         it { should be_a Hash }
       end
     end
