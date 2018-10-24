@@ -8,7 +8,7 @@
 
 ## 3.0.0 (Aug 2, 2018)
 
-* __Deprecate support for Ruby 2.0, 2.1 and 2.2__, since [even Ruby 2.2 reached its end-of-life]##(https://www.ruby-lang.org/en/news/2018/06/20/support-of-ruby-2-2-has-ended/) in June 2018. (This is the only breaking change included in this version.)
+* __Deprecate support for Ruby 2.0, 2.1 and 2.2__, since [even Ruby 2.2 reached its end-of-life](https://www.ruby-lang.org/en/news/2018/06/20/support-of-ruby-2-2-has-ended/) in June 2018. (This is the only breaking change included in this version.)
 * Fix `NoMethodError` when trying to upsert a record using a `Fixnum` as the external ID (@AlexandruCD)
 * Escape record IDs passed in to the client to identify records to find, delete, etc. (@jmdx)
 * Stop relying on our middleware for Gzip compression if you're using `httpclient`, since Faraday enables this automatically using `httpclient`'s built-in support (@shivanshgaur)
