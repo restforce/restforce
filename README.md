@@ -585,7 +585,7 @@ memory using a Hash, stores a timestamp and has some rudimentary logic that
 will use one of the magic IDs depending on the value of the timestamp:
 
 ```ruby
-class SimpleReplayHander
+class SimpleReplayHandler
 
   MAX_AGE = 86_400 # 24 hours
 
