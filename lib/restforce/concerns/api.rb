@@ -1,5 +1,6 @@
 # frozen_string_literal: true
 
+require 'erb'
 require 'uri'
 require 'restforce/concerns/verbs'
 
@@ -377,7 +378,7 @@ module Restforce
               api_post "sobjects/#{sobject}/#{field}", attrs
             end
           else
-            api_patch "sobjects/#{sobject}/#{field}/#{CGI.escape(external_id)}", attrs
+            api_patch "sobjects/#{sobject}/#{field}/#{ERB::Util.url_encode(external_id)}", attrs
           end
 
         response.body.respond_to?(:fetch) ? response.body.fetch('id', true) : true
@@ -414,7 +415,7 @@ module Restforce
       # Returns true of the sobject was successfully deleted.
       # Raises an exception if an error is returned from Salesforce.
       def destroy!(sobject, id)
-        api_delete "sobjects/#{sobject}/#{CGI.escape(id)}"
+        api_delete "sobjects/#{sobject}/#{ERB::Util.url_encode(id)}"
         true
       end
 
@@ -428,9 +429,9 @@ module Restforce
       # Returns the Restforce::SObject sobject record.
       def find(sobject, id, field = nil)
         url = if field
-                "sobjects/#{sobject}/#{field}/#{CGI.escape(id)}"
+                "sobjects/#{sobject}/#{field}/#{ERB::Util.url_encode(id)}"
               else
-                "sobjects/#{sobject}/#{CGI.escape(id)}"
+                "sobjects/#{sobject}/#{ERB::Util.url_encode(id)}"
               end
         api_get(url).body
       end
@@ -446,9 +447,9 @@ module Restforce
       #
       def select(sobject, id, select, field = nil)
         path = if field
-                 "sobjects/#{sobject}/#{field}/#{CGI.escape(id)}"
+               "sobjects/#{sobject}/#{field}/#{ERB::Util.url_encode(id)}"
                else
-                 "sobjects/#{sobject}/#{CGI.escape(id)}"
+                 "sobjects/#{sobject}/#{ERB::Util.url_encode(id)}"
                end
 
         path = "#{path}?fields=#{select.join(',')}" if select&.any?
