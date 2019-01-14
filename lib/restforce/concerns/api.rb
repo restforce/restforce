@@ -288,6 +288,47 @@ module Restforce
       end
       alias insert! create!
 
+      # Public: Insert number of records.
+      #
+      # attrs_collection - Collection of attributes for new records.
+      # all_or_none - Fail all collection if one record creation fails.
+      #
+      # Examples
+      #
+      #   # Add new accounts
+      #   client.create_collection([{Name: 'Foo Inc.'}, {Name: 'Bar Corp.'}])
+      #   # => [{ 'id' => '0016000000MRatd', 'success' => true, 'errors' => [] },
+      #   #     { 'id' => '0016000000MRert', 'success' => true, 'errors' => [] }]
+      #
+      # Returns array of result objects.
+      # Returns false if something bad happens.
+      def create_collection(*args)
+        create_collection!(*args)
+      rescue *exceptions
+        false
+      end
+
+      # Public: Insert number of records.
+      #
+      # attrs_collection - Collection of attributes for new records.
+      # all_or_none - Fail all collection if one record creation fails.
+      #
+      # Examples
+      #
+      #   # Add new accounts
+      #   client.create_collection([{Name: 'Foo Inc.'}, {Name: 'Bar Corp.'}])
+      #   # => [{ 'id' => '0016000000MRatd', 'success' => true, 'errors' => [] },
+      #   #     { 'id' => '0016000000MRert', 'success' => true, 'errors' => [] }]
+      #
+      # Returns array of result objects.
+      # Raises exceptions if an error is returned from Salesforce.
+      def create_collection!(attrs_collection, all_or_none = false)
+        raise ArgumentError,
+          'Amount of records to create is limited to 200' if attrs_collection.size > 200
+
+        api_post('composite/sobjects', {records: attrs_collection, allOrNone: all_or_none}).body
+      end
+
       # Public: Update a record.
       #
       # sobject - String name of the sobject.
