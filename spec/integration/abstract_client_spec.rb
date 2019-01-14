@@ -105,6 +105,56 @@ shared_examples_for Restforce::AbstractClient do
     end
   end
 
+  describe '.create_collection!' do
+    requests 'composite/sobjects',
+              method: :post,
+              with_body: {
+                allOrNone: false,
+                records: [{Name: 'Foobar'}]
+              },
+              fixture: 'sobject/composite_sobjects_create_success_response'
+
+    subject { client.create_collection!([{Name: 'Foobar'}]) }
+
+    it { should eq [{'id' => 'some_id', 'errors' => [], 'success' => true}] }
+
+    context 'with invalid params' do
+      requests 'composite/sobjects',
+                method: :post,
+                status: 400,
+                with_body: {
+                  allOrNone: false,
+                  records: ['Foo']
+                },
+                fixture: 'sobject/composite_sobjects_create_error_response'
+
+      subject {
+        lambda do
+          client.create_collection!(['Foo'])
+        end
+      }
+
+      it { should raise_error(Faraday::ClientError) }
+    end
+  end
+
+  describe '.create_collection' do
+    context 'with invalid params' do
+      requests 'composite/sobjects',
+                method: :post,
+                status: 400,
+                with_body: {
+                  allOrNone: false,
+                  records: ['Foo']
+                },
+                fixture: 'sobject/composite_sobjects_create_error_response'
+
+      subject { client.create_collection(['Foo']) }
+
+      it { should eq false }
+    end
+  end
+
   describe '.update!' do
     context 'with invalid Id' do
       requests 'sobjects/Account/001D000000INjVe',
