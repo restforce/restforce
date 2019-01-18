@@ -3,15 +3,29 @@
 module Restforce
   module Concerns
     module Streaming
+
       # Public: Subscribe to a PushTopic
       #
-      # channels - The name of the PushTopic channel(s) to subscribe to.
+      # topics   - The name of the PushTopic channel(s) to subscribe to.
       # block    - A block to run when a new message is received.
       #
       # Returns a Faye::Subscription
-      def subscribe(channels, options = {}, &block)
-        Array(channels).each { |channel| replay_handlers[channel] = options[:replay] }
-        faye.subscribe Array(channels).map { |channel| "/topic/#{channel}" }, &block
+      def legacy_subscribe(topics, options = {}, &block)
+        topics = Array(topics).map { |channel| "/topic/#{channel}" }
+        subscription(topics, options, &block)
+      end
+      alias subscribe legacy_subscribe
+
+      # Public: Subscribe to one or more Streaming API channels
+      #
+      # channels - The name of the Streaming API (cometD) channel(s) to subscribe to.
+      # block    - A block to run when a new message is received.
+      #
+      # Returns a Faye::Subscription
+      def subscription(channels, options = {}, &block)
+        one_or_more_channels = Array(channels)
+        one_or_more_channels.each { |channel| replay_handlers[channel] = options[:replay] }
+        faye.subscribe(one_or_more_channels, &block)
       end
 
       # Public: Faye client to use for subscribing to PushTopics
@@ -49,7 +63,7 @@ module Restforce
 
         def incoming(message, callback)
           callback.call(message).tap do
-            channel = message.fetch('channel').gsub('/topic/', '')
+            channel = message.fetch('channel')
             replay_id = message.fetch('data', {}).fetch('event', {})['replayId']
 
             handler = @replay_handlers[channel]
@@ -66,12 +80,12 @@ module Restforce
             return callback.call(message)
           end
 
-          channel = message['subscription'].gsub('/topic/', '')
+          channel = message['subscription']
 
           # Set the replay value for the channel
           message['ext'] ||= {}
           message['ext']['replay'] = {
-            "/topic/#{channel}" => replay_id(channel)
+            channel => replay_id(channel)
           }
 
           # Carry on and send the message to the server
