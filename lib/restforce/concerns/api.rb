@@ -409,6 +409,43 @@ module Restforce
         api_patch('composite/sobjects', {records: attrs_collection, allOrNone: all_or_none}).body
       end
 
+      # Public: Delete collection of records.
+      #
+      # ids - List of IDs of objects to be deleted.
+      # all_or_none - Roll back the entire request when the deletion of any object fails.
+      #
+      # Examples
+      #
+      #   # Delete collection of records
+      #   client.destroy('0016000000MRatd', '0016000000ERats')
+      #
+      # Returns array of result objects.
+      # Returns false if an error is returned from Salesforce.
+      def destroy_collection(*args)
+        destroy_collection!(*args)
+      rescue *exceptions
+        false
+      end
+
+      # Public: Delete collection of records.
+      #
+      # ids - List of IDs of objects to be deleted.
+      # all_or_none - Roll back the entire request when the deletion of any object fails.
+      #
+      # Examples
+      #
+      #   # Delete collection of records
+      #   client.destroy('0016000000MRatd', '0016000000ERats')
+      #
+      # Returns array of result objects.
+      # Raises exceptions if an error is returned from Salesforce.
+      def destroy_collection!(ids, all_or_none = false)
+        raise ArgumentError,
+          'Amount of records to delete is limited to 200' if ids.size > 200
+
+        api_delete("composite/sobjects?ids=#{ids.join(',')}&allOrNone=#{all_or_none}").body
+      end
+
       # Public: Update or create a record based on an external ID
       #
       # sobject - The name of the sobject to created.
