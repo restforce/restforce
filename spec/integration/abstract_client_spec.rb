@@ -167,17 +167,19 @@ shared_examples_for Restforce::AbstractClient do
   end
 
   describe '.create_collection!' do
-    requests 'composite/sobjects',
-              method: :post,
-              with_body: {
-                allOrNone: false,
-                records: [{Name: 'Foobar'}]
-              },
-              fixture: 'sobject/composite_sobjects_success_response'
+    context 'with valid params' do
+      requests 'composite/sobjects',
+                method: :post,
+                with_body: {
+                  allOrNone: false,
+                  records: [{Name: 'Foobar'}]
+                },
+                fixture: 'sobject/composite_sobjects_success_response'
 
-    subject { client.create_collection!([{Name: 'Foobar'}]) }
+      subject { client.create_collection!([{Name: 'Foobar'}]) }
 
-    it { should eq [{'id' => 'some_id', 'errors' => [], 'success' => true}] }
+      it { should eq [{'id' => 'some_id', 'errors' => [], 'success' => true}] }
+    end
 
     context 'with invalid params' do
       requests 'composite/sobjects',
@@ -217,7 +219,8 @@ shared_examples_for Restforce::AbstractClient do
   end
 
   describe '.update_collection!' do
-    requests 'composite/sobjects',
+    context 'with valid params' do
+      requests 'composite/sobjects',
               method: :patch,
               with_body: {
                 allOrNone: false,
@@ -225,9 +228,10 @@ shared_examples_for Restforce::AbstractClient do
               },
               fixture: 'sobject/composite_sobjects_success_response'
 
-    subject { client.update_collection!([{Name: 'Foobar'}]) }
+      subject { client.update_collection!([{Name: 'Foobar'}]) }
 
-    it { should eq [{'id' => 'some_id', 'errors' => [], 'success' => true}] }
+      it { should eq [{'id' => 'some_id', 'errors' => [], 'success' => true}] }
+    end
 
     context 'with invalid params' do
       requests 'composite/sobjects',
