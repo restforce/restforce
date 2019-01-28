@@ -354,7 +354,7 @@ module Restforce
       # Examples
       #
       #   # Add new accounts
-      #   client.create_collection([{Name: 'Foo Inc.'}, {Name: 'Bar Corp.'}])
+      #   client.create_collection!([{Name: 'Foo Inc.'}, {Name: 'Bar Corp.'}])
       #   # => [{ 'id' => '1', 'success' => true, 'errors' => [] },
       #   #     { 'id' => '2', 'success' => true, 'errors' => [] }]
       #
@@ -395,7 +395,7 @@ module Restforce
       # Examples
       #
       #   # Update accounts
-      #   client.update_collection([{Id: '1', Name: 'Foo Inc.'}, {Id: '2', Name: 'Bar Corp.'}])
+      #   client.update_collection!([{Id: '1', Name: 'Foo Inc.'}, {Id: '2', Name: 'Bar Corp.'}])
       #   # => [{ 'id' => '1', 'success' => true, 'errors' => [] },
       #   #     { 'id' => '2', 'success' => true, 'errors' => [] }]
       #
@@ -416,7 +416,7 @@ module Restforce
       # Examples
       #
       #   # Delete collection of records
-      #   client.destroy('0016000000MRatd', '0016000000ERats')
+      #   client.destroy_collection('0016000000MRatd', '0016000000ERats')
       #
       # Returns array of result objects.
       # Returns false if an error is returned from Salesforce.
@@ -434,7 +434,7 @@ module Restforce
       # Examples
       #
       #   # Delete collection of records
-      #   client.destroy('0016000000MRatd', '0016000000ERats')
+      #   client.destroy_collection!('0016000000MRatd', '0016000000ERats')
       #
       # Returns array of result objects.
       # Raises exceptions if an error is returned from Salesforce.
