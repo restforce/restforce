@@ -45,6 +45,24 @@ module Restforce
   UnauthorizedError   = Class.new(Error)
   APIVersionError     = Class.new(Error)
 
+  # Inherit from Faraday::Error::ResourceNotFound for backwards-compatibility
+  # Consumers of this library that rescue and handle Faraday::Error::ResourceNotFound
+  # can continue to do so.
+  NotFoundError       = Class.new(Faraday::Error::ResourceNotFound)
+
+  # Inherit from Faraday::Error::ClientError for backwards-compatibility
+  # Consumers of this library that rescue and handle Faraday::Error::ClientError
+  # can continue to do so.
+  ResponseError       = Class.new(Faraday::Error::ClientError)
+  MatchesMultipleError= Class.new(ResponseError)
+  EntityTooLargeError = Class.new(ResponseError)
+
+  module ErrorCode
+    def self.const_missing(constant_name)
+      const_set constant_name, Class.new(ResponseError)
+    end
+  end
+
   class << self
     # Alias for Restforce::Data::Client.new
     #
