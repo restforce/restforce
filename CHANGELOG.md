@@ -15,6 +15,12 @@
 * Fix `get_updated` and `get_deleted` API calls by removing the erroneous leading forward slash from the path (@scottolsen)
 * Fix unpacking of dependent picklist options (@parkm)
 
+## 2.5.4 (May 15, 2019)
+
+See the [`v2`](https://github.com/restforce/restforce/tree/v2) branch for this release.
+
+* Escape record IDs passed in to the client to identify records to find, delete, etc. (@jmdx, @apanzerj)
+
 ## 2.5.3 (Apr 25, 2017)
 
 * Raise an error where a custom external ID field name is supplied to `upsert` and `upsert!`, but it is missing from the provided attributes (@velveret)
