@@ -378,7 +378,10 @@ module Restforce
               api_post "sobjects/#{sobject}/#{field}", attrs
             end
           else
-            api_patch "sobjects/#{sobject}/#{field}/#{ERB::Util.url_encode(external_id)}", attrs
+            api_patch(
+              "sobjects/#{sobject}/#{field}/#{ERB::Util.url_encode(external_id)}",
+              attrs
+            )
           end
 
         response.body.respond_to?(:fetch) ? response.body.fetch('id', true) : true
