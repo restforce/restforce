@@ -26,7 +26,10 @@ module Restforce
     end
 
     def message
-      "#{body['errorCode']}: #{body['message']}"
+      message = "#{body['errorCode']}: #{body['message']}"
+      message << "\nRESPONSE: #{JSON.dump(@env[:body])}"
+    rescue
+      message # if JSON.dump fails, return message without extra detail
     end
 
     def body
