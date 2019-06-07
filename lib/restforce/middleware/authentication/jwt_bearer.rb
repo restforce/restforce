@@ -22,7 +22,9 @@ module Restforce
     end
 
     def private_key
-      OpenSSL::PKey::RSA.new File.read(@options[:jwt_key])
+      # check if the jwt_key is being stored as a file or string
+      key_string = File.exist?(@options[:jwt_key]) ? File.read(@options[:jwt_key]) : @options[:jwt_key]
+      OpenSSL::PKey::RSA.new key_string
     end
   end
 end

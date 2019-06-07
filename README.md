@@ -119,7 +119,7 @@ If you prefer to use a [JWT Bearer Token](https://developer.salesforce.com/page/
 client = Restforce.new(username: 'foo',
                        client_id: 'client_id',
                        instance_url: 'instance_url',
-                       jwt_key: '/path/to/private/key',
+                       jwt_key: '<path to key file, key string, or ENV>',
                        api_version: '38.0')
 ```
 
