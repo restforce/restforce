@@ -16,7 +16,7 @@ module Restforce
       {
           iss: @options[:client_id],
           sub: @options[:username],
-          aud: @options[:host],
+          aud: @options[:instance_url],
           exp: Time.now.utc.to_i
       }
     end
