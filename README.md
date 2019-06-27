@@ -111,6 +111,18 @@ client = Restforce.new(username: 'foo',
                        api_version: '41.0')
 ```
 
+#### JWT Bearer Token
+
+If you prefer to use a [JWT Bearer Token](https://developer.salesforce.com/page/Digging_Deeper_into_OAuth_2.0_on_Force.com#Obtaining_an_Access_Token_using_a_JWT_Bearer_Token) to authenticate:
+
+```ruby
+client = Restforce.new(username: 'foo',
+                       client_id: 'client_id',
+                       instance_url: 'instance_url',
+                       jwt_key: '<path to key file, key string, or ENV>',
+                       api_version: '38.0')
+```
+
 You can also set the username, password, security token, client ID, client
 secret and API version in environment variables:
 
