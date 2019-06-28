@@ -40,6 +40,10 @@ module Restforce
     autoload :Client, 'restforce/tooling/client'
   end
 
+  module Bulk
+    autoload :Client, 'restforce/bulk/client'
+  end
+
   Error               = Class.new(StandardError)
   ServerError         = Class.new(Error)
   AuthenticationError = Class.new(Error)
@@ -60,6 +64,10 @@ module Restforce
 
     def tooling(*args, &block)
       Restforce::Tooling::Client.new(*args, &block)
+    end
+
+    def bulk(*args, &block)
+      Restforce::Bulk::Client.new(*args, &block)
     end
 
     # Helper for decoding signed requests.

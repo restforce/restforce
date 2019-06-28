@@ -9,6 +9,8 @@ require 'faye' unless RUBY_PLATFORM == 'java'
 
 require 'webmock/rspec'
 
+require 'pry-byebug'
+
 WebMock.disable_net_connect!
 
 RSpec.configure do |config|
