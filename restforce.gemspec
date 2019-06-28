@@ -39,4 +39,6 @@ Gem::Specification.new do |gem|
   gem.add_development_dependency 'rubocop', '~> 0.50.0'
   gem.add_development_dependency 'rspec_junit_formatter', '~> 0.3.0'
   gem.add_development_dependency 'faye' unless RUBY_PLATFORM == 'java'
+  gem.add_development_dependency 'pry'
+  gem.add_development_dependency 'pry-byebug'
 end

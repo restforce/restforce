@@ -1,0 +1,15 @@
+{
+  "id": "0123456789ABC",
+  "operation": "insert",
+  "object": "Account",
+  "createdById": "00541000000hWTkAAM",
+  "createdDate": "2019-06-27T19:21:14.000+0000",
+  "systemModstamp": "2019-06-27T19:21:14.000+0000",
+  "state": "Open",
+  "concurrencyMode": "Parallel",
+  "contentType": "CSV",
+  "apiVersion": 46.0,
+  "contentUrl": "services/data/v46.0/jobs/ingest/7502f0000007zCgAAI/batches",
+  "lineEnding": "LF",
+  "columnDelimiter": "COMMA"
+}
