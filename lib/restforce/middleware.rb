@@ -22,9 +22,7 @@ module Restforce
     end
 
     # Internal: Proxy to the client.
-    def client
-      @client
-    end
+    attr_reader :client
 
     # Internal: Proxy to the client's faraday connection.
     def connection

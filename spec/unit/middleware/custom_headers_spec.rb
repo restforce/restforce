@@ -4,7 +4,7 @@ require 'spec_helper'
 
 describe Restforce::Middleware::CustomHeaders do
   describe '.call' do
-    subject { lambda { middleware.call(env) } }
+    subject { -> { middleware.call(env) } }
 
     context 'when :request_headers are a Hash' do
       let(:options) { { request_headers: { 'x-test-header' => 'Test Value' } } }

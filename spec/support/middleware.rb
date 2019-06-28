@@ -43,8 +43,8 @@ shared_examples_for 'authentication middleware' do
         its([:instance_url]) { should eq 'https://na1.salesforce.com' }
 
         its([:oauth_token])  do
-          should eq "00Dx0000000BV7z!AR8AQAxo9UfVkh8AlV0Gomt9Czx9LjHnSSpwBMmbRcgKFmxOtv" \
-                    "xjTrKW19ye6PE3Ds1eQz3z8jr3W7_VbWmEu4Q8TVGSTHxs"
+          should eq '00Dx0000000BV7z!AR8AQAxo9UfVkh8AlV0Gomt9Czx9LjHnSSpwBMmbRcgKFmxOtv' \
+                    'xjTrKW19ye6PE3Ds1eQz3z8jr3W7_VbWmEu4Q8TVGSTHxs'
         end
       end
 
@@ -64,9 +64,9 @@ shared_examples_for 'authentication middleware' do
       let!(:request) { fail_request }
 
       it 'raises an exception' do
-        expect {
+        expect do
           middleware.authenticate!
-        }.to raise_error Restforce::AuthenticationError, /^invalid_grant: .*/
+        end.to raise_error Restforce::AuthenticationError, /^invalid_grant: .*/
       end
 
       context 'when an authentication_callback is specified' do

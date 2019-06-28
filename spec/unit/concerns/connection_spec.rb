@@ -14,11 +14,11 @@ describe Restforce::Concerns::Connection do
     it { should eq builder }
   end
 
-  describe "#connection_options" do
+  describe '#connection_options' do
     let(:options) { { ssl: { verify: false } } }
     before { client.stub(options: options) }
 
-    it "picks up passed-in SSL options" do
+    it 'picks up passed-in SSL options' do
       expect(client.send(:connection_options)).to include(options)
     end
   end
@@ -63,7 +63,7 @@ describe Restforce::Concerns::Connection do
       end
     end
 
-    describe ":logger option" do
+    describe ':logger option' do
       let(:options) { { adapter: Faraday.default_adapter } }
 
       before(:each) do
@@ -73,7 +73,7 @@ describe Restforce::Concerns::Connection do
         Restforce.stub(log?: true)
       end
 
-      it "must always be used last before the Faraday Adapter" do
+      it 'must always be used last before the Faraday Adapter' do
         client.middleware.handlers.reverse.index(Restforce::Middleware::Logger).
           should eq 1
       end

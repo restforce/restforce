@@ -4,7 +4,7 @@ require 'spec_helper'
 
 describe Restforce::Middleware::InstanceURL do
   describe '.call' do
-    subject { lambda { middleware.call(nil) } }
+    subject { -> { middleware.call(nil) } }
 
     context 'when the instance url is not set' do
       before do

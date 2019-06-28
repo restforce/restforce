@@ -65,7 +65,7 @@ module Restforce
       #
       # Returns an Array of String names for each SObject.
       def limits
-        version_guard(29.0) { api_get("limits").body }
+        version_guard(29.0) { api_get('limits').body }
       end
 
       # Public: Gets the IDs of sobjects of type [sobject]
@@ -202,7 +202,7 @@ module Restforce
       # See: https://www.salesforce.com/us/developer/docs/api_rest/Content/dome_query_expl
       #      ain.htm
       def explain(soql)
-        version_guard(30.0) { api_get("query", explain: soql).body }
+        version_guard(30.0) { api_get('query', explain: soql).body }
       end
 
       # Public: Executes a SOQL query and returns the result.  Unlike the Query resource,
@@ -319,9 +319,10 @@ module Restforce
       # Returns true if the sobject was successfully updated.
       # Raises an exception if an error is returned from Salesforce.
       def update!(sobject, attrs)
-        id = attrs.fetch(attrs.keys.find { |k, v| k.to_s.casecmp('id').zero? }, nil)
+        id = attrs.fetch(attrs.keys.find { |k, _v| k.to_s.casecmp('id').zero? }, nil)
         raise ArgumentError, 'ID field missing from provided attributes' unless id
-        attrs_without_id = attrs.reject { |k, v| k.to_s.casecmp("id").zero? }
+
+        attrs_without_id = attrs.reject { |k, _v| k.to_s.casecmp('id').zero? }
         api_patch "sobjects/#{sobject}/#{CGI.escape(id)}", attrs_without_id
         true
       end
@@ -367,18 +368,21 @@ module Restforce
         attrs = attrs.dup
         external_id =
           extract_case_insensitive_string_or_symbol_key_from_hash!(attrs, field).to_s
-        if field.to_s != "Id" && (external_id.nil? || external_id.strip.empty?)
+        if field.to_s != 'Id' && (external_id.nil? || external_id.strip.empty?)
           raise ArgumentError, 'Specified external ID field missing from provided ' \
                                'attributes'
         end
 
         response =
-          if field.to_s == "Id" && (external_id.nil? || external_id.strip.empty?)
+          if field.to_s == 'Id' && (external_id.nil? || external_id.strip.empty?)
             version_guard(37.0) do
               api_post "sobjects/#{sobject}/#{field}", attrs
             end
           else
-            api_patch "sobjects/#{sobject}/#{field}/#{ERB::Util.url_encode(external_id)}", attrs
+            api_patch(
+              "sobjects/#{sobject}/#{field}/#{ERB::Util.url_encode(external_id)}",
+              attrs
+            )
           end
 
         response.body.respond_to?(:fetch) ? response.body.fetch('id', true) : true
@@ -447,7 +451,7 @@ module Restforce
       #
       def select(sobject, id, select, field = nil)
         path = if field
-               "sobjects/#{sobject}/#{field}/#{ERB::Util.url_encode(id)}"
+                 "sobjects/#{sobject}/#{field}/#{ERB::Util.url_encode(id)}"
                else
                  "sobjects/#{sobject}/#{ERB::Util.url_encode(id)}"
                end
@@ -467,7 +471,7 @@ module Restforce
       #
       # Returns an array of the recently viewed Restforce::SObject records.
       def recent(limit = nil)
-        path = limit ? "recent?limit=#{limit}" : "recent"
+        path = limit ? "recent?limit=#{limit}" : 'recent'
 
         api_get(path).body
       end
@@ -491,10 +495,10 @@ module Restforce
           yield
         else
           raise APIVersionError, "You must set an `api_version` of at least #{version} " \
-                                 "to use this feature in the Salesforce API. Set the " \
-                                 "`api_version` option when configuring the client - " \
-                                 "see https://github.com/ejholmes/restforce/blob/master" \
-                                 "/README.md#api-versions"
+                                 'to use this feature in the Salesforce API. Set the ' \
+                                 '`api_version` option when configuring the client - ' \
+                                 'see https://github.com/ejholmes/restforce/blob/master' \
+                                 '/README.md#api-versions'
         end
       end
 

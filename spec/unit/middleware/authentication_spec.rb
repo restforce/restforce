@@ -12,12 +12,12 @@ describe Restforce::Middleware::Authentication do
   end
 
   describe '.authenticate!' do
-    subject { lambda { middleware.authenticate! } }
+    subject { -> { middleware.authenticate! } }
     it      { should raise_error NotImplementedError }
   end
 
   describe '.call' do
-    subject { lambda { middleware.call(env) } }
+    subject { -> { middleware.call(env) } }
 
     context 'when successfull' do
       before do
@@ -44,7 +44,7 @@ describe Restforce::Middleware::Authentication do
 
     its(:url_prefix)     { should eq(URI.parse('https://login.salesforce.com')) }
 
-    it "should have a proxy URI" do
+    it 'should have a proxy URI' do
       connection.proxy[:uri].should eq(URI.parse('https://not-a-real-site.com'))
     end
 
@@ -56,10 +56,10 @@ describe Restforce::Middleware::Authentication do
           Restforce.stub log?: false
         end
 
-        its(:handlers) {
+        its(:handlers) do
           should include FaradayMiddleware::ParseJson,
                          Faraday::Adapter::NetHttp
-        }
+        end
         its(:handlers) { should_not include Restforce::Middleware::Logger }
       end
 
@@ -68,10 +68,10 @@ describe Restforce::Middleware::Authentication do
           Restforce.stub log?: true
         end
 
-        its(:handlers) {
+        its(:handlers) do
           should include FaradayMiddleware::ParseJson,
                          Restforce::Middleware::Logger, Faraday::Adapter::NetHttp
-        }
+        end
       end
 
       context 'with specified adapter' do
@@ -79,13 +79,13 @@ describe Restforce::Middleware::Authentication do
           options[:adapter] = :typhoeus
         end
 
-        its(:handlers) {
+        its(:handlers) do
           should include FaradayMiddleware::ParseJson, Faraday::Adapter::Typhoeus
-        }
+        end
       end
     end
 
-    it "should have SSL config set" do
+    it 'should have SSL config set' do
       connection.ssl[:version].should eq(:TLSv1_2)
     end
   end

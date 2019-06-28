@@ -23,7 +23,7 @@ module Faraday
         part = ''
         part << "--#{boundary}\r\n"
         part << "Content-Disposition: form-data; name=\"#{name}\"\r\n"
-        part << "Content-Type: #{headers['Content-Type']}\r\n" if headers["Content-Type"]
+        part << "Content-Type: #{headers['Content-Type']}\r\n" if headers['Content-Type']
         part << "\r\n"
         part << "#{value}\r\n"
       end

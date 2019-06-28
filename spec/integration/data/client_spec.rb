@@ -70,7 +70,7 @@ shared_examples_for Restforce::Data::Client do
     context 'with missing instance url' do
       let(:instance_url) { nil }
 
-      it "raises an error" do
+      it 'raises an error' do
         expect { subject }.to raise_error RuntimeError, /Instance URL missing/
       end
     end
@@ -81,7 +81,7 @@ shared_examples_for Restforce::Data::Client do
 
       it 'should not raise error' do
         client.stub(:authorize!)
-        client.faye.stub(:set_header).with('Authorization', "OAuth token")
+        client.faye.stub(:set_header).with('Authorization', 'OAuth token')
         expect { subject }.to_not raise_error
       end
     end
@@ -91,7 +91,7 @@ shared_examples_for Restforce::Data::Client do
         access_token = double('access token')
         access_token.stub(:access_token).and_return('token')
         client.should_receive(:authenticate!).and_return(access_token)
-        client.faye.should_receive(:set_header).with('Authorization', "OAuth token")
+        client.faye.should_receive(:set_header).with('Authorization', 'OAuth token')
         client.faye.trigger('transport:down')
       end
     end

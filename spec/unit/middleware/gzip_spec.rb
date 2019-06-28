@@ -15,7 +15,7 @@ describe Restforce::Middleware::Gzip do
   end
 
   describe '.call' do
-    subject { lambda { middleware.call(env) } }
+    subject { -> { middleware.call(env) } }
 
     before do
       app.should_receive(:on_complete) { middleware.on_complete(env) }

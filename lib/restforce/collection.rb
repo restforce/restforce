@@ -40,17 +40,17 @@ module Restforce
 
     # Return the current and all of the following pages.
     def pages
-      [self] + (has_next_page? ? next_page.pages : [])
+      [self] + (next_page? ? next_page.pages : [])
     end
 
     # Returns true if there is a pointer to the next page.
-    def has_next_page?
+    def next_page?
       !@raw_page['nextRecordsUrl'].nil?
     end
 
     # Returns the next page as a Restforce::Collection if it's available, nil otherwise.
     def next_page
-      @client.get(@raw_page['nextRecordsUrl']).body if has_next_page?
+      @client.get(@raw_page['nextRecordsUrl']).body if next_page?
     end
   end
 end

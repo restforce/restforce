@@ -34,6 +34,7 @@ module Restforce
           @field = field
           @valid_for = options.delete(:valid_for)
           raise "#{field} is not a dependent picklist" if @valid_for && !dependent?
+
           replace(picklist_values)
         end
 
@@ -51,30 +52,32 @@ module Restforce
 
         # Returns true of the given field is dependent on another field.
         def dependent?
-          !!field['dependentPicklist']
+          field['dependentPicklist']
         end
 
         def valid_for?
-          !!@valid_for
+          !@valid_for.nil?
         end
 
         def controlling_picklist
-          @_controlling_picklist ||= controlling_field['picklistValues'].
-                                     find do |picklist_entry|
-                                       picklist_entry['value'] == @valid_for
-                                     end
+          @controlling_picklist ||= controlling_field['picklistValues'].
+                                    find do |picklist_entry|
+            picklist_entry['value'] == @valid_for
+          end
         end
 
         def index
-          @_index ||= controlling_field['picklistValues'].index(controlling_picklist)
+          @index ||= controlling_field['picklistValues'].index(controlling_picklist)
         end
 
         def controlling_field
-          @_controlling_field ||= fields.find { |f| f['name'] == field['controllerName'] }
+          @controlling_field ||= fields.find { |f| f['name'] == field['controllerName'] }
         end
 
         def field
+          # rubocop:disable Naming/MemoizedInstanceVariableName
           @_field ||= fields.find { |f| f['name'] == @field }
+          # rubocop:enable Naming/MemoizedInstanceVariableName
         end
 
         # Returns true if the picklist entry is valid for the controlling picklist.
@@ -82,7 +85,7 @@ module Restforce
         # See http://www.salesforce.com/us/developer/docs/api/Content/sforce_api_calls_des
         # cribesobjects_describesobjectresult.htm
         def valid?(picklist_entry)
-          valid_for = picklist_entry['validFor'].ljust(16, 'A').unpack('m').first.
+          valid_for = picklist_entry['validFor'].ljust(16, 'A').unpack1('m').
                       unpack('C*')
           (valid_for[index >> 3] & (0x80 >> index % 8)).positive?
         end

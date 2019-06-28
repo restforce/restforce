@@ -48,7 +48,7 @@ describe Restforce::SObject do
       subject(:send_method) { sobject.send(method) }
 
       context 'when an Id was not queried' do
-        it "raises an error" do
+        it 'raises an error' do
           expect { send_method }.to raise_error ArgumentError,
                                                 /need to query the Id for the record/
         end
@@ -66,7 +66,7 @@ describe Restforce::SObject do
   end
 
   describe '.describe' do
-    subject { lambda { sobject.describe } }
+    subject { -> { sobject.describe } }
 
     before do
       client.should_receive(:describe).with('Whizbang')
@@ -77,7 +77,7 @@ describe Restforce::SObject do
 
   describe '.describe_layouts' do
     let(:layout_id) { nil }
-    subject { lambda { sobject.describe_layouts } }
+    subject { -> { sobject.describe_layouts } }
 
     before do
       client.should_receive(:describe_layouts).with('Whizbang', layout_id)
@@ -87,7 +87,7 @@ describe Restforce::SObject do
 
     context 'when a layout Id is specified' do
       let(:layout_id) { '012E0000000RHEp' }
-      subject { lambda { sobject.describe_layouts(layout_id) } }
+      subject { -> { sobject.describe_layouts(layout_id) } }
 
       it { should_not raise_error }
     end

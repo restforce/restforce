@@ -3,8 +3,8 @@
 module Restforce
   class Middleware::Multipart < Faraday::Request::UrlEncoded
     self.mime_type = 'multipart/form-data'
-    DEFAULT_BOUNDARY  = "--boundary_string"
-    JSON_CONTENT_TYPE = { "Content-Type" => "application/json" }.freeze
+    DEFAULT_BOUNDARY  = '--boundary_string'
+    JSON_CONTENT_TYPE = { 'Content-Type' => 'application/json' }.freeze
 
     def call(env)
       match_content_type(env) do |params|
@@ -19,16 +19,16 @@ module Restforce
     def process_request?(env)
       type = request_type(env)
       env[:body].respond_to?(:each_key) && !env[:body].empty? && (
-        (type.empty? && has_multipart?(env[:body])) ||
+        (type.empty? && multipart?(env[:body])) ||
         type == self.class.mime_type
       )
     end
 
-    def has_multipart?(obj)
+    def multipart?(obj)
       # string is an enum in 1.8, returning list of itself
       if obj.respond_to?(:each) && !obj.is_a?(String)
         (obj.respond_to?(:values) ? obj.values : obj).each do |val|
-          return true if val.respond_to?(:content_type) || has_multipart?(val)
+          return true if val.respond_to?(:content_type) || multipart?(val)
         end
       end
       false
@@ -42,13 +42,14 @@ module Restforce
       parts << Faraday::Parts::Part.new(
         boundary,
         'entity_content',
-        params.reject { |k, v| v.respond_to? :content_type }.to_json,
+        params.reject { |_k, v| v.respond_to? :content_type }.to_json,
         JSON_CONTENT_TYPE
       )
 
       # Files
       params.each do |k, v|
         next unless v.respond_to? :content_type
+
         parts << Faraday::Parts::Part.new(boundary,
                                           k.to_s,
                                           v)

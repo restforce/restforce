@@ -6,7 +6,7 @@ describe Restforce::Concerns::Streaming, event_machine: true do
   describe '.subscribe' do
     let(:channels)        { %w[channel1 channel2] }
     let(:topics)          { channels.map { |c| "/topic/#{c}" } }
-    let(:subscribe_block) { lambda { 'subscribe' } }
+    let(:subscribe_block) { -> { 'subscribe' } }
     let(:faye_double)     { double('Faye') }
 
     it 'subscribes to the topics with faye' do
@@ -18,11 +18,11 @@ describe Restforce::Concerns::Streaming, event_machine: true do
       client.subscribe(channels, &subscribe_block)
     end
 
-    context "replay_handlers" do
-      before {
+    context 'replay_handlers' do
+      before do
         faye_double.should_receive(:subscribe).at_least(1)
         client.stub faye: faye_double
-      }
+      end
 
       it 'registers nil handlers when no replay option is given' do
         client.subscribe(channels, &subscribe_block)
@@ -63,7 +63,7 @@ describe Restforce::Concerns::Streaming, event_machine: true do
         faye_double = double('Faye::Client')
         Faye::Client.
           should_receive(:new).
-          with("/url/cometd/30.0").
+          with('/url/cometd/30.0').
           and_return(faye_double)
         faye_double.should_receive(:set_header).with('Authorization', 'OAuth secret')
         faye_double.should_receive(:set_header).with('Authorization', 'OAuth secret2')
@@ -87,13 +87,13 @@ describe Restforce::Concerns::Streaming, event_machine: true do
     let(:extension) { Restforce::Concerns::Streaming::ReplayExtension.new(handlers) }
 
     it 'sends nil without a specified handler' do
-      output = subscribe(extension, to: "channel1")
+      output = subscribe(extension, to: 'channel1')
       read_replay(output).should eq('/topic/channel1' => nil)
     end
 
     it 'with a scalar replay id' do
       handlers['channel1'] = -2
-      output = subscribe(extension, to: "channel1")
+      output = subscribe(extension, to: 'channel1')
       read_replay(output).should eq('/topic/channel1' => -2)
     end
 
@@ -103,10 +103,10 @@ describe Restforce::Concerns::Streaming, event_machine: true do
       handlers['channel1'] = hash_handler
       handlers['channel2'] = hash_handler
 
-      output = subscribe(extension, to: "channel1")
+      output = subscribe(extension, to: 'channel1')
       read_replay(output).should eq('/topic/channel1' => -1)
 
-      output = subscribe(extension, to: "channel2")
+      output = subscribe(extension, to: 'channel2')
       read_replay(output).should eq('/topic/channel2' => -2)
     end
 
@@ -115,7 +115,7 @@ describe Restforce::Concerns::Streaming, event_machine: true do
       custom_handler.should_receive(:[]).and_return(123)
       handlers['channel1'] = custom_handler
 
-      output = subscribe(extension, to: "channel1")
+      output = subscribe(extension, to: 'channel1')
       read_replay(output).should eq('/topic/channel1' => 123)
     end
 
@@ -154,7 +154,7 @@ describe Restforce::Concerns::Streaming, event_machine: true do
         'channel' => '/meta/subscribe',
         'subscription' => "/topic/#{options[:to]}"
       }
-      extension.outgoing(message, ->(m) {
+      extension.outgoing(message, lambda { |m|
         output = m
       })
       output

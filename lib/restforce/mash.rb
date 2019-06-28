@@ -12,9 +12,9 @@ module Restforce
       # Restforce::Mash objects.
       def build(val, client)
         if val.is_a?(Array)
-          val.collect { |a_val| self.build(a_val, client) }
+          val.collect { |a_val| build(a_val, client) }
         elsif val.is_a?(Hash)
-          self.klass(val).new(val, client)
+          klass(val).new(val, client)
         else
           val
         end
@@ -29,9 +29,9 @@ module Restforce
           Restforce::Collection
         elsif val.key? 'attributes'
           case (val['attributes']['type'])
-          when "Attachment"
+          when 'Attachment'
             Restforce::Attachment
-          when "Document"
+          when 'Document'
             Restforce::Document
           else
             # When the hash contains an attributes key, it should be considered an
@@ -52,7 +52,7 @@ module Restforce
     end
 
     def dup
-      self.class.new(self, @client, self.default)
+      self.class.new(self, @client, default)
     end
 
     def convert_value(val, duping = false)

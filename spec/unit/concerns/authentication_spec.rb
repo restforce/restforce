@@ -11,7 +11,7 @@ describe Restforce::Concerns::Authentication do
         client.stub authentication_middleware: nil
       end
 
-      it "raises an error" do
+      it 'raises an error' do
         expect { authenticate! }.to raise_error Restforce::AuthenticationError,
                                                 'No authentication middleware present'
       end
@@ -113,7 +113,7 @@ describe Restforce::Concerns::Authentication do
 
   describe '.jwt?' do
     subject       { client.jwt? }
-    let(:options) { Hash.new }
+    let(:options) { {} }
 
     before do
       client.stub options: options

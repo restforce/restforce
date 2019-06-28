@@ -5,10 +5,10 @@ module Restforce
   # When a request fails (a status of 401 is returned), the middleware
   # will attempt to either reauthenticate (username and password) or refresh
   # the oauth access token (if a refresh token is present).
-  class Middleware::Authentication < Restforce::Middleware
+  class Restforce::Middleware::Authentication < Restforce::Middleware
     autoload :Password, 'restforce/middleware/authentication/password'
-    autoload :Token,    'restforce/middleware/authentication/token'
-    autoload :JWTBearer,      'restforce/middleware/authentication/jwt_bearer'
+    autoload :Token, 'restforce/middleware/authentication/token'
+    autoload :JWTBearer, 'restforce/middleware/authentication/jwt_bearer'
 
     # Rescue from 401's, authenticate then raise the error again so the client
     # can reissue the request.
@@ -25,14 +25,14 @@ module Restforce
         req.body = encode_www_form(params)
       end
 
-      if response.status >= 500
-        raise Restforce::ServerError, error_message(response)
-      elsif response.status != 200
+      raise Restforce::ServerError, error_message(response) if response.status >= 500
+
+      if response.status != 200
         raise Restforce::AuthenticationError, error_message(response)
       end
 
       @options[:instance_url] = response.body['instance_url']
-      @options[:oauth_token]  = response.body['access_token']
+      @options[:oauth_token] = response.body['access_token']
 
       @options[:authentication_callback]&.call(response.body)
 

@@ -37,8 +37,8 @@ shared_examples_for Restforce::AbstractClient do
   end
 
   describe '.get_updated' do
-    let(:start_date) { Time.new(2015, 8, 17, 0, 0, 0, "+02:00") }
-    let(:end_date) { Time.new(2016, 8, 19, 0, 0, 0, "+02:00") }
+    let(:start_date) { Time.new(2015, 8, 17, 0, 0, 0, '+02:00') }
+    let(:end_date) { Time.new(2016, 8, 19, 0, 0, 0, '+02:00') }
     end_string = '2016-08-18T22:00:00Z'
     start_string = '2015-08-16T22:00:00Z'
     requests "sobjects/Whizbang/updated/\\?end=#{end_string}&start=#{start_string}",
@@ -48,8 +48,8 @@ shared_examples_for Restforce::AbstractClient do
   end
 
   describe '.get_deleted' do
-    let(:start_date) { Time.new(2015, 8, 17, 0, 0, 0, "+02:00") }
-    let(:end_date) { Time.new(2016, 8, 19, 0, 0, 0, "+02:00") }
+    let(:start_date) { Time.new(2015, 8, 17, 0, 0, 0, '+02:00') }
+    let(:end_date) { Time.new(2016, 8, 19, 0, 0, 0, '+02:00') }
     end_string = '2016-08-18T22:00:00Z'
     start_string = '2015-08-16T22:00:00Z'
     requests "sobjects/Whizbang/deleted/\\?end=#{end_string}&start=#{start_string}",
@@ -78,7 +78,7 @@ shared_examples_for Restforce::AbstractClient do
     context 'without multipart' do
       requests 'sobjects/Account',
                method: :post,
-               with_body: "{\"Name\":\"Foobar\"}",
+               with_body: '{"Name":"Foobar"}',
                fixture: 'sobject/create_success_response'
 
       subject { client.create('Account', Name: 'Foobar') }
@@ -96,7 +96,7 @@ shared_examples_for Restforce::AbstractClient do
       subject do
         client.create('Account', Name: 'Foobar',
                                  Blob: Restforce::UploadIO.new(
-                                   File.expand_path('../../fixtures/blob.jpg', __FILE__),
+                                   File.expand_path('../fixtures/blob.jpg', __dir__),
                                    'image/jpeg'
                                  ))
       end
@@ -109,7 +109,7 @@ shared_examples_for Restforce::AbstractClient do
     context 'with invalid Id' do
       requests 'sobjects/Account/001D000000INjVe',
                method: :patch,
-               with_body: "{\"Name\":\"Foobar\"}",
+               with_body: '{"Name":"Foobar"}',
                status: 404,
                fixture: 'sobject/delete_error_response'
 
@@ -134,14 +134,14 @@ shared_examples_for Restforce::AbstractClient do
 
   describe '.update' do
     context 'with missing Id' do
-      subject { lambda { client.update('Account', Name: 'Foobar') } }
+      subject { -> { client.update('Account', Name: 'Foobar') } }
       it { should raise_error ArgumentError, 'ID field missing from provided attributes' }
     end
 
     context 'with invalid Id' do
       requests 'sobjects/Account/001D000000INjVe',
                method: :patch,
-               with_body: "{\"Name\":\"Foobar\"}",
+               with_body: '{"Name":"Foobar"}',
                status: 404,
                fixture: 'sobject/delete_error_response'
 
@@ -152,7 +152,7 @@ shared_examples_for Restforce::AbstractClient do
     context 'with success' do
       requests 'sobjects/Account/001D000000INjVe',
                method: :patch,
-               with_body: "{\"Name\":\"Foobar\"}"
+               with_body: '{"Name":"Foobar"}'
 
       [:Id, :id, 'Id', 'id'].each do |key|
         context "with #{key.inspect} as the key" do
@@ -170,8 +170,8 @@ shared_examples_for Restforce::AbstractClient do
     context 'when updated' do
       requests 'sobjects/Account/External__c/foobar',
                method: :patch,
-               with_body: "{\"Name\":\"Foobar\"}",
-               fixture: "sobject/upsert_updated_success_response"
+               with_body: '{"Name":"Foobar"}',
+               fixture: 'sobject/upsert_updated_success_response'
 
       context 'with symbol external Id key' do
         subject do
@@ -195,7 +195,7 @@ shared_examples_for Restforce::AbstractClient do
     context 'when created' do
       requests 'sobjects/Account/External__c/foobar',
                method: :patch,
-               with_body: "{\"Name\":\"Foobar\"}",
+               with_body: '{"Name":"Foobar"}',
                fixture: 'sobject/upsert_created_success_response'
 
       [:External__c, 'External__c', :external__c, 'external__c'].each do |key|
@@ -213,7 +213,7 @@ shared_examples_for Restforce::AbstractClient do
     context 'when created with a space in the id' do
       requests 'sobjects/Account/External__c/foo%20bar',
                method: :patch,
-               with_body: "{\"Name\":\"Foobar\"}",
+               with_body: '{"Name":"Foobar"}',
                fixture: 'sobject/upsert_created_success_response'
 
       [:External__c, 'External__c', :external__c, 'external__c'].each do |key|
@@ -238,7 +238,7 @@ shared_examples_for Restforce::AbstractClient do
                method: :delete,
                status: 404
 
-      subject { lambda { destroy! } }
+      subject { -> { destroy! } }
       it { should raise_error Faraday::Error::ResourceNotFound }
     end
 
@@ -355,9 +355,9 @@ shared_examples_for Restforce::AbstractClient do
     context 'when successful' do
       before do
         @request = stub_login_request(
-          with_body: "grant_type=password&client_id=client_id" \
-                        "&client_secret=client_secret&username=foo" \
-                        "&password=barsecurity_token"
+          with_body: 'grant_type=password&client_id=client_id' \
+                        '&client_secret=client_secret&username=foo' \
+                        '&password=barsecurity_token'
         ).to_return(status: 200, body: fixture(:auth_success_response))
       end
 
@@ -373,7 +373,7 @@ shared_examples_for Restforce::AbstractClient do
         client.stub(:authentication_middleware).and_return(nil)
       end
 
-      it "raises an error" do
+      it 'raises an error' do
         expect { authenticate! }.to raise_error Restforce::AuthenticationError,
                                                 'No authentication middleware present'
       end
@@ -407,13 +407,13 @@ shared_examples_for Restforce::AbstractClient do
         )
 
         @query_request = stub_login_request(
-          with_body: "grant_type=password&client_id=client_id" \
-                        "&client_secret=client_secret&username=foo&" \
-                        "password=barsecurity_token"
+          with_body: 'grant_type=password&client_id=client_id' \
+                        '&client_secret=client_secret&username=foo&' \
+                        'password=barsecurity_token'
         ).to_return(status: 200, body: fixture(:auth_success_response))
       end
 
-      subject { lambda { client.query('SELECT some, fields FROM object') } }
+      subject { -> { client.query('SELECT some, fields FROM object') } }
       it { should raise_error Restforce::UnauthorizedError }
     end
   end
@@ -425,15 +425,15 @@ shared_examples_for Restforce::AbstractClient do
       @query = stub_api_request('query\?q=SELECT%20some,%20fields%20FROM%20object').
                with(headers: { 'Authorization' => "OAuth #{oauth_token}" }).
                to_return(status: 401,
-                  body: fixture('expired_session_response'),
-                  headers: { 'Content-Type' => 'application/json' }).then.
+                         body: fixture('expired_session_response'),
+                         headers: { 'Content-Type' => 'application/json' }).then.
                to_return(status: 200,
-                  body: fixture('sobject/query_success_response'),
-                  headers: { 'Content-Type' => 'application/json' })
+                         body: fixture('sobject/query_success_response'),
+                         headers: { 'Content-Type' => 'application/json' })
 
       @login = stub_login_request(
-        with_body: "grant_type=password&client_id=client_id&client_secret=" \
-                      "client_secret&username=foo&password=barsecurity_token"
+        with_body: 'grant_type=password&client_id=client_id&client_secret=' \
+                      'client_secret&username=foo&password=barsecurity_token'
       ).to_return(status: 200, body: fixture(:auth_success_response))
     end
 
