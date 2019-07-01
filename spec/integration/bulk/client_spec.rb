@@ -10,7 +10,7 @@ shared_examples_for Restforce::Bulk::Client do
     it { should eq '0123456789ABC' }
   end
 
-  describe '.upload_csv' do
+  describe '.upload_job_data' do
     requests 'jobs/ingest/0123456789/batches',
              method: :put, status: 201, fixture: 'bulk/upload_csv_success_response'
     subject { client.upload_job_data('0123456789', "\"NAME\"\n\"Foo\"\n\"Bar\"") }
@@ -24,14 +24,14 @@ shared_examples_for Restforce::Bulk::Client do
     it { should be_true }
   end
 
-  describe '.check_status' do
+  describe '.get_job_status' do
     requests 'jobs/ingest/0123456789',
              fixture: 'bulk/check_status_success_response'
     subject { client.get_job_status('0123456789') }
-    it { should eq 'JobComplete' }
+    it { subject['state'].should eq 'JobComplete' }
   end
 
-  describe '.success_results' do
+  describe '.get_job_success_results' do
     requests 'jobs/ingest/0123456789/successfulResults',
              fixture: 'bulk/success_results_success_response'
     subject { client.get_job_success_results('0123456789') }
@@ -51,7 +51,7 @@ shared_examples_for Restforce::Bulk::Client do
     }
   end
 
-  describe '.failed_results' do
+  describe '.get_job_failed_results' do
     requests 'jobs/ingest/0123456789/failedResults',
              fixture: 'bulk/failed_results_success_response'
     subject { client.get_job_failed_results('0123456789') }
