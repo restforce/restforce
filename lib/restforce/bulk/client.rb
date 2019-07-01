@@ -38,7 +38,7 @@ module Restforce
           'Content-Type' => 'application/json',
           'Accept' => 'application/json'
         )
-        get(api_path(jid)).body['state']
+        get(api_path(jid)).body
       end
 
       def get_job_success_results(jid)
