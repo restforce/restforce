@@ -34,6 +34,7 @@ module Restforce
 
     def log(message)
       return unless Restforce.log?
+
       configuration.logger.send(configuration.log_level, message)
     end
   end
@@ -90,29 +91,29 @@ module Restforce
       end
     end
 
-    option :api_version, default: lambda { ENV['SALESFORCE_API_VERSION'] || '26.0' }
+    option :api_version, default: -> { ENV['SALESFORCE_API_VERSION'] || '26.0' }
 
     # The username to use during login.
-    option :username, default: lambda { ENV['SALESFORCE_USERNAME'] }
+    option :username, default: -> { ENV['SALESFORCE_USERNAME'] }
 
     # The password to use during login.
-    option :password, default: lambda { ENV['SALESFORCE_PASSWORD'] }
+    option :password, default: -> { ENV['SALESFORCE_PASSWORD'] }
 
     # The security token to use during login.
-    option :security_token, default: lambda { ENV['SALESFORCE_SECURITY_TOKEN'] }
+    option :security_token, default: -> { ENV['SALESFORCE_SECURITY_TOKEN'] }
 
     # The OAuth client id
-    option :client_id, default: lambda { ENV['SALESFORCE_CLIENT_ID'] }
+    option :client_id, default: -> { ENV['SALESFORCE_CLIENT_ID'] }
 
     # The OAuth client secret
-    option :client_secret, default: lambda { ENV['SALESFORCE_CLIENT_SECRET'] }
+    option :client_secret, default: -> { ENV['SALESFORCE_CLIENT_SECRET'] }
 
     # Path to private key for JWT authentication
     option :jwt_key
 
     # Set this to true if you're authenticating with a Sandbox instance.
     # Defaults to false.
-    option :host, default: lambda { ENV['SALESFORCE_HOST'] || 'login.salesforce.com' }
+    option :host, default: -> { ENV['SALESFORCE_HOST'] || 'login.salesforce.com' }
 
     option :oauth_token
     option :refresh_token
@@ -136,9 +137,9 @@ module Restforce
     option :timeout
 
     # Faraday adapter to use. Defaults to Faraday.default_adapter.
-    option :adapter, default: lambda { Faraday.default_adapter }
+    option :adapter, default: -> { Faraday.default_adapter }
 
-    option :proxy_uri, default: lambda { ENV['SALESFORCE_PROXY_URI'] }
+    option :proxy_uri, default: -> { ENV['SALESFORCE_PROXY_URI'] }
 
     # A Proc that is called with the response body after a successful authentication.
     option :authentication_callback

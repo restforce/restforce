@@ -87,7 +87,7 @@ module Restforce
 end
 
 if ENV['PROXY_URI']
-  warn "[restforce] You must now use the SALESFORCE_PROXY_URI environment variable (as " \
-       "opposed to PROXY_URI) to set a proxy server for Restforce. Please update your " \
+  warn '[restforce] You must now use the SALESFORCE_PROXY_URI environment variable (as ' \
+       'opposed to PROXY_URI) to set a proxy server for Restforce. Please update your ' \
        "environment's configuration."
 end

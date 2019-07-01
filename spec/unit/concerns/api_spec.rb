@@ -22,8 +22,8 @@ describe Restforce::Concerns::API do
   end
 
   describe '.get_updated' do
-    let(:start_date_time) { Time.new(2002, 10, 31, 2, 2, 2, "+02:00") }
-    let(:end_date_time) { Time.new(2003, 10, 31, 2, 2, 2, "+02:00") }
+    let(:start_date_time) { Time.new(2002, 10, 31, 2, 2, 2, '+02:00') }
+    let(:end_date_time) { Time.new(2003, 10, 31, 2, 2, 2, '+02:00') }
     let(:sobject) { 'Whizbang' }
     subject(:results) { client.get_updated(sobject, start_date_time, end_date_time) }
     it 'returns the body' do
@@ -38,8 +38,8 @@ describe Restforce::Concerns::API do
   end
 
   describe '.get_deleted' do
-    let(:start_date_time) { Time.new(2002, 10, 31, 2, 2, 2, "+02:00") }
-    let(:end_date_time) { Time.new(2003, 10, 31, 2, 2, 2, "+02:00") }
+    let(:start_date_time) { Time.new(2002, 10, 31, 2, 2, 2, '+02:00') }
+    let(:end_date_time) { Time.new(2003, 10, 31, 2, 2, 2, '+02:00') }
     let(:sobject) { 'Whizbang' }
     subject(:results) { client.get_deleted(sobject, start_date_time, end_date_time) }
     it 'returns the body' do
@@ -69,7 +69,7 @@ describe Restforce::Concerns::API do
     it 'returns the limits for an organization' do
       limits = double('limits')
       limits.stub(:body).and_return({})
-      client.should_receive(:api_get).with("limits").and_return(limits)
+      client.should_receive(:api_get).with('limits').and_return(limits)
       client.should_receive(:options).and_return(api_version: 29.0)
       expect(client.limits).to eq({})
     end
@@ -84,13 +84,13 @@ describe Restforce::Concerns::API do
     let(:soql)        { 'Select Id from Account' }
     subject(:results) { client.explain(soql) }
 
-    it "returns an execute plan for this SOQL" do
-      plans = double("plans")
-      plans.stub(:body).and_return("plans" => [])
-      client.should_receive(:api_get).with("query", explain: soql).
+    it 'returns an execute plan for this SOQL' do
+      plans = double('plans')
+      plans.stub(:body).and_return('plans' => [])
+      client.should_receive(:api_get).with('query', explain: soql).
         and_return(plans)
       client.should_receive(:options).and_return(api_version: 30.0)
-      expect(results).to eq("plans" => [])
+      expect(results).to eq('plans' => [])
     end
 
     it "raises an exception if we aren't at version 30.0 or above" do
@@ -126,7 +126,7 @@ describe Restforce::Concerns::API do
   describe '.describe_layouts' do
     subject(:describe_layouts) { client.describe_layouts('Whizbang') }
 
-    context "API version where describe_layouts is supported" do
+    context 'API version where describe_layouts is supported' do
       before { client.should_receive(:options).and_return(api_version: 28.0) }
 
       it 'returns the layouts for the sobject' do
@@ -150,10 +150,10 @@ describe Restforce::Concerns::API do
       end
     end
 
-    context "an API version where describe_layouts is not supported" do
+    context 'an API version where describe_layouts is not supported' do
       before { client.should_receive(:options).and_return(api_version: 24.0) }
 
-      it "raises a error" do
+      it 'raises a error' do
         expect { describe_layouts }.to raise_error(Restforce::APIVersionError)
       end
     end
@@ -210,7 +210,7 @@ describe Restforce::Concerns::API do
     let(:soql)        { 'Select Id from Account' }
     subject(:results) { client.query_all(soql) }
 
-    context "with supported api_version" do
+    context 'with supported api_version' do
       before { client.should_receive(:options).and_return(api_version: 31.0) }
 
       context 'with mashify middleware' do
@@ -238,12 +238,12 @@ describe Restforce::Concerns::API do
       end
     end
 
-    context "with unsupported api_version" do
+    context 'with unsupported api_version' do
       before { client.should_receive(:options).and_return(api_version: 26.0) }
 
       subject(:query_all) { client.query_all(soql) }
 
-      it "raises an error" do
+      it 'raises an error' do
         expect { query_all }.to raise_error(Restforce::APIVersionError)
       end
     end
@@ -309,27 +309,27 @@ describe Restforce::Concerns::API do
       subject(:result) { client.update!(sobject, attrs) }
 
       context 'when the id field is present' do
-        let(:attrs) { { id: '1234', StageName: "Call Scheduled" } }
+        let(:attrs) { { id: '1234', StageName: 'Call Scheduled' } }
 
         it 'sends an HTTP PATCH, and returns true' do
           client.should_receive(:api_patch).
-            with('sobjects/Whizbang/1234', StageName: "Call Scheduled")
+            with('sobjects/Whizbang/1234', StageName: 'Call Scheduled')
           expect(result).to be_true
         end
       end
 
       context 'when the id field contains special characters' do
-        let(:attrs) { { id: '1234/?abc', StageName: "Call Scheduled" } }
+        let(:attrs) { { id: '1234/?abc', StageName: 'Call Scheduled' } }
 
         it 'sends an HTTP PATCH, and encodes the ID' do
           client.should_receive(:api_patch).
-            with('sobjects/Whizbang/1234%2F%3Fabc', StageName: "Call Scheduled")
+            with('sobjects/Whizbang/1234%2F%3Fabc', StageName: 'Call Scheduled')
           expect(result).to be_true
         end
       end
 
       context 'when the id field is missing from the attrs' do
-        it "raises an error" do
+        it 'raises an error' do
           expect { client.update!(sobject, attrs) }.
             to raise_error(ArgumentError, 'ID field missing from provided attributes')
         end
@@ -364,7 +364,7 @@ describe Restforce::Concerns::API do
 
       context 'when the record is found and created' do
         it 'returns the id of the record' do
-          response.stub(:body) { { "id" => "4321" } }
+          response.stub(:body) { { 'id' => '4321' } }
           client.should_receive(:api_patch).
             with('sobjects/Whizbang/External_ID__c/1234', {}).
             and_return(response)
@@ -388,7 +388,7 @@ describe Restforce::Concerns::API do
 
         context 'and the value for Id is provided' do
           it 'returns the id of the record, and original record still contains id' do
-            response.stub(:body) { { "id" => "4321" } }
+            response.stub(:body) { { 'id' => '4321' } }
             client.should_receive(:api_patch).
               with('sobjects/Whizbang/Id/4321', {}).
               and_return(response)
@@ -401,7 +401,7 @@ describe Restforce::Concerns::API do
           let(:attrs) { { 'External_ID__c' => '1234' } }
 
           it 'uses POST to create the record' do
-            response.stub(:body) { { "id" => "4321" } }
+            response.stub(:body) { { 'id' => '4321' } }
             client.should_receive(:options).and_return(api_version: 38.0)
             client.should_receive(:api_post).
               with('sobjects/Whizbang/Id', attrs).
@@ -514,7 +514,7 @@ describe Restforce::Concerns::API do
     end
 
     context 'when an internal ID which contains special characters is specified' do
-      let(:id)    { "1234/?abc" }
+      let(:id)    { '1234/?abc' }
       it 'returns the full representation of the object' do
         client.should_receive(:api_get).
           with('sobjects/Whizbang/1234%2F%3Fabc').
@@ -595,7 +595,7 @@ describe Restforce::Concerns::API do
     end
 
     context 'when an internal ID which contains special characters is specified' do
-      let(:id)    { "1234/?abc" }
+      let(:id)    { '1234/?abc' }
       it 'returns the full representation of the object' do
         client.should_receive(:api_get).
           with('sobjects/Whizbang/1234%2F%3Fabc').
@@ -605,21 +605,21 @@ describe Restforce::Concerns::API do
     end
   end
 
-  describe "#recent" do
+  describe '#recent' do
     let(:limit) { nil }
     subject(:result) { client.recent(limit) }
 
-    context "given no limit is specified" do
-      it "returns the most recently viewed items for the logged-in user" do
+    context 'given no limit is specified' do
+      it 'returns the most recently viewed items for the logged-in user' do
         client.should_receive(:api_get).with('recent').and_return(response)
         expect(result).to eq response.body
       end
     end
 
-    context "given a limit is specified" do
+    context 'given a limit is specified' do
       let(:limit) { 10 }
 
-      it "returns up to the limit specified results" do
+      it 'returns up to the limit specified results' do
         client.should_receive(:api_get).with('recent?limit=10').and_return(response)
         expect(result).to eq response.body
       end

@@ -7,7 +7,7 @@ describe Restforce::Middleware::Logger do
   let(:middleware) { described_class.new app, logger, options }
 
   describe '.call' do
-    subject { lambda { middleware.call(env) } }
+    subject { -> { middleware.call(env) } }
 
     before do
       app.should_receive(:call).once.and_return(app)

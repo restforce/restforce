@@ -20,11 +20,11 @@ describe Restforce::Concerns::Caching do
       it 'ensures the :use_cache is deleted' do
         options.should_receive(:[]=).with(:use_cache, false)
         options.should_receive(:delete).with(:use_cache)
-        expect {
+        expect do
           client.without_caching do
             raise 'Foo'
           end
-        }.to raise_error 'Foo'
+        end.to raise_error 'Foo'
       end
     end
   end

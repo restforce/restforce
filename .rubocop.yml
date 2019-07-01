@@ -2,14 +2,14 @@
 
 inherit_from: .rubocop_todo.yml
 
+require:
+  - rubocop-performance
+
 AllCops:
-  DisplayCopNames: true
-  Include:
-    - Rakefile
-  Exclude:
-    - .*/**/*
-    - vendor/**/*
   TargetRubyVersion: 2.3
+  CacheRootDirectory: ./tmp/cache
+  Exclude:
+    - 'script/**/*'
 
 # Limit lines to 80 characters.
 LineLength:
@@ -29,9 +29,6 @@ MethodLength:
 # Avoid single-line methods.
 SingleLineMethods:
   AllowIfMethodIsEmpty: true
-
-StringLiterals:
-  Enabled: false
 
 GlobalVars:
   Enabled: false # We use them Redis + StatsD (though maybe we shouldn't?)

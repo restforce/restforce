@@ -36,14 +36,14 @@ describe Restforce do
 
     context 'when environment variables are defined' do
       before do
-        { 'SALESFORCE_USERNAME'       => 'foo',
-          'SALESFORCE_PASSWORD'       => 'bar',
+        { 'SALESFORCE_USERNAME' => 'foo',
+          'SALESFORCE_PASSWORD' => 'bar',
           'SALESFORCE_SECURITY_TOKEN' => 'foobar',
-          'SALESFORCE_CLIENT_ID'      => 'client id',
-          'SALESFORCE_CLIENT_SECRET'  => 'client secret',
-          'SALESFORCE_PROXY_URI'      => 'proxy',
-          'SALESFORCE_HOST'           => 'test.host.com',
-          'SALESFORCE_API_VERSION'    => '37.0' }.
+          'SALESFORCE_CLIENT_ID' => 'client id',
+          'SALESFORCE_CLIENT_SECRET' => 'client secret',
+          'SALESFORCE_PROXY_URI' => 'proxy',
+          'SALESFORCE_HOST' => 'test.host.com',
+          'SALESFORCE_API_VERSION' => '37.0' }.
           each { |var, value| ENV.stub(:[]).with(var).and_return(value) }
       end
 
@@ -100,7 +100,7 @@ describe Restforce do
         Restforce.log 'foobar'
       end
 
-      context "with a custom logger" do
+      context 'with a custom logger' do
         let(:fake_logger) { double(debug: true) }
 
         before do
@@ -109,13 +109,13 @@ describe Restforce do
           end
         end
 
-        it "logs using the provided logger" do
+        it 'logs using the provided logger' do
           fake_logger.should_receive(:debug).with('foobar')
           Restforce.log('foobar')
         end
       end
 
-      context "with a custom log_level" do
+      context 'with a custom log_level' do
         before do
           Restforce.configure do |config|
             config.log_level = :info
@@ -134,7 +134,7 @@ describe Restforce do
     it 'calls its block' do
       checker = double(:block_checker)
       expect(checker).to receive(:check!).once
-      Restforce.new do |builder|
+      Restforce.new do |_builder|
         checker.check!
       end
     end

@@ -6,17 +6,17 @@ describe Restforce::Concerns::Base do
   describe '#new' do
     context 'without options passed in' do
       it 'does not raise an exception' do
-        expect {
+        expect do
           klass.new
-        }.to_not raise_error
+        end.to_not raise_error
       end
     end
 
     context 'with a non-hash value' do
       it 'raises an ArgumentError exception' do
-        expect {
+        expect do
           klass.new 'foo'
-        }.to raise_error ArgumentError, 'Please specify a hash of options'
+        end.to raise_error ArgumentError, 'Please specify a hash of options'
       end
     end
 
@@ -27,7 +27,7 @@ describe Restforce::Concerns::Base do
   end
 
   describe '.options' do
-    subject { lambda { client.options } }
+    subject { -> { client.options } }
     it { should_not raise_error }
   end
 

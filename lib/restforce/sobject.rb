@@ -3,7 +3,7 @@
 module Restforce
   class SObject < Restforce::Mash
     def sobject_type
-      self.attributes['type']
+      attributes['type']
     end
 
     # Public: Get the describe for this sobject type
@@ -52,7 +52,7 @@ module Restforce
     # Public: Returns a hash representation of this object with the attributes
     # key and parent/child relationships removed.
     def attrs
-      self.to_hash.reject { |key, _| key =~ /.*__r/ || key =~ /^attributes$/ }
+      to_hash.reject { |key, _| key =~ /.*__r/ || key =~ /^attributes$/ }
     end
 
     def to_sparam
@@ -63,6 +63,7 @@ module Restforce
 
     def ensure_id
       return true if self.Id?
+
       raise ArgumentError, 'You need to query the Id for the record first.'
     end
   end

@@ -26,12 +26,12 @@ module Restforce
           client.set_header 'Authorization', "OAuth #{options[:oauth_token]}"
 
           client.bind 'transport:down' do
-            Restforce.log "[COMETD DOWN]"
+            Restforce.log '[COMETD DOWN]'
             client.set_header 'Authorization', "OAuth #{authenticate!.access_token}"
           end
 
           client.bind 'transport:up' do
-            Restforce.log "[COMETD UP]"
+            Restforce.log '[COMETD UP]'
           end
 
           client.add_extension ReplayExtension.new(replay_handlers)
@@ -39,7 +39,7 @@ module Restforce
       end
 
       def replay_handlers
-        @_replay_handlers ||= {}
+        @replay_handlers ||= {}
       end
 
       class ReplayExtension
@@ -62,9 +62,7 @@ module Restforce
 
         def outgoing(message, callback)
           # Leave non-subscribe messages alone
-          unless message['channel'] == '/meta/subscribe'
-            return callback.call(message)
-          end
+          return callback.call(message) unless message['channel'] == '/meta/subscribe'
 
           channel = message['subscription'].gsub('/topic/', '')
 

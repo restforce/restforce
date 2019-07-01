@@ -13,7 +13,7 @@ describe Restforce::Middleware::RaiseError do
     context 'when the status code is 404' do
       let(:status) { 404 }
 
-      it "raises an error" do
+      it 'raises an error' do
         expect { on_complete }.to raise_error Faraday::Error::ResourceNotFound,
                                               'INVALID_FIELD: error_message'
       end
@@ -22,7 +22,7 @@ describe Restforce::Middleware::RaiseError do
     context 'when the status code is 300' do
       let(:status) { 300 }
 
-      it "raises an error" do
+      it 'raises an error' do
         expect { on_complete }.to raise_error Faraday::Error::ClientError,
                                               /300: The external ID provided/
       end
@@ -31,7 +31,7 @@ describe Restforce::Middleware::RaiseError do
     context 'when the status code is 400' do
       let(:status) { 400 }
 
-      it "raises an error" do
+      it 'raises an error' do
         expect { on_complete }.to raise_error Faraday::Error::ClientError,
                                               'INVALID_FIELD: error_message'
       end
@@ -40,7 +40,7 @@ describe Restforce::Middleware::RaiseError do
     context 'when the status code is 401' do
       let(:status) { 401 }
 
-      it "raises an error" do
+      it 'raises an error' do
         expect { on_complete }.to raise_error Restforce::UnauthorizedError,
                                               'INVALID_FIELD: error_message'
       end
@@ -49,7 +49,7 @@ describe Restforce::Middleware::RaiseError do
     context 'when the status code is 413' do
       let(:status) { 413 }
 
-      it "raises an error" do
+      it 'raises an error' do
         expect { on_complete }.to raise_error Faraday::Error::ClientError,
                                               '413: Request Entity Too Large'
       end

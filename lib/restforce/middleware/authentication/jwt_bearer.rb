@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'jwt'
 
 module Restforce
@@ -14,16 +16,20 @@ module Restforce
 
     def claim_set
       {
-          iss: @options[:client_id],
-          sub: @options[:username],
-          aud: @options[:host],
-          exp: Time.now.utc.to_i
+        iss: @options[:client_id],
+        sub: @options[:username],
+        aud: @options[:host],
+        exp: Time.now.utc.to_i
       }
     end
 
     def private_key
       # check if the jwt_key is being stored as a file or string
-      key_string = File.exist?(@options[:jwt_key]) ? File.read(@options[:jwt_key]) : @options[:jwt_key]
+      key_string = if File.exist?(@options[:jwt_key])
+                     File.read(@options[:jwt_key])
+                   else
+                     @options[:jwt_key]
+                   end
       OpenSSL::PKey::RSA.new key_string
     end
   end
