@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'restforce/concerns/verbs'
 
 module Restforce
@@ -7,7 +9,7 @@ module Restforce
 
       define_verbs :post
 
-      def batch(halt_on_error: false, &block)
+      def batch(halt_on_error: false)
         subrequests = Subrequests.new(options)
         yield(subrequests)
         subrequests.requests.each_slice(25).map do |requests|
@@ -43,17 +45,21 @@ module Restforce
         end
 
         def update(sobject, attrs)
-          id = attrs.fetch(attrs.keys.find { |k, v| k.to_s.downcase == 'id' }, nil)
+          id = attrs.fetch(attrs.keys.find { |k, v| k.to_s.casecmp?('id') }, nil)
           raise ArgumentError, 'Id field missing from attrs.' unless id
-          attrs_without_id = attrs.reject { |k, v| k.to_s.downcase == "id" }
-          requests << { method: 'PATCH', url: batch_api_path("#{sobject}/#{id}"), richInput: attrs_without_id }
+          attrs_without_id = attrs.reject { |k, v| k.to_s.casecmp?('id') }
+          requests << {
+            method: 'PATCH',
+            url: batch_api_path("#{sobject}/#{id}"),
+            richInput: attrs_without_id
+          }
         end
 
         def destroy(sobject, id)
           requests << { method: 'DELETE', url: batch_api_path("#{sobject}/#{id}") }
         end
 
-      private
+        private
 
         def batch_api_path(path)
           "v#{options[:api_version]}/sobjects/#{path}"
