@@ -59,6 +59,20 @@ module Restforce
           requests << { method: 'DELETE', url: batch_api_path("#{sobject}/#{id}") }
         end
 
+        def upsert(sobject, ext_field, attrs)
+          raise ArgumentError, 'External id field missing.' unless ext_field
+          ext_id = attrs.fetch(attrs.keys.find { |k, v|
+            k.to_s.casecmp?(ext_field.to_s)
+          }, nil)
+          raise ArgumentError, 'External id missing from attrs.' unless ext_id
+          attrs_without_ext_id = attrs.reject { |k, v| k.to_s.casecmp?(ext_field) }
+          requests << {
+            method: 'PATCH',
+            url: batch_api_path("#{sobject}/#{ext_field}/#{ext_id}"),
+            richInput: attrs_without_ext_id
+          }
+        end
+
         private
 
         def batch_api_path(path)

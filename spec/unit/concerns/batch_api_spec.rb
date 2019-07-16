@@ -51,6 +51,22 @@ describe Restforce::Concerns::BatchAPI do
       end
     end
 
+    it '#upsert' do
+      client.
+        should_receive(:api_post).
+        with(endpoint, { batchRequests: [
+          { method: 'PATCH', url: 'v34.0/sobjects/Object/extIdField__c/456', richInput: {
+            name: 'test'
+          } }
+        ], haltOnError: halt_on_error }.to_json).
+        and_return(response)
+
+      client.send(method) do |subrequests|
+        subrequests.upsert('Object', 'extIdField__c',
+                           extIdField__c: '456', name: 'test')
+      end
+    end
+
     it 'multiple subrequests' do
       client.
         should_receive(:api_post).
