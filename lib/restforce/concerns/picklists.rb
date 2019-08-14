@@ -82,8 +82,9 @@ module Restforce
         # See http://www.salesforce.com/us/developer/docs/api/Content/sforce_api_calls_des
         # cribesobjects_describesobjectresult.htm
         def valid?(picklist_entry)
-          valid_for = picklist_entry['validFor'].ljust(16, 'A').unpack('m').first.
-                      unpack('C*')
+          control_count = controlling_field['picklistValues'].count
+          valid_for = picklist_entry['validFor'].ljust(control_count, 'A').unpack('m').
+                      first.unpack('C*')
           (valid_for[index >> 3] & (0x80 >> index % 8)).positive?
         end
       end
