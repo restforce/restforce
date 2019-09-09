@@ -10,7 +10,7 @@ module Restforce
                                               "more than one record",
                                               response_values)
       when 401
-        raise Restforce::UnauthorizedError, message
+        raise Restforce::UnauthorizedError.new(message, response_values)
       when 404
         raise Faraday::Error::ResourceNotFound.new(message, response_values)
       when 413

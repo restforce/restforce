@@ -42,7 +42,7 @@ module Restforce
   Error               = Class.new(StandardError)
   ServerError         = Class.new(Error)
   AuthenticationError = Class.new(Error)
-  UnauthorizedError   = Class.new(Error)
+  UnauthorizedError   = Class.new(Faraday::Error::ClientError)
   APIVersionError     = Class.new(Error)
 
   class << self
