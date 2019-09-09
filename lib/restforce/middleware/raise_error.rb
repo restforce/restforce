@@ -12,7 +12,7 @@ module Restforce
       when 401
         raise Restforce::UnauthorizedError, message
       when 404
-        raise Faraday::Error::ResourceNotFound, message
+        raise Faraday::Error::ResourceNotFound.new(message, response_values)
       when 413
         raise Faraday::Error::ClientError.new("413: Request Entity Too Large",
                                               response_values)
