@@ -524,6 +524,57 @@ describe Restforce::Concerns::API do
     end
   end
 
+  describe '.param_search' do
+    let(:search_string) { 'foo' }
+    context 'when no sobject is specified' do 
+      subject(:results) { client.param_search(search_string) }
+      it 'performs a parameterizes search' do
+        client.should_receive(:api_get).
+          with('parameterizedSearch/?q=foo').
+          and_return(response)
+          client.should_receive(:options).and_return(api_version: 36.0)
+        expect(results).to eq response.body
+      end
+    end
+
+    context 'when sobject is specified' do 
+      let(:sobject) { 'Opportunity'}
+      let(:fields) { ["Id"]}
+      let(:search_string) {'foo'}
+      subject(:results) { client.param_search(search_string,sobject,fields) }
+      it 'performs a parameterizes search on the sobject' do
+        client.should_receive(:api_get).
+          with('parameterizedSearch/?q=foo&sobject=Opportunity&Opportunity.fields=Id').
+          and_return(response)
+        client.should_receive(:options).and_return(api_version: 36.0)
+        expect(results).to eq response.body
+      end
+    end
+
+    context 'when search string contains special characters' do 
+      let(:search_string) { 'bar name-foo' }
+      subject(:results) { client.param_search(search_string) }
+      it 'performs a parameterizes search' do
+        client.should_receive(:api_get).
+          with('parameterizedSearch/?q=bar%20name-foo').
+          and_return(response)
+        client.should_receive(:options).and_return(api_version: 36.0)
+        expect(results).to eq response.body
+      end
+    end
+
+    context 'unspported api version' do 
+      let(:search_string) { 'bar' }
+      subject(:results) { client.param_search(search_string) }
+      it "raises an exception if we aren't at version 36.0 or above" do
+        client.should_receive(:options).at_least(:once).and_return(api_version: 24.0)
+        expect { results }.to raise_error(Restforce::APIVersionError)
+      end
+    end
+
+  end
+
+
   describe '.select' do
     let(:sobject)    { 'Whizbang' }
     let(:id)         { '1234' }

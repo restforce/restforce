@@ -12,7 +12,12 @@ module Restforce
     end
 
     def password
-      "#{@options[:password]}#{@options[:security_token]}"
+      #Having client id and secret means its oauth enabled so security token is not required
+      if @options[:client_id]
+        "#{@options[:password]}"
+      else 
+        "#{@options[:password]}#{@options[:security_token]}"
+      end
     end
   end
 end

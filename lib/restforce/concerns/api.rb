@@ -436,6 +436,22 @@ module Restforce
         api_get(url).body
       end
 
+
+      #Public: Executes parameterized search for the search string
+      #
+      #sobject - The String of the sobject where the search is to be performed
+      #
+      #fields - Fileds to be retrieved from the search result (Give it as an array)
+      # This api is available in version 36.0 and later
+      def param_search(search_string, sobject=nil, fields=nil )
+        version_guard(36.0) do 
+          url =  "parameterizedSearch/?q=#{ERB::Util.url_encode(search_string)}"
+          url += "&sobject=#{sobject}" if sobject
+          url += "&#{sobject}.fields=#{fields.join(',')}" if fields
+          api_get(url).body
+        end
+      end
+
       # Public: Finds a single record and returns select fields.
       #
       # sobject - The String name of the sobject.
