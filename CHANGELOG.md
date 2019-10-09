@@ -1,3 +1,7 @@
+## Unreleased
+
+* Name exceptions for the error codes that might be returned from Salesforce.com (@boblail)
+
 ## 3.1.0 (Aug 16, 2018)
 
 * Add support for replaying missed messages when using the Salesforce Streaming API (@andreimaxim, @drteeth, @panozzaj)

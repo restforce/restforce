@@ -6,23 +6,30 @@ module Restforce
       @env = env
       case env[:status]
       when 300
-        raise Faraday::Error::ClientError.new("300: The external ID provided matches " \
-                                              "more than one record",
-                                              response_values)
+        raise Restforce::MatchesMultipleError.new(
+          "300: The external ID provided matches more than one record",
+          response_values
+        )
       when 401
         raise Restforce::UnauthorizedError, message
       when 404
-        raise Faraday::Error::ResourceNotFound, message
+        raise Restforce::NotFoundError, message
       when 413
-        raise Faraday::Error::ClientError.new("413: Request Entity Too Large",
-                                              response_values)
+        raise Restforce::EntityTooLargeError.new(
+          "413: Request Entity Too Large",
+          response_values
+        )
       when 400...600
-        raise Faraday::Error::ClientError.new(message, response_values)
+        klass = exception_class_for_error_code(body['errorCode'])
+        raise klass.new(message, response_values)
       end
     end
 
     def message
-      "#{body['errorCode']}: #{body['message']}"
+      message = "#{body['errorCode']}: #{body['message']}"
+      message << "\nRESPONSE: #{JSON.dump(@env[:body])}"
+    rescue
+      message # if JSON.dump fails, return message without extra detail
     end
 
     def body
@@ -42,6 +49,15 @@ module Restforce
         headers: @env[:response_headers],
         body: @env[:body]
       }
+    end
+
+    ERROR_CODE_MATCHER = /\A[A-Z_]+\z/.freeze
+
+    def exception_class_for_error_code(error_code)
+      return Restforce::ResponseError unless ERROR_CODE_MATCHER.match?(error_code)
+
+      constant_name = error_code.split('_').map(&:capitalize).join.to_sym
+      constant = Restforce::ErrorCode.const_get(constant_name)
     end
   end
 end
