@@ -321,6 +321,7 @@ module Restforce
       def update!(sobject, attrs)
         id = attrs.fetch(attrs.keys.find { |k, v| k.to_s.casecmp('id').zero? }, nil)
         raise ArgumentError, 'ID field missing from provided attributes' unless id
+
         attrs_without_id = attrs.reject { |k, v| k.to_s.casecmp("id").zero? }
         api_patch "sobjects/#{sobject}/#{CGI.escape(id)}", attrs_without_id
         true
