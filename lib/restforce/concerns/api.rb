@@ -447,7 +447,7 @@ module Restforce
       #
       def select(sobject, id, select, field = nil)
         path = if field
-               "sobjects/#{sobject}/#{field}/#{ERB::Util.url_encode(id)}"
+                 "sobjects/#{sobject}/#{field}/#{ERB::Util.url_encode(id)}"
                else
                  "sobjects/#{sobject}/#{ERB::Util.url_encode(id)}"
                end
