@@ -1,6 +1,9 @@
-## Unreleased
+## 3.2.0 (Oct 9, 2019)
 
-* Name exceptions for the error codes that might be returned from Salesforce.com (@boblail)
+* Add support for the Batch API (@gaiottino, @teoulas)
+* Return specific exceptions for errors that might be returned from Salesforce.com - instead of getting a generic `Faraday::Error::ClientError`, you might get something like a `Restforce::EntityTooLargeError` (@boblail)
+* Expose the full response in exceptions' messages to make debugging easier (@boblail)
+* Properly escape IDs with spaces in them when working with existing records (@pushups)
 
 ## 3.1.0 (Aug 16, 2018)
 
