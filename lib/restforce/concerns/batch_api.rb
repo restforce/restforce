@@ -47,6 +47,7 @@ module Restforce
         def update(sobject, attrs)
           id = attrs.fetch(attrs.keys.find { |k, v| k.to_s.casecmp?('id') }, nil)
           raise ArgumentError, 'Id field missing from attrs.' unless id
+
           attrs_without_id = attrs.reject { |k, v| k.to_s.casecmp?('id') }
           requests << {
             method: 'PATCH',
@@ -61,10 +62,12 @@ module Restforce
 
         def upsert(sobject, ext_field, attrs)
           raise ArgumentError, 'External id field missing.' unless ext_field
+
           ext_id = attrs.fetch(attrs.keys.find { |k, v|
             k.to_s.casecmp?(ext_field.to_s)
           }, nil)
           raise ArgumentError, 'External id missing from attrs.' unless ext_id
+
           attrs_without_ext_id = attrs.reject { |k, v| k.to_s.casecmp?(ext_field) }
           requests << {
             method: 'PATCH',

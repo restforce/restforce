@@ -34,6 +34,7 @@ module Restforce
 
     def log(message)
       return unless Restforce.log?
+
       configuration.logger.send(configuration.log_level, message)
     end
   end

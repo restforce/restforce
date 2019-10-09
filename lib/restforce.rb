@@ -94,7 +94,7 @@ module Restforce
       self
     end
   end
-  Object.send :include, Restforce::CoreExtensions unless Object.respond_to? :tap
+  Object.include Restforce::CoreExtensions unless Object.respond_to? :tap
 end
 
 if ENV['PROXY_URI']

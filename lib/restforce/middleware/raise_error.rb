@@ -25,14 +25,12 @@ module Restforce
       end
     end
 
-    # rubocop:disable Lint/RescueWithoutErrorClass
     def message
       message = "#{body['errorCode']}: #{body['message']}"
       message << "\nRESPONSE: #{JSON.dump(@env[:body])}"
-    rescue
+    rescue StandardError
       message # if JSON.dump fails, return message without extra detail
     end
-    # rubocop:enable Lint/RescueWithoutErrorClass
 
     def body
       @body = (@env[:body].is_a?(Array) ? @env[:body].first : @env[:body])
@@ -53,7 +51,7 @@ module Restforce
       }
     end
 
-    ERROR_CODE_MATCHER = /\A[A-Z_]+\z/
+    ERROR_CODE_MATCHER = /\A[A-Z_]+\z/.freeze
 
     def exception_class_for_error_code(error_code)
       return Restforce::ResponseError unless ERROR_CODE_MATCHER.match?(error_code)

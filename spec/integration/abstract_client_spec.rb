@@ -96,7 +96,7 @@ shared_examples_for Restforce::AbstractClient do
       subject do
         client.create('Account', Name: 'Foobar',
                                  Blob: Restforce::UploadIO.new(
-                                   File.expand_path('../../fixtures/blob.jpg', __FILE__),
+                                   File.expand_path('../fixtures/blob.jpg', __dir__),
                                    'image/jpeg'
                                  ))
       end

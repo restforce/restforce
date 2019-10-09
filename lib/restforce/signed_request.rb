@@ -27,6 +27,7 @@ module Restforce
     # Returns nil if the signed request is invalid.
     def decode
       return nil if signature != hmac
+
       JSON.parse(Base64.decode64(payload))
     end
 

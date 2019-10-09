@@ -49,6 +49,7 @@ module Restforce
       # Files
       params.each do |k, v|
         next unless v.respond_to? :content_type
+
         parts << Faraday::Parts::Part.new(boundary,
                                           k.to_s,
                                           v)

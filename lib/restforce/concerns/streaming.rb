@@ -62,9 +62,7 @@ module Restforce
 
         def outgoing(message, callback)
           # Leave non-subscribe messages alone
-          unless message['channel'] == '/meta/subscribe'
-            return callback.call(message)
-          end
+          return callback.call(message) unless message['channel'] == '/meta/subscribe'
 
           channel = message['subscription'].gsub('/topic/', '')
 
