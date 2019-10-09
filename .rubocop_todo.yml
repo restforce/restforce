@@ -70,7 +70,7 @@ Style/GuardClause:
 # Offense count: 48
 # Cop supports --auto-correct.
 # Configuration parameters: EnforcedStyle, SupportedStyles.
-Layout/IndentHash:
+Layout/IndentFirstHashElement:
   Enabled: false
 
 # Offense count: 70
