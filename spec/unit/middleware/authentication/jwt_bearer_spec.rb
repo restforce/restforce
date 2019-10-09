@@ -1,5 +1,6 @@
-require 'spec_helper'
+# frozen_string_literal: true
 
+require 'spec_helper'
 describe Restforce::Middleware::Authentication::JWTBearer do
   let(:jwt_key) { File.read('spec/fixtures/test_private.key') }
 
@@ -29,9 +30,10 @@ describe Restforce::Middleware::Authentication::JWTBearer do
   end
 
   context 'allows jwt_key as string' do
-    let(:jwt_key) {
+    let(:jwt_key) do
       File.read('spec/fixtures/test_private.key')
-    }
+    end
+
     let(:options) do
       { host: 'login.salesforce.com',
         client_id: 'client_id',
