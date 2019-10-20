@@ -1,3 +1,7 @@
+## 4.1.0 (Oct 20, 2019)
+
+* Add support for JWT authentication (@nathanKramer, @tagCincy)
+
 ## 4.0.0 (Oct 9, 2019)
 
 * __Deprecate support for Ruby 2.3__, since [Ruby 2.3 reached its end-of-life](https://www.ruby-lang.org/en/news/2019/03/31/support-of-ruby-2-3-has-ended/) in March 2019. (This is the only breaking change included in this version.)
