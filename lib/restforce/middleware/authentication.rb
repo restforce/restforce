@@ -6,8 +6,9 @@ module Restforce
   # will attempt to either reauthenticate (username and password) or refresh
   # the oauth access token (if a refresh token is present).
   class Middleware::Authentication < Restforce::Middleware
-    autoload :Password, 'restforce/middleware/authentication/password'
-    autoload :Token,    'restforce/middleware/authentication/token'
+    autoload :Password,  'restforce/middleware/authentication/password'
+    autoload :Token,     'restforce/middleware/authentication/token'
+    autoload :JWTBearer, 'restforce/middleware/authentication/jwt_bearer'
 
     # Rescue from 401's, authenticate then raise the error again so the client
     # can reissue the request.

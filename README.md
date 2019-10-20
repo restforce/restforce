@@ -111,6 +111,21 @@ client = Restforce.new(username: 'foo',
                        api_version: '41.0')
 ```
 
+#### JWT Bearer Token
+
+If you prefer to use a [JWT Bearer Token](https://developer.salesforce.com/page/Digging_Deeper_into_OAuth_2.0_on_Force.com#Obtaining_an_Access_Token_using_a_JWT_Bearer_Token) to authenticate:
+
+```ruby
+client = Restforce.new(username: 'foo',
+                       client_id: 'client_id',
+                       instance_url: 'instance_url',
+                       jwt_key: 'certificate_private_key',
+                       api_version: '38.0')
+```
+
+The `jwt_key` option is the private key of the certificate uploaded to your Connected App in Salesforce.
+Choose "use digital signatures" in the Connected App configuration screen to upload your certificate.
+
 You can also set the username, password, security token, client ID, client
 secret and API version in environment variables:
 
@@ -473,11 +488,11 @@ document = client.query('select Id, Name, Body from Document').first
 File.open(document.Name, 'wb') { |f| f.write(document.Body) }
 ```
 
-**Note:** The example above is only applicable if your SOQL query returns a single Document record. If more than one record is returned, 
+**Note:** The example above is only applicable if your SOQL query returns a single Document record. If more than one record is returned,
 the Body field contains an URL to retrieve the BLOB content for the first 2000 records returned. Subsequent records contain the BLOB content
-in the Body field. This is confusing and hard to debug. See notes in [Issue #301](https://github.com/restforce/restforce/issues/301#issuecomment-298972959) explaining this detail. 
-**Executive Summary:** Don't retrieve the Body field in a SOQL query; instead, use the BLOB retrieval URL documented 
-in [SObject BLOB Retrieve](https://developer.salesforce.com/docs/atlas.en-us.api_rest.meta/api_rest/resources_sobject_blob_retrieve.htm) 
+in the Body field. This is confusing and hard to debug. See notes in [Issue #301](https://github.com/restforce/restforce/issues/301#issuecomment-298972959) explaining this detail.
+**Executive Summary:** Don't retrieve the Body field in a SOQL query; instead, use the BLOB retrieval URL documented
+in [SObject BLOB Retrieve](https://developer.salesforce.com/docs/atlas.en-us.api_rest.meta/api_rest/resources_sobject_blob_retrieve.htm)
 
 * * *
 
@@ -574,14 +589,14 @@ There are two magic values for the replay ID accepted by Salesforce:
 
 **Warning**: Only use a replay ID of a event from the last 24 hours otherwise
 Salesforce will not send anything, including newer events. If in doubt, use one
-of the two magic replay IDs mentioned above. 
+of the two magic replay IDs mentioned above.
 
-You might want to store the replay ID in some sort of datastore so you can 
+You might want to store the replay ID in some sort of datastore so you can
 access it, for example between application restarts. In that case, there is the
 option of passing a custom replay handler which responds to `[]` and `[]=`.
 
 Below is a sample replay handler that stores the replay ID for each channel in
-memory using a Hash, stores a timestamp and has some rudimentary logic that 
+memory using a Hash, stores a timestamp and has some rudimentary logic that
 will use one of the magic IDs depending on the value of the timestamp:
 
 ```ruby
@@ -637,9 +652,9 @@ EM.run {
     puts message.inspect
   end
 }
-``` 
+```
 
-_See also_: 
+_See also_:
 
 * [Force.com Streaming API docs](http://www.salesforce.com/us/developer/docs/api_streaming/index.htm)
 * [Message Durability docs](https://developer.salesforce.com/docs/atlas.en-us.api_streaming.meta/api_streaming/using_streaming_api_durability.htm)
