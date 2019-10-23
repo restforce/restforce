@@ -3,7 +3,6 @@
 module Restforce
   module Concerns
     module Streaming
-
       # Public: Subscribe to a PushTopic
       #
       # topics   - The name of the PushTopic channel(s) to subscribe to.
@@ -24,7 +23,9 @@ module Restforce
       # Returns a Faye::Subscription
       def subscription(channels, options = {}, &block)
         one_or_more_channels = Array(channels)
-        one_or_more_channels.each { |channel| replay_handlers[channel] = options[:replay] }
+        one_or_more_channels.each do |channel|
+          replay_handlers[channel] = options[:replay]
+        end
         faye.subscribe(one_or_more_channels, &block)
       end
 
