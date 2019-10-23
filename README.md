@@ -528,8 +528,10 @@ client.get('/services/apexrest/FieldCase', company: 'GenePoint')
 
 ### Streaming
 
-Restforce supports the [Streaming API](http://wiki.developerforce.com/page/Getting_Started_with_the_Force.com_Streaming_API), and makes implementing
-pub/sub with Salesforce a trivial task:
+Restforce supports the [Streaming API](https://trailhead.salesforce.com/en/content/learn/modules/api_basics/api_basics_streaming), and makes implementing
+pub/sub with Salesforce a trivial task.
+
+Here is an example of creating and subscribing to a `PushTopic`:
 
 ```ruby
 # Restforce uses faye as the underlying implementation for CometD.
@@ -553,7 +555,7 @@ client.create!('PushTopic',
 
 EM.run do
   # Subscribe to the PushTopic.
-  client.subscribe 'AllAccounts' do |message|
+  client.subscription '/topic/AllAccounts' do |message|
     puts message.inspect
   end
 end
@@ -574,7 +576,7 @@ that event ID:
 ```ruby
 EM.run {
   # Subscribe to the PushTopic.
-  client.subscribe 'AllAccounts', replay: 10 do |message|
+  client.subscription '/topic/AllAccounts', replay: 10 do |message|
     puts message.inspect
   end
 }
@@ -648,7 +650,7 @@ of the subscription:
 EM.run {
   # Subscribe to the PushTopic and use the custom replay handler to store any
   # received replay ID.
-  client.subscribe 'AllAccounts', replay: SimpleReplayHandler.new do |message|
+  client.subscription '/topic/AllAccounts', replay: SimpleReplayHandler.new do |message|
     puts message.inspect
   end
 }
