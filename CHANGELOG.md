@@ -1,3 +1,7 @@
+## 4.2.0 (Oct 23, 2019)
+
+* Add support for platform events, CDC, generic events, etc. in the Streaming API (@nathanKramer)
+
 ## 4.1.0 (Oct 20, 2019)
 
 * Add support for JWT authentication (@nathanKramer, @tagCincy)
