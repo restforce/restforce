@@ -30,7 +30,7 @@ Gem::Specification.new do |gem|
   gem.add_dependency 'json', '>= 1.7.5'
   gem.add_dependency 'jwt', ['>= 1.5.6']
 
-  gem.add_dependency 'hashie', ['>= 1.2.0', '< 4.0']
+  gem.add_dependency 'hashie', '>= 1.2.0', '< 5.0'
 
   gem.add_development_dependency 'faye' unless RUBY_PLATFORM == 'java'
   gem.add_development_dependency 'rspec', '~> 2.14.0'
