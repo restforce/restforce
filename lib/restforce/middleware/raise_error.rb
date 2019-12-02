@@ -54,7 +54,7 @@ module Restforce
     ERROR_CODE_MATCHER = /\A[A-Z_]+\z/.freeze
 
     def exception_class_for_error_code(error_code)
-      return Restforce::ResponseError unless ERROR_CODE_MATCHER.match?(error_code)
+      return Faraday::ClientError unless ERROR_CODE_MATCHER.match?(error_code)
 
       constant_name = error_code.split('_').map(&:capitalize).join.to_sym
       Restforce::ErrorCode.const_get(constant_name)

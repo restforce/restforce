@@ -13,7 +13,7 @@
 ## 3.2.0 (Oct 9, 2019)
 
 * Add support for the Batch API (@gaiottino, @teoulas)
-* Return specific exceptions for errors that might be returned from Salesforce.com - instead of getting a generic `Faraday::Error::ClientError`, you might get something like a `Restforce::EntityTooLargeError` (@boblail)
+* Return specific exceptions for errors that might be returned from Salesforce.com - instead of getting a generic `Faraday::ClientError`, you might get something like a `Restforce::EntityTooLargeError` (@boblail)
 * Expose the full response in exceptions' messages to make debugging easier (@boblail)
 * Properly escape IDs with spaces in them when working with existing records (@pushups)
 
@@ -89,8 +89,8 @@ See the [`v2`](https://github.com/restforce/restforce/tree/v2) branch for this r
 
 ## 2.2.0 (Mar 16, 2016)
 
-* Raise a `Faraday::Error::ClientError` for `300` responses triggered by a conflicting external ID, providing access to the response, which contains an array of the conflicting IDs (@timrogers, @michaelminter)
-* Improve the consistency of `Faraday::Error::ClientError`s raised, so they all have a message with the same format (@timrogers)
+* Raise a `Faraday::ClientError` for `300` responses triggered by a conflicting external ID, providing access to the response, which contains an array of the conflicting IDs (@timrogers, @michaelminter)
+* Improve the consistency of `Faraday::ClientError`s raised, so they all have a message with the same format (@timrogers)
 
 ## 2.1.3 (Mar 9, 2016)
 
@@ -112,7 +112,7 @@ See the [`v2`](https://github.com/restforce/restforce/tree/v2) branch for this r
 * Added support for `recent` API call (@davebrace)
 * Changed `PROXY_URI` environment variable to `SALESFORCE_PROXY_URI` (with warning to `STDOUT` if the old variable is set) (@timrogers)
 * Implemented `version_guard` in `Restforce::Concerns::API` to standardise behaviour of API calls which require a particular version of the Salesforce API (@zenchild)
-* Fixed bug with construction of `Faraday::Error::ClientError` exceptions (@debussyman)
+* Fixed bug with construction of `Faraday::ClientError` exceptions (@debussyman)
 * Added support for specifying SSL options to be passed to Faraday (@jonathanrico)
 * Added support for specifying a custom logger and log level (@ilyakatz)
 * Improved experience for contributors to the gem with bootstrapping process (@rafalchmiel)

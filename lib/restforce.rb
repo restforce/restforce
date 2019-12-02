@@ -48,15 +48,15 @@ module Restforce
   APIVersionError     = Class.new(Error)
   BatchAPIError       = Class.new(Error)
 
-  # Inherit from Faraday::Error::ResourceNotFound for backwards-compatibility
-  # Consumers of this library that rescue and handle Faraday::Error::ResourceNotFound
+  # Inherit from Faraday::ResourceNotFound for backwards-compatibility
+  # Consumers of this library that rescue and handle Faraday::ResourceNotFound
   # can continue to do so.
-  NotFoundError       = Class.new(Faraday::Error::ResourceNotFound)
+  NotFoundError       = Class.new(Faraday::ResourceNotFound)
 
-  # Inherit from Faraday::Error::ClientError for backwards-compatibility
-  # Consumers of this library that rescue and handle Faraday::Error::ClientError
+  # Inherit from Faraday::ClientError for backwards-compatibility
+  # Consumers of this library that rescue and handle Faraday::ClientError
   # can continue to do so.
-  ResponseError       = Class.new(Faraday::Error::ClientError)
+  ResponseError       = Class.new(Faraday::ClientError)
   MatchesMultipleError= Class.new(ResponseError)
   EntityTooLargeError = Class.new(ResponseError)
 
