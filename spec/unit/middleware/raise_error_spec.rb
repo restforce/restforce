@@ -75,8 +75,8 @@ describe Restforce::Middleware::RaiseError do
       let(:body)   { 'An error occured' }
       let(:status) { 400 }
 
-      it 'raises a generic Faraday::ClientError' do
-        expect { on_complete }.to raise_error Faraday::ClientError,
+      it 'raises a generic Restforce::ResponseError' do
+        expect { on_complete }.to raise_error Restforce::ResponseError,
                                               "(error code missing): #{body}"
       end
 
