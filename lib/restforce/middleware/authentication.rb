@@ -63,7 +63,10 @@ module Restforce
 
     # Internal: The parsed error response.
     def error_message(response)
-      "#{response.body['error']}: #{response.body['error_description']}"
+      return response.status.to_s unless response.body
+
+      "#{response.body['error']}: #{response.body['error_description']} " \
+        "(#{response.status})"
     end
 
     # Featured detect form encoding.
