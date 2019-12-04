@@ -1,3 +1,8 @@
+## 4.2.1 (Dec 4, 2019)
+
+* Handle empty response bodies returned with authentication errors (@sylvandor)
+* Fix Faraday deprecation warning in newer Faraday versions (`v0.17.1` onwards) caused by inheriting from a deprecated class 
+
 ## 4.2.0 (Oct 23, 2019)
 
 * Add support for platform events, CDC, generic events, etc. in the Streaming API (@nathanKramer)
