@@ -18,8 +18,8 @@ describe Restforce::Middleware::RaiseError do
                                               'INVALID_FIELD: error_message'
       end
 
-      it 'raises an error that inherits from Faraday::Error::ResourceNotFound' do
-        expect { on_complete }.to raise_error Faraday::Error::ResourceNotFound
+      it 'raises an error that inherits from Faraday::ResourceNotFound' do
+        expect { on_complete }.to raise_error Faraday::ResourceNotFound
       end
     end
 
@@ -31,8 +31,8 @@ describe Restforce::Middleware::RaiseError do
                                               /300: The external ID provided/
       end
 
-      it 'raises an error that inherits from Faraday::Error::ClientError' do
-        expect { on_complete }.to raise_error Faraday::Error::ClientError
+      it 'raises an error that inherits from Faraday::ClientError' do
+        expect { on_complete }.to raise_error Faraday::ClientError
       end
     end
 
@@ -44,8 +44,8 @@ describe Restforce::Middleware::RaiseError do
                                               'INVALID_FIELD: error_message'
       end
 
-      it 'raises an error that inherits from Faraday::Error::ClientError' do
-        expect { on_complete }.to raise_error Faraday::Error::ClientError
+      it 'raises an error that inherits from Faraday::ClientError' do
+        expect { on_complete }.to raise_error Faraday::ClientError
       end
     end
 
@@ -66,8 +66,8 @@ describe Restforce::Middleware::RaiseError do
                                               '413: Request Entity Too Large'
       end
 
-      it 'raises an error that inherits from Faraday::Error::ClientError' do
-        expect { on_complete }.to raise_error Faraday::Error::ClientError
+      it 'raises an error that inherits from Faraday::ClientError' do
+        expect { on_complete }.to raise_error Faraday::ClientError
       end
     end
 
@@ -80,8 +80,8 @@ describe Restforce::Middleware::RaiseError do
                                               "(error code missing): #{body}"
       end
 
-      it 'raises an error that inherits from Faraday::Error::ClientError' do
-        expect { on_complete }.to raise_error Faraday::Error::ClientError,
+      it 'raises an error that inherits from Faraday::ClientError' do
+        expect { on_complete }.to raise_error Faraday::ClientError,
                                               "(error code missing): #{body}"
       end
     end

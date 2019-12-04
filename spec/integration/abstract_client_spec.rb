@@ -125,7 +125,7 @@ shared_examples_for Restforce::AbstractClient do
 
       it {
         should raise_error(
-          Faraday::Error::ResourceNotFound,
+          Faraday::ResourceNotFound,
           "#{error.first['errorCode']}: #{error.first['message']}"
         )
       }
@@ -239,7 +239,7 @@ shared_examples_for Restforce::AbstractClient do
                status: 404
 
       subject { lambda { destroy! } }
-      it { should raise_error Faraday::Error::ResourceNotFound }
+      it { should raise_error Faraday::ResourceNotFound }
     end
 
     context 'with success' do
