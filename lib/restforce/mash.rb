@@ -28,6 +28,8 @@ module Restforce
           # of sobject records.
           Restforce::Collection
         elsif val.key? 'attributes'
+          return Restforce::SObject unless val['attributes']
+
           case (val['attributes']['type'])
           when "Attachment"
             Restforce::Attachment
