@@ -328,7 +328,10 @@ client.update('Account', Id: '0016000000MRatd', Name: 'Whizbang Corp')
 ```ruby
 # Update the record with external `External__c` external ID set to '12'
 client.upsert('Account', 'External__c', External__c: 12, Name: 'Foobar')
+# => true or "RecordId"
 ```
+
+The upsert method will return the record Id if included in the response body from the Salesforce API; otherwise, it returns true. Currently the Salesforce API only returns the Id for newly created records.
 
 ### destroy
 
