@@ -27,7 +27,7 @@ module Restforce
           # When the hash has a records key, it should be considered a collection
           # of sobject records.
           Restforce::Collection
-        elsif val.key? 'attributes'
+        elsif val.dig('attributes', 'type')
           case (val['attributes']['type'])
           when "Attachment"
             Restforce::Attachment

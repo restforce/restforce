@@ -33,6 +33,11 @@ describe Restforce::Mash do
         let(:input) { { 'attributes' => { 'type' => 'Document' } } }
         it { should eq Restforce::Document }
       end
+
+      context 'when the hash has an "attributes" key without a type' do
+        let(:input) { { 'attributes' => {} } }
+        it { should eq Restforce::Mash }
+      end
     end
 
     context 'else' do
