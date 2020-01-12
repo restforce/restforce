@@ -1,3 +1,27 @@
+## 4.2.1 (Dec 4, 2019)
+
+* Handle empty response bodies returned with authentication errors (@sylvandor)
+* Fix Faraday deprecation warning in newer Faraday versions (`v0.17.1` onwards) caused by inheriting from a deprecated class 
+
+## 4.2.0 (Oct 23, 2019)
+
+* Add support for platform events, CDC, generic events, etc. in the Streaming API (@nathanKramer)
+
+## 4.1.0 (Oct 20, 2019)
+
+* Add support for JWT authentication (@nathanKramer, @tagCincy)
+
+## 4.0.0 (Oct 9, 2019)
+
+* __Deprecate support for Ruby 2.3__, since [Ruby 2.3 reached its end-of-life](https://www.ruby-lang.org/en/news/2019/03/31/support-of-ruby-2-3-has-ended/) in March 2019. (This is the only breaking change included in this version.)
+
+## 3.2.0 (Oct 9, 2019)
+
+* Add support for the Batch API (@gaiottino, @teoulas)
+* Return specific exceptions for errors that might be returned from Salesforce.com - instead of getting a generic `Faraday::Error::ClientError`, you might get something like a `Restforce::EntityTooLargeError` (@boblail)
+* Expose the full response in exceptions' messages to make debugging easier (@boblail)
+* Properly escape IDs with spaces in them when working with existing records (@pushups)
+
 ## 3.1.0 (Aug 16, 2018)
 
 * Add support for replaying missed messages when using the Salesforce Streaming API (@andreimaxim, @drteeth, @panozzaj)

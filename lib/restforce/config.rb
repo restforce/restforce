@@ -34,6 +34,7 @@ module Restforce
 
     def log(message)
       return unless Restforce.log?
+
       configuration.logger.send(configuration.log_level, message)
     end
   end
@@ -106,6 +107,9 @@ module Restforce
 
     # The OAuth client secret
     option :client_secret, default: lambda { ENV['SALESFORCE_CLIENT_SECRET'] }
+
+    # The private key for JWT authentication
+    option :jwt_key
 
     # Set this to true if you're authenticating with a Sandbox instance.
     # Defaults to false.
