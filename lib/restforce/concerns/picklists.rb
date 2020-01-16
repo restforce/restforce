@@ -85,7 +85,7 @@ module Restforce
         def valid?(picklist_entry)
           control_count = controlling_field['picklistValues'].count
           valid_for = picklist_entry['validFor'].ljust(control_count, 'A').unpack1('m').
-                      .unpack('C*')
+                      unpack('C*')
           (valid_for[index >> 3] & (0x80 >> index % 8)).positive?
         end
       end
