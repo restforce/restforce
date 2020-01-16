@@ -14,7 +14,7 @@ module Restforce
     end
 
     def url_prefix_set?
-      !!(connection.url_prefix&.host)
+      !!connection.url_prefix&.host
     end
   end
 end

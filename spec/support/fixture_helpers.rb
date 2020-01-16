@@ -27,8 +27,8 @@ module FixtureHelpers
       stub
     end
 
-    def fixture(f)
-      File.read(File.expand_path("../../fixtures/#{f}.json", __FILE__))
+    def fixture(filename)
+      File.read(File.expand_path("../../fixtures/#{filename}.json", __FILE__))
     end
   end
 

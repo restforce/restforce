@@ -321,6 +321,7 @@ module Restforce
       def update!(sobject, attrs)
         id = attrs.fetch(attrs.keys.find { |k, v| k.to_s.casecmp('id').zero? }, nil)
         raise ArgumentError, 'ID field missing from provided attributes' unless id
+
         attrs_without_id = attrs.reject { |k, v| k.to_s.casecmp("id").zero? }
         api_patch "sobjects/#{sobject}/#{CGI.escape(id)}", attrs_without_id
         true
@@ -378,7 +379,8 @@ module Restforce
               api_post "sobjects/#{sobject}/#{field}", attrs
             end
           else
-            api_patch "sobjects/#{sobject}/#{field}/#{ERB::Util.url_encode(external_id)}", attrs
+            api_patch "sobjects/#{sobject}/#{field}/" \
+              "#{ERB::Util.url_encode(external_id)}", attrs
           end
 
         response.body.respond_to?(:fetch) ? response.body.fetch('id', true) : true
@@ -447,7 +449,7 @@ module Restforce
       #
       def select(sobject, id, select, field = nil)
         path = if field
-               "sobjects/#{sobject}/#{field}/#{ERB::Util.url_encode(id)}"
+                 "sobjects/#{sobject}/#{field}/#{ERB::Util.url_encode(id)}"
                else
                  "sobjects/#{sobject}/#{ERB::Util.url_encode(id)}"
                end
@@ -508,7 +510,7 @@ module Restforce
 
       # Internal: Errors that should be rescued from in non-bang methods
       def exceptions
-        [Faraday::Error::ClientError]
+        [Faraday::ClientError]
       end
     end
   end

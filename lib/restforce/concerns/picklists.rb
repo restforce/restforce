@@ -34,6 +34,7 @@ module Restforce
           @field = field
           @valid_for = options.delete(:valid_for)
           raise "#{field} is not a dependent picklist" if @valid_for && !dependent?
+
           replace(picklist_values)
         end
 
@@ -83,8 +84,8 @@ module Restforce
         # cribesobjects_describesobjectresult.htm
         def valid?(picklist_entry)
           control_count = controlling_field['picklistValues'].count
-          valid_for = picklist_entry['validFor'].ljust(control_count, 'A').unpack('m').
-                      first.unpack('C*')
+          valid_for = picklist_entry['validFor'].ljust(control_count, 'A').unpack1('m').
+                      unpack('C*')
           (valid_for[index >> 3] & (0x80 >> index % 8)).positive?
         end
       end

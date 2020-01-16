@@ -17,6 +17,7 @@ module Restforce
 
     def ensure_body
       return true if self.Body?
+
       raise 'You need to query the Body for the record first.'
     end
   end
