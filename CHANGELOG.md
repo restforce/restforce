@@ -1,3 +1,7 @@
+## 4.2.2 (Jan 23, 2020)
+
+* Fix `NoMethodError: undefined method '[]' for nil:NilClass` error when generating objects to return (@apurkiss)
+
 ## 4.2.1 (Dec 4, 2019)
 
 * Handle empty response bodies returned with authentication errors (@sylvandor)
