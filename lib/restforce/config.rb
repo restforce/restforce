@@ -156,6 +156,9 @@ module Restforce
     # Set a log level for logging when Restforce.log is set to true, defaulting to :debug
     option :log_level, default: :debug
 
+    # Set use_cache to false to opt in to caching with client.with_caching
+    option :use_cache, default: true
+
     def options
       self.class.options
     end

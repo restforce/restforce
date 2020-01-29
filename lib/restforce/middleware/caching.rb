@@ -18,7 +18,7 @@ module Restforce
     end
 
     def use_cache?
-      @options.fetch(:use_cache, true)
+      @options[:use_cache]
     end
 
     def hashed_auth_header(env)

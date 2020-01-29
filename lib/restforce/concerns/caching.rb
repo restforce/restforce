@@ -15,6 +15,13 @@ module Restforce
         options.delete(:use_cache)
       end
 
+      def with_caching
+        options[:use_cache] = true
+        yield
+      ensure
+        options[:use_cache] = false
+      end
+
       private
 
       # Internal: Cache to use for the caching middleware
