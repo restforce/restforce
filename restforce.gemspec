@@ -36,6 +36,6 @@ Gem::Specification.new do |gem|
   gem.add_development_dependency 'rspec', '~> 2.14.0'
   gem.add_development_dependency 'rspec_junit_formatter', '~> 0.4.1'
   gem.add_development_dependency 'rubocop', '~> 0.77.0'
-  gem.add_development_dependency 'simplecov', '~> 0.17.1'
+  gem.add_development_dependency 'simplecov', '~> 0.18.2'
   gem.add_development_dependency 'webmock', '~> 3.7.6'
 end
