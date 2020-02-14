@@ -172,7 +172,7 @@ module Restforce
       # Public: Executs a SOQL query and returns the result.
       #
       # soql    - A SOQL expression.
-      # options - An optional hash containing options for this
+      # query_options - An optional hash containing options for this
       #           query.
       #
       # Examples
@@ -187,8 +187,8 @@ module Restforce
       # Returns a Restforce::Collection if Restforce.configuration.mashify is true.
       # Returns an Array of Hash for each record in the result if
       # Restforce.configuration.mashify is false.
-      def query(soql, options = {})
-        batch_size = options[:batch_size]
+      def query(soql, query_options = {})
+        batch_size = query_options[:batch_size]
         response = api_get 'query', q: soql do |req|
           req.headers['Sforce-Query-Options'] = "batchSize=#{batch_size}" if batch_size != nil
         end
