@@ -190,7 +190,7 @@ module Restforce
       def query(soql, query_options = {})
         batch_size = query_options[:batch_size]
         response = api_get 'query', q: soql do |req|
-          if !batch_size.nil?
+          unless batch_size.nil?
             req.headers['Sforce-Query-Options'] = "batchSize=#{batch_size}"
           end
         end
