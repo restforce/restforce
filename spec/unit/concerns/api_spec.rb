@@ -192,7 +192,7 @@ describe Restforce::Concerns::API do
 
       it 'does not set the query options header' do
         expect(client).to receive(:api_get).
-          with('query', :q => soql) do |*args, &block|
+          with('query', q: soql) do |*args, &block|
           block.call(request)
           expect(headers['Sforce-Query-Options']).to be_nil
 
@@ -206,7 +206,7 @@ describe Restforce::Concerns::API do
 
         it 'sets the query options header' do
           expect(client).to receive(:api_get).
-            with('query', :q => soql) do |*args, &block|
+            with('query', q: soql) do |*args, &block|
             block.call(request)
             expect(headers['Sforce-Query-Options']).to eq 'batchSize=800'
 

@@ -190,7 +190,9 @@ module Restforce
       def query(soql, query_options = {})
         batch_size = query_options[:batch_size]
         response = api_get 'query', q: soql do |req|
-          req.headers['Sforce-Query-Options'] = "batchSize=#{batch_size}" if batch_size != nil
+          if !batch_size.nil?
+            req.headers['Sforce-Query-Options'] = "batchSize=#{batch_size}"
+          end
         end
         mashify? ? response.body : response.body['records']
       end
@@ -387,8 +389,10 @@ module Restforce
               api_post "sobjects/#{sobject}/#{field}", attrs
             end
           else
-            api_patch "sobjects/#{sobject}/#{field}/" \
-              "#{ERB::Util.url_encode(external_id)}", attrs
+            api_patch(
+              "sobjects/#{sobject}/#{field}/#{ERB::Util.url_encode(external_id)}",
+              attrs
+            )
           end
 
         response.body.respond_to?(:fetch) ? response.body.fetch('id', true) : true
