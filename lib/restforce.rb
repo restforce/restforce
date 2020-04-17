@@ -32,6 +32,7 @@ module Restforce
     autoload :Base,           'restforce/concerns/base'
     autoload :API,            'restforce/concerns/api'
     autoload :BatchAPI,       'restforce/concerns/batch_api'
+    autoload :CompositeAPI,   'restforce/concerns/composite_api'
   end
 
   module Data
@@ -48,6 +49,7 @@ module Restforce
   UnauthorizedError   = Class.new(Faraday::ClientError)
   APIVersionError     = Class.new(Error)
   BatchAPIError       = Class.new(Error)
+  CompositeAPIError   = Class.new(Error)
 
   # Inherit from Faraday::ResourceNotFound for backwards-compatibility
   # Consumers of this library that rescue and handle Faraday::ResourceNotFound
