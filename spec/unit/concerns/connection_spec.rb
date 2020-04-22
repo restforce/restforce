@@ -75,7 +75,7 @@ describe Restforce::Concerns::Connection do
 
       it "must always be used last before the Faraday Adapter" do
         client.middleware.handlers.reverse.index(Restforce::Middleware::Logger).
-          should eq 1
+          should eq 0
       end
     end
   end

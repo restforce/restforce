@@ -56,10 +56,8 @@ describe Restforce::Middleware::Authentication do
           Restforce.stub log?: false
         end
 
-        its(:handlers) {
-          should include FaradayMiddleware::ParseJson,
-                         Faraday::Adapter::NetHttp
-        }
+        its(:adapter) { should eq(Faraday::Adapter::NetHttp) }
+        its(:handlers) { should include FaradayMiddleware::ParseJson }
         its(:handlers) { should_not include Restforce::Middleware::Logger }
       end
 
@@ -68,9 +66,10 @@ describe Restforce::Middleware::Authentication do
           Restforce.stub log?: true
         end
 
+        its(:adapter) { should eq(Faraday::Adapter::NetHttp) }
         its(:handlers) {
           should include FaradayMiddleware::ParseJson,
-                         Restforce::Middleware::Logger, Faraday::Adapter::NetHttp
+                         Restforce::Middleware::Logger
         }
       end
 
@@ -79,9 +78,8 @@ describe Restforce::Middleware::Authentication do
           options[:adapter] = :typhoeus
         end
 
-        its(:handlers) {
-          should include FaradayMiddleware::ParseJson, Faraday::Adapter::Typhoeus
-        }
+        its(:adapter) { should eq(Faraday::Adapter::Typhoeus) }
+        its(:handlers) { should include FaradayMiddleware::ParseJson }
       end
     end
 
@@ -94,7 +92,9 @@ describe Restforce::Middleware::Authentication do
     context 'when response.body is present' do
       let(:response) {
         Faraday::Response.new(
-          body: { 'error' => 'error', 'error_description' => 'description' },
+          response_body: {
+            'error' => 'error', 'error_description' => 'description'
+          },
           status: 401
         )
       }
