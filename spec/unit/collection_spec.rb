@@ -62,4 +62,22 @@ describe Restforce::Collection do
       end
     end
   end
+
+  describe '#empty?' do
+    subject(:empty?) do
+      described_class.new(JSON.parse(fixture(sobject_fixture)), client).empty?
+    end
+
+    context 'with size 1' do
+      let(:sobject_fixture) { 'sobject/query_success_response' }
+
+      it { should be_false }
+    end
+
+    context 'with size 0' do
+      let(:sobject_fixture) { 'sobject/query_empty_response' }
+
+      it { should be_true }
+    end
+  end
 end
