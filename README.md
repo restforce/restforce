@@ -689,7 +689,7 @@ end
 ```
 
 If you prefer to opt in to caching on a per-request, you can do so by using .with_caching and
-setting the use_cache config option to false:
+setting the `use_cache` config option to false:
 
 ```ruby
 Restforce.configure do |config|
@@ -704,7 +704,7 @@ client.with_caching do
 end
 ```
 
-Caching is done on based on your authentication credentials, so cached responses will not be shared between different Salesforce logins.
+Caching is done based on your authentication credentials, so cached responses will not be shared between different Salesforce logins.
 
 * * *
 
