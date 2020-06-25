@@ -109,7 +109,7 @@ shared_examples_for Restforce::AbstractClient do
                         Blob: Restforce::UploadIO.new(
                           File.expand_path('../fixtures/blob.jpg', __dir__),
                           'image/jpeg'
-          ))
+                        ))
         end
 
         it { should eq 'some_id' }
