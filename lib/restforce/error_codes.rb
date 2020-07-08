@@ -4,181 +4,200 @@
 # https://developer.salesforce.com/docs/atlas.en-us.api.meta/api/sforce_api_calls_concepts_core_data_objects.htm#statuscode
 module Restforce
   module ErrorCode
-    class AllOrNoneOperationRolledBack < ResponseError; end
-    class AlreadyInProcess < ResponseError; end
-    class AssigneeTypeRequired < ResponseError; end
-    class BadCustomEntityParentDomain < ResponseError; end
-    class BccNotAllowedIfBccComplianceEnabled < ResponseError; end
-    class BccSelfNotAllowedIfBccComplianceEnabled < ResponseError; end
-    class CannotCascadeProductActive < ResponseError; end
-    class CannotChangeFieldTypeOfApexReferencedField < ResponseError; end
-    class CannotCreateAnotherManagedPackage < ResponseError; end
-    class CannotDeactivateDivision < ResponseError; end
-    class CannotDeleteLastDatedConversionRate < ResponseError; end
-    class CannotDeleteManagedObject < ResponseError; end
-    class CannotDisableLastAdmin < ResponseError; end
-    class CannotEnableIpRestrictRequests < ResponseError; end
-    class CannotInsertUpdateActivateEntity < ResponseError; end
-    class CannotModifyManagedObject < ResponseError; end
-    class CannotRenameApexReferencedField < ResponseError; end
-    class CannotRenameApexReferencedObject < ResponseError; end
-    class CannotReparentRecord < ResponseError; end
-    class CannotResolveName < ResponseError; end
-    class CannotUpdateConvertedLead < ResponseError; end
-    class CantDisableCorpCurrency < ResponseError; end
-    class CantUnsetCorpCurrency < ResponseError; end
-    class ChildShareFailsParent < ResponseError; end
-    class CircularDependency < ResponseError; end
-    class CommunityNotAccessible < ResponseError; end
-    class CustomClobFieldLimitExceeded < ResponseError; end
-    class CustomEntityOrFieldLimit < ResponseError; end
-    class CustomFieldIndexLimitExceeded < ResponseError; end
-    class CustomIndexExists < ResponseError; end
-    class CustomLinkLimitExceeded < ResponseError; end
-    class CustomMetadataLimitExceeded < ResponseError; end
-    class CustomSettingsLimitExceeded < ResponseError; end
-    class CustomTabLimitExceeded < ResponseError; end
-    class DeleteFailed < ResponseError; end
-    class DependencyExists < ResponseError; end
-    class DuplicateCaseSolution < ResponseError; end
-    class DuplicateCustomEntityDefinition < ResponseError; end
-    class DuplicateCustomTabMotif < ResponseError; end
-    class DuplicateDeveloperName < ResponseError; end
-    class DuplicatesDetected < ResponseError; end
-    class DuplicateExternalId < ResponseError; end
-    class DuplicateMasterLabel < ResponseError; end
-    class DuplicateSenderDisplayName < ResponseError; end
-    class DuplicateUsername < ResponseError; end
-    class DuplicateValue < ResponseError; end
-    class EmailAddressBounced < ResponseError; end
-    class EmailNotProcessedDueToPriorError < ResponseError; end
-    class EmailOptedOut < ResponseError; end
-    class EmailTemplateFormulaError < ResponseError; end
-    class EmailTemplateMergefieldAccessError < ResponseError; end
-    class EmailTemplateMergefieldError < ResponseError; end
-    class EmailTemplateMergefieldValueError < ResponseError; end
-    class EmailTemplateProcessingError < ResponseError; end
-    class EmptyScontrolFileName < ResponseError; end
-    class EntityFailedIflastmodifiedOnUpdate < ResponseError; end
-    class EntityIsArchived < ResponseError; end
-    class EntityIsDeleted < ResponseError; end
-    class EntityIsLocked < ResponseError; end
-    class EnvironmentHubMembershipConflict < ResponseError; end
-    class ErrorInMailer < ResponseError; end
-    class FailedActivation < ResponseError; end
-    class FieldCustomValidationException < ResponseError; end
-    class FieldFilterValidationException < ResponseError; end
-    class FilteredLookupLimitExceeded < ResponseError; end
-    class HtmlFileUploadNotAllowed < ResponseError; end
-    class ImageTooLarge < ResponseError; end
-    class InactiveOwnerOrUser < ResponseError; end
-    class InsertUpdateDeleteNotAllowedDuringMaintenance < ResponseError; end
-    class InsufficientAccessOnCrossReferenceEntity < ResponseError; end
-    class InsufficientAccessOrReadonly < ResponseError; end
-    class InvalidAccessLevel < ResponseError; end
-    class InvalidArgumentType < ResponseError; end
-    class InvalidAssigneeType < ResponseError; end
-    class InvalidAssignmentRule < ResponseError; end
-    class InvalidBatchOperation < ResponseError; end
-    class InvalidContentType < ResponseError; end
-    class InvalidCreditCardInfo < ResponseError; end
-    class InvalidCrossReferenceKey < ResponseError; end
-    class InvalidCrossReferenceTypeForField < ResponseError; end
-    class InvalidCurrencyConvRate < ResponseError; end
-    class InvalidCurrencyCorpRate < ResponseError; end
-    class InvalidCurrencyIso < ResponseError; end
-    class InvalidEmailAddress < ResponseError; end
-    class InvalidEmptyKeyOwner < ResponseError; end
-    class InvalidEventSubscription < ResponseError; end
-    class InvalidField < ResponseError; end
-    class InvalidFieldForInsertUpdate < ResponseError; end
-    class InvalidFieldWhenUsingTemplate < ResponseError; end
-    class InvalidFilterAction < ResponseError; end
-    class InvalidIdField < ResponseError; end
-    class InvalidInetAddress < ResponseError; end
-    class InvalidLineitemCloneState < ResponseError; end
-    class InvalidMasterOrTranslatedSolution < ResponseError; end
-    class InvalidMessageIdReference < ResponseError; end
-    class InvalidOperation < ResponseError; end
-    class InvalidOperator < ResponseError; end
-    class InvalidOrNullForRestrictedPicklist < ResponseError; end
-    class InvalidPartnerNetworkStatus < ResponseError; end
-    class InvalidPersonAccountOperation < ResponseError; end
-    class InvalidReadOnlyUserDml < ResponseError; end
-    class InvalidSaveAsActivityFlag < ResponseError; end
-    class InvalidSessionId < ResponseError; end
-    class InvalidStatus < ResponseError; end
-    class InvalidType < ResponseError; end
-    class InvalidTypeForOperation < ResponseError; end
-    class InvalidTypeOnFieldInRecord < ResponseError; end
-    class IpRangeLimitExceeded < ResponseError; end
-    class JigsawImportLimitExceeded < ResponseError; end
-    class LicenseLimitExceeded < ResponseError; end
-    class LightPortalUserException < ResponseError; end
-    class LimitExceeded < ResponseError; end
-    class LoginChallengeIssued < ResponseError; end
-    class LoginChallengePending < ResponseError; end
-    class LoginMustUseSecurityToken < ResponseError; end
-    class MalformedId < ResponseError; end
-    class ManagerNotDefined < ResponseError; end
-    class MassmailRetryLimitExceeded < ResponseError; end
-    class MassMailLimitExceeded < ResponseError; end
-    class MaximumCcemailsExceeded < ResponseError; end
-    class MaximumDashboardComponentsExceeded < ResponseError; end
-    class MaximumHierarchyLevelsReached < ResponseError; end
-    class MaximumSizeOfAttachment < ResponseError; end
-    class MaximumSizeOfDocument < ResponseError; end
-    class MaxActionsPerRuleExceeded < ResponseError; end
-    class MaxActiveRulesExceeded < ResponseError; end
-    class MaxApprovalStepsExceeded < ResponseError; end
-    class MaxFormulasPerRuleExceeded < ResponseError; end
-    class MaxRulesExceeded < ResponseError; end
-    class MaxRuleEntriesExceeded < ResponseError; end
-    class MaxTaskDescriptionExceeded < ResponseError; end
-    class MaxTmRulesExceeded < ResponseError; end
-    class MaxTmRuleItemsExceeded < ResponseError; end
-    class MergeFailed < ResponseError; end
-    class MissingArgument < ResponseError; end
-    class NonuniqueShippingAddress < ResponseError; end
-    class NoApplicableProcess < ResponseError; end
-    class NoAttachmentPermission < ResponseError; end
-    class NoInactiveDivisionMembers < ResponseError; end
-    class NoMassMailPermission < ResponseError; end
-    class NumberOutsideValidRange < ResponseError; end
-    class NumHistoryFieldsBySobjectExceeded < ResponseError; end
-    class OpWithInvalidUserTypeException < ResponseError; end
-    class OptedOutOfMassMail < ResponseError; end
-    class PackageLicenseRequired < ResponseError; end
-    class PlatformEventEncryptionError < ResponseError; end
-    class PlatformEventPublishingUnavailable < ResponseError; end
-    class PlatformEventPublishFailed < ResponseError; end
-    class PortalUserAlreadyExistsForContact < ResponseError; end
-    class PrivateContactOnAsset < ResponseError; end
-    class RecordInUseByWorkflow < ResponseError; end
-    class RequestRunningTooLong < ResponseError; end
-    class RequiredFieldMissing < ResponseError; end
-    class SelfReferenceFromTrigger < ResponseError; end
-    class ShareNeededForChildOwner < ResponseError; end
-    class SingleEmailLimitExceeded < ResponseError; end
-    class StandardPriceNotDefined < ResponseError; end
-    class StorageLimitExceeded < ResponseError; end
-    class StringTooLong < ResponseError; end
-    class TabsetLimitExceeded < ResponseError; end
-    class TemplateNotActive < ResponseError; end
-    class TerritoryRealignInProgress < ResponseError; end
-    class TextDataOutsideSupportedCharset < ResponseError; end
-    class TooManyApexRequests < ResponseError; end
-    class TooManyEnumValue < ResponseError; end
-    class TransferRequiresRead < ResponseError; end
-    class UnableToLockRow < ResponseError; end
-    class UnavailableRecordtypeException < ResponseError; end
-    class UndeleteFailed < ResponseError; end
-    class UnknownException < ResponseError; end
-    class UnspecifiedEmailAddress < ResponseError; end
-    class UnsupportedApexTriggerOperation < ResponseError; end
-    class UnverifiedSenderAddress < ResponseError; end
-    class WeblinkSizeLimitExceeded < ResponseError; end
-    class WeblinkUrlInvalid < ResponseError; end
-    class WrongControllerType < ResponseError; end
+    ERROR_CODES = {} # rubocop:disable Style/MutableConstant
+
+    def self.add_error_code(error_code)
+      return ERROR_CODES[error_code] if ERROR_CODES.key? error_code
+
+      constant_name = error_code.to_s.split('_').map(&:capitalize).join.to_sym
+      new_exception = const_set(constant_name, Class.new(ResponseError))
+
+      ERROR_CODES[error_code] = new_exception
+
+      new_exception
+    end
+
+    def self.get_exception_class(error_code)
+      ERROR_CODES[error_code] || add_error_code(error_code)
+    end
+
+    %w[
+      ALL_OR_NONE_OPERATION_ROLLED_BACK
+      ALREADY_IN_PROCESS
+      ASSIGNEE_TYPE_REQUIRED
+      BAD_CUSTOM_ENTITY_PARENT_DOMAIN
+      BCC_NOT_ALLOWED_IF_BCC_COMPLIANCE_ENABLED
+      BCC_SELF_NOT_ALLOWED_IF_BCC_COMPLIANCE_ENABLED
+      CANNOT_CASCADE_PRODUCT_ACTIVE
+      CANNOT_CHANGE_FIELD_TYPE_OF_APEX_REFERENCED_FIELD
+      CANNOT_CREATE_ANOTHER_MANAGED_PACKAGE
+      CANNOT_DEACTIVATE_DIVISION
+      CANNOT_DELETE_LAST_DATED_CONVERSION_RATE
+      CANNOT_DELETE_MANAGED_OBJECT
+      CANNOT_DISABLE_LAST_ADMIN
+      CANNOT_ENABLE_IP_RESTRICT_REQUESTS
+      CANNOT_INSERT_UPDATE_ACTIVATE_ENTITY
+      CANNOT_MODIFY_MANAGED_OBJECT
+      CANNOT_RENAME_APEX_REFERENCED_FIELD
+      CANNOT_RENAME_APEX_REFERENCED_OBJECT
+      CANNOT_REPARENT_RECORD
+      CANNOT_RESOLVE_NAME
+      CANNOT_UPDATE_CONVERTED_LEAD
+      CANT_DISABLE_CORP_CURRENCY
+      CANT_UNSET_CORP_CURRENCY
+      CHILD_SHARE_FAILS_PARENT
+      CIRCULAR_DEPENDENCY
+      COMMUNITY_NOT_ACCESSIBLE
+      CUSTOM_CLOB_FIELD_LIMIT_EXCEEDED
+      CUSTOM_ENTITY_OR_FIELD_LIMIT
+      CUSTOM_FIELD_INDEX_LIMIT_EXCEEDED
+      CUSTOM_INDEX_EXISTS
+      CUSTOM_LINK_LIMIT_EXCEEDED
+      CUSTOM_METADATA_LIMIT_EXCEEDED
+      CUSTOM_SETTINGS_LIMIT_EXCEEDED
+      CUSTOM_TAB_LIMIT_EXCEEDED
+      DELETE_FAILED
+      DEPENDENCY_EXISTS
+      DUPLICATE_CASE_SOLUTION
+      DUPLICATE_CUSTOM_ENTITY_DEFINITION
+      DUPLICATE_CUSTOM_TAB_MOTIF
+      DUPLICATE_DEVELOPER_NAME
+      DUPLICATES_DETECTED
+      DUPLICATE_EXTERNAL_ID
+      DUPLICATE_MASTER_LABEL
+      DUPLICATE_SENDER_DISPLAY_NAME
+      DUPLICATE_USERNAME
+      DUPLICATE_VALUE
+      EMAIL_ADDRESS_BOUNCED
+      EMAIL_NOT_PROCESSED_DUE_TO_PRIOR_ERROR
+      EMAIL_OPTED_OUT
+      EMAIL_TEMPLATE_FORMULA_ERROR
+      EMAIL_TEMPLATE_MERGEFIELD_ACCESS_ERROR
+      EMAIL_TEMPLATE_MERGEFIELD_ERROR
+      EMAIL_TEMPLATE_MERGEFIELD_VALUE_ERROR
+      EMAIL_TEMPLATE_PROCESSING_ERROR
+      EMPTY_SCONTROL_FILE_NAME
+      ENTITY_FAILED_IFLASTMODIFIED_ON_UPDATE
+      ENTITY_IS_ARCHIVED
+      ENTITY_IS_DELETED
+      ENTITY_IS_LOCKED
+      ENVIRONMENT_HUB_MEMBERSHIP_CONFLICT
+      ERROR_IN_MAILER
+      FAILED_ACTIVATION
+      FIELD_CUSTOM_VALIDATION_EXCEPTION
+      FIELD_FILTER_VALIDATION_EXCEPTION
+      FILTERED_LOOKUP_LIMIT_EXCEEDED
+      HTML_FILE_UPLOAD_NOT_ALLOWED
+      IMAGE_TOO_LARGE
+      INACTIVE_OWNER_OR_USER
+      INSERT_UPDATE_DELETE_NOT_ALLOWED_DURING_MAINTENANCE
+      INSUFFICIENT_ACCESS_ON_CROSS_REFERENCE_ENTITY
+      INSUFFICIENT_ACCESS_OR_READONLY
+      INVALID_ACCESS_LEVEL
+      INVALID_ARGUMENT_TYPE
+      INVALID_ASSIGNEE_TYPE
+      INVALID_ASSIGNMENT_RULE
+      INVALID_BATCH_OPERATION
+      INVALID_CONTENT_TYPE
+      INVALID_CREDIT_CARD_INFO
+      INVALID_CROSS_REFERENCE_KEY
+      INVALID_CROSS_REFERENCE_TYPE_FOR_FIELD
+      INVALID_CURRENCY_CONV_RATE
+      INVALID_CURRENCY_CORP_RATE
+      INVALID_CURRENCY_ISO
+      INVALID_EMAIL_ADDRESS
+      INVALID_EMPTY_KEY_OWNER
+      INVALID_EVENT_SUBSCRIPTION
+      INVALID_FIELD
+      INVALID_FIELD_FOR_INSERT_UPDATE
+      INVALID_FIELD_WHEN_USING_TEMPLATE
+      INVALID_FILTER_ACTION
+      INVALID_ID_FIELD
+      INVALID_INET_ADDRESS
+      INVALID_LINEITEM_CLONE_STATE
+      INVALID_MASTER_OR_TRANSLATED_SOLUTION
+      INVALID_MESSAGE_ID_REFERENCE
+      INVALID_OPERATION
+      INVALID_OPERATOR
+      INVALID_OR_NULL_FOR_RESTRICTED_PICKLIST
+      INVALID_PARTNER_NETWORK_STATUS
+      INVALID_PERSON_ACCOUNT_OPERATION
+      INVALID_READ_ONLY_USER_DML
+      INVALID_SAVE_AS_ACTIVITY_FLAG
+      INVALID_SESSION_ID
+      INVALID_STATUS
+      INVALID_TYPE
+      INVALID_TYPE_FOR_OPERATION
+      INVALID_TYPE_ON_FIELD_IN_RECORD
+      IP_RANGE_LIMIT_EXCEEDED
+      JIGSAW_IMPORT_LIMIT_EXCEEDED
+      LICENSE_LIMIT_EXCEEDED
+      LIGHT_PORTAL_USER_EXCEPTION
+      LIMIT_EXCEEDED
+      LOGIN_CHALLENGE_ISSUED
+      LOGIN_CHALLENGE_PENDING
+      LOGIN_MUST_USE_SECURITY_TOKEN
+      MALFORMED_ID
+      MANAGER_NOT_DEFINED
+      MASSMAIL_RETRY_LIMIT_EXCEEDED
+      MASS_MAIL_LIMIT_EXCEEDED
+      MAXIMUM_CCEMAILS_EXCEEDED
+      MAXIMUM_DASHBOARD_COMPONENTS_EXCEEDED
+      MAXIMUM_HIERARCHY_LEVELS_REACHED
+      MAXIMUM_SIZE_OF_ATTACHMENT
+      MAXIMUM_SIZE_OF_DOCUMENT
+      MAX_ACTIONS_PER_RULE_EXCEEDED
+      MAX_ACTIVE_RULES_EXCEEDED
+      MAX_APPROVAL_STEPS_EXCEEDED
+      MAX_FORMULAS_PER_RULE_EXCEEDED
+      MAX_RULES_EXCEEDED
+      MAX_RULE_ENTRIES_EXCEEDED
+      MAX_TASK_DESCRIPTION_EXCEEDED
+      MAX_TM_RULES_EXCEEDED
+      MAX_TM_RULE_ITEMS_EXCEEDED
+      MERGE_FAILED
+      MISSING_ARGUMENT
+      NONUNIQUE_SHIPPING_ADDRESS
+      NO_APPLICABLE_PROCESS
+      NO_ATTACHMENT_PERMISSION
+      NO_INACTIVE_DIVISION_MEMBERS
+      NO_MASS_MAIL_PERMISSION
+      NUMBER_OUTSIDE_VALID_RANGE
+      NUM_HISTORY_FIELDS_BY_SOBJECT_EXCEEDED
+      OP_WITH_INVALID_USER_TYPE_EXCEPTION
+      OPTED_OUT_OF_MASS_MAIL
+      PACKAGE_LICENSE_REQUIRED
+      PLATFORM_EVENT_ENCRYPTION_ERROR
+      PLATFORM_EVENT_PUBLISHING_UNAVAILABLE
+      PLATFORM_EVENT_PUBLISH_FAILED
+      PORTAL_USER_ALREADY_EXISTS_FOR_CONTACT
+      PRIVATE_CONTACT_ON_ASSET
+      RECORD_IN_USE_BY_WORKFLOW
+      REQUEST_RUNNING_TOO_LONG
+      REQUIRED_FIELD_MISSING
+      SELF_REFERENCE_FROM_TRIGGER
+      SHARE_NEEDED_FOR_CHILD_OWNER
+      SINGLE_EMAIL_LIMIT_EXCEEDED
+      STANDARD_PRICE_NOT_DEFINED
+      STORAGE_LIMIT_EXCEEDED
+      STRING_TOO_LONG
+      TABSET_LIMIT_EXCEEDED
+      TEMPLATE_NOT_ACTIVE
+      TERRITORY_REALIGN_IN_PROGRESS
+      TEXT_DATA_OUTSIDE_SUPPORTED_CHARSET
+      TOO_MANY_APEX_REQUESTS
+      TOO_MANY_ENUM_VALUE
+      TRANSFER_REQUIRES_READ
+      UNABLE_TO_LOCK_ROW
+      UNAVAILABLE_RECORDTYPE_EXCEPTION
+      UNDELETE_FAILED
+      UNKNOWN_EXCEPTION
+      UNSPECIFIED_EMAIL_ADDRESS
+      UNSUPPORTED_APEX_TRIGGER_OPERATION
+      UNVERIFIED_SENDER_ADDRESS
+      WEBLINK_SIZE_LIMIT_EXCEEDED
+      WEBLINK_URL_INVALID
+      WRONG_CONTROLLER_TYPE
+    ].each { |error_code| add_error_code(error_code) }
   end
 end

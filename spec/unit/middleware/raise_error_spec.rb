@@ -90,9 +90,8 @@ describe Restforce::Middleware::RaiseError do
       let(:body) { { 'errorCode' => 'SOMETHING_UNDEFINED' } }
       let(:status) { 400 }
 
-      it 'raises an argument error' do
-        expect { on_complete }.to raise_error ArgumentError,
-                                              /^No error code defined for SomethingUndefi/
+      it 'raises an error that inherits from Restforce::ResponseError' do
+        expect { on_complete }.to raise_error Restforce::ResponseError
       end
     end
   end
