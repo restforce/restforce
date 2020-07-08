@@ -60,9 +60,11 @@ module Restforce
   MatchesMultipleError= Class.new(ResponseError)
   EntityTooLargeError = Class.new(ResponseError)
 
+  require 'restforce/error_codes'
+
   module ErrorCode
     def self.const_missing(constant_name)
-      const_set constant_name, Class.new(ResponseError)
+      raise ArgumentError, "No error code defined for #{constant_name}"
     end
   end
 

@@ -85,5 +85,15 @@ describe Restforce::Middleware::RaiseError do
                                               "(error code missing): #{body}"
       end
     end
+
+    context 'when error code is not already defined' do
+      let(:body) { { 'errorCode' => 'SOMETHING_UNDEFINED' } }
+      let(:status) { 400 }
+
+      it 'raises an argument error' do
+        expect { on_complete }.to raise_error ArgumentError,
+                                              /^No error code defined for SomethingUndefi/
+      end
+    end
   end
 end
