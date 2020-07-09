@@ -61,11 +61,7 @@ module Restforce
   MatchesMultipleError= Class.new(ResponseError)
   EntityTooLargeError = Class.new(ResponseError)
 
-  module ErrorCode
-    def self.const_missing(constant_name)
-      const_set constant_name, Class.new(ResponseError)
-    end
-  end
+  require 'restforce/error_code'
 
   class << self
     # Alias for Restforce::Data::Client.new
