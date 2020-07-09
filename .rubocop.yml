@@ -7,7 +7,7 @@ AllCops:
   Exclude:
     - .*/**/*
     - vendor/**/*
-  TargetRubyVersion: 2.4
+  TargetRubyVersion: 2.5
 
 # Limit lines to 90 characters.
 Layout/LineLength:
