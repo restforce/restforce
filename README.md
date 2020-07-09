@@ -8,7 +8,7 @@ Restforce is a ruby gem for the [Salesforce REST api](http://www.salesforce.com/
 Features include:
 
 * A clean and modular architecture using [Faraday middleware](https://github.com/technoweenie/faraday) and [Hashie::Mash](https://github.com/intridea/hashie/tree/v1.2.0)'d responses.
-* Support for interacting with multiple users from different orgs.
+* Support for interacting with multiple users from different organizations.
 * Support for parent-to-child relationships.
 * Support for aggregate queries.
 * Support for the [Streaming API](#streaming)
@@ -48,7 +48,7 @@ so you can do things like `client.query('select Id, (select Name from Children__
 ### Initialization
 
 Which authentication method you use really depends on your use case. If you're
-building an application where many users from different orgs are authenticated
+building an application where many users from different organizations are authenticated
 through oauth and you need to interact with data in their org on their behalf,
 you should use the OAuth token authentication method.
 
@@ -78,7 +78,7 @@ client = Restforce.new(oauth_token: 'access_token',
                        api_version: '41.0')
 ```
 
-The middleware will use the `refresh_token` automatically to acquire a new `access_token` if the existing `access_token` is invalid.
+The middleware will use the `refresh_token` automatically to acquire a new `access_token` if the existing `access_token` is invalid. The refresh process uses the `host` option so make sure that is set correctly for sandbox organizations.
 
 `authentication_callback` is a proc that handles the response from Salesforce when the `refresh_token` is used to obtain a new `access_token`. This allows the `access_token` to be saved for re-use later - otherwise subsequent API calls will continue the cycle of "auth failure/issue new access_token/auth success".
 
@@ -142,7 +142,17 @@ export SALESFORCE_API_VERSION="41.0"
 client = Restforce.new
 ```
 
-### Proxy Support
+#### Sandbox Organizations
+
+You can connect to sandbox organizations by specifying a host. The default host is
+'login.salesforce.com':
+
+```ruby
+client = Restforce.new(host: 'test.salesforce.com')
+```
+The host can also be set with the environment variable `SALESFORCE_HOST`.
+
+#### Proxy Support
 
 You can specify a HTTP proxy using the `proxy_uri` option, as follows, or by setting the `SALESFORCE_PROXY_URI` environment variable:
 
@@ -157,16 +167,6 @@ client = Restforce.new(username: 'foo',
 ```
 
 You may specify a username and password for the proxy with a URL along the lines of 'http://user:password@proxy.example.com:123'.
-
-#### Sandbox Orgs
-
-You can connect to sandbox orgs by specifying a host. The default host is
-'login.salesforce.com':
-
-```ruby
-client = Restforce.new(host: 'test.salesforce.com')
-```
-The host can also be set with the environment variable `SALESFORCE_HOST`.
 
 #### Global configuration
 
