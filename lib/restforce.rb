@@ -15,7 +15,8 @@ module Restforce
   autoload :Middleware,     'restforce/middleware'
   autoload :Attachment,     'restforce/attachment'
   autoload :Document,       'restforce/document'
-  autoload :UploadIO,       'restforce/upload_io'
+  autoload :FilePart,       'restforce/file_part'
+  autoload :UploadIO,       'restforce/file_part' # Deprecated
   autoload :SObject,        'restforce/sobject'
   autoload :Client,         'restforce/client'
   autoload :Mash,           'restforce/mash'

@@ -95,13 +95,25 @@ shared_examples_for Restforce::AbstractClient do
 
       subject do
         client.create('Account', Name: 'Foobar',
-                                 Blob: Restforce::UploadIO.new(
+                                 Blob: Restforce::FilePart.new(
                                    File.expand_path('../fixtures/blob.jpg', __dir__),
                                    'image/jpeg'
                                  ))
       end
 
       it { should eq 'some_id' }
+
+      context 'with deprecated UploadIO' do
+        subject do
+          client.create('Account', Name: 'Foobar',
+                        Blob: Restforce::UploadIO.new(
+                          File.expand_path('../fixtures/blob.jpg', __dir__),
+                          'image/jpeg'
+                        ))
+        end
+
+        it { should eq 'some_id' }
+      end
     end
   end
 
