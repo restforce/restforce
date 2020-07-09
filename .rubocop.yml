@@ -9,8 +9,8 @@ AllCops:
     - vendor/**/*
   TargetRubyVersion: 2.4
 
-# Limit lines to 80 characters.
-Metrics/LineLength:
+# Limit lines to 90 characters.
+Layout/LineLength:
   Max: 90
 
 Metrics/ClassLength:
