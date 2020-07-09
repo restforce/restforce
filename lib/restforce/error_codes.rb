@@ -18,7 +18,14 @@ module Restforce
     end
 
     def self.get_exception_class(error_code)
-      ERROR_CODES[error_code] || add_error_code(error_code)
+      if ERROR_CODES.key? error_code
+        ERROR_CODES[error_code]
+      else
+        warn "Unknown error code: #{error_code}\n" \
+             'Please open an issue at https://github.com/restforce/restforce/issues/new/choose'
+
+        add_error_code(error_code)
+      end
     end
 
     %w[

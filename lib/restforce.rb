@@ -65,7 +65,7 @@ module Restforce
   module ErrorCode
     def self.const_missing(constant_name)
       message = "No error code defined for #{constant_name}.\n" \
-                'Please file a ticket at https://github.com/restforce/restforce/issues/new/choose'
+                'Please open an issue at https://github.com/restforce/restforce/issues/new/choose'
 
       raise ArgumentError, message
     end

@@ -56,4 +56,30 @@ describe Restforce::ErrorCode do
       end
     end
   end
+
+  describe 'warning message' do
+    subject do
+      ->(error_code) { described_class.get_exception_class(error_code) }
+    end
+
+    context 'when a non-existent class is fetched' do
+      let(:new_error_code) { 'YET_ANOTHER_NEW_ERROR_CODE' }
+
+      it 'outputs a warning' do
+        expect(Warning).to receive(:warn)
+
+        subject.call(new_error_code)
+      end
+    end
+
+    context 'when an existing class is fetched' do
+      let(:existing_error_code) { error_code_list.keys.last }
+
+      it 'does not output a warning' do
+        expect(Warning).to_not receive(:warn)
+
+        subject.call(new_error_code)
+      end
+    end
+  end
 end
