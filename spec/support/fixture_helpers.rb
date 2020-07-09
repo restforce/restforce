@@ -22,9 +22,7 @@ module FixtureHelpers
     end
 
     def stub_login_request(*)
-      stub = stub_request(:post, "https://login.salesforce.com/services/oauth2/token")
-
-      stub
+      stub_request(:post, "https://login.salesforce.com/services/oauth2/token")
     end
 
     def fixture(filename)
