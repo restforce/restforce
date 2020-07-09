@@ -1,3 +1,22 @@
+## 5.0.0 (Jul 10, 2020)
+
+For instructions on upgrading from Restforce 4.x to 5.x, see our ["Upgrading from Restforce 4.x to 5.x"](https://github.com/restforce/restforce/blob/master/UPGRADING.md) guide.
+
+### Breaking changes 
+
+* __⚠️  Define exception classes for Salesforce errors up-front instead of dynamically at runtime__, *running the risk that we might miss some errors which should be defined*. If any errors are missed, they will be added in patch versions (e.g. `5.0.1`). For more details on this change, see the ["Upgrading from Restforce 4.x to 5.x"](https://github.com/restforce/restforce/blob/master/UPGRADING.md) guide (@presidentbeef, @timrogers).
+* __⚠️  Deprecate support for Ruby 2.4__, since [Ruby 2.4 reached its end-of-life](https://www.ruby-lang.org/en/news/2020/04/05/support-of-ruby-2-4-has-ended/) in April 2020 (@timrogers)
+* __⚠️  Change the ancestry of `Restforce::UnauthorizedError` so it inherits from `Faraday::ClientError`, not `Restforce::Error`__. This breaking change was required to expose the response body returned by the API as part of this error - see the non-breaking changes entry below for further details (@michaldbianchi).
+
+### Non-breaking changes
+
+* Add support for `lostisland/faraday` v1.x, whilst maintaining support for v0.9.x (@ryansch)
+* Add `#empty?` method to `Restforce::Collection`, returning whether they are any items in a collection (@bubaflub)
+* Allow opting-in to caching on a per-call basis with `Restforce::Client#with_caching` (@swaincreates)
+* Expose the response body from Salesforce on `Restforce::UnauthorizedError` and `Restforce::NotFoundError` (@michaeldbianchi)
+* Remove the unnecessary depending on the `json` gem, which has been part of the Ruby standard library since v1.9 (@vonTronje)
+
+
 ## 4.2.2 (Jan 23, 2020)
 
 * Fix `NoMethodError: undefined method '[]' for nil:NilClass` error when generating objects to return (@apurkiss)
