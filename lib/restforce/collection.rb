@@ -33,6 +33,11 @@ module Restforce
     end
     alias length size
 
+    # Returns true if the size of the Collection is zero.
+    def empty?
+      size.zero?
+    end
+
     # Return array of the elements on the current page
     def current_page
       first(@raw_page['records'].size)
