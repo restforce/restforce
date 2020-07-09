@@ -45,7 +45,7 @@ module Restforce
   Error               = Class.new(StandardError)
   ServerError         = Class.new(Error)
   AuthenticationError = Class.new(Error)
-  UnauthorizedError   = Class.new(Faraday::Error::ClientError)
+  UnauthorizedError   = Class.new(Faraday::ClientError)
   APIVersionError     = Class.new(Error)
   BatchAPIError       = Class.new(Error)
 
