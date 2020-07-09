@@ -33,6 +33,11 @@ describe Restforce::Mash do
         let(:input) { { 'attributes' => { 'type' => 'Document' } } }
         it { should eq Restforce::Document }
       end
+
+      context 'when the attributes value is nil' do
+        let(:input) { { 'attributes' => nil } }
+        it { should eq Restforce::SObject }
+      end
     end
 
     context 'else' do

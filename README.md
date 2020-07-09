@@ -8,7 +8,7 @@ Restforce is a ruby gem for the [Salesforce REST api](http://www.salesforce.com/
 Features include:
 
 * A clean and modular architecture using [Faraday middleware](https://github.com/technoweenie/faraday) and [Hashie::Mash](https://github.com/intridea/hashie/tree/v1.2.0)'d responses.
-* Support for interacting with multiple users from different orgs.
+* Support for interacting with multiple users from different organizations.
 * Support for parent-to-child relationships.
 * Support for aggregate queries.
 * Support for the [Streaming API](#streaming)
@@ -25,7 +25,7 @@ Features include:
 
 Add this line to your application's Gemfile:
 
-    gem 'restforce', '~> 3.1.0'
+    gem 'restforce', '~> 4.2.2'
 
 And then execute:
 
@@ -35,7 +35,7 @@ Or install it yourself as:
 
     $ gem install restforce
 
-__As of [version 3.0.0](https://github.com/restforce/restforce/blob/master/CHANGELOG.md#300-aug-2-2018), this gem is only compatible with Ruby 2.3.0 and later.__ You'll need to use version 2.5.3 or earlier if you're running on Ruby 2.2, 2.1 or 2.0. For Ruby 1.9.3, you'll need to manually specify that you wish to use version 2.4.2.
+__As of [version 4.0.0](https://github.com/restforce/restforce/blob/master/CHANGELOG.md#400-oct-9-2019), this gem is only compatible with Ruby 2.4.0 and later.__ You'll need to use version 3.2.0 or earlier if you're running on Ruby 2.3. If you're running on Ruby 2.2, 2.1 or 2.0, use version 2.5.3 or earlier. For Ruby 1.9.3, you'll need to manually specify that you wish to use version 2.4.2.
 
 This gem is versioned using [Semantic Versioning](http://semver.org/), so you can be confident when updating that there will not be breaking changes outside of a major version (following format MAJOR.MINOR.PATCH, so for instance moving from 3.1.0 to 4.0.0 would be allowed to include incompatible API changes). See the [changelog](https://github.com/restforce/restforce/tree/master/CHANGELOG.md) for details on what has changed in each version.
 
@@ -43,12 +43,12 @@ This gem is versioned using [Semantic Versioning](http://semver.org/), so you ca
 
 Restforce is designed with flexibility and ease of use in mind. By default, all API calls will
 return [Hashie::Mash](https://github.com/intridea/hashie/tree/v1.2.0) objects,
-so you can do things like `client.query('select Id, (select Name from Children__r) from Account').Children__r.first.Name`.
+so you can do things like `client.query('select Id, (select Name from Children__r) from Account').first.Children__r.first.Name`.
 
 ### Initialization
 
 Which authentication method you use really depends on your use case. If you're
-building an application where many users from different orgs are authenticated
+building an application where many users from different organizations are authenticated
 through oauth and you need to interact with data in their org on their behalf,
 you should use the OAuth token authentication method.
 
@@ -78,7 +78,7 @@ client = Restforce.new(oauth_token: 'access_token',
                        api_version: '41.0')
 ```
 
-The middleware will use the `refresh_token` automatically to acquire a new `access_token` if the existing `access_token` is invalid.
+The middleware will use the `refresh_token` automatically to acquire a new `access_token` if the existing `access_token` is invalid. The refresh process uses the `host` option so make sure that is set correctly for sandbox organizations.
 
 `authentication_callback` is a proc that handles the response from Salesforce when the `refresh_token` is used to obtain a new `access_token`. This allows the `access_token` to be saved for re-use later - otherwise subsequent API calls will continue the cycle of "auth failure/issue new access_token/auth success".
 
@@ -111,6 +111,21 @@ client = Restforce.new(username: 'foo',
                        api_version: '41.0')
 ```
 
+#### JWT Bearer Token
+
+If you prefer to use a [JWT Bearer Token](https://developer.salesforce.com/page/Digging_Deeper_into_OAuth_2.0_on_Force.com#Obtaining_an_Access_Token_using_a_JWT_Bearer_Token) to authenticate:
+
+```ruby
+client = Restforce.new(username: 'foo',
+                       client_id: 'client_id',
+                       instance_url: 'instance_url',
+                       jwt_key: 'certificate_private_key',
+                       api_version: '38.0')
+```
+
+The `jwt_key` option is the private key of the certificate uploaded to your Connected App in Salesforce.
+Choose "use digital signatures" in the Connected App configuration screen to upload your certificate.
+
 You can also set the username, password, security token, client ID, client
 secret and API version in environment variables:
 
@@ -127,7 +142,17 @@ export SALESFORCE_API_VERSION="41.0"
 client = Restforce.new
 ```
 
-### Proxy Support
+#### Sandbox Organizations
+
+You can connect to sandbox organizations by specifying a host. The default host is
+'login.salesforce.com':
+
+```ruby
+client = Restforce.new(host: 'test.salesforce.com')
+```
+The host can also be set with the environment variable `SALESFORCE_HOST`.
+
+#### Proxy Support
 
 You can specify a HTTP proxy using the `proxy_uri` option, as follows, or by setting the `SALESFORCE_PROXY_URI` environment variable:
 
@@ -142,16 +167,6 @@ client = Restforce.new(username: 'foo',
 ```
 
 You may specify a username and password for the proxy with a URL along the lines of 'http://user:password@proxy.example.com:123'.
-
-#### Sandbox Orgs
-
-You can connect to sandbox orgs by specifying a host. The default host is
-'login.salesforce.com':
-
-```ruby
-client = Restforce.new(host: 'test.salesforce.com')
-```
-The host can also be set with the environment variable `SALESFORCE_HOST`.
 
 #### Global configuration
 
@@ -442,7 +457,7 @@ Using the new [Blob Data](http://www.salesforce.com/us/developer/docs/api_rest/C
 client.create('Document', FolderId: '00lE0000000FJ6H',
                           Description: 'Document test',
                           Name: 'My image',
-                          Body: Restforce::UploadIO.new(File.expand_path('image.jpg', __FILE__), 'image/jpeg')
+                          Body: Restforce::FilePart.new(File.expand_path('image.jpg', __FILE__), 'image/jpeg')
 ```
 
 Using base64 encoded data (37.5mb limit):
@@ -473,11 +488,11 @@ document = client.query('select Id, Name, Body from Document').first
 File.open(document.Name, 'wb') { |f| f.write(document.Body) }
 ```
 
-**Note:** The example above is only applicable if your SOQL query returns a single Document record. If more than one record is returned, 
+**Note:** The example above is only applicable if your SOQL query returns a single Document record. If more than one record is returned,
 the Body field contains an URL to retrieve the BLOB content for the first 2000 records returned. Subsequent records contain the BLOB content
-in the Body field. This is confusing and hard to debug. See notes in [Issue #301](https://github.com/restforce/restforce/issues/301#issuecomment-298972959) explaining this detail. 
-**Executive Summary:** Don't retrieve the Body field in a SOQL query; instead, use the BLOB retrieval URL documented 
-in [SObject BLOB Retrieve](https://developer.salesforce.com/docs/atlas.en-us.api_rest.meta/api_rest/resources_sobject_blob_retrieve.htm) 
+in the Body field. This is confusing and hard to debug. See notes in [Issue #301](https://github.com/restforce/restforce/issues/301#issuecomment-298972959) explaining this detail.
+**Executive Summary:** Don't retrieve the Body field in a SOQL query; instead, use the BLOB retrieval URL documented
+in [SObject BLOB Retrieve](https://developer.salesforce.com/docs/atlas.en-us.api_rest.meta/api_rest/resources_sobject_blob_retrieve.htm)
 
 * * *
 
@@ -513,8 +528,10 @@ client.get('/services/apexrest/FieldCase', company: 'GenePoint')
 
 ### Streaming
 
-Restforce supports the [Streaming API](http://wiki.developerforce.com/page/Getting_Started_with_the_Force.com_Streaming_API), and makes implementing
-pub/sub with Salesforce a trivial task:
+Restforce supports the [Streaming API](https://trailhead.salesforce.com/en/content/learn/modules/api_basics/api_basics_streaming), and makes implementing
+pub/sub with Salesforce a trivial task.
+
+Here is an example of creating and subscribing to a `PushTopic`:
 
 ```ruby
 # Restforce uses faye as the underlying implementation for CometD.
@@ -538,7 +555,7 @@ client.create!('PushTopic',
 
 EM.run do
   # Subscribe to the PushTopic.
-  client.subscribe 'AllAccounts' do |message|
+  client.subscription '/topic/AllAccounts' do |message|
     puts message.inspect
   end
 end
@@ -559,7 +576,7 @@ that event ID:
 ```ruby
 EM.run {
   # Subscribe to the PushTopic.
-  client.subscribe 'AllAccounts', replay: 10 do |message|
+  client.subscription '/topic/AllAccounts', replay: 10 do |message|
     puts message.inspect
   end
 }
@@ -574,14 +591,14 @@ There are two magic values for the replay ID accepted by Salesforce:
 
 **Warning**: Only use a replay ID of a event from the last 24 hours otherwise
 Salesforce will not send anything, including newer events. If in doubt, use one
-of the two magic replay IDs mentioned above. 
+of the two magic replay IDs mentioned above.
 
-You might want to store the replay ID in some sort of datastore so you can 
+You might want to store the replay ID in some sort of datastore so you can
 access it, for example between application restarts. In that case, there is the
 option of passing a custom replay handler which responds to `[]` and `[]=`.
 
 Below is a sample replay handler that stores the replay ID for each channel in
-memory using a Hash, stores a timestamp and has some rudimentary logic that 
+memory using a Hash, stores a timestamp and has some rudimentary logic that
 will use one of the magic IDs depending on the value of the timestamp:
 
 ```ruby
@@ -633,13 +650,13 @@ of the subscription:
 EM.run {
   # Subscribe to the PushTopic and use the custom replay handler to store any
   # received replay ID.
-  client.subscribe 'AllAccounts', replay: SimpleReplayHandler.new do |message|
+  client.subscription '/topic/AllAccounts', replay: SimpleReplayHandler.new do |message|
     puts message.inspect
   end
 }
-``` 
+```
 
-_See also_: 
+_See also_:
 
 * [Force.com Streaming API docs](http://www.salesforce.com/us/developer/docs/api_streaming/index.htm)
 * [Message Durability docs](https://developer.salesforce.com/docs/atlas.en-us.api_streaming.meta/api_streaming/using_streaming_api_durability.htm)
@@ -671,7 +688,23 @@ client.without_caching do
 end
 ```
 
-Caching is done on based on your authentication credentials, so cached responses will not be shared between different Salesforce logins.
+If you prefer to opt in to caching on a per-request, you can do so by using .with_caching and
+setting the `use_cache` config option to false:
+
+```ruby
+Restforce.configure do |config|
+  config.cache = Rails.cache
+  config.use_cache = false
+end
+```
+
+```ruby
+client.with_caching do
+  client.query('select Id from Account')
+end
+```
+
+Caching is done based on your authentication credentials, so cached responses will not be shared between different Salesforce logins.
 
 * * *
 

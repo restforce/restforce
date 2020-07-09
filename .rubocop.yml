@@ -4,46 +4,45 @@ inherit_from: .rubocop_todo.yml
 
 AllCops:
   DisplayCopNames: true
-  Include:
-    - Rakefile
   Exclude:
     - .*/**/*
     - vendor/**/*
-  TargetRubyVersion: 2.3
+  NewCops: enable
+  TargetRubyVersion: 2.5
 
-# Limit lines to 80 characters.
-LineLength:
+# Limit lines to 90 characters.
+Layout/LineLength:
   Max: 90
 
-ClassLength:
+Metrics/ClassLength:
   Enabled: false
 
-ModuleLength:
+Metrics/ModuleLength:
   Enabled: false
 
 # Avoid methods longer than 30 lines of code
-MethodLength:
+Metrics/MethodLength:
   CountComments: false  # count full line comments?
   Max: 87
 
 # Avoid single-line methods.
-SingleLineMethods:
+Style/SingleLineMethods:
   AllowIfMethodIsEmpty: true
 
-StringLiterals:
+Style/StringLiterals:
   Enabled: false
 
-GlobalVars:
+Style/GlobalVars:
   Enabled: false # We use them Redis + StatsD (though maybe we shouldn't?)
 
 # Wants underscores in all large numbers. Pain in the ass for things like
 # unix timestamps.
-NumericLiterals:
+Style/NumericLiterals:
   Enabled: false
 
 # Wants you to use the same argument names for every reduce. This seems kinda
 # naff compared to naming them semantically
-SingleLineBlockParams:
+Style/SingleLineBlockParams:
   Enabled: false
 
 Style/SignalException:

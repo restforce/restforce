@@ -34,6 +34,7 @@ module Restforce
 
     def log(message)
       return unless Restforce.log?
+
       configuration.logger.send(configuration.log_level, message)
     end
   end
@@ -107,6 +108,9 @@ module Restforce
     # The OAuth client secret
     option :client_secret, default: lambda { ENV['SALESFORCE_CLIENT_SECRET'] }
 
+    # The private key for JWT authentication
+    option :jwt_key
+
     # Set this to true if you're authenticating with a Sandbox instance.
     # Defaults to false.
     option :host, default: lambda { ENV['SALESFORCE_HOST'] || 'login.salesforce.com' }
@@ -151,6 +155,9 @@ module Restforce
 
     # Set a log level for logging when Restforce.log is set to true, defaulting to :debug
     option :log_level, default: :debug
+
+    # Set use_cache to false to opt in to caching with client.with_caching
+    option :use_cache, default: true
 
     def options
       self.class.options

@@ -3,6 +3,7 @@
 require 'faraday'
 require 'faraday_middleware'
 require 'json'
+require 'jwt'
 
 require 'restforce/version'
 require 'restforce/config'
@@ -14,7 +15,8 @@ module Restforce
   autoload :Middleware,     'restforce/middleware'
   autoload :Attachment,     'restforce/attachment'
   autoload :Document,       'restforce/document'
-  autoload :UploadIO,       'restforce/upload_io'
+  autoload :FilePart,       'restforce/file_part'
+  autoload :UploadIO,       'restforce/file_part' # Deprecated
   autoload :SObject,        'restforce/sobject'
   autoload :Client,         'restforce/client'
   autoload :Mash,           'restforce/mash'
@@ -29,6 +31,7 @@ module Restforce
     autoload :Verbs,          'restforce/concerns/verbs'
     autoload :Base,           'restforce/concerns/base'
     autoload :API,            'restforce/concerns/api'
+    autoload :BatchAPI,       'restforce/concerns/batch_api'
   end
 
   module Data
@@ -44,6 +47,25 @@ module Restforce
   AuthenticationError = Class.new(Error)
   UnauthorizedError   = Class.new(Faraday::Error::ClientError)
   APIVersionError     = Class.new(Error)
+  BatchAPIError       = Class.new(Error)
+
+  # Inherit from Faraday::ResourceNotFound for backwards-compatibility
+  # Consumers of this library that rescue and handle Faraday::ResourceNotFound
+  # can continue to do so.
+  NotFoundError       = Class.new(Faraday::ResourceNotFound)
+
+  # Inherit from Faraday::ClientError for backwards-compatibility
+  # Consumers of this library that rescue and handle Faraday::ClientError
+  # can continue to do so.
+  ResponseError       = Class.new(Faraday::ClientError)
+  MatchesMultipleError= Class.new(ResponseError)
+  EntityTooLargeError = Class.new(ResponseError)
+
+  module ErrorCode
+    def self.const_missing(constant_name)
+      const_set constant_name, Class.new(ResponseError)
+    end
+  end
 
   class << self
     # Alias for Restforce::Data::Client.new
@@ -74,7 +96,7 @@ module Restforce
       self
     end
   end
-  Object.send :include, Restforce::CoreExtensions unless Object.respond_to? :tap
+  Object.include Restforce::CoreExtensions unless Object.respond_to? :tap
 end
 
 if ENV['PROXY_URI']

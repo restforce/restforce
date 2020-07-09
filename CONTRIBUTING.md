@@ -34,4 +34,4 @@ Some things that will increase the chance that your pull request is accepted:
 * Write tests.
 * Write a [good commit message](http://tbaggery.com/2008/04/19/a-note-about-git-commit-messages.html).
 
-*Adapted from [factory_girl_rails's CONTRIBUTING.md](https://github.com/thoughtbot/factory_girl_rails/blob/master/CONTRIBUTING.md).*
+*Adapted from [factory_bot_rails's CONTRIBUTING.md](https://github.com/thoughtbot/factory_bot_rails/blob/master/CONTRIBUTING.md).*
