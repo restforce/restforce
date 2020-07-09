@@ -11,9 +11,9 @@ module Restforce
           response_values
         )
       when 401
-        raise Restforce::UnauthorizedError, message
+        raise Restforce::UnauthorizedError.new(message, response_values)
       when 404
-        raise Restforce::NotFoundError, message
+        raise Restforce::NotFoundError.new(message, response_values)
       when 413
         raise Restforce::EntityTooLargeError.new(
           "413: Request Entity Too Large",
