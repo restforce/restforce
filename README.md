@@ -19,7 +19,7 @@ Features include:
 * Support for dependent picklists.
 * Support for decoding [Force.com Canvas](http://www.salesforce.com/us/developer/docs/platform_connectpre/canvas_framework.pdf) signed requests. (NEW!)
 
-[Official Website](http://restforce.org/) | [Documentation](http://rubydoc.info/gems/restforce/frames) | [Changelog](https://github.com/restforce/restforce/tree/master/CHANGELOG.md)
+[Official Website](https://restforce.github.io/) | [Documentation](http://rubydoc.info/gems/restforce/frames) | [Changelog](https://github.com/restforce/restforce/tree/master/CHANGELOG.md)
 
 ## Installation
 
