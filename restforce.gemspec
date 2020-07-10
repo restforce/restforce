@@ -3,11 +3,11 @@
 require File.expand_path('lib/restforce/version', __dir__)
 
 Gem::Specification.new do |gem|
-  gem.authors       = ["Eric J. Holmes", "Tim Rogers"]
-  gem.email         = ["eric@ejholmes.net", "tim@gocardless.com"]
-  gem.description   = 'A lightweight ruby client for the Salesforce REST API.'
-  gem.summary       = 'A lightweight ruby client for the Salesforce REST API.'
-  gem.homepage      = "http://restforce.org/"
+  gem.authors       = ["Tim Rogers", "Eric J. Holmes"]
+  gem.email         = ["me@timrogers.co.uk", "eric@ejholmes.net"]
+  gem.description   = 'A lightweight Ruby client for the Salesforce REST API'
+  gem.summary       = 'A lightweight Ruby client for the Salesforce REST API'
+  gem.homepage      = "https://restforce.github.io/"
   gem.license       = "MIT"
 
   gem.files         = `git ls-files`.split($OUTPUT_RECORD_SEPARATOR)
