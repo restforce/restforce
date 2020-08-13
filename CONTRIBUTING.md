@@ -35,3 +35,23 @@ Some things that will increase the chance that your pull request is accepted:
 * Write a [good commit message](http://tbaggery.com/2008/04/19/a-note-about-git-commit-messages.html).
 
 *Adapted from [factory_bot_rails's CONTRIBUTING.md](https://github.com/thoughtbot/factory_bot_rails/blob/master/CONTRIBUTING.md).*
+
+## Docker
+
+If you'd rather use a docker container to run the tests, you can use the following instructions.
+
+To set up the container image:
+
+`docker-compose build --pull`
+
+To run specs:
+
+`docker-compose run --rm restforce rspec`
+
+To run rubocop:
+
+`docker-compose run --rm restforce rubocop`
+
+To reset the bundler cache:
+
+`docker-compose down -v`
