@@ -15,6 +15,7 @@ module Restforce
     # at least a semi-graceful manner.
     class AllOrNoneOperationRolledBack < ResponseError; end
     class AlreadyInProcess < ResponseError; end
+    class ApiCurrentlyDisabled < ResponseError; end
     class AssigneeTypeRequired < ResponseError; end
     class BadCustomEntityParentDomain < ResponseError; end
     class BccNotAllowedIfBccComplianceEnabled < ResponseError; end
@@ -195,6 +196,7 @@ module Restforce
     ERROR_EXCEPTION_CLASSES = {
       "ALL_OR_NONE_OPERATION_ROLLED_BACK" => AllOrNoneOperationRolledBack,
       "ALREADY_IN_PROCESS" => AlreadyInProcess,
+      "API_CURRENTLY_DISABLED" => ApiCurrentlyDisabled,
       "ASSIGNEE_TYPE_REQUIRED" => AssigneeTypeRequired,
       "BAD_CUSTOM_ENTITY_PARENT_DOMAIN" => BadCustomEntityParentDomain,
       "BCC_NOT_ALLOWED_IF_BCC_COMPLIANCE_ENABLED" =>
