@@ -1,3 +1,11 @@
+## 5.0.1 (Aug 13, 2020)
+
+* Handle the undocumented `API_CURRENTLY_DISABLED` error returned by Salesforce (@ruipserra, @timrogers)
+* Handle the undocumented `MALFORMED_QUERY` error returned by Salesforce (@scottserok, @timrogers)
+* Handle the undocumented `INVALID_QUERY_FILTER_OPERATOR` error returned by Salesforce (@Dantemss, @timrogers)
+* Add documentation and scripts for running the
+library's tests using Docker (@ryansch)
+
 ## 5.0.0 (Jul 10, 2020)
 
 For instructions on upgrading from Restforce 4.x to 5.x, see our ["Upgrading from Restforce 4.x to 5.x"](https://github.com/restforce/restforce/blob/master/UPGRADING.md) guide.
