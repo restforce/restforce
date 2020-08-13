@@ -15,6 +15,7 @@ module Restforce
     # at least a semi-graceful manner.
     class AllOrNoneOperationRolledBack < ResponseError; end
     class AlreadyInProcess < ResponseError; end
+    class ApiCurrentlyDisabled < ResponseError; end
     class AssigneeTypeRequired < ResponseError; end
     class BadCustomEntityParentDomain < ResponseError; end
     class BccNotAllowedIfBccComplianceEnabled < ResponseError; end
@@ -111,6 +112,7 @@ module Restforce
     class InvalidOperation < ResponseError; end
     class InvalidOperator < ResponseError; end
     class InvalidOrNullForRestrictedPicklist < ResponseError; end
+    class InvalidQueryFilterOperator < ResponseError; end
     class InvalidPartnerNetworkStatus < ResponseError; end
     class InvalidPersonAccountOperation < ResponseError; end
     class InvalidReadOnlyUserDml < ResponseError; end
@@ -129,6 +131,7 @@ module Restforce
     class LoginChallengePending < ResponseError; end
     class LoginMustUseSecurityToken < ResponseError; end
     class MalformedId < ResponseError; end
+    class MalformedQuery < ResponseError; end
     class ManagerNotDefined < ResponseError; end
     class MassmailRetryLimitExceeded < ResponseError; end
     class MassMailLimitExceeded < ResponseError; end
@@ -195,6 +198,7 @@ module Restforce
     ERROR_EXCEPTION_CLASSES = {
       "ALL_OR_NONE_OPERATION_ROLLED_BACK" => AllOrNoneOperationRolledBack,
       "ALREADY_IN_PROCESS" => AlreadyInProcess,
+      "API_CURRENTLY_DISABLED" => ApiCurrentlyDisabled,
       "ASSIGNEE_TYPE_REQUIRED" => AssigneeTypeRequired,
       "BAD_CUSTOM_ENTITY_PARENT_DOMAIN" => BadCustomEntityParentDomain,
       "BCC_NOT_ALLOWED_IF_BCC_COMPLIANCE_ENABLED" =>
@@ -300,6 +304,7 @@ module Restforce
       "INVALID_OPERATOR" => InvalidOperator,
       "INVALID_OR_NULL_FOR_RESTRICTED_PICKLIST" =>
    InvalidOrNullForRestrictedPicklist,
+      "INVALID_QUERY_FILTER_OPERATOR" => InvalidQueryFilterOperator,
       "INVALID_PARTNER_NETWORK_STATUS" => InvalidPartnerNetworkStatus,
       "INVALID_PERSON_ACCOUNT_OPERATION" => InvalidPersonAccountOperation,
       "INVALID_READ_ONLY_USER_DML" => InvalidReadOnlyUserDml,
@@ -318,6 +323,7 @@ module Restforce
       "LOGIN_CHALLENGE_PENDING" => LoginChallengePending,
       "LOGIN_MUST_USE_SECURITY_TOKEN" => LoginMustUseSecurityToken,
       "MALFORMED_ID" => MalformedId,
+      "MALFORMED_QUERY" => MalformedQuery,
       "MANAGER_NOT_DEFINED" => ManagerNotDefined,
       "MASSMAIL_RETRY_LIMIT_EXCEEDED" => MassmailRetryLimitExceeded,
       "MASS_MAIL_LIMIT_EXCEEDED" => MassMailLimitExceeded,
