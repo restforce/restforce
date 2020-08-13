@@ -11,9 +11,10 @@ module Restforce
       # appropriate Restforce::Collection, Restforce::SObject and
       # Restforce::Mash objects.
       def build(val, client)
-        if val.is_a?(Array)
+        case val
+        when Array
           val.collect { |a_val| self.build(a_val, client) }
-        elsif val.is_a?(Hash)
+        when Hash
           self.klass(val).new(val, client)
         else
           val

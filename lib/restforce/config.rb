@@ -151,7 +151,7 @@ module Restforce
     option :request_headers
 
     # Set a logger for when Restforce.log is set to true, defaulting to STDOUT
-    option :logger, default: ::Logger.new(STDOUT)
+    option :logger, default: ::Logger.new($stdout)
 
     # Set a log level for logging when Restforce.log is set to true, defaulting to :debug
     option :log_level, default: :debug
