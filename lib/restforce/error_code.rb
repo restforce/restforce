@@ -130,6 +130,7 @@ module Restforce
     class LoginChallengePending < ResponseError; end
     class LoginMustUseSecurityToken < ResponseError; end
     class MalformedId < ResponseError; end
+    class MalformedQuery < ResponseError; end
     class ManagerNotDefined < ResponseError; end
     class MassmailRetryLimitExceeded < ResponseError; end
     class MassMailLimitExceeded < ResponseError; end
@@ -320,6 +321,7 @@ module Restforce
       "LOGIN_CHALLENGE_PENDING" => LoginChallengePending,
       "LOGIN_MUST_USE_SECURITY_TOKEN" => LoginMustUseSecurityToken,
       "MALFORMED_ID" => MalformedId,
+      "MALFORMED_QUERY" => MalformedQuery,
       "MANAGER_NOT_DEFINED" => ManagerNotDefined,
       "MASSMAIL_RETRY_LIMIT_EXCEEDED" => MassmailRetryLimitExceeded,
       "MASS_MAIL_LIMIT_EXCEEDED" => MassMailLimitExceeded,
