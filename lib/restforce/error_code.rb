@@ -170,6 +170,7 @@ module Restforce
     class RequestRunningTooLong < ResponseError; end
     class RequiredFieldMissing < ResponseError; end
     class SelfReferenceFromTrigger < ResponseError; end
+    class ServerUnavailable < ResponseError; end
     class ShareNeededForChildOwner < ResponseError; end
     class SingleEmailLimitExceeded < ResponseError; end
     class StandardPriceNotDefined < ResponseError; end
@@ -362,6 +363,7 @@ module Restforce
       "REQUEST_RUNNING_TOO_LONG" => RequestRunningTooLong,
       "REQUIRED_FIELD_MISSING" => RequiredFieldMissing,
       "SELF_REFERENCE_FROM_TRIGGER" => SelfReferenceFromTrigger,
+      "SERVER_UNAVAILABLE" => ServerUnavailable,
       "SHARE_NEEDED_FOR_CHILD_OWNER" => ShareNeededForChildOwner,
       "SINGLE_EMAIL_LIMIT_EXCEEDED" => SingleEmailLimitExceeded,
       "STANDARD_PRICE_NOT_DEFINED" => StandardPriceNotDefined,
