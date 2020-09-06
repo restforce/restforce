@@ -16,6 +16,8 @@ module Restforce
     autoload :CustomHeaders,  'restforce/middleware/custom_headers'
 
     def initialize(app, client, options)
+      super(app)
+
       @app = app
       @client = client
       @options = options
