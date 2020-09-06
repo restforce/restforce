@@ -167,6 +167,7 @@ module Restforce
     class PortalUserAlreadyExistsForContact < ResponseError; end
     class PrivateContactOnAsset < ResponseError; end
     class RecordInUseByWorkflow < ResponseError; end
+    class RequestLimitExceeded < ResponseError; end
     class RequestRunningTooLong < ResponseError; end
     class RequiredFieldMissing < ResponseError; end
     class SelfReferenceFromTrigger < ResponseError; end
@@ -360,6 +361,7 @@ module Restforce
       "PORTAL_USER_ALREADY_EXISTS_FOR_CONTACT" => PortalUserAlreadyExistsForContact,
       "PRIVATE_CONTACT_ON_ASSET" => PrivateContactOnAsset,
       "RECORD_IN_USE_BY_WORKFLOW" => RecordInUseByWorkflow,
+      "REQUEST_LIMIT_EXCEEDED" => RequestLimitExceeded,
       "REQUEST_RUNNING_TOO_LONG" => RequestRunningTooLong,
       "REQUIRED_FIELD_MISSING" => RequiredFieldMissing,
       "SELF_REFERENCE_FROM_TRIGGER" => SelfReferenceFromTrigger,
