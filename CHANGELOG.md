@@ -1,3 +1,9 @@
+## 5.0.2 (Sep 6, 2020)
+
+* Handle the undocumented `REQUEST_LIMIT_EXCEEDED` error returned by Salesforce (@wkirkby, @timrogers)
+* Handle the undocumented `SERVER_UNAVAILABLE` error returned by Salesforce (@wkirkby, @timrogers)
+* Refactor the library to be compatible with Rubocop 0.90's cops (this shouldn't introduce any noticeable changes see #569 for detailed changes) (@timrogers)
+
 ## 5.0.1 (Aug 13, 2020)
 
 * Handle the undocumented `API_CURRENTLY_DISABLED` error returned by Salesforce (@ruipserra, @timrogers)
