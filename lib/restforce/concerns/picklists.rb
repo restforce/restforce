@@ -35,7 +35,7 @@ module Restforce
           @valid_for = options.delete(:valid_for)
           raise "#{field} is not a dependent picklist" if @valid_for && !dependent?
 
-          replace(picklist_values)
+          super(picklist_values)
         end
 
         private

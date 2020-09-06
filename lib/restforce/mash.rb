@@ -11,9 +11,10 @@ module Restforce
       # appropriate Restforce::Collection, Restforce::SObject and
       # Restforce::Mash objects.
       def build(val, client)
-        if val.is_a?(Array)
+        case val
+        when Array
           val.collect { |a_val| self.build(a_val, client) }
-        elsif val.is_a?(Hash)
+        when Hash
           self.klass(val).new(val, client)
         else
           val
@@ -55,6 +56,9 @@ module Restforce
       self.class.new(self, @client, self.default)
     end
 
+    # The #convert_value method and its signature are part of Hashie::Mash's API, so we
+    # can't unilaterally decide to change `duping` to be a keyword argument
+    # rubocop:disable Style/OptionalBooleanParameter
     def convert_value(val, duping = false)
       case val
       when self.class
@@ -68,5 +72,6 @@ module Restforce
         val
       end
     end
+    # rubocop:enable Style/OptionalBooleanParameter
   end
 end

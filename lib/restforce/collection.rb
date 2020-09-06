@@ -12,12 +12,12 @@ module Restforce
     end
 
     # Yield each value on each page.
-    def each
+    def each(&block)
       @raw_page['records'].each { |record| yield Restforce::Mash.build(record, @client) }
 
       np = next_page
       while np
-        np.current_page.each { |record| yield record }
+        np.current_page.each(&block)
         np = np.next_page
       end
     end
