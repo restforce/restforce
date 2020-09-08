@@ -1,3 +1,7 @@
+## 5.0.3 (Sep 8, 2020)
+
+* Handle the undocumented `EXCEEDED_MAX_SEMIJOIN_SUBSELECTS` error returned by Salesforce (@embertel, @timrogers)
+
 ## 5.0.2 (Sep 6, 2020)
 
 * Handle the undocumented `REQUEST_LIMIT_EXCEEDED` error returned by Salesforce (@wkirkby, @timrogers)
