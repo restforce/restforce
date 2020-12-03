@@ -80,6 +80,7 @@ module Restforce
     class FieldCustomValidationException < ResponseError; end
     class FieldFilterValidationException < ResponseError; end
     class FilteredLookupLimitExceeded < ResponseError; end
+    class Forbidden < ResponseError; end
     class HtmlFileUploadNotAllowed < ResponseError; end
     class ImageTooLarge < ResponseError; end
     class InactiveOwnerOrUser < ResponseError; end
@@ -272,6 +273,7 @@ module Restforce
       "FIELD_CUSTOM_VALIDATION_EXCEPTION" => FieldCustomValidationException,
       "FIELD_FILTER_VALIDATION_EXCEPTION" => FieldFilterValidationException,
       "FILTERED_LOOKUP_LIMIT_EXCEEDED" => FilteredLookupLimitExceeded,
+      "FORBIDDEN" => Forbidden,
       "HTML_FILE_UPLOAD_NOT_ALLOWED" => HtmlFileUploadNotAllowed,
       "IMAGE_TOO_LARGE" => ImageTooLarge,
       "INACTIVE_OWNER_OR_USER" => InactiveOwnerOrUser,
