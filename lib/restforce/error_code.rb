@@ -125,6 +125,7 @@ module Restforce
     class InvalidTypeOnFieldInRecord < ResponseError; end
     class IpRangeLimitExceeded < ResponseError; end
     class JigsawImportLimitExceeded < ResponseError; end
+    class JsonParserError < ResponseError; end
     class LicenseLimitExceeded < ResponseError; end
     class LightPortalUserException < ResponseError; end
     class LimitExceeded < ResponseError; end
@@ -320,6 +321,7 @@ module Restforce
       "INVALID_TYPE_ON_FIELD_IN_RECORD" => InvalidTypeOnFieldInRecord,
       "IP_RANGE_LIMIT_EXCEEDED" => IpRangeLimitExceeded,
       "JIGSAW_IMPORT_LIMIT_EXCEEDED" => JigsawImportLimitExceeded,
+      "JSON_PARSER_ERROR" => JsonParserError,
       "LICENSE_LIMIT_EXCEEDED" => LicenseLimitExceeded,
       "LIGHT_PORTAL_USER_EXCEPTION" => LightPortalUserException,
       "LIMIT_EXCEEDED" => LimitExceeded,
