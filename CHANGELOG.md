@@ -1,3 +1,12 @@
+## 5.0.4 (Jan 18, 2021)
+
+* Handle the `INVALID_QUERY_LOCATOR` error returned by Salesforce
+* Handle the `INVALID_OPERATION_WITH_EXPIRED_PASSWORD` error returned by Salesforce
+* Handle the `FIELD_INTEGRITY_EXCEPTION` error returned by Salesforce
+* Handle the `FORBIDDEN` error returned by Salesforce
+* Handle the `ILLEGAL_QUERY_PARAMETER_VALUE` error returned by Salesforce
+* Handle the `JSON_PARSER_ERROR` error returned by Salesforce
+
 ## 5.0.3 (Sep 8, 2020)
 
 * Handle the undocumented `EXCEEDED_MAX_SEMIJOIN_SUBSELECTS` error returned by Salesforce (@embertel, @timrogers)
