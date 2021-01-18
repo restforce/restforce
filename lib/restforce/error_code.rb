@@ -81,6 +81,7 @@ module Restforce
     class FieldFilterValidationException < ResponseError; end
     class FilteredLookupLimitExceeded < ResponseError; end
     class HtmlFileUploadNotAllowed < ResponseError; end
+    class IllegalQueryParameterValue < ResponseError; end
     class ImageTooLarge < ResponseError; end
     class InactiveOwnerOrUser < ResponseError; end
     class InsertUpdateDeleteNotAllowedDuringMaintenance < ResponseError; end
@@ -274,6 +275,7 @@ module Restforce
       "FIELD_FILTER_VALIDATION_EXCEPTION" => FieldFilterValidationException,
       "FILTERED_LOOKUP_LIMIT_EXCEEDED" => FilteredLookupLimitExceeded,
       "HTML_FILE_UPLOAD_NOT_ALLOWED" => HtmlFileUploadNotAllowed,
+      "ILLEGAL_QUERY_PARAMETER_VALUE" => IllegalQueryParameterValue,
       "IMAGE_TOO_LARGE" => ImageTooLarge,
       "INACTIVE_OWNER_OR_USER" => InactiveOwnerOrUser,
       "INSERT_UPDATE_DELETE_NOT_ALLOWED_DURING_MAINTENANCE" =>
