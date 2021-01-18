@@ -118,6 +118,7 @@ module Restforce
     class InvalidOperator < ResponseError; end
     class InvalidOrNullForRestrictedPicklist < ResponseError; end
     class InvalidQueryFilterOperator < ResponseError; end
+    class InvalidQueryLocator < ResponseError; end
     class InvalidPartnerNetworkStatus < ResponseError; end
     class InvalidPersonAccountOperation < ResponseError; end
     class InvalidReadOnlyUserDml < ResponseError; end
@@ -318,6 +319,7 @@ module Restforce
       "INVALID_OR_NULL_FOR_RESTRICTED_PICKLIST" =>
    InvalidOrNullForRestrictedPicklist,
       "INVALID_QUERY_FILTER_OPERATOR" => InvalidQueryFilterOperator,
+      "INVALID_QUERY_LOCATOR" => InvalidQueryLocator,
       "INVALID_PARTNER_NETWORK_STATUS" => InvalidPartnerNetworkStatus,
       "INVALID_PERSON_ACCOUNT_OPERATION" => InvalidPersonAccountOperation,
       "INVALID_READ_ONLY_USER_DML" => InvalidReadOnlyUserDml,
