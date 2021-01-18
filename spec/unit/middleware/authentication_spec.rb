@@ -8,7 +8,9 @@ describe Restforce::Middleware::Authentication do
       proxy_uri: 'https://not-a-real-site.com',
       authentication_retries: retries,
       adapter: :net_http,
+      # rubocop:disable Naming/VariableNumber
       ssl: { version: :TLSv1_2 } }
+    # rubocop:enable Naming/VariableNumber
   end
 
   describe '.authenticate!' do
@@ -88,7 +90,9 @@ describe Restforce::Middleware::Authentication do
     end
 
     it "should have SSL config set" do
+      # rubocop:disable Naming/VariableNumber
       connection.ssl[:version].should eq(:TLSv1_2)
+      # rubocop:enable Naming/VariableNumber
     end
   end
 
