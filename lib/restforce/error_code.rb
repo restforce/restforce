@@ -79,8 +79,11 @@ module Restforce
     class FailedActivation < ResponseError; end
     class FieldCustomValidationException < ResponseError; end
     class FieldFilterValidationException < ResponseError; end
+    class FieldIntegrityException < ResponseError; end
     class FilteredLookupLimitExceeded < ResponseError; end
+    class Forbidden < ResponseError; end
     class HtmlFileUploadNotAllowed < ResponseError; end
+    class IllegalQueryParameterValue < ResponseError; end
     class ImageTooLarge < ResponseError; end
     class InactiveOwnerOrUser < ResponseError; end
     class InsertUpdateDeleteNotAllowedDuringMaintenance < ResponseError; end
@@ -111,9 +114,11 @@ module Restforce
     class InvalidMasterOrTranslatedSolution < ResponseError; end
     class InvalidMessageIdReference < ResponseError; end
     class InvalidOperation < ResponseError; end
+    class InvalidOperationWithExpiredPassword < ResponseError; end
     class InvalidOperator < ResponseError; end
     class InvalidOrNullForRestrictedPicklist < ResponseError; end
     class InvalidQueryFilterOperator < ResponseError; end
+    class InvalidQueryLocator < ResponseError; end
     class InvalidPartnerNetworkStatus < ResponseError; end
     class InvalidPersonAccountOperation < ResponseError; end
     class InvalidReadOnlyUserDml < ResponseError; end
@@ -125,6 +130,7 @@ module Restforce
     class InvalidTypeOnFieldInRecord < ResponseError; end
     class IpRangeLimitExceeded < ResponseError; end
     class JigsawImportLimitExceeded < ResponseError; end
+    class JsonParserError < ResponseError; end
     class LicenseLimitExceeded < ResponseError; end
     class LightPortalUserException < ResponseError; end
     class LimitExceeded < ResponseError; end
@@ -271,8 +277,11 @@ module Restforce
       "FAILED_ACTIVATION" => FailedActivation,
       "FIELD_CUSTOM_VALIDATION_EXCEPTION" => FieldCustomValidationException,
       "FIELD_FILTER_VALIDATION_EXCEPTION" => FieldFilterValidationException,
+      "FIELD_INTEGRITY_EXCEPTION" => FieldIntegrityException,
       "FILTERED_LOOKUP_LIMIT_EXCEEDED" => FilteredLookupLimitExceeded,
+      "FORBIDDEN" => Forbidden,
       "HTML_FILE_UPLOAD_NOT_ALLOWED" => HtmlFileUploadNotAllowed,
+      "ILLEGAL_QUERY_PARAMETER_VALUE" => IllegalQueryParameterValue,
       "IMAGE_TOO_LARGE" => ImageTooLarge,
       "INACTIVE_OWNER_OR_USER" => InactiveOwnerOrUser,
       "INSERT_UPDATE_DELETE_NOT_ALLOWED_DURING_MAINTENANCE" =>
@@ -305,10 +314,12 @@ module Restforce
       "INVALID_MASTER_OR_TRANSLATED_SOLUTION" => InvalidMasterOrTranslatedSolution,
       "INVALID_MESSAGE_ID_REFERENCE" => InvalidMessageIdReference,
       "INVALID_OPERATION" => InvalidOperation,
+      "INVALID_OPERATION_WITH_EXPIRED_PASSWORD" => InvalidOperationWithExpiredPassword,
       "INVALID_OPERATOR" => InvalidOperator,
       "INVALID_OR_NULL_FOR_RESTRICTED_PICKLIST" =>
    InvalidOrNullForRestrictedPicklist,
       "INVALID_QUERY_FILTER_OPERATOR" => InvalidQueryFilterOperator,
+      "INVALID_QUERY_LOCATOR" => InvalidQueryLocator,
       "INVALID_PARTNER_NETWORK_STATUS" => InvalidPartnerNetworkStatus,
       "INVALID_PERSON_ACCOUNT_OPERATION" => InvalidPersonAccountOperation,
       "INVALID_READ_ONLY_USER_DML" => InvalidReadOnlyUserDml,
@@ -320,6 +331,7 @@ module Restforce
       "INVALID_TYPE_ON_FIELD_IN_RECORD" => InvalidTypeOnFieldInRecord,
       "IP_RANGE_LIMIT_EXCEEDED" => IpRangeLimitExceeded,
       "JIGSAW_IMPORT_LIMIT_EXCEEDED" => JigsawImportLimitExceeded,
+      "JSON_PARSER_ERROR" => JsonParserError,
       "LICENSE_LIMIT_EXCEEDED" => LicenseLimitExceeded,
       "LIGHT_PORTAL_USER_EXCEPTION" => LightPortalUserException,
       "LIMIT_EXCEEDED" => LimitExceeded,
