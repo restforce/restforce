@@ -114,6 +114,7 @@ module Restforce
     class InvalidMasterOrTranslatedSolution < ResponseError; end
     class InvalidMessageIdReference < ResponseError; end
     class InvalidOperation < ResponseError; end
+    class InvalidOperationWithExpiredPassword < ResponseError; end
     class InvalidOperator < ResponseError; end
     class InvalidOrNullForRestrictedPicklist < ResponseError; end
     class InvalidQueryFilterOperator < ResponseError; end
@@ -312,6 +313,7 @@ module Restforce
       "INVALID_MASTER_OR_TRANSLATED_SOLUTION" => InvalidMasterOrTranslatedSolution,
       "INVALID_MESSAGE_ID_REFERENCE" => InvalidMessageIdReference,
       "INVALID_OPERATION" => InvalidOperation,
+      "INVALID_OPERATION_WITH_EXPIRED_PASSWORD" => InvalidOperationWithExpiredPassword,
       "INVALID_OPERATOR" => InvalidOperator,
       "INVALID_OR_NULL_FOR_RESTRICTED_PICKLIST" =>
    InvalidOrNullForRestrictedPicklist,
