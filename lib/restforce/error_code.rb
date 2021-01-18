@@ -79,6 +79,7 @@ module Restforce
     class FailedActivation < ResponseError; end
     class FieldCustomValidationException < ResponseError; end
     class FieldFilterValidationException < ResponseError; end
+    class FieldIntegrityException < ResponseError; end
     class FilteredLookupLimitExceeded < ResponseError; end
     class Forbidden < ResponseError; end
     class HtmlFileUploadNotAllowed < ResponseError; end
@@ -274,6 +275,7 @@ module Restforce
       "FAILED_ACTIVATION" => FailedActivation,
       "FIELD_CUSTOM_VALIDATION_EXCEPTION" => FieldCustomValidationException,
       "FIELD_FILTER_VALIDATION_EXCEPTION" => FieldFilterValidationException,
+      "FIELD_INTEGRITY_EXCEPTION" => FieldIntegrityException,
       "FILTERED_LOOKUP_LIMIT_EXCEEDED" => FilteredLookupLimitExceeded,
       "FORBIDDEN" => Forbidden,
       "HTML_FILE_UPLOAD_NOT_ALLOWED" => HtmlFileUploadNotAllowed,
