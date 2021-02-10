@@ -1,6 +1,10 @@
 # frozen_string_literal: true
 
-require 'faraday/upload_io'
+if Faraday::VERSION =~ /^0\./
+  require 'faraday/upload_io'
+else
+  require 'faraday/file_part'
+end
 
 module Restforce
   UploadIO = Faraday::UploadIO
