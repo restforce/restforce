@@ -1,3 +1,7 @@
+## 4.3.0 (Feb 10, 2021)
+
+* Add compatability with Faraday versions up to but not including `v1.1.0` (@hongtron)
+
 ## 4.2.2 (Jan 23, 2020)
 
 * Fix `NoMethodError: undefined method '[]' for nil:NilClass` error when generating objects to return (@apurkiss)
