@@ -43,6 +43,8 @@ module Restforce
 
     class CannotEnableIpRestrictRequests < ResponseError; end
 
+    class CannotExecuteFlowTrigger < ResponseError; end
+
     class CannotInsertUpdateActivateEntity < ResponseError; end
 
     class CannotModifyManagedObject < ResponseError; end
@@ -411,6 +413,7 @@ module Restforce
       "CANNOT_DELETE_MANAGED_OBJECT" => CannotDeleteManagedObject,
       "CANNOT_DISABLE_LAST_ADMIN" => CannotDisableLastAdmin,
       "CANNOT_ENABLE_IP_RESTRICT_REQUESTS" => CannotEnableIpRestrictRequests,
+      "CANNOT_EXECUTE_FLOW_TRIGGER" => CannotExecuteFlowTrigger,
       "CANNOT_INSERT_UPDATE_ACTIVATE_ENTITY" => CannotInsertUpdateActivateEntity,
       "CANNOT_MODIFY_MANAGED_OBJECT" => CannotModifyManagedObject,
       "CANNOT_RENAME_APEX_REFERENCED_FIELD" => CannotRenameApexReferencedField,
