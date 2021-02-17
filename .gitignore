@@ -19,3 +19,4 @@ tmp
 .rspec
 .ruby-version
 *.swp
+.env

@@ -1,56 +1,77 @@
-version: 2
+# Ruby CircleCI 2.0 configuration file
+#
+# Check https://circleci.com/docs/2.0/language-ruby/ for more details
+#
+version: 2.1
 
-references:
-  steps: &steps
-    - checkout
-
-    - run:
-        name: Update Bundler
-        command: gem install bundler
-
-    - run:
-        name: Install dependencies from .gemspec
-        command: bundle install --jobs=4 --retry=3 --path vendor/bundle
-
-    - run:
-        name: Run RSpec tests
-        command: |
-          mkdir /tmp/test-results
-          
-          bundle exec rspec --format progress \
-                          --format RspecJunitFormatter \
-                          --out /tmp/test-results/rspec.xml \
-                          --format progress \
-                          spec/**/*_spec.rb
-
-    - run:
-        name: Check code style with Rubocop
-        command: bundle exec rubocop
-
-    - store_test_results:
-        path: /tmp/test-results
-    - store_artifacts:
-        path: /tmp/test-results
-        destination: test-results
+orbs:
+  ruby: circleci/ruby@1
 
 jobs:
-  build-ruby271:
+  test:
+    parameters:
+      ruby-version:
+        type: string
     docker:
-       - image: circleci/ruby:2.7.1
-    steps: *steps
-  build-ruby266:
+      - image: "cimg/base:stable"
+    working_directory: ~/repo
+    steps:
+      - checkout
+      - ruby/install:
+          version: << parameters.ruby-version >>
+      - ruby/install-deps:
+          key: gems-v1-<< parameters.ruby-version >>
+      - ruby/rubocop-check
+      - ruby/rspec-test
+  publish:
     docker:
-       - image: circleci/ruby:2.6.6
-    steps: *steps
-  build-ruby258:
-    docker:
-       - image: circleci/ruby:2.5.8
-    steps: *steps
+      - image: ruby:3.0
+    steps:
+      - checkout
+      - run:
+          name: Generate credentials for authenticating with GitHub Packages
+          command: |
+            mkdir -p ~/.gem
+            touch ~/.gem/credentials
+            chmod 600 ~/.gem/credentials
+            echo ":github: Bearer ${GITHUB_PACKAGES_TOKEN}" >> ~/.gem/credentials
+      - run:
+          name: Build gem
+          command: |
+            bundle install
+            gem build *.gemspec
+      - run:
+          name: Publish gem to GitHub Packages
+          command: gem push --key github --host https://rubygems.pkg.github.com/healthiqeng ./*.gem
 
 workflows:
   version: 2
-  tests:
+  test:
     jobs:
-      - build-ruby271
-      - build-ruby266
-      - build-ruby258
+      - test:
+          matrix:
+            parameters:
+              ruby-version: ["2.5", "2.6", "2.7", "3.0"]
+          filters:
+            tags:
+              ignore: /v.*/
+  test-and-publish:
+    jobs:
+      - test:
+          matrix:
+            parameters:
+              ruby-version: ["2.5", "2.6", "2.7", "3.0"]
+          filters:
+            branches:
+              ignore: /.*/
+            tags:
+              only: /v.*/
+      - publish:
+          context: github-packages-publishing
+          requires:
+            - test
+          filters:
+            branches:
+              ignore: /.*/
+            tags:
+              only: /v.*/

@@ -159,6 +159,12 @@ module Restforce
     # Set use_cache to false to opt in to caching with client.with_caching
     option :use_cache, default: true
 
+    # Custom Health IQ configuration
+    option :aws_account_id, default: lambda { ENV['AWS_ACCOUNT_ID'] }
+    option :aws_access_key_id, default: lambda { ENV['AWS_ACCESS_KEY_ID'] }
+    option :aws_secret_access_key, default: lambda { ENV['AWS_SECRET_ACCESS_KEY'] }
+    option :aws_region, default: lambda { ENV['AWS_REGION'] }
+
     def options
       self.class.options
     end

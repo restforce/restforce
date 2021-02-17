@@ -4,6 +4,8 @@ require 'erb'
 require 'uri'
 require 'restforce/concerns/verbs'
 
+require 'hiq/mq'
+
 module Restforce
   module Concerns
     module API
@@ -284,6 +286,22 @@ module Restforce
       # Returns the String Id of the newly created sobject.
       # Raises exceptions if an error is returned from Salesforce.
       def create!(sobject, attrs)
+        supported_sobjects = ['Task']
+        if supported_sobjects.include? sobject
+          fields = attrs.to_a.map { |attr| { name: attr[0], value: attr[1] } }
+          payload = { type: sobject, fields: fields }.to_json
+          client = Hiq::Mq::Client.new(
+            aws_account_id: options[:aws_account_id],
+            aws_access_key_id: options[:aws_access_key_id],
+            aws_secret_access_key: options[:aws_secret_access_key],
+            aws_region: options[:aws_region]
+          )
+          client.publish(
+            event: 'salesforce-create',
+            priority: 1000,
+            message: payload
+          )
+        end
         api_post("sobjects/#{sobject}", attrs).body['id']
       end
       alias insert! create!
