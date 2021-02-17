@@ -1,3 +1,7 @@
+## 5.0.5 (Feb 17, 2021)
+
+* Handle the `CANNOT_EXECUTE_FLOW_TRIGGER` error returned by Salesforce (@almusavi, @timrogers)
+
 ## 5.0.4 (Jan 18, 2021)
 
 * Handle the `INVALID_QUERY_LOCATOR` error returned by Salesforce
