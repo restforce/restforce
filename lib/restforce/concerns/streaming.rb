@@ -26,7 +26,13 @@ module Restforce
         one_or_more_channels.each do |channel|
           replay_handlers[channel] = options[:replay]
         end
-        faye.subscribe(one_or_more_channels, &block)
+        if options[:with_channel]
+          subs = faye.subscribe(one_or_more_channels)
+          subs.each { |sub| sub.with_channel(&block) }
+        else
+          subs = faye.subscribe(one_or_more_channels, &block)
+        end
+        subs
       end
 
       # Public: Faye client to use for subscribing to PushTopics
