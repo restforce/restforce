@@ -572,6 +572,32 @@ end
 Boom, you're now receiving push notifications when Accounts are
 created/updated.
 
+#### Receiving events from more than one channel
+
+If you want to listen to events from more than one channel, you can pass an array of channels to the client.subscription call:
+
+```
+EM.run do
+  # Subscribe to multiple PushTopics.
+  client.subscription ['/topic/AllAccounts', '/topic/AllUsers'] do |message|
+    puts message.inspect
+  end
+end
+```
+
+The only downside to this approach is that you will not necessarily know which channel the message came from. However, if you add the `with_channel:` option to the subscription call, the callback will provide the channel and message:
+
+```
+EM.run do
+  # Subscribe to multiple PushTopics.
+  client.subscription(['/topic/AllAccounts', '/topic/AllUsers'], with_channel: true) do |channel, message|
+    puts "Message came in on channel #{channel}"
+    puts message.inspect
+  end
+end
+```
+
+
 #### Replaying Events
 
 Since API version 37.0, Salesforce stores events for 24 hours and they can be

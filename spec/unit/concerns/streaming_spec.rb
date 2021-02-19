@@ -8,7 +8,9 @@ describe Restforce::Concerns::Streaming, event_machine: true do
       ['/topic/topic1', '/event/MyCustomEvent__e', '/data/ChangeEvents']
     end
     let(:subscribe_block) { lambda { 'subscribe' } }
-    let(:faye_double)     { double('Faye') }
+    let(:subscribe_block_with_channels) { lambda { 'subscribe_with_channels' } }
+    let(:faye_double) { double('Faye') }
+    let(:sub_double) { double('Subscription') }
 
     it 'subscribes to the topics with faye' do
       faye_double.
@@ -17,6 +19,19 @@ describe Restforce::Concerns::Streaming, event_machine: true do
       client.stub faye: faye_double
 
       client.subscription(channels, &subscribe_block)
+    end
+
+    it 'subscribes to the topics with faye with a with_channel option' do
+      sub_double.
+        should_receive(:with_channel).
+        with(&subscribe_block_with_channels)
+      faye_double.
+        should_receive(:subscribe).
+        with(channels).
+        and_return([sub_double])
+      client.stub faye: faye_double
+
+      client.subscription(channels, with_channel: true, &subscribe_block_with_channels)
     end
 
     context "replay_handlers" do
