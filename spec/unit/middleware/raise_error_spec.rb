@@ -17,6 +17,10 @@ describe Restforce::Middleware::RaiseError do
         expect { on_complete }.to raise_error Faraday::Error::ResourceNotFound,
                                               'INVALID_FIELD: error_message'
       end
+
+      it 'raises an error that inherits from Faraday::ResourceNotFound' do
+        expect { on_complete }.to raise_error Faraday::ResourceNotFound
+      end
     end
 
     context 'when the status code is 300' do
@@ -26,6 +30,10 @@ describe Restforce::Middleware::RaiseError do
         expect { on_complete }.to raise_error Faraday::Error::ClientError,
                                               /300: The external ID provided/
       end
+
+      it 'raises an error that inherits from Faraday::ClientError' do
+        expect { on_complete }.to raise_error Faraday::ClientError
+      end
     end
 
     context 'when the status code is 400' do
@@ -34,6 +42,10 @@ describe Restforce::Middleware::RaiseError do
       it 'raises an error' do
         expect { on_complete }.to raise_error Faraday::Error::ClientError,
                                               'INVALID_FIELD: error_message'
+      end
+
+      it 'raises an error that inherits from Faraday::ClientError' do
+        expect { on_complete }.to raise_error Faraday::ClientError
       end
     end
 
@@ -53,15 +65,33 @@ describe Restforce::Middleware::RaiseError do
         expect { on_complete }.to raise_error Faraday::Error::ClientError,
                                               '413: Request Entity Too Large'
       end
+
+      it 'raises an error that inherits from Faraday::ClientError' do
+        expect { on_complete }.to raise_error Faraday::ClientError
+      end
     end
 
     context 'when status is 400+ and body is a string' do
       let(:body)   { 'An error occured' }
-      let(:status) { 404 }
+      let(:status) { 400 }
 
-      it 'raises an error with a non-existing error code' do
-        expect { on_complete }.to raise_error Faraday::Error::ClientError,
+      it 'raises a generic Restforce::ResponseError' do
+        expect { on_complete }.to raise_error Restforce::ResponseError,
                                               "(error code missing): #{body}"
+      end
+
+      it 'raises an error that inherits from Faraday::ClientError' do
+        expect { on_complete }.to raise_error Faraday::ClientError,
+                                              "(error code missing): #{body}"
+      end
+    end
+
+    context 'when error code is not already defined' do
+      let(:body) { { 'errorCode' => 'SOMETHING_UNDEFINED' } }
+      let(:status) { 400 }
+
+      it 'raises a generic Restforce::ResponseError' do
+        expect { on_complete }.to raise_error Restforce::ResponseError
       end
     end
   end

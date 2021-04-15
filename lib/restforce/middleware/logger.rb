@@ -11,7 +11,7 @@ module Restforce
       @options = options
       @logger = logger || begin
         require 'logger'
-        ::Logger.new(STDOUT)
+        ::Logger.new($stdout)
       end
     end
 
@@ -36,7 +36,8 @@ module Restforce
     end
 
     def dump(hash)
-      "\n" + hash.map { |k, v| "  #{k}: #{v.inspect}" }.join("\n")
+      dumped_pairs = hash.map { |k, v| "  #{k}: #{v.inspect}" }.join("\n")
+      "\n#{dumped_pairs}"
     end
   end
 end

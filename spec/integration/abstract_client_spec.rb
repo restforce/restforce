@@ -86,12 +86,12 @@ shared_examples_for Restforce::AbstractClient do
     end
 
     context 'with multipart' do
-      # rubocop:disable Metrics/LineLength
+      # rubocop:disable Layout/LineLength
       requests 'sobjects/Account',
                method: :post,
-               with_body: %r(----boundary_string\r\nContent-Disposition: form-data; name=\"entity_content\"\r\nContent-Type: application/json\r\n\r\n{\"Name\":\"Foobar\"}\r\n----boundary_string\r\nContent-Disposition: form-data; name=\"Blob\"; filename=\"blob.jpg\"\r\nContent-Length: 42171\r\nContent-Type: image/jpeg\r\nContent-Transfer-Encoding: binary),
+               with_body: %r(----boundary_string\r\nContent-Disposition: form-data; name="entity_content"\r\nContent-Type: application/json\r\n\r\n{"Name":"Foobar"}\r\n----boundary_string\r\nContent-Disposition: form-data; name="Blob"; filename="blob.jpg"\r\nContent-Length: 42171\r\nContent-Type: image/jpeg\r\nContent-Transfer-Encoding: binary),
                fixture: 'sobject/create_success_response'
-      # rubocop:enable Metrics/LineLength
+      # rubocop:enable Layout/LineLength
 
       subject do
         client.create('Account', Name: 'Foobar',
@@ -102,6 +102,18 @@ shared_examples_for Restforce::AbstractClient do
       end
 
       it { should eq 'some_id' }
+
+      context 'with deprecated UploadIO' do
+        subject do
+          client.create('Account', Name: 'Foobar',
+                        Blob: Restforce::UploadIO.new(
+                          File.expand_path('../fixtures/blob.jpg', __dir__),
+                          'image/jpeg'
+                        ))
+        end
+
+        it { should eq 'some_id' }
+      end
     end
   end
 
@@ -125,7 +137,7 @@ shared_examples_for Restforce::AbstractClient do
 
       it {
         should raise_error(
-          Faraday::Error::ResourceNotFound,
+          Faraday::ResourceNotFound,
           "#{error.first['errorCode']}: #{error.first['message']}"
         )
       }

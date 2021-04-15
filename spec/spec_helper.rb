@@ -17,6 +17,18 @@ RSpec.configure do |config|
   config.order = 'random'
   config.filter_run focus: true
   config.run_all_when_everything_filtered = true
+
+  original_stderr = $stderr
+  original_stdout = $stdout
+  config.before(:all) do
+    # Redirect stderr and stdout
+    $stderr = File.open(File::NULL, "w")
+    $stdout = File.open(File::NULL, "w")
+  end
+  config.after(:all) do
+    $stderr = original_stderr
+    $stdout = original_stdout
+  end
 end
 
 # Requires supporting ruby files with custom matchers and macros, etc,

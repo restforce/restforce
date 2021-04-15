@@ -45,7 +45,7 @@ describe Restforce::SObject do
     destroy: :destroy,
     destroy!: :destroy! }.each do |method, receiver|
     describe ".#{method}" do
-      subject(:send_method) { sobject.send(method) }
+      subject(:send_method) { lambda { sobject.send(method) } }
 
       context 'when an Id was not queried' do
         it 'raises an error' do

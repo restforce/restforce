@@ -274,7 +274,7 @@ describe Restforce::Concerns::API do
       end
 
       it 'rescues exceptions' do
-        [Faraday::Error::ClientError].each do |exception_klass|
+        [Faraday::ClientError].each do |exception_klass|
           client.should_receive(:"#{method}!").
             with(*args).
             and_raise(exception_klass.new(nil))

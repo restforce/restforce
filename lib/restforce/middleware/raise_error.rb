@@ -10,19 +10,23 @@ module Restforce
                                               'more than one record',
                                               response_values)
       when 401
-        raise Restforce::UnauthorizedError, message
+        raise Restforce::UnauthorizedError.new(message, response_values)
       when 404
-        raise Faraday::Error::ResourceNotFound, message
+        raise Restforce::NotFoundError.new(message, response_values)
       when 413
         raise Faraday::Error::ClientError.new('413: Request Entity Too Large',
                                               response_values)
       when 400...600
-        raise Faraday::Error::ClientError.new(message, response_values)
+        klass = exception_class_for_error_code(body['errorCode'])
+        raise klass.new(message, response_values)
       end
     end
 
     def message
-      "#{body['errorCode']}: #{body['message']}"
+      message = "#{body['errorCode']}: #{body['message']}"
+      message << "\nRESPONSE: #{JSON.dump(@env[:body])}"
+    rescue StandardError
+      message # if JSON.dump fails, return message without extra detail
     end
 
     def body
@@ -42,6 +46,14 @@ module Restforce
         headers: @env[:response_headers],
         body: @env[:body]
       }
+    end
+
+    ERROR_CODE_MATCHER = /\A[A-Z_]+\z/.freeze
+
+    def exception_class_for_error_code(error_code)
+      return Restforce::ResponseError unless ERROR_CODE_MATCHER.match?(error_code)
+
+      Restforce::ErrorCode.get_exception_class(error_code)
     end
   end
 end

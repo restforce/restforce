@@ -8,7 +8,9 @@ describe Restforce::Middleware::Authentication do
       proxy_uri: 'https://not-a-real-site.com',
       authentication_retries: retries,
       adapter: :net_http,
+      # rubocop:disable Naming/VariableNumber
       ssl: { version: :TLSv1_2 } }
+    # rubocop:enable Naming/VariableNumber
   end
 
   describe '.authenticate!' do
@@ -61,6 +63,7 @@ describe Restforce::Middleware::Authentication do
                          Faraday::Adapter::NetHttp
         end
         its(:handlers) { should_not include Restforce::Middleware::Logger }
+        its(:adapter) { should eq Faraday::Adapter::NetHttp }
       end
 
       context 'with logging enabled' do
@@ -87,6 +90,28 @@ describe Restforce::Middleware::Authentication do
 
     it 'should have SSL config set' do
       connection.ssl[:version].should eq(:TLSv1_2)
+      # rubocop:enable Naming/VariableNumber
+    end
+  end
+
+  describe '.error_message' do
+    context 'when response.body is present' do
+      let(:response) {
+        Faraday::Response.new(
+          response_body: { 'error' => 'error', 'error_description' => 'description' },
+          status: 401
+        )
+      }
+
+      subject { middleware.error_message(response) }
+      it { should eq "error: description (401)" }
+    end
+
+    context 'when response.body is nil' do
+      let(:response) { Faraday::Response.new(status: 401) }
+
+      subject { middleware.error_message(response) }
+      it { should eq "401" }
     end
   end
 end

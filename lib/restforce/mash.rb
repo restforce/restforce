@@ -55,6 +55,9 @@ module Restforce
       self.class.new(self, @client, default)
     end
 
+    # The #convert_value method and its signature are part of Hashie::Mash's API, so we
+    # can't unilaterally decide to change `duping` to be a keyword argument
+    # rubocop:disable Style/OptionalBooleanParameter
     def convert_value(val, duping = false)
       case val
       when self.class
@@ -68,5 +71,6 @@ module Restforce
         val
       end
     end
+    # rubocop:enable Style/OptionalBooleanParameter
   end
 end

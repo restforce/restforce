@@ -111,6 +111,9 @@ module Restforce
     # Path to private key for JWT authentication
     option :jwt_key
 
+    # The private key for JWT authentication
+    option :jwt_key
+
     # Set this to true if you're authenticating with a Sandbox instance.
     # Defaults to false.
     option :host, default: -> { ENV['SALESFORCE_HOST'] || 'login.salesforce.com' }
@@ -151,10 +154,13 @@ module Restforce
     option :request_headers
 
     # Set a logger for when Restforce.log is set to true, defaulting to STDOUT
-    option :logger, default: ::Logger.new(STDOUT)
+    option :logger, default: ::Logger.new($stdout)
 
     # Set a log level for logging when Restforce.log is set to true, defaulting to :debug
     option :log_level, default: :debug
+
+    # Set use_cache to false to opt in to caching with client.with_caching
+    option :use_cache, default: true
 
     def options
       self.class.options

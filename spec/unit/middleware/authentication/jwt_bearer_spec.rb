@@ -32,6 +32,7 @@ describe Restforce::Middleware::Authentication::JWTBearer do
     let(:jwt_key) do
       File.read('spec/fixtures/test_private.key')
     end
+
     let(:options) do
       { host: 'login.salesforce.com',
         client_id: 'client_id',
