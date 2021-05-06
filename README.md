@@ -459,7 +459,7 @@ info.user_id
 
 ### File Uploads
 
-Using the new [Blob Data](http://www.salesforce.com/us/developer/docs/api_rest/Content/dome_sobject_insert_update_blob.htm) api feature (500mb limit):
+Using the new Blob Data api feature (500mb limit):
 
 ```ruby
 client.create('Document', FolderId: '00lE0000000FJ6H',
@@ -476,8 +476,6 @@ client.create('Document', FolderId: '00lE0000000FJ6H',
                           Name: 'My image',
                           Body: Base64::encode64(File.read('image.jpg'))
 ```
-
-_See also: [Inserting or updating blob data](http://www.salesforce.com/us/developer/docs/api_rest/Content/dome_sobject_insert_update_blob.htm)_
 
 * * *
 
