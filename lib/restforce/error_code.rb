@@ -19,6 +19,8 @@ module Restforce
 
     class ApiCurrentlyDisabled < ResponseError; end
 
+    class ApiDisabledForOrg < ResponseError; end
+
     class AssigneeTypeRequired < ResponseError; end
 
     class BadCustomEntityParentDomain < ResponseError; end
@@ -397,6 +399,7 @@ module Restforce
       "ALL_OR_NONE_OPERATION_ROLLED_BACK" => AllOrNoneOperationRolledBack,
       "ALREADY_IN_PROCESS" => AlreadyInProcess,
       "API_CURRENTLY_DISABLED" => ApiCurrentlyDisabled,
+      "API_DISABLED_FOR_ORG" => ApiDisabledForOrg,
       "ASSIGNEE_TYPE_REQUIRED" => AssigneeTypeRequired,
       "BAD_CUSTOM_ENTITY_PARENT_DOMAIN" => BadCustomEntityParentDomain,
       "BCC_NOT_ALLOWED_IF_BCC_COMPLIANCE_ENABLED" =>
