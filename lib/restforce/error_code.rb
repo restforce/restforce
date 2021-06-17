@@ -305,6 +305,8 @@ module Restforce
 
     class MergeFailed < ResponseError; end
 
+    class MethodNotAllowed < ResponseError; end
+
     class MissingArgument < ResponseError; end
 
     class NonuniqueShippingAddress < ResponseError; end
@@ -551,6 +553,7 @@ module Restforce
       "MAX_TM_RULES_EXCEEDED" => MaxTmRulesExceeded,
       "MAX_TM_RULE_ITEMS_EXCEEDED" => MaxTmRuleItemsExceeded,
       "MERGE_FAILED" => MergeFailed,
+      "METHOD_NOT_ALLOWED" => MethodNotAllowed,
       "MISSING_ARGUMENT" => MissingArgument,
       "NONUNIQUE_SHIPPING_ADDRESS" => NonuniqueShippingAddress,
       "NO_APPLICABLE_PROCESS" => NoApplicableProcess,
