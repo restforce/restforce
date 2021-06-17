@@ -32,7 +32,7 @@ Gem::Specification.new do |gem|
   gem.add_dependency 'hashie', '>= 1.2.0', '< 5.0'
 
   gem.add_development_dependency 'faye' unless RUBY_PLATFORM == 'java'
-  gem.add_development_dependency 'rspec', '~> 2.14.0'
+  gem.add_development_dependency 'rspec', '~> 3.10.0'
   gem.add_development_dependency 'rspec_junit_formatter', '~> 0.4.1'
 
   gem.add_development_dependency 'rubocop', '~> 1.17.0'
