@@ -17,6 +17,8 @@ module Restforce
 
     class AlreadyInProcess < ResponseError; end
 
+    class ApexError < ResponseError; end
+
     class ApiCurrentlyDisabled < ResponseError; end
 
     class ApiDisabledForOrg < ResponseError; end
@@ -400,6 +402,7 @@ module Restforce
     ERROR_EXCEPTION_CLASSES = {
       "ALL_OR_NONE_OPERATION_ROLLED_BACK" => AllOrNoneOperationRolledBack,
       "ALREADY_IN_PROCESS" => AlreadyInProcess,
+      "APEX_ERROR" => ApexError,
       "API_CURRENTLY_DISABLED" => ApiCurrentlyDisabled,
       "API_DISABLED_FOR_ORG" => ApiDisabledForOrg,
       "ASSIGNEE_TYPE_REQUIRED" => AssigneeTypeRequired,
