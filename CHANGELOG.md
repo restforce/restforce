@@ -1,3 +1,9 @@
+## 5.0.6 (Jun 17, 2021)
+
+* Handle the `API_DISABLED_FOR_ORG` error returned by Salesforce (@cmac)
+* Handle the `METHOD_NOT_ALLOWED` error returned by Salesforce (@timrogers)
+* Handle the `APEX_ERROR` error returned by Salesforce (@timrogers)
+
 ## 5.0.5 (Feb 17, 2021)
 
 * Handle the `CANNOT_EXECUTE_FLOW_TRIGGER` error returned by Salesforce (@almusavi, @timrogers)
