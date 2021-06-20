@@ -171,7 +171,9 @@ module Restforce
 
       # Public: Executs a SOQL query and returns the result.
       #
-      # soql - A SOQL expression.
+      # soql    - A SOQL expression.
+      # query_options - An optional hash containing options for this
+      #           query.
       #
       # Examples
       #
@@ -179,11 +181,19 @@ module Restforce
       #   client.query('select Name from Account').map(&:Name)
       #   # => ['Foo Bar Inc.', 'Whizbang Corp']
       #
+      #   client.query('select Name from Account', batch_size: 1).map(&:Name)
+      #   # => ['Foo Bar Inc.']
+      #
       # Returns a Restforce::Collection if Restforce.configuration.mashify is true.
       # Returns an Array of Hash for each record in the result if
       # Restforce.configuration.mashify is false.
-      def query(soql)
-        response = api_get 'query', q: soql
+      def query(soql, query_options = {})
+        batch_size = query_options[:batch_size]
+        response = api_get 'query', q: soql do |req|
+          unless batch_size.nil?
+            req.headers['Sforce-Query-Options'] = "batchSize=#{batch_size}"
+          end
+        end
         mashify? ? response.body : response.body['records']
       end
 
@@ -379,8 +389,10 @@ module Restforce
               api_post "sobjects/#{sobject}/#{field}", attrs
             end
           else
-            api_patch "sobjects/#{sobject}/#{field}/" \
-              "#{ERB::Util.url_encode(external_id)}", attrs
+            api_patch(
+              "sobjects/#{sobject}/#{field}/#{ERB::Util.url_encode(external_id)}",
+              attrs
+            )
           end
 
         response.body.respond_to?(:fetch) ? response.body.fetch('id', true) : true
