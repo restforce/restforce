@@ -206,6 +206,40 @@ describe Restforce::Concerns::API do
     end
   end
 
+  describe '.query_next_page' do
+    let(:url) { '/services/data/v26.0/query/01gD' }
+    subject(:results) { client.query_next_page(url) }
+
+    context 'with mashify middleware' do
+      before do
+        client.stub :mashify? => true
+      end
+
+      it 'returns the body' do
+        expect(client).to receive(:get).
+          with(url).and_return(response)
+        expect(results).to eq response.body
+      end
+    end
+
+    context 'without mashify middleware' do
+      before do
+        client.stub :mashify? => false
+      end
+
+      it 'returns the records attribute of the body' do
+        records = double('records')
+        allow(response.body).to receive(:[]).
+          with('records').
+          and_return(records)
+        expect(client).to receive(:get).
+          with(url).
+          and_return(response)
+        expect(results).to eq records
+      end
+    end
+  end
+
   describe '.query_all' do
     let(:soql)        { 'Select Id from Account' }
     subject(:results) { client.query_all(soql) }

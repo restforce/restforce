@@ -53,9 +53,14 @@ module Restforce
       !@raw_page['nextRecordsUrl'].nil?
     end
 
+    # Returns the url for the next page if it's available, nil otherwise.
+    def next_page_url
+      @raw_page['nextRecordsUrl'] if has_next_page?
+    end
+
     # Returns the next page as a Restforce::Collection if it's available, nil otherwise.
     def next_page
-      @client.get(@raw_page['nextRecordsUrl']).body if has_next_page?
+      @client.get(next_page_url).body if has_next_page?
     end
   end
 end
