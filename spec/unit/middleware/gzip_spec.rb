@@ -58,11 +58,11 @@ describe Restforce::Middleware::Gzip do
         env[:response_headers]['Content-Encoding'] = 'gzip'
       end
 
-      it { should be_true }
+      it { should be true }
     end
 
     context 'when not gzipped' do
-      it { should be_false }
+      it { should be false }
     end
   end
 end

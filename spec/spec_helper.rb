@@ -8,6 +8,8 @@ Bundler.require :default, :test
 require 'faye' unless RUBY_PLATFORM == 'java'
 
 require 'webmock/rspec'
+require 'rspec/collection_matchers'
+require 'rspec/its'
 
 WebMock.disable_net_connect!
 

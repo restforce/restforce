@@ -158,7 +158,7 @@ shared_examples_for Restforce::AbstractClient do
                fixture: 'sobject/delete_error_response'
 
       subject { client.update('Account', Id: '001D000000INjVe', Name: 'Foobar') }
-      it { should be_false }
+      it { should be false }
     end
 
     context 'with success' do
@@ -172,7 +172,7 @@ shared_examples_for Restforce::AbstractClient do
             client.update('Account', key => '001D000000INjVe', :Name => 'Foobar')
           end
 
-          it { should be_true }
+          it { should be true }
         end
       end
     end
@@ -191,7 +191,7 @@ shared_examples_for Restforce::AbstractClient do
                                                    Name: 'Foobar')
         end
 
-        it { should be_true }
+        it { should be true }
       end
 
       context 'with string external Id key' do
@@ -200,7 +200,7 @@ shared_examples_for Restforce::AbstractClient do
                                                    'Name' => 'Foobar')
         end
 
-        it { should be_true }
+        it { should be true }
       end
     end
 
@@ -257,14 +257,14 @@ shared_examples_for Restforce::AbstractClient do
     context 'with success' do
       requests 'sobjects/Account/001D000000INjVe', method: :delete
 
-      it { should be_true }
+      it { should be true }
     end
 
     context 'with a space in the id' do
       subject(:destroy!) { client.destroy!('Account', '001D000000 INjVe') }
       requests 'sobjects/Account/001D000000%20INjVe', method: :delete
 
-      it { should be_true }
+      it { should be true }
     end
   end
 
@@ -277,13 +277,13 @@ shared_examples_for Restforce::AbstractClient do
                method: :delete,
                status: 404
 
-      it { should be_false }
+      it { should be false }
     end
 
     context 'with success' do
       requests 'sobjects/Account/001D000000INjVe', method: :delete
 
-      it { should be_true }
+      it { should be true }
     end
   end
 

@@ -76,7 +76,7 @@ describe Restforce do
     subject { Restforce.log? }
 
     context 'by default' do
-      it { should be_false }
+      it { should be false }
     end
   end
 

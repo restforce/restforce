@@ -13,10 +13,10 @@ describe Restforce::Concerns::Streaming, event_machine: true do
     it 'subscribes to the topics with faye' do
       faye_double.
         should_receive(:subscribe).
-        with(channels, &subscribe_block)
+        with(channels)
       client.stub faye: faye_double
 
-      client.subscription(channels, &subscribe_block)
+      client.subscription(channels)
     end
 
     context "replay_handlers" do
@@ -110,7 +110,7 @@ describe Restforce::Concerns::Streaming, event_machine: true do
     end
   end
 
-  describe Restforce::Concerns::Streaming::ReplayExtension do
+  describe "ReplayExtension" do
     let(:handlers) { {} }
     let(:extension) { Restforce::Concerns::Streaming::ReplayExtension.new(handlers) }
 
