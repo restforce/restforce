@@ -14,8 +14,12 @@ describe Restforce::Middleware::RaiseError do
       let(:status) { 404 }
 
       it 'raises Restforce::NotFoundError' do
-        expect { on_complete }.to raise_error Restforce::NotFoundError,
-                                              'INVALID_FIELD: error_message'
+        expect { on_complete }.to raise_error do |error|
+          expect(error).to be_a Restforce::NotFoundError
+          expect(error.message).to eq("INVALID_FIELD: error_message\nRESPONSE: " \
+                                      "[{\"message\":\"error_message\",\"errorCode" \
+                                      "\":\"INVALID_FIELD\"}]")
+        end
       end
 
       it 'raises an error that inherits from Faraday::ResourceNotFound' do
@@ -40,8 +44,12 @@ describe Restforce::Middleware::RaiseError do
       let(:status) { 400 }
 
       it "raises an error derived from the response's errorCode" do
-        expect { on_complete }.to raise_error Restforce::ErrorCode::InvalidField,
-                                              'INVALID_FIELD: error_message'
+        expect { on_complete }.to raise_error do |error|
+          expect(error).to be_a Restforce::ErrorCode::InvalidField
+          expect(error.message).to eq("INVALID_FIELD: error_message\nRESPONSE: " \
+                                      "[{\"message\":\"error_message\",\"" \
+                                      "errorCode\":\"INVALID_FIELD\"}]")
+        end
       end
 
       it 'raises an error that inherits from Faraday::ClientError' do
@@ -53,8 +61,12 @@ describe Restforce::Middleware::RaiseError do
       let(:status) { 401 }
 
       it 'raises Restforce::UnauthorizedError' do
-        expect { on_complete }.to raise_error Restforce::UnauthorizedError,
-                                              'INVALID_FIELD: error_message'
+        expect { on_complete }.to raise_error do |error|
+          expect(error).to be_a Restforce::UnauthorizedError
+          expect(error.message).to eq("INVALID_FIELD: error_message\nRESPONSE: " \
+                                      "[{\"message\":\"error_message\",\"errorCode\"" \
+                                      ":\"INVALID_FIELD\"}]")
+        end
       end
     end
 
@@ -76,13 +88,19 @@ describe Restforce::Middleware::RaiseError do
       let(:status) { 400 }
 
       it 'raises a generic Restforce::ResponseError' do
-        expect { on_complete }.to raise_error Restforce::ResponseError,
-                                              "(error code missing): #{body}"
+        expect { on_complete }.to raise_error do |error|
+          expect(error).to be_a Restforce::ResponseError
+          expect(error.message).to eq("(error code missing): An error occured\n" \
+                                      "RESPONSE: \"An error occured\"")
+        end
       end
 
       it 'raises an error that inherits from Faraday::ClientError' do
-        expect { on_complete }.to raise_error Faraday::ClientError,
-                                              "(error code missing): #{body}"
+        expect { on_complete }.to raise_error do |error|
+          expect(error).to be_a Faraday::ClientError
+          expect(error.message).to eq("(error code missing): An error occured" \
+                                      "\nRESPONSE: \"An error occured\"")
+        end
       end
     end
 

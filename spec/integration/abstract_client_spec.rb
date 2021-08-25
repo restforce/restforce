@@ -138,7 +138,9 @@ shared_examples_for Restforce::AbstractClient do
       it {
         should raise_error(
           Faraday::ResourceNotFound,
-          "#{error.first['errorCode']}: #{error.first['message']}"
+          "#{error.first['errorCode']}: #{error.first['message']}\nRESPONSE: " \
+          "[{\"message\":\"#{error.first['message']}\",\"errorCode\"" \
+          ":\"#{error.first['errorCode']}\"}]"
         )
       }
     end

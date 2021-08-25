@@ -29,6 +29,10 @@ RSpec.configure do |config|
     $stderr = original_stderr
     $stdout = original_stdout
   end
+
+  config.expect_with :rspec do |expectations|
+    expectations.syntax = %i[should expect]
+  end
 end
 
 # Requires supporting ruby files with custom matchers and macros, etc,
