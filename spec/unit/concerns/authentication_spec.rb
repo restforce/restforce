@@ -80,11 +80,11 @@ describe Restforce::Concerns::Authentication do
           client_secret: 'secret' }
       end
 
-      it { should be_true }
+      it { should be_truthy }
     end
 
     context 'when username and password options are not provided' do
-      it { should_not be_true }
+      it { should_not be_truthy }
     end
   end
 
@@ -103,11 +103,11 @@ describe Restforce::Concerns::Authentication do
           client_secret: 'secret' }
       end
 
-      it { should be_true }
+      it { should be_truthy }
     end
 
     context 'when oauth options are not provided' do
-      it { should_not be_true }
+      it { should_not be true }
     end
   end
 
@@ -128,11 +128,11 @@ describe Restforce::Concerns::Authentication do
           client_id: 'client' }
       end
 
-      it { should be_true }
+      it { should be_truthy }
     end
 
     context 'when jwt options are not provided' do
-      it { should_not be_true }
+      it { should_not be true }
     end
   end
 end
