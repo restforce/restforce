@@ -5,7 +5,7 @@ module ClientIntegrationExampleGroup
     base.class_eval do
       let(:oauth_token) do
         '00Dx0000000BV7z!AR8AQAxo9UfVkh8AlV0Gomt9Czx9LjHnSSpwBMmbRcgKFmxOtvxjTrKW19ye6P' \
-        'E3Ds1eQz3z8jr3W7_VbWmEu4Q8TVGSTHxs'
+          'E3Ds1eQz3z8jr3W7_VbWmEu4Q8TVGSTHxs'
       end
 
       let(:refresh_token)  { 'refresh' }

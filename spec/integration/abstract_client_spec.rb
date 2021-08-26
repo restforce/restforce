@@ -365,8 +365,8 @@ shared_examples_for Restforce::AbstractClient do
       before do
         @request = stub_login_request(
           with_body: "grant_type=password&client_id=client_id" \
-                        "&client_secret=client_secret&username=foo" \
-                        "&password=barsecurity_token"
+                     "&client_secret=client_secret&username=foo" \
+                     "&password=barsecurity_token"
         ).to_return(status: 200, body: fixture(:auth_success_response))
       end
 
@@ -417,8 +417,8 @@ shared_examples_for Restforce::AbstractClient do
 
         @query_request = stub_login_request(
           with_body: "grant_type=password&client_id=client_id" \
-                        "&client_secret=client_secret&username=foo&" \
-                        "password=barsecurity_token"
+                     "&client_secret=client_secret&username=foo&" \
+                     "password=barsecurity_token"
         ).to_return(status: 200, body: fixture(:auth_success_response))
       end
 
@@ -442,7 +442,7 @@ shared_examples_for Restforce::AbstractClient do
 
       @login = stub_login_request(
         with_body: "grant_type=password&client_id=client_id&client_secret=" \
-                      "client_secret&username=foo&password=barsecurity_token"
+                   "client_secret&username=foo&password=barsecurity_token"
       ).to_return(status: 200, body: fixture(:auth_success_response))
     end
 

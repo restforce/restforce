@@ -3,8 +3,8 @@
 module Restforce
   module ErrorCode
     GITHUB_ISSUE_URL = "https://github.com/restforce/restforce/issues/new?template=" \
-      "unhandled-salesforce-error.md&title=Unhandled+Salesforce+error%3A+%3Cinsert+" \
-      "error+code+here%3E"
+                       "unhandled-salesforce-error.md&title=Unhandled+Salesforce+error" \
+                       "%3A+%3Cinsert+error+code+here%3E"
 
     # We define all of the known errors returned by Salesforce based on the
     # documentation at
@@ -609,9 +609,9 @@ module Restforce
     def self.get_exception_class(error_code)
       ERROR_EXCEPTION_CLASSES.fetch(error_code) do |_|
         warn "[restforce] An unrecognised error code, `#{error_code}` has been " \
-        "received from Salesforce. Instead of raising an error-specific exception, " \
-        "we'll raise a generic `ResponseError`. Please report this missing error code" \
-        " on GitHub at <#{GITHUB_ISSUE_URL}>."
+             "received from Salesforce. Instead of raising an error-specific exception" \
+             ", we'll raise a generic `ResponseError`. Please report this missing " \
+             "error code on GitHub at <#{GITHUB_ISSUE_URL}>."
 
         # If we've received an unexpected error where we don't have a specific
         # class defined, we can return a generic ResponseError instead
@@ -621,10 +621,10 @@ module Restforce
 
     def self.const_missing(constant_name)
       warn "[restforce] You're referring to a Restforce error that isn't defined, " \
-      "`#{name}::#{constant_name}` (for example by trying to `rescue` it). This might " \
-      "be our fault - we've recently made some changes to how errors are defined. If " \
-      "you're sure that this is a valid Salesforce error, then please create an " \
-      "issue on GitHub at <#{GITHUB_ISSUE_URL}>."
+           "`#{name}::#{constant_name}` (for example by trying to `rescue` it). This " \
+           "might be our fault - we've recently made some changes to how errors are " \
+           "defined. If you're sure that this is a valid Salesforce error, then " \
+           "please create an issue on GitHub at <#{GITHUB_ISSUE_URL}>."
 
       super(constant_name)
     end
