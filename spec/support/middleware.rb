@@ -19,8 +19,7 @@ module MiddlewareExampleGroup
   end
 
   RSpec.configure do |config|
-    config.include self,
-                   example_group: { file_path: %r{spec/unit/middleware} }
+    config.include self, file_path: %r{spec/unit/middleware}
   end
 end
 

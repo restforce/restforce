@@ -29,6 +29,14 @@ RSpec.configure do |config|
     $stderr = original_stderr
     $stdout = original_stdout
   end
+
+  config.expect_with :rspec do |expectations|
+    expectations.syntax = %i[expect should]
+  end
+
+  config.mock_with :rspec do |mocks|
+    mocks.syntax = %i[expect should]
+  end
 end
 
 # Requires supporting ruby files with custom matchers and macros, etc,
