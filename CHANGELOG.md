@@ -1,3 +1,10 @@
+## 5.1.0 (Aug 26, 2021)
+
+* Add official support for Ruby 3.0 (@timrogers)
+* Drop support for Ruby 2.5, which has reached end-of-life (@timrogers)
+* Handle the `QUERY_TIMEOUT` error returned by Salesforce (@timrogers)
+* Remove unnecessary development dependencies for the gem, which can just be in the project's `Gemfile` (@timrogers)
+
 ## 5.0.6 (Jun 17, 2021)
 
 * Handle the `API_DISABLED_FOR_ORG` error returned by Salesforce (@cmac)
