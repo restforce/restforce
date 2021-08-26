@@ -459,7 +459,7 @@ info.user_id
 
 ### File Uploads
 
-Using the new [Blob Data](http://www.salesforce.com/us/developer/docs/api_rest/Content/dome_sobject_insert_update_blob.htm) api feature (500mb limit):
+Using the new [Blob Data](https://developer.salesforce.com/docs/atlas.en-us.api_rest.meta/api_rest/dome_sobject_insert_update_blob.htm) api feature (500mb limit):
 
 ```ruby
 client.create('Document', FolderId: '00lE0000000FJ6H',
@@ -477,7 +477,7 @@ client.create('Document', FolderId: '00lE0000000FJ6H',
                           Body: Base64::encode64(File.read('image.jpg'))
 ```
 
-_See also: [Inserting or updating blob data](http://www.salesforce.com/us/developer/docs/api_rest/Content/dome_sobject_insert_update_blob.htm)_
+_See also: [Inserting or updating blob data](https://developer.salesforce.com/docs/atlas.en-us.api_rest.meta/api_rest/dome_sobject_insert_update_blob.htm)_
 
 * * *
 
