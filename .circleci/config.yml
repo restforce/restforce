@@ -46,10 +46,6 @@ jobs:
     docker:
        - image: circleci/ruby:2.6.6
     steps: *steps
-  build-ruby258:
-    docker:
-       - image: circleci/ruby:2.5.8
-    steps: *steps
 
 workflows:
   version: 2
@@ -58,4 +54,3 @@ workflows:
       - build-ruby302
       - build-ruby271
       - build-ruby266
-      - build-ruby258
