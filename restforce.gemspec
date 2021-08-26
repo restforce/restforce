@@ -26,18 +26,6 @@ Gem::Specification.new do |gem|
 
   gem.add_dependency 'faraday', '<= 2.0', '>= 0.9.0'
   gem.add_dependency 'faraday_middleware', ['>= 0.8.8', '<= 2.0']
-
-  gem.add_dependency 'jwt', ['>= 1.5.6']
-
   gem.add_dependency 'hashie', '>= 1.2.0', '< 5.0'
-
-  gem.add_development_dependency 'faye' unless RUBY_PLATFORM == 'java'
-  gem.add_development_dependency 'rspec', '~> 3.10.0'
-  gem.add_development_dependency 'rspec-collection_matchers', '~> 1.2.0'
-  gem.add_development_dependency 'rspec-its', '~> 1.3.0'
-  gem.add_development_dependency 'rspec_junit_formatter', '~> 0.4.1'
-
-  gem.add_development_dependency 'rubocop', '~> 1.17.0'
-  gem.add_development_dependency 'simplecov', '~> 0.21.2'
-  gem.add_development_dependency 'webmock', '~> 3.14.0'
+  gem.add_dependency 'jwt', ['>= 1.5.6']
 end
