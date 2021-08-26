@@ -8,6 +8,8 @@ Bundler.require :default, :test
 require 'faye' unless RUBY_PLATFORM == 'java'
 
 require 'webmock/rspec'
+require 'rspec/collection_matchers'
+require 'rspec/its'
 
 WebMock.disable_net_connect!
 
@@ -26,6 +28,14 @@ RSpec.configure do |config|
   config.after(:all) do
     $stderr = original_stderr
     $stdout = original_stdout
+  end
+
+  config.expect_with :rspec do |expectations|
+    expectations.syntax = %i[expect should]
+  end
+
+  config.mock_with :rspec do |mocks|
+    mocks.syntax = %i[expect should]
   end
 end
 

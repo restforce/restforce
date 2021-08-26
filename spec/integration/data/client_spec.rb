@@ -98,17 +98,21 @@ shared_examples_for Restforce::Data::Client do
   end
 
   describe '.subscribe', event_machine: true do
+    let(:faye_double)     { double('Faye') }
+
     context 'when given a single pushtopic' do
       it 'subscribes to the pushtopic' do
-        client.faye.should_receive(:subscribe).with(['/topic/PushTopic'])
+        faye_double.should_receive(:subscribe).with(['/topic/PushTopic'])
+        client.stub faye: faye_double
         client.subscribe('PushTopic')
       end
     end
 
     context 'when given an array of pushtopics' do
       it 'subscribes to each pushtopic' do
-        client.faye.should_receive(:subscribe).with(['/topic/PushTopic1',
+        faye_double.should_receive(:subscribe).with(['/topic/PushTopic1',
                                                      '/topic/PushTopic2'])
+        client.stub faye: faye_double
         client.subscribe(%w[PushTopic1 PushTopic2])
       end
     end

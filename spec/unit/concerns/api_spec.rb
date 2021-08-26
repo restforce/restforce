@@ -11,7 +11,7 @@ describe Restforce::Concerns::API do
     it 'returns the user info from identity url' do
       identity_url = double('identity_url')
       response.body.stub(:identity).and_return(identity_url)
-      client.should_receive(:api_get).with.and_return(response)
+      client.should_receive(:api_get).with(no_args).and_return(response)
 
       identity = double('identity')
       identity.stub(:body).and_return(identity)
@@ -268,7 +268,7 @@ describe Restforce::Concerns::API do
 
       it "delegates to :#{method}!" do
         client.should_receive(:"#{method}!").
-          with(*args).
+          with(no_args).
           and_return(response)
         expect(result).to eq response
       end
@@ -276,7 +276,7 @@ describe Restforce::Concerns::API do
       it 'rescues exceptions' do
         [Faraday::ClientError].each do |exception_klass|
           client.should_receive(:"#{method}!").
-            with(*args).
+            with(no_args).
             and_raise(exception_klass.new(nil))
           expect(result).to eq false
         end
@@ -314,7 +314,7 @@ describe Restforce::Concerns::API do
         it 'sends an HTTP PATCH, and returns true' do
           client.should_receive(:api_patch).
             with('sobjects/Whizbang/1234', StageName: "Call Scheduled")
-          expect(result).to be_true
+          expect(result).to be true
         end
       end
 
@@ -324,7 +324,7 @@ describe Restforce::Concerns::API do
         it 'sends an HTTP PATCH, and encodes the ID' do
           client.should_receive(:api_patch).
             with('sobjects/Whizbang/1234%2F%3Fabc', StageName: "Call Scheduled")
-          expect(result).to be_true
+          expect(result).to be true
         end
       end
 
@@ -348,7 +348,7 @@ describe Restforce::Concerns::API do
           client.should_receive(:api_patch).
             with('sobjects/Whizbang/External_ID__c/1234', {}).
             and_return(response)
-          expect(result).to be_true
+          expect(result).to be true
         end
 
         context 'and the response body is a string' do
@@ -357,7 +357,7 @@ describe Restforce::Concerns::API do
             client.should_receive(:api_patch).
               with('sobjects/Whizbang/External_ID__c/1234', {}).
               and_return(response)
-            expect(result).to be_true
+            expect(result).to be true
           end
         end
       end
@@ -431,7 +431,7 @@ describe Restforce::Concerns::API do
           client.should_receive(:api_patch).
             with('sobjects/Whizbang/External_ID__c/%E3%81%82', {}).
             and_return(response)
-          expect(result).to be_true
+          expect(result).to be true
         end
       end
     end
@@ -448,7 +448,7 @@ describe Restforce::Concerns::API do
           client.should_receive(:api_patch).
             with('sobjects/Whizbang/External_ID__c/1234', {}).
             and_return(response)
-          expect(result).to be_true
+          expect(result).to be true
         end
       end
     end
@@ -462,7 +462,7 @@ describe Restforce::Concerns::API do
     it 'sends and HTTP delete, and returns true' do
       client.should_receive(:api_delete).
         with('sobjects/Whizbang/1234')
-      expect(result).to be_true
+      expect(result).to be true
     end
 
     context 'when the id field contains special characters' do
@@ -471,7 +471,7 @@ describe Restforce::Concerns::API do
       it 'sends an HTTP delete, and encodes the ID' do
         client.should_receive(:api_delete).
           with('sobjects/Whizbang/1234%2F%3Fabc')
-        expect(result).to be_true
+        expect(result).to be true
       end
     end
   end

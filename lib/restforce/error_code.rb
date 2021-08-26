@@ -341,6 +341,8 @@ module Restforce
 
     class PrivateContactOnAsset < ResponseError; end
 
+    class QueryTimeout < ResponseError; end
+
     class RecordInUseByWorkflow < ResponseError; end
 
     class RequestLimitExceeded < ResponseError; end
@@ -573,6 +575,7 @@ module Restforce
       "PLATFORM_EVENT_PUBLISH_FAILED" => PlatformEventPublishFailed,
       "PORTAL_USER_ALREADY_EXISTS_FOR_CONTACT" => PortalUserAlreadyExistsForContact,
       "PRIVATE_CONTACT_ON_ASSET" => PrivateContactOnAsset,
+      "QUERY_TIMEOUT" => QueryTimeout,
       "RECORD_IN_USE_BY_WORKFLOW" => RecordInUseByWorkflow,
       "REQUEST_LIMIT_EXCEEDED" => RequestLimitExceeded,
       "REQUEST_RUNNING_TOO_LONG" => RequestRunningTooLong,

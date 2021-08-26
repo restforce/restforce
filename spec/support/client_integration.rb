@@ -39,13 +39,13 @@ module ClientIntegrationExampleGroup
   end
 
   RSpec.configure do |config|
+    describes = lambda do |described|
+      described <= Restforce::AbstractClient
+    end
+
     config.include self,
-                   example_group: {
-                     describes: lambda do |described|
-                       described <= Restforce::AbstractClient
-                     end,
-                     file_path: %r{spec/integration}
-                   }
+                   file_path: %r{spec/integration},
+                   describes: describes
 
     config.before mashify: false do
       base_options.merge!(mashify: false)
