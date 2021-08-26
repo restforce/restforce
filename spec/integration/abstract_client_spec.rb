@@ -129,18 +129,15 @@ shared_examples_for Restforce::AbstractClient do
         JSON.parse(fixture('sobject/delete_error_response'))
       end
 
-      subject do
-        lambda do
-          client.update!('Account', Id: '001D000000INjVe', Name: 'Foobar')
-        end
-      end
+      it "raises Faraday::ResourceNotFound" do
+        expect { client.update!('Account', Id: '001D000000INjVe', Name: 'Foobar') }.
+          to raise_error do |exception|
+            expect(exception).to be_a(Faraday::ResourceNotFound)
 
-      it {
-        should raise_error(
-          Faraday::ResourceNotFound,
-          "#{error.first['errorCode']}: #{error.first['message']}"
-        )
-      }
+            expect(exception.message).
+              to start_with("#{error.first['errorCode']}: #{error.first['message']}")
+          end
+      end
     end
   end
 
