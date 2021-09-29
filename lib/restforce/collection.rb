@@ -32,10 +32,10 @@ module Restforce
       @raw_page['totalSize']
     end
     alias length size
-    
+
     def count
       return size unless block_given?
-      
+
       super
     end
 
