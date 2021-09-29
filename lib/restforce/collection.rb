@@ -32,6 +32,12 @@ module Restforce
       @raw_page['totalSize']
     end
     alias length size
+    
+    def count
+      return size unless block_given?
+      
+      super
+    end
 
     # Returns true if the size of the Collection is zero.
     def empty?
