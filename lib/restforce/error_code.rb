@@ -399,6 +399,8 @@ module Restforce
 
     class WrongControllerType < ResponseError; end
 
+    class BigObjectUnsupportedOperation < ResponseError; end
+
     # Maps `errorCode`s returned from Salesforce to the exception class
     # to be used for these errors
     ERROR_EXCEPTION_CLASSES = {
@@ -603,7 +605,8 @@ module Restforce
       "UNVERIFIED_SENDER_ADDRESS" => UnverifiedSenderAddress,
       "WEBLINK_SIZE_LIMIT_EXCEEDED" => WeblinkSizeLimitExceeded,
       "WEBLINK_URL_INVALID" => WeblinkUrlInvalid,
-      "WRONG_CONTROLLER_TYPE" => WrongControllerType
+      "WRONG_CONTROLLER_TYPE" => WrongControllerType,
+      "BIG_OBJECT_UNSUPPORTED_OPERATION" => BigObjectUnsupportedOperation
     }.freeze
 
     def self.get_exception_class(error_code)
