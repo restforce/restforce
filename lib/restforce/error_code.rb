@@ -31,6 +31,8 @@ module Restforce
 
     class BccSelfNotAllowedIfBccComplianceEnabled < ResponseError; end
 
+    class BigObjectUnsupportedOperation < ResponseError; end
+
     class CannotCascadeProductActive < ResponseError; end
 
     class CannotChangeFieldTypeOfApexReferencedField < ResponseError; end
@@ -399,8 +401,6 @@ module Restforce
 
     class WrongControllerType < ResponseError; end
 
-    class BigObjectUnsupportedOperation < ResponseError; end
-
     # Maps `errorCode`s returned from Salesforce to the exception class
     # to be used for these errors
     ERROR_EXCEPTION_CLASSES = {
@@ -415,6 +415,7 @@ module Restforce
    BccNotAllowedIfBccComplianceEnabled,
       "BCC_SELF_NOT_ALLOWED_IF_BCC_COMPLIANCE_ENABLED" =>
    BccSelfNotAllowedIfBccComplianceEnabled,
+      "BIG_OBJECT_UNSUPPORTED_OPERATION" => BigObjectUnsupportedOperation,
       "CANNOT_CASCADE_PRODUCT_ACTIVE" => CannotCascadeProductActive,
       "CANNOT_CHANGE_FIELD_TYPE_OF_APEX_REFERENCED_FIELD" =>
    CannotChangeFieldTypeOfApexReferencedField,
@@ -605,8 +606,7 @@ module Restforce
       "UNVERIFIED_SENDER_ADDRESS" => UnverifiedSenderAddress,
       "WEBLINK_SIZE_LIMIT_EXCEEDED" => WeblinkSizeLimitExceeded,
       "WEBLINK_URL_INVALID" => WeblinkUrlInvalid,
-      "WRONG_CONTROLLER_TYPE" => WrongControllerType,
-      "BIG_OBJECT_UNSUPPORTED_OPERATION" => BigObjectUnsupportedOperation
+      "WRONG_CONTROLLER_TYPE" => WrongControllerType
     }.freeze
 
     def self.get_exception_class(error_code)
