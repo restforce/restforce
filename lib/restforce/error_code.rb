@@ -237,6 +237,8 @@ module Restforce
 
     class InvalidReadOnlyUserDml < ResponseError; end
 
+    class InvalidReplicationDate < ResponseError; end
+
     class InvalidSaveAsActivityFlag < ResponseError; end
 
     class InvalidSessionId < ResponseError; end
@@ -523,6 +525,7 @@ module Restforce
       "INVALID_PARTNER_NETWORK_STATUS" => InvalidPartnerNetworkStatus,
       "INVALID_PERSON_ACCOUNT_OPERATION" => InvalidPersonAccountOperation,
       "INVALID_READ_ONLY_USER_DML" => InvalidReadOnlyUserDml,
+      "INVALID_REPLICATION_DATE" => InvalidReplicationDate,
       "INVALID_SAVE_AS_ACTIVITY_FLAG" => InvalidSaveAsActivityFlag,
       "INVALID_SESSION_ID" => InvalidSessionId,
       "INVALID_STATUS" => InvalidStatus,
