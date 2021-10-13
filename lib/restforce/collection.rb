@@ -33,7 +33,7 @@ module Restforce
     end
     alias length size
 
-    def count
+    def count(*args)
       return size unless block_given?
 
       super
