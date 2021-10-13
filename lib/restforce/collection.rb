@@ -34,11 +34,12 @@ module Restforce
     alias length size
 
     def count(*args)
-      # Enumerable's only interface is #each and thus Enumerable#count's default implementation
-      # does not check for and delegate to #size on argument and blockless call. Therefore
-      # somebody calling #count instead of #size on the collection would load and iterate the 
-      # entire collection, despite us already having the answer to that question available.
-      # So we optimize for this case here and protect the user from this easy mistake.
+      # Enumerable's only interface is #each and thus Enumerable#count's default 
+      # implementation does not check for and delegate to #size on an argument and 
+      # blockless call. Therefore somebody calling #count instead of #size on the 
+      # collection would load and iterate the entire collection, despite us already 
+      # having the answer to that question available. So we optimize for this case here
+      # and protect the user from this easy mistake.
       return size unless block_given? || !args.empty?
 
       super
