@@ -85,7 +85,7 @@ module Restforce
         def valid?(picklist_entry)
           valid_for = picklist_entry['validFor'].ljust(16, 'A').unpack1('m').
                       unpack('C*')
-          (valid_for[index >> 3] & (0x80 >> index % 8)).positive?
+          (valid_for[index >> 3] & (0x80 >> (index % 8))).positive?
         end
       end
     end
