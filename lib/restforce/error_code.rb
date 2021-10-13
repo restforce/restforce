@@ -31,6 +31,8 @@ module Restforce
 
     class BccSelfNotAllowedIfBccComplianceEnabled < ResponseError; end
 
+    class BigObjectUnsupportedOperation < ResponseError; end
+
     class CannotCascadeProductActive < ResponseError; end
 
     class CannotChangeFieldTypeOfApexReferencedField < ResponseError; end
@@ -413,6 +415,7 @@ module Restforce
    BccNotAllowedIfBccComplianceEnabled,
       "BCC_SELF_NOT_ALLOWED_IF_BCC_COMPLIANCE_ENABLED" =>
    BccSelfNotAllowedIfBccComplianceEnabled,
+      "BIG_OBJECT_UNSUPPORTED_OPERATION" => BigObjectUnsupportedOperation,
       "CANNOT_CASCADE_PRODUCT_ACTIVE" => CannotCascadeProductActive,
       "CANNOT_CHANGE_FIELD_TYPE_OF_APEX_REFERENCED_FIELD" =>
    CannotChangeFieldTypeOfApexReferencedField,
