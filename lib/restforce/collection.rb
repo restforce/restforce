@@ -34,7 +34,7 @@ module Restforce
     alias length size
 
     def count(*args)
-      return size unless block_given?
+      return size unless block_given? || !args.empty?
 
       super
     end
