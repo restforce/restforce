@@ -1,3 +1,8 @@
+## 5.1.1 (Oct 13, 2021)
+
+* Handle the `INVALID_REPLICATION_DATE` error returned by Salesforce (@michaelwnyc)
+* Handle the `BIG_OBJECT_UNSUPPORTED_OPERATION` error returned by Salesforce (@remon)
+
 ## 5.1.0 (Aug 26, 2021)
 
 * Add official support for Ruby 3.0 (@timrogers)
