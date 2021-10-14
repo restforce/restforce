@@ -27,19 +27,21 @@ module Restforce
       @raw_page['records'].size
     end
 
-    # Return the size of the Collection without making any additional requests.
+    # Return the number of items in the Collection without making any additional
+    # requests and going through all of the pages of results, one by one. Instead,
+    # we can rely on the total count of results which Salesforce returns.
     def size
       @raw_page['totalSize']
     end
     alias length size
 
     def count(*args)
-      # Enumerable's only interface is #each and thus Enumerable#count's default
-      # implementation does not check for and delegate to #size on an argument and
-      # blockless call. Therefore somebody calling #count instead of #size on the
-      # collection would load and iterate the entire collection, despite us already
-      # having the answer to that question available. So we optimize for this case here
-      # and protect the user from this easy mistake.
+      # By default, `Enumerable`'s `#count` uses `#each`, which means going through all
+      # of the pages of results, one by one. Instead, we can use `#size` which we have
+      # already overridden to work in a smarter, more efficient way. This only works for
+      # the simple version of `#count` with no arguments. When called with an argument or
+      # a block, you need to know what the items in the collection actually are, so we
+      # call `super` and end up iterating through each item in the collection.
       return size unless block_given? || !args.empty?
 
       super
