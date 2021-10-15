@@ -27,7 +27,7 @@ Features include:
 
 Add this line to your application's Gemfile:
 
-    gem 'restforce', '~> 5.1.1'
+    gem 'restforce', '~> 5.2.0'
 
 And then execute:
 

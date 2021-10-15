@@ -1,3 +1,8 @@
+## 5.2.0 (Oct 15, 2021)
+
+* Add support for Salesforce's Composite API and Composite Batch API (@meenie, @amacdougall)
+* Improve the performance of counting numbers of query results with `Restforce::Collection#count`, avoiding unnecessary API requests (@jhass)
+
 ## 5.1.1 (Oct 13, 2021)
 
 * Handle the `INVALID_REPLICATION_DATE` error returned by Salesforce (@michaelwnyc)
