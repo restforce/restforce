@@ -12,6 +12,8 @@ Features include:
 * Support for parent-to-child relationships.
 * Support for aggregate queries.
 * Support for the [Streaming API](#streaming)
+* Support for the [Composite API](#composite-api)
+* Support for the [Composite Batch API](#composite-batch-api)
 * Support for the GetUpdated API
 * Support for blob data types.
 * Support for GZIP compression.
@@ -571,6 +573,52 @@ end
 
 Boom, you're now receiving push notifications when Accounts are
 created/updated.
+
+#### Composite API
+
+Restforce supports the [Composite API](https://developer.salesforce.com/docs/atlas.en-us.api_rest.meta/api_rest/resources_composite_composite.htm).
+This feature permits the user to send a composite object—that is, a complex
+object with nested children—in a single API call. Up to 25 requests may be
+included in a single composite.
+
+Note that `GET` is not yet implemented for this API.
+
+```ruby
+# build up an array of requests:
+requests << {
+  method: :update,
+  sobject: sobject, # e.g. "Contact"
+  reference_id: reference_id,
+  data: data
+}
+
+# send every 25 requests as a subrequest in a single composite call
+requests.each_slice(25).map do |req_slice|
+  client.composite do |subrequest|
+    req_slice.each do |r|
+      subrequest.send *r.values
+    end
+  end
+end
+
+# note that we're using `map` to return an array of each responses to each
+# composite call; 100 requests will produce 4 responses
+```
+
+#### Composite Batch API
+
+Restforce supports the [Composite Batch API](https://developer.salesforce.com/docs/atlas.en-us.api_rest.meta/api_rest/resources_composite_batch.htm).
+This feature permits up to 25 subrequests in a single request, though each
+subrequest counts against the API limit. On the other hand, it has fewer
+limitations than the Composite API.
+
+```
+client.batch do |subrequests|
+  subrequests.create('Object', name: 'test')
+  subrequests.update('Object', id: '123', name: 'test')
+  subrequests.destroy('Object', '123')
+end
+```
 
 #### Replaying Events
 
