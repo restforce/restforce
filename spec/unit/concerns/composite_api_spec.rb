@@ -128,7 +128,7 @@ describe Restforce::Concerns::CompositeAPI do
   describe '#composite' do
     let(:method) { :composite }
     let(:all_or_none) { false }
-    let(:response) { double('Faraday::Response', body: { 'CompositeResponse' => [] }) }
+    let(:response) { double('Faraday::Response', body: { 'compositeResponse' => [] }) }
     it_behaves_like 'composite requests'
   end
 
@@ -136,7 +136,7 @@ describe Restforce::Concerns::CompositeAPI do
     let(:method) { :composite! }
     let(:all_or_none) { true }
     let(:response) do
-      double('Faraday::Response', body: { 'CompositeResponse' => [] })
+      double('Faraday::Response', body: { 'compositeResponse' => [] })
     end
     it_behaves_like 'composite requests'
   end
