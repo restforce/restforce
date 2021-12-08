@@ -1,3 +1,8 @@
+# 5.2.1 (Dec 8, 2021)
+
+* Handle the `OPERATION_TOO_LARGE` error returned by Salesforce (@timrogers)
+* Handle the `INVALID_SIGNUP_COUNTRY` error returned by Salesforce (@timrogers)
+
 ## 5.2.0 (Oct 15, 2021)
 
 * Add support for Salesforce's Composite API and Composite Batch API (@meenie, @amacdougall)
