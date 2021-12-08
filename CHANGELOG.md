@@ -1,3 +1,7 @@
+## 3.2.1 (Dec 8, 2021)
+
+* Update the gemspec to reflect that `faraday` `v1.0.0` is not supported (@timrogers)
+
 ## 3.2.0 (Oct 9, 2019)
 
 * Add support for the Batch API (@gaiottino, @teoulas)
