@@ -87,7 +87,7 @@ describe Restforce::Concerns::Streaming, event_machine: true do
       end
 
       it 'connects to the streaming api' do
-        client.stub authenticate!: OpenStruct.new(access_token: 'secret2')
+        client.stub authenticate!: double(access_token: 'secret2')
         faye_double = double('Faye::Client')
         Faye::Client.
           should_receive(:new).
