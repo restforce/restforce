@@ -19,7 +19,8 @@ Gem::Specification.new do |gem|
 
   gem.metadata = {
     'source_code_uri' => 'https://github.com/restforce/restforce',
-    'changelog_uri'   => 'https://github.com/restforce/restforce/blob/master/CHANGELOG.md'
+    'changelog_uri'   => 'https://github.com/restforce/restforce/blob/master/CHANGELOG.md',
+'rubygems_mfa_required' => 'true'
   }
 
   gem.required_ruby_version = '>= 2.6'
