@@ -331,6 +331,8 @@ module Restforce
 
     class OpWithInvalidUserTypeException < ResponseError; end
 
+    class OperationTooLarge < ResponseError; end
+
     class OptedOutOfMassMail < ResponseError; end
 
     class PackageLicenseRequired < ResponseError; end
@@ -574,6 +576,7 @@ module Restforce
       "NUMBER_OUTSIDE_VALID_RANGE" => NumberOutsideValidRange,
       "NUM_HISTORY_FIELDS_BY_SOBJECT_EXCEEDED" => NumHistoryFieldsBySobjectExceeded,
       "OP_WITH_INVALID_USER_TYPE_EXCEPTION" => OpWithInvalidUserTypeException,
+      "OPERATION_TOO_LARGE" => OperationTooLarge,
       "OPTED_OUT_OF_MASS_MAIL" => OptedOutOfMassMail,
       "PACKAGE_LICENSE_REQUIRED" => PackageLicenseRequired,
       "PLATFORM_EVENT_ENCRYPTION_ERROR" => PlatformEventEncryptionError,
