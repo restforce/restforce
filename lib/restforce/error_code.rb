@@ -245,6 +245,8 @@ module Restforce
 
     class InvalidSessionId < ResponseError; end
 
+    class InvalidSignupCountry < ResponseError; end
+
     class InvalidStatus < ResponseError; end
 
     class InvalidType < ResponseError; end
@@ -533,6 +535,7 @@ module Restforce
       "INVALID_REPLICATION_DATE" => InvalidReplicationDate,
       "INVALID_SAVE_AS_ACTIVITY_FLAG" => InvalidSaveAsActivityFlag,
       "INVALID_SESSION_ID" => InvalidSessionId,
+      "INVALID_SIGNUP_COUNTRY" => InvalidSignupCountry,
       "INVALID_STATUS" => InvalidStatus,
       "INVALID_TYPE" => InvalidType,
       "INVALID_TYPE_FOR_OPERATION" => InvalidTypeForOperation,
