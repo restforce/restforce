@@ -277,6 +277,8 @@ module Restforce
 
     class MalformedQuery < ResponseError; end
 
+    class MalformedSearch < ResponseError; end
+
     class ManagerNotDefined < ResponseError; end
 
     class MassmailRetryLimitExceeded < ResponseError; end
@@ -551,6 +553,7 @@ module Restforce
       "LOGIN_MUST_USE_SECURITY_TOKEN" => LoginMustUseSecurityToken,
       "MALFORMED_ID" => MalformedId,
       "MALFORMED_QUERY" => MalformedQuery,
+      "MALFORMED_SEARCH" => MalformedSearch,
       "MANAGER_NOT_DEFINED" => ManagerNotDefined,
       "MASSMAIL_RETRY_LIMIT_EXCEEDED" => MassmailRetryLimitExceeded,
       "MASS_MAIL_LIMIT_EXCEEDED" => MassMailLimitExceeded,
