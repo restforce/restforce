@@ -1,3 +1,7 @@
+# 5.2.2 (Dec 16, 2021)
+
+* Handle the `MALFORMED_SEARCH` error returned by Salesforce (@timrogers)
+
 # 5.2.1 (Dec 8, 2021)
 
 * Handle the `OPERATION_TOO_LARGE` error returned by Salesforce (@timrogers)
