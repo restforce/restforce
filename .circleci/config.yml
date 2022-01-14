@@ -34,6 +34,10 @@ references:
         destination: test-results
 
 jobs:
+  build-ruby31:
+    docker:
+       - image: cimg/ruby:3.1
+    steps: *steps
   build-ruby30:
     docker:
        - image: circleci/ruby:3.0
@@ -51,6 +55,7 @@ workflows:
   version: 2
   tests:
     jobs:
+      - build-ruby31
       - build-ruby30
       - build-ruby27
       - build-ruby26
