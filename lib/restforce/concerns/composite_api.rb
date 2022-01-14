@@ -24,12 +24,12 @@ module Restforce
         }
         response = api_post('composite', properties.to_json)
 
-        results = response.body['CompositeResponse']
-        has_errors = results.any? { |result| result['HttpStatusCode'].digits.last == 4 }
+        results = response.body['compositeResponse']
+        has_errors = results.any? { |result| result['httpStatusCode'].digits.last == 4 }
         if all_or_none && has_errors
-          last_error_index = results.rindex { |result| result['HttpStatusCode'] != 412 }
+          last_error_index = results.rindex { |result| result['httpStatusCode'] != 412 }
           last_error = results[last_error_index]
-          raise CompositeAPIError, last_error['Body'][0]['errorCode']
+          raise CompositeAPIError, last_error['body'][0]['errorCode']
         end
 
         results
