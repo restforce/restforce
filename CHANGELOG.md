@@ -1,3 +1,9 @@
+# 5.2.3 (Jan 17, 2022)
+
+* Add official support for Ruby 3.1 (@timrogers)
+* Fix handling of responses from the Composite API (@robob27)
+* Fix dependencies to correctly declare that the gem doesn't work with [faraday](https://github.com/lostisland/faraday) `v1.9.0` or later (@timrogers)
+
 # 5.2.2 (Dec 16, 2021)
 
 * Handle the `MALFORMED_SEARCH` error returned by Salesforce (@timrogers)
