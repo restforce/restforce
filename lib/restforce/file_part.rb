@@ -1,9 +1,9 @@
 # frozen_string_literal: true
 
-begin
-  require 'faraday/file_part'
+%w[faraday/multipart faraday/file_part faraday/upload_io].find do |faraday|
+  require faraday
 rescue LoadError
-  require 'faraday/upload_io'
+  false
 end
 
 module Restforce
