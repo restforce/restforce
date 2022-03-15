@@ -63,6 +63,24 @@ describe Restforce::Collection do
     end
   end
 
+  describe '#size' do
+    subject(:size) do
+      described_class.new(JSON.parse(fixture(sobject_fixture)), client).size
+    end
+
+    context 'when the query response contains a totalSize field' do
+      let(:sobject_fixture) { 'sobject/query_success_response' }
+
+      it { should eq 1 }
+    end
+
+    context 'when the query response contains a size field' do
+      let(:sobject_fixture) { 'sobject/list_view_results_success_response' }
+
+      it { should eq 1 }
+    end
+  end
+
   describe '#empty?' do
     subject(:empty?) do
       described_class.new(JSON.parse(fixture(sobject_fixture)), client).empty?

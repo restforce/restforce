@@ -31,7 +31,7 @@ module Restforce
     # requests and going through all of the pages of results, one by one. Instead,
     # we can rely on the total count of results which Salesforce returns.
     def size
-      @raw_page['totalSize']
+      @raw_page['totalSize'] || @raw_page['size']
     end
     alias length size
 
