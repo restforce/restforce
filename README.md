@@ -1,7 +1,7 @@
 # Restforce
 
-[![CircleCI](https://circleci.com/gh/restforce/restforce.svg?style=svg)](https://circleci.com/gh/restforce/restforce) [![Code Climate](https://codeclimate.com/github/restforce/restforce.png)](https://codeclimate.com/github/restforce/restforce) [![Dependency Status](https://gemnasium.com/restforce/restforce.png)](https://gemnasium.com/restforce/restforce)
-![](https://img.shields.io/gem/dt/restforce.svg)
+[![CircleCI](https://circleci.com/gh/restforce/restforce.svg?style=svg)](https://circleci.com/gh/restforce/restforce)
+![Downloads](https://img.shields.io/gem/dt/restforce.svg)
 
 Restforce is a ruby gem for the [Salesforce REST api](http://www.salesforce.com/us/developer/docs/api_rest/index.htm).
 
