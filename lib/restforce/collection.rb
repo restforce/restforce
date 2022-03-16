@@ -30,8 +30,12 @@ module Restforce
     # Return the number of items in the Collection without making any additional
     # requests and going through all of the pages of results, one by one. Instead,
     # we can rely on the total count of results which Salesforce returns.
+    #
+    # Most of the Salesforce API returns this in the `totalSize` attribute. For
+    # some reason, the [List View Results](https://developer.salesforce.com/docs/atlas.en-us.api_rest.meta/api_rest/resources_listviewresults.htm)
+    # endpoint (and maybe others?!) uses the `size` attribute.
     def size
-      @raw_page['totalSize']
+      @raw_page['totalSize'] || @raw_page['size']
     end
     alias length size
 
