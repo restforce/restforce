@@ -1,3 +1,7 @@
+# 5.2.4 (Mar 16, 2022)
+
+* Fix `Restforce::Collection#size` for Salesforce APIs that use the `size` property to return the total number of results, instead of `totalSize` (@kwong-yw)
+
 # 5.2.3 (Jan 17, 2022)
 
 * Add official support for Ruby 3.1 (@timrogers)
