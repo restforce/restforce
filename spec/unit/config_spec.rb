@@ -22,7 +22,7 @@ describe Restforce do
     it { should be_a Restforce::Configuration }
 
     context 'by default' do
-      its(:api_version)            { should eq '26.0' }
+      its(:api_version)            { should eq '29.0' }
       its(:host)                   { should eq 'login.salesforce.com' }
       its(:authentication_retries) { should eq 3 }
       its(:adapter)                { should eq Faraday.default_adapter }

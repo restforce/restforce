@@ -476,6 +476,36 @@ describe Restforce::Concerns::API do
     end
   end
 
+  describe '.get_updated_between' do
+    let(:sobject) {'Account'}
+    let(:endTime) {Time.now}
+    let(:startTime) {Time.now - 100}
+    subject(:result) {client.get_updated_between(sobject, startTime, endTime)}
+
+
+    it 'should return the value from the api request' do
+      client.should_receive(:api_get).
+          with("sobjects/Account/updated/?start=#{startTime.utc.iso8601}&end=#{endTime.utc.iso8601}").
+          and_return(response)
+      expect(result).to eq(response.body)
+    end
+  end
+
+  describe '.get_deleted_between' do
+    let(:sobject) {'Account'}
+    let(:endTime) {Time.now}
+    let(:startTime) {Time.now - 100}
+    subject(:result) {client.get_deleted_between(sobject, startTime, endTime)}
+
+
+    it 'should return the value from the api request' do
+      client.should_receive(:api_get).
+          with("sobjects/Account/deleted/?start=#{startTime.utc.iso8601}&end=#{endTime.utc.iso8601}").
+          and_return(response)
+      expect(result).to eq(response.body)
+    end
+  end
+
   describe '.find' do
     let(:sobject)    { 'Whizbang' }
     let(:id)         { '1234' }

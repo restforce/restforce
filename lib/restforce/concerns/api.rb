@@ -459,6 +459,16 @@ module Restforce
         api_get(path).body
       end
 
+      def get_updated_between(sobject, startDate, endDate)
+        path = "sobjects/#{sobject}/updated/?start=#{startDate.utc.iso8601}&end=#{endDate.utc.iso8601}"
+        api_get(path).body
+      end
+
+      def get_deleted_between(sobject, startDate, endDate)
+        path = "sobjects/#{sobject}/deleted/?start=#{startDate.utc.iso8601}&end=#{endDate.utc.iso8601}"
+        api_get(path).body
+      end
+
       # Public: Finds recently viewed items for the logged-in user.
       #
       # limit - An optional limit that specifies the maximum number of records to be

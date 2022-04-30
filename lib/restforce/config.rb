@@ -91,7 +91,7 @@ module Restforce
       end
     end
 
-    option :api_version, default: lambda { ENV['SALESFORCE_API_VERSION'] || '26.0' }
+    option :api_version, default: lambda { ENV['SALESFORCE_API_VERSION'] || '29.0' }
 
     # The username to use during login.
     option :username, default: lambda { ENV['SALESFORCE_USERNAME'] }
