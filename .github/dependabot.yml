@@ -4,16 +4,7 @@ updates:
   directory: "/"
   schedule:
     interval: daily
-  open-pull-requests-limit: 10
-  ignore:
-  - dependency-name: rubocop
-    versions:
-    - 1.10.0
-    - 1.11.0
-    - 1.12.0
-    - 1.12.1
-    - 1.9.0
-  - dependency-name: webmock
-    versions:
-    - 3.12.0
-    - 3.12.1
+- package-ecosystem: 'github-actions'
+  directory: '/'
+  schedule:
+    interval: 'daily'
