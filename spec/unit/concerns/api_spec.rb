@@ -312,8 +312,11 @@ describe Restforce::Concerns::API do
         let(:attrs) { { id: '1234', StageName: "Call Scheduled" } }
 
         it 'sends an HTTP PATCH, and returns true' do
-          client.should_receive(:api_patch).
-            with('sobjects/Whizbang/1234', StageName: "Call Scheduled")
+          client.should_receive(:api_patch) do |*args|
+            expect(args).to eq(["sobjects/Whizbang/1234",
+                                { StageName: "Call Scheduled" }])
+          end
+
           expect(result).to be true
         end
       end
@@ -322,8 +325,12 @@ describe Restforce::Concerns::API do
         let(:attrs) { { id: '1234/?abc', StageName: "Call Scheduled" } }
 
         it 'sends an HTTP PATCH, and encodes the ID' do
-          client.should_receive(:api_patch).
-            with('sobjects/Whizbang/1234%2F%3Fabc', StageName: "Call Scheduled")
+          client.should_receive(:api_patch) do |*args|
+            expect(args).to eq(['sobjects/Whizbang/1234%2F%3Fabc', {
+                                 StageName: "Call Scheduled"
+                               }])
+          end
+
           expect(result).to be true
         end
       end
