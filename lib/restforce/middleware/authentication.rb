@@ -49,6 +49,7 @@ module Restforce
       @connection ||= Faraday.new(faraday_options) do |builder|
         builder.use Faraday::Request::UrlEncoded
         builder.use Restforce::Middleware::Mashify, nil, @options
+        builder.use FaradayMiddleware::FollowRedirects
         builder.response :json
 
         if Restforce.log?
