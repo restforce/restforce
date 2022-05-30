@@ -92,12 +92,4 @@ describe Restforce::Concerns::Connection do
       end
     end
   end
-
-  describe '#adapter' do
-    before do
-      client.stub options: { adapter: :typhoeus }
-    end
-
-    its(:adapter) { should eq(:typhoeus) }
-  end
 end
