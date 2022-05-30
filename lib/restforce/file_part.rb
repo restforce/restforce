@@ -3,15 +3,15 @@
 case Faraday::VERSION
 when /\A0\./
   require 'faraday/upload_io'
-when /\A1\.9/
-  # Faraday v1.9 automatically includes the `faraday-multipart`
-  # gem, which includes `Faraday::FilePart`
-  require 'faraday/multipart'
-when /\A1\./
+when /\A1\.[0-8]\./
   # Faraday 1.x versions before 1.9 - not matched by
   # the previous clause - use `FilePart` (which must be explicitly
   # required)
   require 'faraday/file_part'
+when /\A1\./
+  # Later 1.x versions from 1.9 onwards automatically include the
+  # `faraday-multipart` gem, which includes `Faraday::FilePart`
+  require 'faraday/multipart'
 else
   raise "Unexpected Faraday version #{Faraday::VERSION} - not sure how to set up " \
         "multipart support"
