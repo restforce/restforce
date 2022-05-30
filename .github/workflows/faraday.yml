@@ -9,7 +9,7 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        faraday_version: ['1.8.0', '1.9.0']
+        faraday_version: ['1.8.0', '1.9.0', '1.10.0']
     env:
       FARADAY_VERSION: ~> ${{ matrix.faraday_version }}
     steps:
