@@ -139,7 +139,7 @@ module Restforce
     option :timeout
 
     # Faraday adapter to use. Defaults to Faraday.default_adapter.
-    option :adapter, default: lambda { Faraday.default_adapter }
+    option :adapter, default: lambda { Faraday.default_adapter || :net_http }
 
     option :proxy_uri, default: lambda { ENV.fetch('SALESFORCE_PROXY_URI', nil) }
 
