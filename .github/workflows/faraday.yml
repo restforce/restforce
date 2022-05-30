@@ -1,0 +1,26 @@
+name: 'Test against supported Faraday minor versions'
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+jobs:
+  lint-and-test:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        faraday_version: ['1.8.0', '1.9.0']
+    env:
+      FARADAY_VERSION: ~> ${{ matrix.faraday_version }}
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+      - name: Setup Ruby ${{ matrix.ruby_version }}
+        uses: ruby/setup-ruby@v1
+        with:
+          bundler-cache: true
+          ruby-version: 3.1
+      - name: Install dependencies
+        run: bundle install
+      - name: Run RSpec tests
+        run: bundle exec rspec

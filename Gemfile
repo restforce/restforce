@@ -3,6 +3,8 @@
 source 'https://rubygems.org'
 gemspec
 
+# Enable us to explicitly pick a Faraday version when running tests
+gem 'faraday', ENV.fetch('FARADAY_VERSION', '~> 1.8.0')
 gem 'faye' unless RUBY_PLATFORM == 'java'
 gem 'guard-rspec'
 gem 'guard-rubocop'
