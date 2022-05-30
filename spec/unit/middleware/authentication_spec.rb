@@ -61,7 +61,7 @@ describe Restforce::Middleware::Authentication do
             end
 
             its(:handlers) {
-              should include FaradayMiddleware::ParseJson
+              should include Faraday::Response::Json
             }
             its(:handlers) { should_not include Restforce::Middleware::Logger }
             its(:handlers) { should include Faraday::Adapter::NetHttp }
@@ -73,12 +73,18 @@ describe Restforce::Middleware::Authentication do
             end
 
             its(:handlers) {
-              should include FaradayMiddleware::ParseJson,
+              should include Faraday::Response::Json,
                              Restforce::Middleware::Logger
             }
             its(:handlers) { should include Faraday::Adapter::NetHttp }
           end
         end
+
+        its(:handlers) {
+          should include Faraday::Response::Json
+        }
+        its(:handlers) { should_not include Restforce::Middleware::Logger }
+        its(:adapter) { should eq Faraday::Adapter::NetHttp }
       end
 
       context "for Faraday 1.x onwards" do
@@ -89,7 +95,7 @@ describe Restforce::Middleware::Authentication do
             end
 
             its(:handlers) {
-              should include FaradayMiddleware::ParseJson
+              should include Faraday::Response::Json
             }
             its(:handlers) { should_not include Restforce::Middleware::Logger }
             its(:adapter) { should eq Faraday::Adapter::NetHttp }
@@ -101,23 +107,19 @@ describe Restforce::Middleware::Authentication do
             end
 
             its(:handlers) {
-              should include FaradayMiddleware::ParseJson,
+              should include Faraday::Response::Json,
                              Restforce::Middleware::Logger
             }
             its(:adapter) { should eq Faraday::Adapter::NetHttp }
           end
-
-          context 'with specified adapter' do
-            before do
-              options[:adapter] = :typhoeus
-            end
-
-            its(:handlers) {
-              should include FaradayMiddleware::ParseJson
-            }
-            its(:adapter) { should eq Faraday::Adapter::Typhoeus }
-          end
         end
+        
+        its(:handlers) {
+          should include Faraday::Response::Json,
+                         Restforce::Middleware::Logger
+        }
+        its(:adapter) { should eq Faraday::Adapter::NetHttp }
+      end
     end
 
     it "should have SSL config set" do
