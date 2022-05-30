@@ -1,3 +1,8 @@
+# 5.3.0 (May 30, 2022)
+
+* Add support for Faraday v1.9.x and v1.10.0 (@magni-, @timrogers)
+* Follow redirects during authentication to support Lightning URLs (e.g. `*.lightning.force.com` instead of `*.my.salesforce.com`) (@nhocki)
+
 # 5.2.4 (Mar 16, 2022)
 
 * Fix `Restforce::Collection#size` for Salesforce APIs that use the `size` property to return the total number of results, instead of `totalSize` (@kwong-yw)
