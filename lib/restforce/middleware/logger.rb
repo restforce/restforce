@@ -3,7 +3,7 @@
 require 'forwardable'
 
 module Restforce
-  class Middleware::Logger < Faraday::Response::Middleware
+  class Middleware::Logger < Faraday::Middleware
     extend Forwardable
 
     def initialize(app, logger, options)
