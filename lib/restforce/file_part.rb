@@ -13,9 +13,10 @@ when /\A1\.[0-8]\./
   # the previous clause - use `FilePart` (which must be explicitly
   # required)
   require 'faraday/file_part'
-when /\A1\./
+when /\A[12]\./
   # Later 1.x versions from 1.9 onwards automatically include the
-  # `faraday-multipart` gem, which includes `Faraday::FilePart`
+  # `faraday-multipart` gem, which includes `Faraday::FilePart`.
+  # We explicitly include it in the gem dependencies for 2.x.
   require 'faraday/multipart'
 else
   raise "Unexpected Faraday version #{Faraday::VERSION} - not sure how to set up " \
