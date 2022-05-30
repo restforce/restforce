@@ -24,8 +24,7 @@ Gem::Specification.new do |gem|
 
   gem.required_ruby_version = '>= 2.6'
 
-  gem.add_dependency 'faraday', '<= 1.10.0', '>= 0.9.0'
-  gem.add_dependency 'faraday_middleware', ['>= 0.8.8', '<= 2.0']
+  gem.add_dependency 'faraday', '< 2.4', '>= 0.9.0'
   gem.add_dependency 'hashie', '>= 1.2.0', '< 6.0'
   gem.add_dependency 'jwt', ['>= 1.5.6']
 end
