@@ -293,6 +293,8 @@ client.find('Account', '1234', 'Some_External_Id_Field__c')
 # => #<Restforce::SObject Id="001D000000INjVe" Name="Test" LastModifiedBy="005G0000002f8FHIAY" ... >
 ```
 
+`find` raises an error if nothing is found.
+
 ### select
 
 `select` allows the fetching of a specific list of fields from a single object.  It requires an `external_id` lookup, but is often much faster than an arbitrary query.
