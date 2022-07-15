@@ -429,6 +429,7 @@ module Restforce
       # field   - External ID field to use (default: nil).
       #
       # Returns the Restforce::SObject sobject record.
+      # Raises NotFoundError if nothing is found.
       def find(sobject, id, field = nil)
         url = if field
                 "sobjects/#{sobject}/#{field}/#{ERB::Util.url_encode(id)}"
