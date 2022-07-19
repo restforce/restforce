@@ -1,3 +1,7 @@
+# 5.3.1 (Jul 19 2022)
+
+* Handle the `EXCEEDED_ID_LIMIT` error returned by the Salesforce API (@timrogers, @yashshah1)
+
 # 5.3.0 (May 30, 2022)
 
 * Add support for Faraday v1.9.x and v1.10.0 (@magni-, @timrogers)
