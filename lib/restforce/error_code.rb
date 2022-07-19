@@ -145,6 +145,8 @@ module Restforce
 
     class ErrorInMailer < ResponseError; end
 
+    class ExceededIdLimit < ResponseError; end
+
     class ExceededMaxSemijoinSubselects < ResponseError; end
 
     class FailedActivation < ResponseError; end
@@ -484,6 +486,7 @@ module Restforce
       "ENTITY_IS_LOCKED" => EntityIsLocked,
       "ENVIRONMENT_HUB_MEMBERSHIP_CONFLICT" => EnvironmentHubMembershipConflict,
       "ERROR_IN_MAILER" => ErrorInMailer,
+      "EXCEEDED_ID_LIMIT" => ExceededIdLimit,
       "EXCEEDED_MAX_SEMIJOIN_SUBSELECTS" => ExceededMaxSemijoinSubselects,
       "FAILED_ACTIVATION" => FailedActivation,
       "FIELD_CUSTOM_VALIDATION_EXCEPTION" => FieldCustomValidationException,
