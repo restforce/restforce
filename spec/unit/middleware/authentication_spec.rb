@@ -53,39 +53,82 @@ describe Restforce::Middleware::Authentication do
     describe '.builder' do
       subject(:builder) { connection.builder }
 
-      context 'with logging disabled' do
-        before do
-          Restforce.stub log?: false
-        end
+      context "for Faraday 0.x" do
+        if faraday_before_first_major_version?
+          context 'with logging disabled' do
+            before do
+              Restforce.stub log?: false
+            end
 
-        its(:handlers) {
-          should include FaradayMiddleware::ParseJson
-        }
-        its(:handlers) { should_not include Restforce::Middleware::Logger }
-        its(:adapter) { should eq Faraday::Adapter::NetHttp }
+            its(:handlers) {
+              should include FaradayMiddleware::ParseJson
+            }
+            its(:handlers) { should_not include Restforce::Middleware::Logger }
+            its(:handlers) { should include Faraday::Adapter::NetHttp }
+          end
+
+          context 'with logging enabled' do
+            before do
+              Restforce.stub log?: true
+            end
+
+            its(:handlers) {
+              should include FaradayMiddleware::ParseJson,
+                             Restforce::Middleware::Logger
+            }
+            its(:handlers) { should include Faraday::Adapter::NetHttp }
+          end
+
+          context 'with specified adapter' do
+            before do
+              options[:adapter] = :typhoeus
+            end
+
+            its(:handlers) {
+              should include FaradayMiddleware::ParseJson
+            }
+            its(:handlers) { should include Faraday::Adapter::Typhoeus }
+          end
+        end
       end
 
-      context 'with logging enabled' do
-        before do
-          Restforce.stub log?: true
+      context "for Faraday 1.x onwards" do
+        unless faraday_before_first_major_version?
+          context 'with logging disabled' do
+            before do
+              Restforce.stub log?: false
+            end
+
+            its(:handlers) {
+              should include FaradayMiddleware::ParseJson
+            }
+            its(:handlers) { should_not include Restforce::Middleware::Logger }
+            its(:adapter) { should eq Faraday::Adapter::NetHttp }
+          end
+
+          context 'with logging enabled' do
+            before do
+              Restforce.stub log?: true
+            end
+
+            its(:handlers) {
+              should include FaradayMiddleware::ParseJson,
+                             Restforce::Middleware::Logger
+            }
+            its(:adapter) { should eq Faraday::Adapter::NetHttp }
+          end
+
+          context 'with specified adapter' do
+            before do
+              options[:adapter] = :typhoeus
+            end
+
+            its(:handlers) {
+              should include FaradayMiddleware::ParseJson
+            }
+            its(:adapter) { should eq Faraday::Adapter::Typhoeus }
+          end
         end
-
-        its(:handlers) {
-          should include FaradayMiddleware::ParseJson,
-                         Restforce::Middleware::Logger
-        }
-        its(:adapter) { should eq Faraday::Adapter::NetHttp }
-      end
-
-      context 'with specified adapter' do
-        before do
-          options[:adapter] = :typhoeus
-        end
-
-        its(:handlers) {
-          should include FaradayMiddleware::ParseJson
-        }
-        its(:adapter) { should eq Faraday::Adapter::Typhoeus }
       end
     end
 
@@ -97,23 +140,54 @@ describe Restforce::Middleware::Authentication do
   end
 
   describe '.error_message' do
-    context 'when response.body is present' do
-      let(:response) {
-        Faraday::Response.new(
-          response_body: { 'error' => 'error', 'error_description' => 'description' },
-          status: 401
-        )
-      }
+    context "for Faraday 1.x onwards" do
+      unless faraday_before_first_major_version?
+        context 'when response_body is present' do
+          let(:response) {
+            Faraday::Response.new(
+              response_body: { 'error' => 'error', 'error_description' => 'description' },
+              status: 401
+            )
+          }
 
-      subject { middleware.error_message(response) }
-      it { should eq "error: description (401)" }
+          subject { middleware.error_message(response) }
+          it { should eq "error: description (401)" }
+        end
+
+        context 'when response_body is nil' do
+          let(:response) { Faraday::Response.new(status: 401) }
+
+          subject { middleware.error_message(response) }
+          it { should eq "401" }
+        end
+      end
     end
 
-    context 'when response.body is nil' do
-      let(:response) { Faraday::Response.new(status: 401) }
+    context "for Faraday 0.x" do
+      if faraday_before_first_major_version?
+        context 'when response.body is present' do
+          let(:response) {
+            Faraday::Response.new(
+              response: {
+                body: { 'error' => 'error', 'error_description' => 'description' }
+              },
+              status: 401
+            )
+          }
 
-      subject { middleware.error_message(response) }
-      it { should eq "401" }
+          subject { middleware.error_message(response) }
+
+          # TODO: Investigate this behaviour in Faraday 0.x, which looks wrong
+          it { should eq "401" }
+        end
+
+        context 'when response.body is nil' do
+          let(:response) { Faraday::Response.new(status: 401) }
+
+          subject { middleware.error_message(response) }
+          it { should eq "401" }
+        end
+      end
     end
   end
 end
