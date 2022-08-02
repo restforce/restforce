@@ -8,6 +8,7 @@ jobs:
   lint-and-test:
     runs-on: ubuntu-latest
     strategy:
+      fail-fast: false
       matrix:
         # We test v0.16.2 as a modern version rather than a legacy version because it contains v1.x-style
         # breaking changes. See https://github.com/lostisland/faraday/releases/tag/v0.17.0.

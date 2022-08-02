@@ -8,6 +8,7 @@ jobs:
   lint-and-test:
     runs-on: ubuntu-latest
     strategy:
+      fail-fast: false
       matrix:
         # Faraday v0.16.x is not included here as that release was rolled back due to accidental
         # breaking changes - see https://github.com/lostisland/faraday/releases/tag/v0.17.0
