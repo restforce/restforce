@@ -1,7 +1,12 @@
 # frozen_string_literal: true
 
-# frozen_string_literal: true
-
+#
+# Taken from `lib/faraday_middleware/response/caching.rb` in the `faraday_middleware`
+# gem (<https://github.com/lostisland/faraday_middleware/blob/784b4f8/lib/faraday_middleware/response/caching.rb>).
+#
+# Copyright (c) 2011 Erik Michaels-Ober, Wynn Netherland, et al.
+# Licensed under the MIT License.
+#
 require 'faraday'
 require 'forwardable'
 require 'digest/sha1'
@@ -52,8 +57,6 @@ module Restforce
     end
 
     def call(env)
-      expire(cache_key(env)) unless use_cache?
-
       if env[:method] == :get
         if env[:parallel_manager]
           # callback mode
@@ -81,7 +84,7 @@ module Restforce
       end
       url.normalize!
       digest = full_key? ? url.host + url.request_uri : url.request_uri
-      Digest::SHA1.hexdigest(digest) + hashed_auth_header(env)
+      Digest::SHA1.hexdigest(digest)
     end
 
     def params_to_ignore
@@ -132,20 +135,6 @@ module Restforce
         response.instance_variable_set('@env', env)
       end
       response
-    end
-
-    def expire(key)
-      cache&.delete(key)
-    end
-
-    def use_cache?
-      @options[:use_cache]
-    end
-
-    def hashed_auth_header(env)
-      Digest::SHA1.hexdigest(
-        env[:request_headers][Restforce::Middleware::Authorization::AUTH_HEADER]
-      )
     end
   end
 end
