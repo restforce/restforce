@@ -1,6 +1,11 @@
 # frozen_string_literal: true
 
+# rubocop:disable Lint/DuplicateBranch
 case Faraday::VERSION
+when /\A0\.16\./
+  # Faraday 0.16.x behaves like v1.x - see
+  # https://github.com/lostisland/faraday/releases/tag/v0.17.0
+  require 'faraday/file_part'
 when /\A0\./
   require 'faraday/upload_io'
 when /\A1\.[0-8]\./
@@ -16,6 +21,7 @@ else
   raise "Unexpected Faraday version #{Faraday::VERSION} - not sure how to set up " \
         "multipart support"
 end
+# rubocop:enable Lint/DuplicateBranch
 
 module Restforce
   if defined?(::Faraday::FilePart)
