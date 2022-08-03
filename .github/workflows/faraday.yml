@@ -4,6 +4,7 @@ jobs:
   lint-and-test:
     runs-on: ubuntu-latest
     strategy:
+      fail-fast: false
       matrix:
         # Normally, we only test the most recent patch version for any given minor version.
         # For v2.0.x, we test v2.0.0 and v2.0.1 because v2.0.0 has a special behaviour where
