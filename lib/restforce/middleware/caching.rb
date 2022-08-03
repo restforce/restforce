@@ -4,6 +4,9 @@
 # Taken from `lib/faraday_middleware/response/caching.rb` in the `faraday_middleware`
 # gem (<https://github.com/lostisland/faraday_middleware/blob/784b4f8/lib/faraday_middleware/response/caching.rb>).
 #
+# Includes some small modifications to allow the cache to be cleared in
+# `#without_caching` mode, replicating traditional Restforce behaviour.
+#
 # Copyright (c) 2011 Erik Michaels-Ober, Wynn Netherland, et al.
 # Licensed under the MIT License.
 #
@@ -57,6 +60,11 @@ module Restforce
     end
 
     def call(env)
+      # Taken from `Restforce::Middleware::Caching` implementation
+      # before we switched away from the `faraday_middleware` gem.
+      # See https://github.com/restforce/restforce/blob/a08b9d6c5e277bd7111ffa7ed50465dd49c05fab/lib/restforce/middleware/caching.rb.
+      cache&.delete(cache_key(env)) unless use_cache?
+
       if env[:method] == :get
         if env[:parallel_manager]
           # callback mode
@@ -135,6 +143,13 @@ module Restforce
         response.instance_variable_set('@env', env)
       end
       response
+    end
+
+    # Taken from `Restforce::Middleware::Caching` implementation
+    # before we switched away from the `faraday_middleware` gem.
+    # See https://github.com/restforce/restforce/blob/a08b9d6c5e277bd7111ffa7ed50465dd49c05fab/lib/restforce/middleware/caching.rb.
+    def use_cache?
+      @options[:use_cache]
     end
   end
 end
