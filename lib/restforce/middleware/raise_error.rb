@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 module Restforce
-  class Middleware::RaiseError < Faraday::Response::Middleware
+  class Middleware::RaiseError < Faraday::Middleware
     def on_complete(env)
       @env = env
       case env[:status]
