@@ -27,6 +27,24 @@ module Restforce
       @preserve_raw = preserve_raw
     end
 
+    #
+    # Taken from `lib/faraday/middleware.rb` in the `faraday`
+    # gem (<https://github.com/lostisland/faraday/blob/08b7d4d/lib/faraday/middleware.rb>).
+    #
+    # In Faraday versions before v1.2.0, `#call` is missing.
+    #
+    # Copyright (c) 2009-2022 Rick Olson, Zack Hobson
+    # Licensed under the MIT License.
+    #
+    attr_reader :app
+
+    def call(env)
+      on_request(env) if respond_to?(:on_request)
+      app.call(env).on_complete do |environment|
+        on_complete(environment) if respond_to?(:on_complete)
+      end
+    end
+
     def on_complete(env)
       process_response(env) if parse_response?(env)
     end
