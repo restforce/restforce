@@ -59,7 +59,7 @@ describe Restforce::Middleware::Authentication do
         end
 
         its(:handlers) {
-          should include FaradayMiddleware::ParseJson
+          should include Restforce::Middleware::JsonResponse
         }
         its(:handlers) { should_not include Restforce::Middleware::Logger }
         its(:adapter) { should eq Faraday::Adapter::NetHttp }
@@ -71,7 +71,7 @@ describe Restforce::Middleware::Authentication do
         end
 
         its(:handlers) {
-          should include FaradayMiddleware::ParseJson,
+          should include Restforce::Middleware::JsonResponse,
                          Restforce::Middleware::Logger
         }
         its(:adapter) { should eq Faraday::Adapter::NetHttp }
@@ -83,7 +83,7 @@ describe Restforce::Middleware::Authentication do
         end
 
         its(:handlers) {
-          should include FaradayMiddleware::ParseJson
+          should include Restforce::Middleware::JsonResponse
         }
         its(:adapter) { should eq Faraday::Adapter::Typhoeus }
       end
