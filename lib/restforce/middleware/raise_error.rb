@@ -2,6 +2,15 @@
 
 module Restforce
   class Middleware::RaiseError < Faraday::Middleware
+    # Required for Faraday versions pre-v1.2.0 which do not include
+    # an implementation of `#call` by default
+    def call(env)
+      on_request(env) if respond_to?(:on_request)
+      @app.call(env).on_complete do |environment|
+        on_complete(environment) if respond_to?(:on_complete)
+      end
+    end
+
     def on_complete(env)
       @env = env
       case env[:status]
