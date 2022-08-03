@@ -64,6 +64,8 @@ module Restforce
   EntityTooLargeError = Class.new(ResponseError)
 
   require 'restforce/error_code'
+  require 'restforce/middleware/json_request'
+  require 'restforce/middleware/json_response'
 
   class << self
     # Alias for Restforce::Data::Client.new

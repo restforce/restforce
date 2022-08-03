@@ -14,6 +14,8 @@ module Restforce
     autoload :Logger,         'restforce/middleware/logger'
     autoload :Gzip,           'restforce/middleware/gzip'
     autoload :CustomHeaders,  'restforce/middleware/custom_headers'
+    autoload :JsonRequest,    'restforce/middleware/json_request'
+    autoload :JsonResponse,   'restforce/middleware/json_response'
 
     def initialize(app, client, options)
       super(app)

@@ -61,7 +61,7 @@ describe Restforce::Middleware::Authentication do
             end
 
             its(:handlers) {
-              should include Faraday::Response::Json
+              should include Restforce::Middleware::JsonResponse
             }
             its(:handlers) { should_not include Restforce::Middleware::Logger }
             its(:handlers) { should include Faraday::Adapter::NetHttp }
@@ -73,7 +73,7 @@ describe Restforce::Middleware::Authentication do
             end
 
             its(:handlers) {
-              should include Faraday::Response::Json,
+              should include Restforce::Middleware::JsonResponse,
                              Restforce::Middleware::Logger
             }
             its(:handlers) { should include Faraday::Adapter::NetHttp }
@@ -81,7 +81,7 @@ describe Restforce::Middleware::Authentication do
         end
 
         its(:handlers) {
-          should include Faraday::Response::Json
+          should include Restforce::Middleware::JsonResponse
         }
         its(:handlers) { should_not include Restforce::Middleware::Logger }
         its(:adapter) { should eq Faraday::Adapter::NetHttp }
@@ -95,7 +95,7 @@ describe Restforce::Middleware::Authentication do
             end
 
             its(:handlers) {
-              should include Faraday::Response::Json
+              should include Restforce::Middleware::JsonResponse
             }
             its(:handlers) { should_not include Restforce::Middleware::Logger }
             its(:adapter) { should eq Faraday::Adapter::NetHttp }
@@ -107,15 +107,15 @@ describe Restforce::Middleware::Authentication do
             end
 
             its(:handlers) {
-              should include Faraday::Response::Json,
+              should include Restforce::Middleware::JsonResponse,
                              Restforce::Middleware::Logger
             }
             its(:adapter) { should eq Faraday::Adapter::NetHttp }
           end
         end
-        
+
         its(:handlers) {
-          should include Faraday::Response::Json,
+          should include Restforce::Middleware::JsonResponse,
                          Restforce::Middleware::Logger
         }
         its(:adapter) { should eq Faraday::Adapter::NetHttp }
