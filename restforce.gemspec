@@ -27,6 +27,7 @@ Gem::Specification.new do |gem|
   gem.add_dependency 'faraday', '< 2.5.0', '>= 1.0.0'
   gem.add_dependency 'faraday-follow_redirects', '<= 0.3.0', '< 1.0.0'
   gem.add_dependency 'faraday-multipart', '>= 1.0.0', '< 2.0.0'
+  gem.add_dependency 'faraday-net_http', '< 3.0.0'
   gem.add_dependency 'hashie', '>= 1.2.0', '< 6.0'
   gem.add_dependency 'jwt', ['>= 1.5.6']
 end
