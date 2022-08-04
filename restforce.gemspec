@@ -22,7 +22,7 @@ Gem::Specification.new do |gem|
 'rubygems_mfa_required' => 'true'
   }
 
-  gem.required_ruby_version = '>= 2.6'
+  gem.required_ruby_version = '>= 2.7'
 
   gem.add_dependency 'faraday', '< 2.5.0', '>= 1.1.0'
   gem.add_dependency 'faraday-follow_redirects', '<= 0.3.0', '< 1.0.0'
