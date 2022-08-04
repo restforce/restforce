@@ -8,6 +8,8 @@ require 'jwt'
 require 'restforce/version'
 require 'restforce/config'
 
+require 'restforce/patches/dependency_loader' if Faraday::VERSION.start_with?("1.0")
+
 module Restforce
   autoload :AbstractClient, 'restforce/abstract_client'
   autoload :SignedRequest,  'restforce/signed_request'
