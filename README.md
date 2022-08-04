@@ -1,5 +1,8 @@
 # Restforce
 
+> **Note**
+> We're looking for users to help test Restforce `v6.0.0.rc.1`, which adds compatibility with [`faraday`](https://github.com/lostisland/faraday) v2.x. To learn more, see our [discussion](https://github.com/restforce/restforce/discussions/733).
+
 [![CircleCI](https://circleci.com/gh/restforce/restforce.svg?style=svg)](https://circleci.com/gh/restforce/restforce)
 ![Downloads](https://img.shields.io/gem/dt/restforce.svg)
 
