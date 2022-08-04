@@ -1,5 +1,10 @@
 # Restforce
 
+> **Warning**
+> You're currently viewing the readme for the experimental, pre-release `v6.0.0.rc.1` version of Restforce, which adds support for [`faraday`](https://github.com/lostisland/faraday) v2.x, but drops support for Faraday versions before v1.1.0 and compatibility with Ruby 2.6.
+>
+> Unless you want to try this new version, you should head back to the [`main` branch](https://github.com/restforce/restforce).
+
 [![CircleCI](https://circleci.com/gh/restforce/restforce.svg?style=svg)](https://circleci.com/gh/restforce/restforce)
 ![Downloads](https://img.shields.io/gem/dt/restforce.svg)
 
