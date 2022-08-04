@@ -1,3 +1,32 @@
+# Upgrading from Restforce 5.x to 6.x
+
+__There are two breaking changes introduced in Restforce 6.x__. In this guide, you'll learn about these changes and what you should check in your code to make sure that it will work with the latest version of the library.
+
+## Versions of `faraday` before `v1.1.0` are no longer supported
+
+__Likelyhood of impact__: Moderate
+
+Restforce uses a gem called [`faraday`](https://github.com/lostisland/faraday) to make HTTP requests to Salesforce. 
+
+Up until now, Restforce has supported Faraday versions between v0.9.0 and v1.10.0. 
+
+In Restforce 6.x, we drop support for Faraday versions before v1.1.0, and add support for Faraday v2.x.
+
+This will allow you to use the latest versions of Faraday and benefit from security patches, new features, etc., but you may need to adapt your code. The impact of this change will depend on your project:
+
+* If Restforce is the only part of your project using Faraday - that is, your own code doesn't use Faraday and none of your other gems use Faraday - then you shouldn't need to do anything special. Just upgrade Restforce, and everything should be handled automatically.
+* If your own code uses Faraday or another gem you use depends on Faraday, and you're currently using a Faraday version before v1.1.0, you will need to upgrade your Faraday version. If possible, you should upgrade to the latest version (v2.4.0 at the time of writing). This may require you to adapt your code (see [here](https://github.com/lostisland/faraday/blob/main/UPGRADING.md) for Faraday's instructions) or upgrade other gems you depend on.
+
+## Ruby 2.6 is no longer supported
+
+__Likelyhood of impact__: Moderate
+
+Ruby 2.6 is no longer officially supported as an active version of the Ruby language. That means that it will not receive patches and security fixes.
+
+Accordingly, we've dropped support for Ruby 2.6 and earlier in the Restforce library. The gemspec now specifies that only 2.7 onwards is supported, and this will be enforced by RubyGems.
+
+Before you update to Restforce 6.x, you'll need to switch to Ruby 2.7 or later. The current version of Ruby at the time of wriing is 3.1.
+
 # Upgrading from Restforce 4.x to 5.x
 
 __There are three breaking changes introduced in Restforce 5.x__. In this guide, you'll learn about these changes and what you should check in your code to make sure that it will work with the latest version of the library.
