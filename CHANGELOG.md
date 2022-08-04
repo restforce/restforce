@@ -1,3 +1,13 @@
+# 6.0.0.rc.1 (Aug 4 2022)
+
+*This version is a release candidate. Once we have gathered feedback from users and are confident that it works as expected, we will release a final `v6.0.0` version.*
+
+__This version contains breaking changes. For help with upgrading, see [`UPGRADING.md`](https://github.com/restforce/restforce/blob/v6.0.0.rc.1/UPGRADING.md).__
+
+* __⚠️  Drop support for Ruby 2.6__, since [Ruby 2.6 has reached its end-of-life](https://www.ruby-lang.org/en/downloads/) (@timrogers)
+* __⚠️  Drop compatability with `faraday` versions before `v1.1.0`__ (@timrogers)
+* Add support for `faraday` versions `v2.0.0` onwards (@timrogers)
+
 # 5.3.1 (Jul 19 2022)
 
 * Handle the `EXCEEDED_ID_LIMIT` error returned by the Salesforce API (@timrogers, @yashshah1)
