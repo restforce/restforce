@@ -73,22 +73,9 @@ describe Restforce::Concerns::Connection do
         Restforce.stub(log?: true)
       end
 
-      context "for Faraday 1.x onwards" do
-        unless faraday_before_first_major_version?
-          it "must always be used as the last handler before the adapter" do
-            client.middleware.handlers.reverse.index(Restforce::Middleware::Logger).
-              should eq 0
-          end
-        end
-      end
-
-      context "for Faraday 0.x" do
-        if faraday_before_first_major_version?
-          it "must always be used as the last handler" do
-            client.middleware.handlers.reverse.index(Restforce::Middleware::Logger).
-              should eq 1
-          end
-        end
+      it "must always be used as the last handler before the adapter" do
+        client.middleware.handlers.reverse.index(Restforce::Middleware::Logger).
+          should eq 0
       end
     end
   end

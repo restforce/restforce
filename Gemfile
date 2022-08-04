@@ -3,8 +3,10 @@
 source 'https://rubygems.org'
 gemspec
 
+faraday_version = ENV.fetch('FARADAY_VERSION', '~> 1.8.0')
+
 # Enable us to explicitly pick a Faraday version when running tests
-gem 'faraday', ENV.fetch('FARADAY_VERSION', '~> 1.8.0')
+gem 'faraday', faraday_version
 gem 'faye' unless RUBY_PLATFORM == 'java'
 gem 'guard-rspec'
 gem 'guard-rubocop'
@@ -17,3 +19,5 @@ gem 'rspec_junit_formatter', '~> 0.5.1'
 gem 'rubocop', '~> 1.32.0'
 gem 'simplecov', '~> 0.21.2'
 gem 'webmock', '~> 3.16.0'
+
+gem 'faraday-typhoeus', '~> 0.2.1' unless faraday_version.start_with?("~> 1")

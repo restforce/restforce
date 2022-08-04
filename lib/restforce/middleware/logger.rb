@@ -3,7 +3,7 @@
 require 'forwardable'
 
 module Restforce
-  class Middleware::Logger < Faraday::Response::Middleware
+  class Middleware::Logger < Faraday::Middleware
     extend Forwardable
 
     def initialize(app, logger, options)
@@ -24,7 +24,11 @@ module Restforce
              headers: env[:request_headers],
              body: env[:body]
       end
-      super
+
+      on_request(env) if respond_to?(:on_request)
+      @app.call(env).on_complete do |environment|
+        on_complete(environment) if respond_to?(:on_complete)
+      end
     end
 
     def on_complete(env)
