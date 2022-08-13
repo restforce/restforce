@@ -20,6 +20,7 @@ module Restforce
       ensure_id
       new_record = @client.find(sobject_type, self.Id)
       deep_update(new_record.attrs)
+      new_record
     end
 
     # Public: Persist the attributes to Salesforce.
