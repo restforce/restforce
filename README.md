@@ -194,7 +194,7 @@ end
 
 By default, the gem defaults to using Version 26.0 (Winter '13) of the Salesforce API. This maintains backwards compatibility for existing users.
 
-__We strongly suggest configuring Restforce to use the most recent API version, currently Version 41.0 (Winter '18) to get the best Salesforce API experience__ - for example, some more recently-added API endpoints will not be available without moving to a more recent
+__We strongly suggest configuring Restforce to use the [most recent API version](https://developer.salesforce.com/docs/atlas.en-us.api_rest.meta/api_rest/dome_versions.htm), to get the best Salesforce API experience__ - for example, some more recently-added API endpoints will not be available without moving to a more recent
 version. If you're trying to use a method that is unavailable with your API version,
 Restforce will raise an `APIVersionError`.
 
