@@ -153,6 +153,8 @@ export SALESFORCE_API_VERSION="41.0"
 client = Restforce.new
 ```
 
+**Note:** Restforce library does not cache JWT Bearer tokens automatically. This means that every instantiation of the Restforce class will be treated as a new login by Salesforce. Remember that Salesforce enforces [rate limits on login requests](https://help.salesforce.com/s/articleView?id=000312767&type=1). If you are building an application that will instantiate the Restforce class more than this specified rate limit, you might want to consider caching the Bearer token either in-memory or in your own storage by leveraging the `authentication_callback` method. 
+
 #### Sandbox Organizations
 
 You can connect to sandbox organizations by specifying a host. The default host is
