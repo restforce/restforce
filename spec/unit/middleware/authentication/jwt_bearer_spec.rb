@@ -18,14 +18,22 @@ describe Restforce::Middleware::Authentication::JWTBearer do
       stub_login_request(
         body: "grant_type=grant_type—urn:ietf:params:oauth:grant-type:jwt-bearer&" \
               "assertion=abc1234567890"
-      ).to_return(status: 200, body: fixture(:auth_success_response))
+      ).to_return(
+        status: 200,
+        body: fixture(:auth_success_response),
+        headers: { "Content-Type" => "application/json" }
+      )
     end
 
     let(:fail_request) do
       stub_login_request(
         body: "grant_type=grant_type—urn:ietf:params:oauth:grant-type:jwt-bearer&" \
               "assertion=abc1234567890"
-      ).to_return(status: 400, body: fixture(:refresh_error_response))
+      ).to_return(
+        status: 400,
+        body: fixture(:refresh_error_response),
+        headers: { "Content-Type" => "application/json" }
+      )
     end
   end
 
@@ -48,14 +56,22 @@ describe Restforce::Middleware::Authentication::JWTBearer do
         stub_login_request(
           body: "grant_type=grant_type—urn:ietf:params:oauth:grant-type:jwt-bearer&" \
                 "assertion=abc1234567890"
-        ).to_return(status: 200, body: fixture(:auth_success_response))
+        ).to_return(
+          status: 200,
+          body: fixture(:auth_success_response),
+          headers: { "Content-Type" => "application/json" }
+        )
       end
 
       let(:fail_request) do
         stub_login_request(
           body: "grant_type=grant_type—urn:ietf:params:oauth:grant-type:jwt-bearer&" \
                 "assertion=abc1234567890"
-        ).to_return(status: 400, body: fixture(:refresh_error_response))
+        ).to_return(
+          status: 400,
+          body: fixture(:refresh_error_response),
+          headers: { "Content-Type" => "application/json" }
+        )
       end
     end
   end

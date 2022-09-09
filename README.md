@@ -1,8 +1,5 @@
 # Restforce
 
-> **Note**
-> We're looking for users to help test Restforce `v6.0.0.rc.1`, which adds compatibility with [`faraday`](https://github.com/lostisland/faraday) v2.x. To learn more, see our [discussion](https://github.com/restforce/restforce/discussions/733).
-
 [![CircleCI](https://circleci.com/gh/restforce/restforce.svg?style=svg)](https://circleci.com/gh/restforce/restforce)
 ![Downloads](https://img.shields.io/gem/dt/restforce.svg)
 
@@ -30,7 +27,7 @@ Features include:
 
 Add this line to your application's Gemfile:
 
-    gem 'restforce', '~> 5.3.1'
+    gem 'restforce', '~> 6.0.0.rc.1'
 
 And then execute:
 
@@ -40,8 +37,9 @@ Or install it yourself as:
 
     $ gem install restforce
 
-__As of version 5.1.0, this gem is only compatible with Ruby 2.6.0 and later.__ If you're using an earlier Ruby version:
+__As of version 6.0.0.rc.1, this gem is only compatible with Ruby 2.7.0 and later.__ If you're using an earlier Ruby version:
 
+* for Ruby 2.6, use version 5.3.1 or earlier
 * for Ruby 2.5, use version 5.0.6 or earlier
 * for Ruby 2.4, use version 4.3.0 or earlier
 * for Ruby 2.3, use version 3.2.0 or earlier
