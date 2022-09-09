@@ -27,7 +27,7 @@ Features include:
 
 Add this line to your application's Gemfile:
 
-    gem 'restforce', '~> 6.0.0.rc.1'
+    gem 'restforce', '~> 6.0.0'
 
 And then execute:
 
@@ -37,7 +37,7 @@ Or install it yourself as:
 
     $ gem install restforce
 
-__As of version 6.0.0.rc.1, this gem is only compatible with Ruby 2.7.0 and later.__ If you're using an earlier Ruby version:
+__As of version 6.0.0, this gem is only compatible with Ruby 2.7.0 and later.__ If you're using an earlier Ruby version:
 
 * for Ruby 2.6, use version 5.3.1 or earlier
 * for Ruby 2.5, use version 5.0.6 or earlier
