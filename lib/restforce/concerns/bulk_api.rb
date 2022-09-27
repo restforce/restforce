@@ -14,62 +14,49 @@ module Restforce
         FAILED = 'Failed'
       end
 
-      extend Restforce::Concerns::Verbs
-
-      define_verbs :post, :put, :patch
-
-      def bulk_upsert(sobject_name, external_key, data)
-        response_on_create = api_post(
-          'jobs/ingest',
-          UpsertJob.create_params(sobject_name, external_key).to_json
-        )
-
-        job = UpsertJob.new(response_on_create.body)
-
-        api_put(
-          "#{job.api_path}/batches",
-          job.prepare_upload_content(data)
-        )
-
-        api_patch(
-          job.api_path,
-          job.patch_state_params(JobState::UPLOAD_COMPLETED).to_json
-        )
-
-        job
+      def bulk_upsert(sobject_name, external_key, _data)
+        UpsertJob.create!(sobject_name, external_key, connection: connection,
+                                                      options: options)
       end
 
       class UpsertJob
-        attr_reader :id, :object_name, :external_key
+        attr_reader :id, :sobject_name, :external_key
 
-        def self.create_params(sobject_name, external_key)
-          {
-            object: sobject_name,
-            contentType: 'CSV',
-            operation: 'upsert',
-            lineEnding: 'LF',
-            externalIdFieldName: external_key
-          }
+        private_class_method :new
+
+        def initialize(_sobject_name, _external_key, connection:, options:)
+          @connection = connection
+          @options = options
         end
 
-        def initialize(response_body)
-          @id = response_body['id']
-          @object_name = response_body['object']
-          @external_key = response_body['externalIdField']
+        def self.create!(sobject_name, external_key, connection:, options:)
+          job = new(sobject_name, external_key, connection: connection, options: options)
+
+          puts "path #{job.bulk_api_path}"
+          response = connection.post(job.bulk_api_path) do |req|
+            req.headers['Content-Type'] = 'application/json'
+            req.body = {
+              object: sobject_name,
+              contentType: 'CSV',
+              operation: 'upsert',
+              lineEnding: 'LF',
+              externalIdFieldName: external_key
+            }.to_json
+          end
+
+          job.send(:id=, response.body['id'])
+          job
         end
 
-        def api_path
-          "jobs/#{id}"
+        def bulk_api_path(path = '')
+          "/services/data/v#{options[:api_version]}/jobs/ingest/#{path}"
         end
 
-        def patch_state_params(state)
-          { 'state' => state }
-        end
+        private
 
-        def prepare_upload_content(_data)
-          # TODO: turn it into a CSV
-          []
-        end
+        attr_writer :id
+
+        attr_reader :connection, :options
       end
     end
   end
