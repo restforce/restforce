@@ -14,8 +14,65 @@ describe Restforce::Middleware::Authentication do
   end
 
   describe '.authenticate!' do
-    subject { lambda { middleware.authenticate! } }
-    it      { should raise_error NotImplementedError }
+    context 'without params' do
+      it 'raises' do
+        expect { middleware.authenticate! }.to raise_error NotImplementedError
+      end
+    end
+
+    context 'with params' do
+      before { allow(middleware).to receive(:params).and_return({foo: :bar}) }
+
+      context 'with a successful reauth' do
+        let(:reauth_success_response) { fixture(:reauth_success_response) }
+        let(:mashed_reauth_success_response) { Restforce::Mash.new(JSON.parse(reauth_success_response)) }
+
+        before do
+          stub_request(:post, "https://login.salesforce.com/services/oauth2/token").
+            with(:body => {"foo"=>"bar"},
+                 :headers => {'Accept'=>'*/*', 'Accept-Encoding'=>'gzip;q=1.0,deflate;q=0.6,identity;q=0.3', 'Content-Type'=>'application/x-www-form-urlencoded'}).
+            to_return(:status => 200, :body => reauth_success_response, :headers => {'Content-Type' => 'application/json;charset=UTF-8'})
+        end
+
+        it 'returns the response body' do
+          expect(middleware.authenticate!).to eq mashed_reauth_success_response
+        end
+
+        context 'with an authentication wrapper' do
+          it 'calls the authentication wrapper' do
+            # Test setup happens here so both setup and expectation have access to wrapper_called
+            wrapper_called = false
+            auth_wrapper = ->(&block) { wrapper_called = true; block.call }
+            options.merge!(:authentication_wrapper => auth_wrapper)
+
+            middleware.authenticate!
+            expect(wrapper_called).to be_true
+          end
+
+          it 'returns the response body' do
+            auth_wrapper = ->(&block) { result = block.call; wrapper_called = true; result }
+            options.merge!(:authentication_wrapper => auth_wrapper)
+            expect(middleware.authenticate!).to eq mashed_reauth_success_response
+          end
+        end
+      end
+
+      context 'with a failed reauth' do
+        let(:refresh_error_response) { fixture(:refresh_error_response) }
+        let(:mashed_refresh_error_response) { Restforce::Mash.new(JSON.parse(refresh_error_response)) }
+
+        before do
+          stub_request(:post, "https://login.salesforce.com/services/oauth2/token").
+            with(:body => {"foo"=>"bar"},
+                 :headers => {'Accept'=>'*/*', 'Accept-Encoding'=>'gzip;q=1.0,deflate;q=0.6,identity;q=0.3', 'Content-Type'=>'application/x-www-form-urlencoded'}).
+            to_return(:status => 400, :body => refresh_error_response, :headers => {'Content-Type' => 'application/json;charset=UTF-8'})
+        end
+
+        it 'raises AuthenticationError' do
+          expect { middleware.authenticate! }.to raise_error Restforce::AuthenticationError
+        end
+      end
+    end
   end
 
   describe '.call' do
