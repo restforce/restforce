@@ -5,48 +5,36 @@ require 'csv'
 
 describe Restforce::Concerns::BulkAPI do
   let(:endpoint) { 'jobs/ingest' }
+  let(:options) { { api_version: 52.0 } }
+  let(:connection) { double('Faraday::Connection', post: nil, patch: nil) }
+
+  before do
+    allow(client).to receive(:options).and_return(options)
+    allow(client).to receive(:connection).and_return(connection)
+  end
 
   describe '.bulk_upsert' do
-    let(:response_on_create) do
-      double('Faraday::Response', body: {
-               'id' => 'abc',
-               'operation' => 'upsert',
-               'object' => 'foo',
-               'externalIdFieldName' => 'bar'
-             })
-    end
-
-    let(:response_on_put) { double('Faraday::Response', body: {}) }
-    let(:response_on_patch) { double('Faraday::Response', body: {}) }
+    let(:job) { double('UpsertJob', create!: nil, upload_csv: nil, patch_state: nil) }
 
     before do
-      create_job_payload = {
-        object: 'foo',
-        contentType: 'CSV',
-        operation: 'upsert',
-        lineEnding: 'LF',
-        externalIdFieldName: 'bar'
-      }
-
-      allow(client).
-        to receive(:api_post).
-        with(endpoint, create_job_payload.to_json).
-        and_return(response_on_create)
-
-      allow(client).
-        to receive(:api_put).
-        with('jobs/abc/batches', []).
-        and_return(response_on_put)
-
-      allow(client).
-        to receive(:api_patch).
-        with('jobs/abc', { 'state' => 'UploadComplete' }.to_json).
-        and_return(response_on_put)
+      expect(Restforce::Concerns::BulkAPI::UpsertJob).
+        to receive(:create!).
+        with('foo', 'bar', connection: connection, options: options).
+        and_return(job)
     end
 
-    it 'returns the UpsertJob' do
-      job = client.bulk_upsert("foo", "bar", [])
-      expect(job.id).to eq 'abc'
+    it 'creates a bulk upsert job' do
+      client.bulk_upsert('foo', 'bar', [])
+    end
+
+    it 'calls #upload_csv on the job' do
+      expect(job).to receive(:upload_csv).and_return(nil)
+      client.bulk_upsert('foo', 'bar', [])
+    end
+
+    it 'sets the job state to UploadComplete' do
+      expect(job).to receive(:patch_state).with('UploadComplete').and_return(nil)
+      client.bulk_upsert('foo', 'bar', [])
     end
   end
 end
