@@ -5,7 +5,8 @@ require 'csv'
 
 describe Restforce::Concerns::BulkAPI do
   let(:endpoint) { 'jobs/ingest' }
-  let(:options) { { api_version: 52.0 } }
+  let(:api_version) { 52.0 }
+  let(:options) { { api_version: api_version } }
   let(:connection) { double('Faraday::Connection', post: nil, patch: nil) }
 
   before do
@@ -35,6 +36,33 @@ describe Restforce::Concerns::BulkAPI do
     it 'sets the job state to UploadComplete' do
       expect(job).to receive(:patch_state).with('UploadComplete').and_return(nil)
       client.bulk_upsert('foo', 'bar', [])
+    end
+  end
+
+  describe '.retrieve_ingest_job' do
+    context 'with an valid job id' do
+      let(:job_id) { 'abcd' }
+      let(:response) do
+        double('Faraday::Response', body: {
+                 'id' => job_id,
+                 'object' => 'foo',
+                 'externalIdFieldName' => 'bar'
+               })
+      end
+
+      before do
+        expect(connection).
+          to receive(:get).
+          with("/services/data/v#{api_version}/jobs/ingest/#{job_id}").
+          and_return(response)
+      end
+
+      it 'fetches for job given the id' do
+        retrieved_job = client.retrieve_ingest_job(job_id)
+        expect(retrieved_job.id).to eq job_id
+        expect(retrieved_job.sobject_name).to eq 'foo'
+        expect(retrieved_job.external_key).to eq 'bar'
+      end
     end
   end
 end

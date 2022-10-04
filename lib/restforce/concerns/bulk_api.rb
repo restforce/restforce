@@ -22,6 +22,10 @@ module Restforce
         job
       end
 
+      def retrieve_ingest_job(job_id)
+        UpsertJob.retrieve(job_id, connection: connection, options: options)
+      end
+
       class UpsertJob
         attr_reader :id, :sobject_name, :external_key
 
@@ -52,6 +56,18 @@ module Restforce
           job
         end
 
+        def self.retrieve(job_id, connection:, options:)
+          response = connection.
+                     get("/services/data/v#{options[:api_version]}/jobs/ingest/#{job_id}")
+
+          body = response.body
+
+          job = new(body['object'], body['externalIdFieldName'], connection: connection,
+                                                                 options: options)
+          job.send(:id=, job_id)
+          job
+        end
+
         def bulk_api_path(path = '')
           "/services/data/v#{options[:api_version]}/jobs/ingest/#{path}"
         end
@@ -62,7 +78,7 @@ module Restforce
 
         def upload_csv(data)
           path = job_api_path('batches')
-          puts path
+
           connection.put(path) do |req|
             req.headers['Content-Type'] = 'text/csv'
             req.headers['Accept'] = 'application/json'
@@ -72,6 +88,11 @@ module Restforce
 
         def patch_state(state)
           patch({ 'state' => state })
+        end
+
+        def inspect
+          "BulkUpsertJob(id: #{id}, object: '#{sobject_name}', \
+            externalIdFieldName:'#{external_key}')"
         end
 
         private
