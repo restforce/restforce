@@ -59,13 +59,14 @@ module Restforce
         def self.retrieve(job_id, connection:, options:)
           response = connection.
                      get("/services/data/v#{options[:api_version]}/jobs/ingest/#{job_id}")
-
           body = response.body
 
           job = new(body['object'], body['externalIdFieldName'], connection: connection,
                                                                  options: options)
           job.send(:id=, job_id)
           job
+        rescue Restforce::NotFoundError
+          raise BulkAPIError, "job with id #{job_id} cannot be found."
         end
 
         def bulk_api_path(path = '')

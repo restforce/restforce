@@ -64,5 +64,22 @@ describe Restforce::Concerns::BulkAPI do
         expect(retrieved_job.external_key).to eq 'bar'
       end
     end
+
+    context 'with an invalid job id' do
+      let(:response) { Faraday::Response.new(status: 404) }
+
+      before do
+        expect(connection).
+          to receive(:get).
+          with("/services/data/v#{api_version}/jobs/ingest/invalid_id").
+          and_raise(Restforce::NotFoundError.new(nil))
+      end
+
+      it 'raises BulkApiError' do
+        expect do
+          client.retrieve_ingest_job('invalid_id')
+        end.to raise_error Restforce::BulkAPIError
+      end
+    end
   end
 end
