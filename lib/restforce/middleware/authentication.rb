@@ -6,8 +6,9 @@ module Restforce
   # will attempt to either reauthenticate (username and password) or refresh
   # the oauth access token (if a refresh token is present).
   class Middleware::Authentication < Restforce::Middleware
-    autoload :Password, 'restforce/middleware/authentication/password'
-    autoload :Token,    'restforce/middleware/authentication/token'
+    autoload :Password,  'restforce/middleware/authentication/password'
+    autoload :Token,     'restforce/middleware/authentication/token'
+    autoload :JWTBearer, 'restforce/middleware/authentication/jwt_bearer'
 
     # Rescue from 401's, authenticate then raise the error again so the client
     # can reissue the request.
@@ -48,6 +49,7 @@ module Restforce
       @connection ||= Faraday.new(faraday_options) do |builder|
         builder.use Faraday::Request::UrlEncoded
         builder.use Restforce::Middleware::Mashify, nil, @options
+        builder.use Faraday::FollowRedirects::Middleware
         builder.response :json
 
         if Restforce.log?
@@ -62,7 +64,10 @@ module Restforce
 
     # Internal: The parsed error response.
     def error_message(response)
-      "#{response.body['error']}: #{response.body['error_description']}"
+      return response.status.to_s unless response.body
+
+      "#{response.body['error']}: #{response.body['error_description']} " \
+        "(#{response.status})"
     end
 
     # Featured detect form encoding.

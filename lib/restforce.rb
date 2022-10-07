@@ -1,8 +1,9 @@
 # frozen_string_literal: true
 
 require 'faraday'
-require 'faraday_middleware'
+require 'faraday/follow_redirects'
 require 'json'
+require 'jwt'
 
 require 'restforce/version'
 require 'restforce/config'
@@ -14,7 +15,8 @@ module Restforce
   autoload :Middleware,     'restforce/middleware'
   autoload :Attachment,     'restforce/attachment'
   autoload :Document,       'restforce/document'
-  autoload :UploadIO,       'restforce/upload_io'
+  autoload :FilePart,       'restforce/file_part'
+  autoload :UploadIO,       'restforce/file_part' # Deprecated
   autoload :SObject,        'restforce/sobject'
   autoload :Client,         'restforce/client'
   autoload :Mash,           'restforce/mash'
@@ -29,6 +31,8 @@ module Restforce
     autoload :Verbs,          'restforce/concerns/verbs'
     autoload :Base,           'restforce/concerns/base'
     autoload :API,            'restforce/concerns/api'
+    autoload :BatchAPI,       'restforce/concerns/batch_api'
+    autoload :CompositeAPI,   'restforce/concerns/composite_api'
   end
 
   module Data
@@ -42,23 +46,41 @@ module Restforce
   Error               = Class.new(StandardError)
   ServerError         = Class.new(Error)
   AuthenticationError = Class.new(Error)
-  UnauthorizedError   = Class.new(Error)
+  UnauthorizedError   = Class.new(Faraday::ClientError)
   APIVersionError     = Class.new(Error)
+  BatchAPIError       = Class.new(Error)
+  CompositeAPIError   = Class.new(Error)
+
+  # Inherit from Faraday::ResourceNotFound for backwards-compatibility
+  # Consumers of this library that rescue and handle Faraday::ResourceNotFound
+  # can continue to do so.
+  NotFoundError       = Class.new(Faraday::ResourceNotFound)
+
+  # Inherit from Faraday::ClientError for backwards-compatibility
+  # Consumers of this library that rescue and handle Faraday::ClientError
+  # can continue to do so.
+  ResponseError       = Class.new(Faraday::ClientError)
+  MatchesMultipleError= Class.new(ResponseError)
+  EntityTooLargeError = Class.new(ResponseError)
+
+  require 'restforce/error_code'
+  require 'restforce/middleware/json_request'
+  require 'restforce/middleware/json_response'
 
   class << self
     # Alias for Restforce::Data::Client.new
     #
     # Shamelessly pulled from https://github.com/pengwynn/octokit/blob/master/lib/octokit.rb
-    def new(*args, &block)
-      data(*args, &block)
+    def new(...)
+      data(...)
     end
 
-    def data(*args, &block)
-      Restforce::Data::Client.new(*args, &block)
+    def data(...)
+      Restforce::Data::Client.new(...)
     end
 
-    def tooling(*args, &block)
-      Restforce::Tooling::Client.new(*args, &block)
+    def tooling(...)
+      Restforce::Tooling::Client.new(...)
     end
 
     # Helper for decoding signed requests.
@@ -74,7 +96,7 @@ module Restforce
       self
     end
   end
-  Object.send :include, Restforce::CoreExtensions unless Object.respond_to? :tap
+  Object.include Restforce::CoreExtensions unless Object.respond_to? :tap
 end
 
 if ENV['PROXY_URI']

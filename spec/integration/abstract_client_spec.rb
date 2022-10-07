@@ -86,22 +86,34 @@ shared_examples_for Restforce::AbstractClient do
     end
 
     context 'with multipart' do
-      # rubocop:disable Metrics/LineLength
+      # rubocop:disable Layout/LineLength
       requests 'sobjects/Account',
                method: :post,
-               with_body: %r(----boundary_string\r\nContent-Disposition: form-data; name=\"entity_content\"\r\nContent-Type: application/json\r\n\r\n{\"Name\":\"Foobar\"}\r\n----boundary_string\r\nContent-Disposition: form-data; name=\"Blob\"; filename=\"blob.jpg\"\r\nContent-Length: 42171\r\nContent-Type: image/jpeg\r\nContent-Transfer-Encoding: binary),
+               with_body: %r(----boundary_string\r\nContent-Disposition: form-data; name="entity_content"\r\nContent-Type: application/json\r\n\r\n{"Name":"Foobar"}\r\n----boundary_string\r\nContent-Disposition: form-data; name="Blob"; filename="blob.jpg"\r\nContent-Length: 42171\r\nContent-Type: image/jpeg\r\nContent-Transfer-Encoding: binary),
                fixture: 'sobject/create_success_response'
-      # rubocop:enable Metrics/LineLength
+      # rubocop:enable Layout/LineLength
 
       subject do
         client.create('Account', Name: 'Foobar',
-                                 Blob: Restforce::UploadIO.new(
-                                   File.expand_path('../../fixtures/blob.jpg', __FILE__),
+                                 Blob: Restforce::FilePart.new(
+                                   File.expand_path('../fixtures/blob.jpg', __dir__),
                                    'image/jpeg'
                                  ))
       end
 
       it { should eq 'some_id' }
+
+      context 'with deprecated UploadIO' do
+        subject do
+          client.create('Account', Name: 'Foobar',
+                        Blob: Restforce::UploadIO.new(
+                          File.expand_path('../fixtures/blob.jpg', __dir__),
+                          'image/jpeg'
+                        ))
+        end
+
+        it { should eq 'some_id' }
+      end
     end
   end
 
@@ -117,18 +129,15 @@ shared_examples_for Restforce::AbstractClient do
         JSON.parse(fixture('sobject/delete_error_response'))
       end
 
-      subject do
-        lambda do
-          client.update!('Account', Id: '001D000000INjVe', Name: 'Foobar')
-        end
-      end
+      it "raises Faraday::ResourceNotFound" do
+        expect { client.update!('Account', Id: '001D000000INjVe', Name: 'Foobar') }.
+          to raise_error do |exception|
+            expect(exception).to be_a(Faraday::ResourceNotFound)
 
-      it {
-        should raise_error(
-          Faraday::Error::ResourceNotFound,
-          "#{error.first['errorCode']}: #{error.first['message']}"
-        )
-      }
+            expect(exception.message).
+              to start_with("#{error.first['errorCode']}: #{error.first['message']}")
+          end
+      end
     end
   end
 
@@ -146,7 +155,7 @@ shared_examples_for Restforce::AbstractClient do
                fixture: 'sobject/delete_error_response'
 
       subject { client.update('Account', Id: '001D000000INjVe', Name: 'Foobar') }
-      it { should be_false }
+      it { should be false }
     end
 
     context 'with success' do
@@ -160,7 +169,7 @@ shared_examples_for Restforce::AbstractClient do
             client.update('Account', key => '001D000000INjVe', :Name => 'Foobar')
           end
 
-          it { should be_true }
+          it { should be true }
         end
       end
     end
@@ -323,7 +332,7 @@ shared_examples_for Restforce::AbstractClient do
                                                    Name: 'Foobar')
         end
 
-        it { should be_true }
+        it { should be true }
       end
 
       context 'with string external Id key' do
@@ -332,7 +341,7 @@ shared_examples_for Restforce::AbstractClient do
                                                    'Name' => 'Foobar')
         end
 
-        it { should be_true }
+        it { should be true }
       end
     end
 
@@ -383,20 +392,20 @@ shared_examples_for Restforce::AbstractClient do
                status: 404
 
       subject { lambda { destroy! } }
-      it { should raise_error Faraday::Error::ResourceNotFound }
+      it { should raise_error Faraday::ResourceNotFound }
     end
 
     context 'with success' do
       requests 'sobjects/Account/001D000000INjVe', method: :delete
 
-      it { should be_true }
+      it { should be true }
     end
 
     context 'with a space in the id' do
       subject(:destroy!) { client.destroy!('Account', '001D000000 INjVe') }
       requests 'sobjects/Account/001D000000%20INjVe', method: :delete
 
-      it { should be_true }
+      it { should be true }
     end
   end
 
@@ -409,13 +418,13 @@ shared_examples_for Restforce::AbstractClient do
                method: :delete,
                status: 404
 
-      it { should be_false }
+      it { should be false }
     end
 
     context 'with success' do
       requests 'sobjects/Account/001D000000INjVe', method: :delete
 
-      it { should be_true }
+      it { should be true }
     end
   end
 
@@ -500,9 +509,13 @@ shared_examples_for Restforce::AbstractClient do
       before do
         @request = stub_login_request(
           with_body: "grant_type=password&client_id=client_id" \
-                        "&client_secret=client_secret&username=foo" \
-                        "&password=barsecurity_token"
-        ).to_return(status: 200, body: fixture(:auth_success_response))
+                     "&client_secret=client_secret&username=foo" \
+                     "&password=barsecurity_token"
+        ).to_return(
+          status: 200,
+          body: fixture(:auth_success_response),
+          headers: { "Content-Type" => "application/json" }
+        )
       end
 
       after do
@@ -552,9 +565,13 @@ shared_examples_for Restforce::AbstractClient do
 
         @query_request = stub_login_request(
           with_body: "grant_type=password&client_id=client_id" \
-                        "&client_secret=client_secret&username=foo&" \
-                        "password=barsecurity_token"
-        ).to_return(status: 200, body: fixture(:auth_success_response))
+                     "&client_secret=client_secret&username=foo&" \
+                     "password=barsecurity_token"
+        ).to_return(
+          status: 200,
+          body: fixture(:auth_success_response),
+          headers: { "Content-Type" => "application/json" }
+        )
       end
 
       subject { lambda { client.query('SELECT some, fields FROM object') } }
@@ -569,16 +586,20 @@ shared_examples_for Restforce::AbstractClient do
       @query = stub_api_request('query\?q=SELECT%20some,%20fields%20FROM%20object').
                with(headers: { 'Authorization' => "OAuth #{oauth_token}" }).
                to_return(status: 401,
-                  body: fixture('expired_session_response'),
-                  headers: { 'Content-Type' => 'application/json' }).then.
+                         body: fixture('expired_session_response'),
+                         headers: { 'Content-Type' => 'application/json' }).then.
                to_return(status: 200,
-                  body: fixture('sobject/query_success_response'),
-                  headers: { 'Content-Type' => 'application/json' })
+                         body: fixture('sobject/query_success_response'),
+                         headers: { 'Content-Type' => 'application/json' })
 
       @login = stub_login_request(
         with_body: "grant_type=password&client_id=client_id&client_secret=" \
-                      "client_secret&username=foo&password=barsecurity_token"
-      ).to_return(status: 200, body: fixture(:auth_success_response))
+                   "client_secret&username=foo&password=barsecurity_token"
+      ).to_return(
+        status: 200,
+        body: fixture(:auth_success_response),
+        headers: { "Content-Type" => "application/json" }
+      )
     end
 
     after do

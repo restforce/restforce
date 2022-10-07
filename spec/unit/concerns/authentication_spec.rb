@@ -52,6 +52,16 @@ describe Restforce::Concerns::Authentication do
 
       it { should eq Restforce::Middleware::Authentication::Token }
     end
+
+    context 'when jwt option is provided' do
+      before do
+        client.stub username_password?: false
+        client.stub oauth_refresh?: false
+        client.stub jwt?: true
+      end
+
+      it { should eq Restforce::Middleware::Authentication::JWTBearer }
+    end
   end
 
   describe '.username_password?' do
@@ -70,11 +80,11 @@ describe Restforce::Concerns::Authentication do
           client_secret: 'secret' }
       end
 
-      it { should be_true }
+      it { should be_truthy }
     end
 
     context 'when username and password options are not provided' do
-      it { should_not be_true }
+      it { should_not be_truthy }
     end
   end
 
@@ -93,11 +103,36 @@ describe Restforce::Concerns::Authentication do
           client_secret: 'secret' }
       end
 
-      it { should be_true }
+      it { should be_truthy }
     end
 
     context 'when oauth options are not provided' do
-      it { should_not be_true }
+      it { should_not be true }
+    end
+  end
+
+  describe '.jwt?' do
+    subject       { client.jwt? }
+    let(:options) do
+      {}
+    end
+
+    before do
+      client.stub options: options
+    end
+
+    context 'when jwt options are provided' do
+      let(:options) do
+        { jwt_key: 'JWT_PRIVATE_KEY',
+          username: 'foo',
+          client_id: 'client' }
+      end
+
+      it { should be_truthy }
+    end
+
+    context 'when jwt options are not provided' do
+      it { should_not be true }
     end
   end
 end

@@ -44,7 +44,7 @@ describe Restforce do
           'SALESFORCE_PROXY_URI'      => 'proxy',
           'SALESFORCE_HOST'           => 'test.host.com',
           'SALESFORCE_API_VERSION'    => '37.0' }.
-          each { |var, value| ENV.stub(:[]).with(var).and_return(value) }
+          each { |var, value| ENV.stub(:fetch).with(var, anything).and_return(value) }
       end
 
       its(:username)       { should eq 'foo' }
@@ -76,7 +76,7 @@ describe Restforce do
     subject { Restforce.log? }
 
     context 'by default' do
-      it { should be_false }
+      it { should be false }
     end
   end
 

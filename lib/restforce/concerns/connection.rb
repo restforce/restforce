@@ -43,7 +43,7 @@ module Restforce
           # Caches GET requests.
           builder.use Restforce::Middleware::Caching, cache, options if cache
           # Follows 30x redirects.
-          builder.use FaradayMiddleware::FollowRedirects
+          builder.use Faraday::FollowRedirects::Middleware
           # Raises errors for 40x responses.
           builder.use Restforce::Middleware::RaiseError
           # Parses returned JSON response into a hash.
@@ -72,9 +72,9 @@ module Restforce
       # Internal: Faraday Connection options
       def connection_options
         { request: {
-            timeout: options[:timeout],
-            open_timeout: options[:timeout]
-},
+          timeout: options[:timeout],
+          open_timeout: options[:timeout]
+        },
           proxy: options[:proxy_uri],
           ssl: options[:ssl] }
       end

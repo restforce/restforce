@@ -28,6 +28,8 @@ module Restforce
       #                                   password and oauth authentication
       #        :client_secret           - The oauth client secret to use.
       #
+      #        :jwt_key                 - The private key for JWT authentication
+      #
       #        :host                    - The String hostname to use during
       #                                   authentication requests
       #                                   (default: 'login.salesforce.com').
@@ -59,9 +61,9 @@ module Restforce
       def initialize(opts = {})
         raise ArgumentError, 'Please specify a hash of options' unless opts.is_a?(Hash)
 
-        @options = Hash[Restforce.configuration.options.map do |option|
+        @options = Restforce.configuration.options.to_h do |option|
           [option, Restforce.configuration.send(option)]
-        end]
+        end
 
         @options.merge! opts
         yield builder if block_given?

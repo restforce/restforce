@@ -7,5 +7,7 @@ module Restforce
     include Restforce::Concerns::Authentication
     include Restforce::Concerns::Caching
     include Restforce::Concerns::API
+    include Restforce::Concerns::BatchAPI
+    include Restforce::Concerns::CompositeAPI
   end
 end

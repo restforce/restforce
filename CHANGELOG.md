@@ -1,3 +1,142 @@
+# 6.0.0 (Sep 9 2022)
+
+__This version contains breaking changes. For help with upgrading, see [`UPGRADING.md`](https://github.com/restforce/restforce/blob/main/UPGRADING.md).__
+
+* __⚠️  Drop support for Ruby 2.6__, since [Ruby 2.6 has reached its end-of-life](https://www.ruby-lang.org/en/downloads/) (@timrogers)
+* __⚠️  Drop compatability with `faraday` versions before `v1.1.0`__ (@timrogers)
+* Add support for `faraday` versions `v2.0.0` onwards (@timrogers)
+
+*This version was also released as [`v6.0.0.rc.1`](https://github.com/restforce/restforce/releases/tag/v6.0.0.rc.1) on Aug 4 2022.*
+
+# 5.3.1 (Jul 19 2022)
+
+* Handle the `EXCEEDED_ID_LIMIT` error returned by the Salesforce API (@timrogers, @yashshah1)
+
+# 5.3.0 (May 30, 2022)
+
+* Add support for Faraday v1.9.x and v1.10.0 (@magni-, @timrogers)
+* Follow redirects during authentication to support Lightning URLs (e.g. `*.lightning.force.com` instead of `*.my.salesforce.com`) (@nhocki)
+
+# 5.2.4 (Mar 16, 2022)
+
+* Fix `Restforce::Collection#size` for Salesforce APIs that use the `size` property to return the total number of results, instead of `totalSize` (@kwong-yw)
+
+# 5.2.3 (Jan 17, 2022)
+
+* Add official support for Ruby 3.1 (@timrogers)
+* Fix handling of responses from the Composite API (@robob27)
+* Fix dependencies to correctly declare that the gem doesn't work with [faraday](https://github.com/lostisland/faraday) `v1.9.0` or later (@timrogers)
+
+# 5.2.2 (Dec 16, 2021)
+
+* Handle the `MALFORMED_SEARCH` error returned by Salesforce (@timrogers)
+
+# 5.2.1 (Dec 8, 2021)
+
+* Handle the `OPERATION_TOO_LARGE` error returned by Salesforce (@timrogers)
+* Handle the `INVALID_SIGNUP_COUNTRY` error returned by Salesforce (@timrogers)
+
+## 5.2.0 (Oct 15, 2021)
+
+* Add support for Salesforce's Composite API and Composite Batch API (@meenie, @amacdougall)
+* Improve the performance of counting numbers of query results with `Restforce::Collection#count`, avoiding unnecessary API requests (@jhass)
+
+## 5.1.1 (Oct 13, 2021)
+
+* Handle the `INVALID_REPLICATION_DATE` error returned by Salesforce (@michaelwnyc)
+* Handle the `BIG_OBJECT_UNSUPPORTED_OPERATION` error returned by Salesforce (@remon)
+
+## 5.1.0 (Aug 26, 2021)
+
+* Add official support for Ruby 3.0 (@timrogers)
+* Drop support for Ruby 2.5, which has reached end-of-life (@timrogers)
+* Handle the `QUERY_TIMEOUT` error returned by Salesforce (@timrogers)
+* Remove unnecessary development dependencies for the gem, which can just be in the project's `Gemfile` (@timrogers)
+
+## 5.0.6 (Jun 17, 2021)
+
+* Handle the `API_DISABLED_FOR_ORG` error returned by Salesforce (@cmac)
+* Handle the `METHOD_NOT_ALLOWED` error returned by Salesforce (@timrogers)
+* Handle the `APEX_ERROR` error returned by Salesforce (@timrogers)
+
+## 5.0.5 (Feb 17, 2021)
+
+* Handle the `CANNOT_EXECUTE_FLOW_TRIGGER` error returned by Salesforce (@almusavi, @timrogers)
+
+## 5.0.4 (Jan 18, 2021)
+
+* Handle the `INVALID_QUERY_LOCATOR` error returned by Salesforce
+* Handle the `INVALID_OPERATION_WITH_EXPIRED_PASSWORD` error returned by Salesforce
+* Handle the `FIELD_INTEGRITY_EXCEPTION` error returned by Salesforce
+* Handle the `FORBIDDEN` error returned by Salesforce
+* Handle the `ILLEGAL_QUERY_PARAMETER_VALUE` error returned by Salesforce
+* Handle the `JSON_PARSER_ERROR` error returned by Salesforce
+
+## 5.0.3 (Sep 8, 2020)
+
+* Handle the undocumented `EXCEEDED_MAX_SEMIJOIN_SUBSELECTS` error returned by Salesforce (@embertel, @timrogers)
+
+## 5.0.2 (Sep 6, 2020)
+
+* Handle the undocumented `REQUEST_LIMIT_EXCEEDED` error returned by Salesforce (@wkirkby, @timrogers)
+* Handle the undocumented `SERVER_UNAVAILABLE` error returned by Salesforce (@wkirkby, @timrogers)
+* Refactor the library to be compatible with Rubocop 0.90's cops (this shouldn't introduce any noticeable changes see #569 for detailed changes) (@timrogers)
+
+## 5.0.1 (Aug 13, 2020)
+
+* Handle the undocumented `API_CURRENTLY_DISABLED` error returned by Salesforce (@ruipserra, @timrogers)
+* Handle the undocumented `MALFORMED_QUERY` error returned by Salesforce (@scottserok, @timrogers)
+* Handle the undocumented `INVALID_QUERY_FILTER_OPERATOR` error returned by Salesforce (@Dantemss, @timrogers)
+* Add documentation and scripts for running the
+library's tests using Docker (@ryansch)
+
+## 5.0.0 (Jul 10, 2020)
+
+For instructions on upgrading from Restforce 4.x to 5.x, see our ["Upgrading from Restforce 4.x to 5.x"](https://github.com/restforce/restforce/blob/master/UPGRADING.md) guide.
+
+### Breaking changes 
+
+* __⚠️  Define exception classes for Salesforce errors up-front instead of dynamically at runtime__, *running the risk that we might miss some errors which should be defined*. If any errors are missed, they will be added in patch versions (e.g. `5.0.1`). For more details on this change, see the ["Upgrading from Restforce 4.x to 5.x"](https://github.com/restforce/restforce/blob/master/UPGRADING.md) guide (@presidentbeef, @timrogers).
+* __⚠️  Deprecate support for Ruby 2.4__, since [Ruby 2.4 reached its end-of-life](https://www.ruby-lang.org/en/news/2020/04/05/support-of-ruby-2-4-has-ended/) in April 2020 (@timrogers)
+* __⚠️  Change the ancestry of `Restforce::UnauthorizedError` so it inherits from `Faraday::ClientError`, not `Restforce::Error`__. This breaking change was required to expose the response body returned by the API as part of this error - see the non-breaking changes entry below for further details (@michaldbianchi).
+
+### Non-breaking changes
+
+* Add support for `lostisland/faraday` v1.x, whilst maintaining support for v0.9.x (@ryansch)
+* Add `#empty?` method to `Restforce::Collection`, returning whether they are any items in a collection (@bubaflub)
+* Allow opting-in to caching on a per-call basis with `Restforce::Client#with_caching` (@swaincreates)
+* Expose the response body from Salesforce on `Restforce::UnauthorizedError` and `Restforce::NotFoundError` (@michaeldbianchi)
+* Remove the unnecessary depending on the `json` gem, which has been part of the Ruby standard library since v1.9 (@vonTronje)
+
+
+## 4.2.2 (Jan 23, 2020)
+
+* Fix `NoMethodError: undefined method '[]' for nil:NilClass` error when generating objects to return (@apurkiss)
+
+## 4.2.1 (Dec 4, 2019)
+
+* Handle empty response bodies returned with authentication errors (@sylvandor)
+* Fix Faraday deprecation warning in newer Faraday versions (`v0.17.1` onwards) caused by inheriting from a deprecated class 
+
+## 4.2.0 (Oct 23, 2019)
+
+* Add support for platform events, CDC, generic events, etc. in the Streaming API (@nathanKramer)
+
+## 4.1.0 (Oct 20, 2019)
+
+* Add support for JWT authentication (@nathanKramer, @tagCincy)
+
+## 4.0.0 (Oct 9, 2019)
+
+* __Deprecate support for Ruby 2.3__, since [Ruby 2.3 reached its end-of-life](https://www.ruby-lang.org/en/news/2019/03/31/support-of-ruby-2-3-has-ended/) in March 2019. (This is the only breaking change included in this version.)
+
+## 3.2.0 (Oct 9, 2019)
+
+* Add support for the Batch API (@gaiottino, @teoulas)
+* Return specific exceptions for errors that might be returned from Salesforce.com - instead of getting a generic `Faraday::Error::ClientError`, you might get something like a `Restforce::EntityTooLargeError` (@boblail)
+* Expose the full response in exceptions' messages to make debugging easier (@boblail)
+* Properly escape IDs with spaces in them when working with existing records (@pushups)
+
 ## 3.1.0 (Aug 16, 2018)
 
 * Add support for replaying missed messages when using the Salesforce Streaming API (@andreimaxim, @drteeth, @panozzaj)
@@ -14,6 +153,12 @@
 * Stop relying on our middleware for Gzip compression if you're using `httpclient`, since Faraday enables this automatically using `httpclient`'s built-in support (@shivanshgaur)
 * Fix `get_updated` and `get_deleted` API calls by removing the erroneous leading forward slash from the path (@scottolsen)
 * Fix unpacking of dependent picklist options (@parkm)
+
+## 2.5.4 (May 15, 2019)
+
+See the [`v2`](https://github.com/restforce/restforce/tree/v2) branch for this release.
+
+* Escape record IDs passed in to the client to identify records to find, delete, etc. (@jmdx, @apanzerj)
 
 ## 2.5.3 (Apr 25, 2017)
 

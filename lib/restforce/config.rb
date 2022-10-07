@@ -34,6 +34,7 @@ module Restforce
 
     def log(message)
       return unless Restforce.log?
+
       configuration.logger.send(configuration.log_level, message)
     end
   end
@@ -90,26 +91,31 @@ module Restforce
       end
     end
 
-    option :api_version, default: lambda { ENV['SALESFORCE_API_VERSION'] || '26.0' }
+    option :api_version, default: lambda { ENV.fetch('SALESFORCE_API_VERSION', '26.0') }
 
     # The username to use during login.
-    option :username, default: lambda { ENV['SALESFORCE_USERNAME'] }
+    option :username, default: lambda { ENV.fetch('SALESFORCE_USERNAME', nil) }
 
     # The password to use during login.
-    option :password, default: lambda { ENV['SALESFORCE_PASSWORD'] }
+    option :password, default: lambda { ENV.fetch('SALESFORCE_PASSWORD', nil) }
 
     # The security token to use during login.
-    option :security_token, default: lambda { ENV['SALESFORCE_SECURITY_TOKEN'] }
+    option :security_token, default: lambda {
+                                       ENV.fetch('SALESFORCE_SECURITY_TOKEN', nil)
+                                     }
 
     # The OAuth client id
-    option :client_id, default: lambda { ENV['SALESFORCE_CLIENT_ID'] }
+    option :client_id, default: lambda { ENV.fetch('SALESFORCE_CLIENT_ID', nil) }
 
     # The OAuth client secret
-    option :client_secret, default: lambda { ENV['SALESFORCE_CLIENT_SECRET'] }
+    option :client_secret, default: lambda { ENV.fetch('SALESFORCE_CLIENT_SECRET', nil) }
+
+    # The private key for JWT authentication
+    option :jwt_key
 
     # Set this to true if you're authenticating with a Sandbox instance.
     # Defaults to false.
-    option :host, default: lambda { ENV['SALESFORCE_HOST'] || 'login.salesforce.com' }
+    option :host, default: lambda { ENV.fetch('SALESFORCE_HOST', 'login.salesforce.com') }
 
     option :oauth_token
     option :refresh_token
@@ -135,7 +141,7 @@ module Restforce
     # Faraday adapter to use. Defaults to Faraday.default_adapter.
     option :adapter, default: lambda { Faraday.default_adapter }
 
-    option :proxy_uri, default: lambda { ENV['SALESFORCE_PROXY_URI'] }
+    option :proxy_uri, default: lambda { ENV.fetch('SALESFORCE_PROXY_URI', nil) }
 
     # A Proc that is called with the response body after a successful authentication.
     option :authentication_callback
@@ -147,10 +153,13 @@ module Restforce
     option :request_headers
 
     # Set a logger for when Restforce.log is set to true, defaulting to STDOUT
-    option :logger, default: ::Logger.new(STDOUT)
+    option :logger, default: ::Logger.new($stdout)
 
     # Set a log level for logging when Restforce.log is set to true, defaulting to :debug
     option :log_level, default: :debug
+
+    # Set use_cache to false to opt in to caching with client.with_caching
+    option :use_cache, default: true
 
     def options
       self.class.options
