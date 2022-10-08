@@ -344,15 +344,16 @@ describe Restforce::Concerns::API do
     end
 
     describe '.create_collection!' do
-      let(:attrs)      { [{'Name' => 'Foobar'}] }
+      let(:attrs)      { [{ 'Name' => 'Foobar' }] }
       subject(:result) { client.create_collection!(attrs) }
 
       it 'sends an HTTP POST, and returns list of result objects' do
-        response.stub(:body).and_return([{'id' => '1', 'success' => true, 'errors' => []}])
+        response.stub(:body).and_return([{ 'id' => '1', 'success' => true,
+                                           'errors' => [] }])
         client.should_receive(:api_post).
-          with('composite/sobjects', {records: attrs, allOrNone: false}).
+          with('composite/sobjects', { records: attrs, allOrNone: false }).
           and_return(response)
-        expect(result[0]).to eq({'id' => '1', 'success' => true, 'errors' => []})
+        expect(result[0]).to eq({ 'id' => '1', 'success' => true, 'errors' => [] })
       end
 
       context 'when attributes collection size is more than 200' do
@@ -360,21 +361,23 @@ describe Restforce::Concerns::API do
 
         it "raises an error" do
           expect { client.create_collection!(attrs) }.to raise_error(
-            ArgumentError, 'Amount of records to create is limited to 200')
+            ArgumentError, 'Amount of records to create is limited to 200'
+          )
         end
       end
     end
 
     describe '.update_collection!' do
-      let(:attrs)      { [{'id' => '1', 'Name' => 'Foobar'}] }
+      let(:attrs)      { [{ 'id' => '1', 'Name' => 'Foobar' }] }
       subject(:result) { client.update_collection!(attrs) }
 
       it 'sends an HTTP PATCH, and returns list of result objects' do
-        response.stub(:body).and_return([{'id' => '1', 'success' => true, 'errors' => []}])
+        response.stub(:body).and_return([{ 'id' => '1', 'success' => true,
+                                           'errors' => [] }])
         client.should_receive(:api_patch).
-          with('composite/sobjects', {records: attrs, allOrNone: false}).
+          with('composite/sobjects', { records: attrs, allOrNone: false }).
           and_return(response)
-        expect(result[0]).to eq({'id' => '1', 'success' => true, 'errors' => []})
+        expect(result[0]).to eq({ 'id' => '1', 'success' => true, 'errors' => [] })
       end
 
       context 'when attributes collection size is more than 200' do
@@ -382,7 +385,8 @@ describe Restforce::Concerns::API do
 
         it "raises an error" do
           expect { client.update_collection!(attrs) }.to raise_error(
-            ArgumentError, 'Amount of records to update is limited to 200')
+            ArgumentError, 'Amount of records to update is limited to 200'
+          )
         end
       end
     end
@@ -392,11 +396,12 @@ describe Restforce::Concerns::API do
       subject(:result) { client.destroy_collection!(attrs) }
 
       it 'sends an HTTP DELETE, and returns list of result objects' do
-        response.stub(:body).and_return([{'id' => '1', 'success' => true, 'errors' => []}])
+        response.stub(:body).and_return([{ 'id' => '1', 'success' => true,
+                                           'errors' => [] }])
         client.should_receive(:api_delete).
           with('composite/sobjects?ids=1&allOrNone=false').
           and_return(response)
-        expect(result[0]).to eq({'id' => '1', 'success' => true, 'errors' => []})
+        expect(result[0]).to eq({ 'id' => '1', 'success' => true, 'errors' => [] })
       end
 
       context 'when ids collection size is more than 200' do
@@ -404,7 +409,8 @@ describe Restforce::Concerns::API do
 
         it "raises an error" do
           expect { client.destroy_collection!(attrs) }.to raise_error(
-            ArgumentError, 'Amount of records to delete is limited to 200')
+            ArgumentError, 'Amount of records to delete is limited to 200'
+          )
         end
       end
     end

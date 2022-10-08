@@ -361,11 +361,14 @@ module Restforce
       #
       # Returns array of result objects.
       # Raises exceptions if an error is returned from Salesforce.
-      def create_collection!(attrs_collection, all_or_none = false)
-        raise ArgumentError,
-          'Amount of records to create is limited to 200' if attrs_collection.size > 200
+      def create_collection!(attrs_collection, all_or_none: false)
+        if attrs_collection.size > 200
+          raise ArgumentError,
+                'Amount of records to create is limited to 200'
+        end
 
-        api_post('composite/sobjects', {records: attrs_collection, allOrNone: all_or_none}).body
+        api_post('composite/sobjects',
+                 { records: attrs_collection, allOrNone: all_or_none }).body
       end
 
       # Public: Update collection of records.
@@ -376,7 +379,9 @@ module Restforce
       # Examples
       #
       #   # Update accounts
-      #   client.update_collection([{Id: '1', Name: 'Foo Inc.'}, {Id: '2', Name: 'Bar Corp.'}])
+      #   client.update_collection([
+      #     {Id: '1', Name: 'Foo Inc.'}, {Id: '2', Name: 'Bar Corp.'}
+      #   ])
       #   # => [{ 'id' => '1', 'success' => true, 'errors' => [] },
       #   #     { 'id' => '2', 'success' => true, 'errors' => [] }]
       #
@@ -396,17 +401,22 @@ module Restforce
       # Examples
       #
       #   # Update accounts
-      #   client.update_collection!([{Id: '1', Name: 'Foo Inc.'}, {Id: '2', Name: 'Bar Corp.'}])
+      #   client.update_collection!([
+      #     {Id: '1', Name: 'Foo Inc.'}, {Id: '2', Name: 'Bar Corp.'}
+      #   ])
       #   # => [{ 'id' => '1', 'success' => true, 'errors' => [] },
       #   #     { 'id' => '2', 'success' => true, 'errors' => [] }]
       #
       # Returns array of result objects.
       # Raises exceptions if an error is returned from Salesforce.
-      def update_collection!(attrs_collection, all_or_none = false)
-        raise ArgumentError,
-          'Amount of records to update is limited to 200' if attrs_collection.size > 200
+      def update_collection!(attrs_collection, all_or_none: false)
+        if attrs_collection.size > 200
+          raise ArgumentError,
+                'Amount of records to update is limited to 200'
+        end
 
-        api_patch('composite/sobjects', {records: attrs_collection, allOrNone: all_or_none}).body
+        api_patch('composite/sobjects',
+                  { records: attrs_collection, allOrNone: all_or_none }).body
       end
 
       # Public: Delete collection of records.
@@ -439,11 +449,15 @@ module Restforce
       #
       # Returns array of result objects.
       # Raises exceptions if an error is returned from Salesforce.
-      def destroy_collection!(ids, all_or_none = false)
-        raise ArgumentError,
-          'Amount of records to delete is limited to 200' if ids.size > 200
+      def destroy_collection!(ids, all_or_none: false)
+        if ids.size > 200
+          raise ArgumentError,
+                'Amount of records to delete is limited to 200'
+        end
 
-        api_delete("composite/sobjects?ids=#{ids.join(',')}&allOrNone=#{all_or_none}").body
+        api_delete(
+          "composite/sobjects?ids=#{ids.join(',')}&allOrNone=#{all_or_none}"
+        ).body
       end
 
       # Public: Update or create a record based on an external ID

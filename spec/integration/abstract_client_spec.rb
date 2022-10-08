@@ -178,33 +178,33 @@ shared_examples_for Restforce::AbstractClient do
   describe '.create_collection!' do
     context 'with valid params' do
       requests 'composite/sobjects',
-                method: :post,
-                with_body: {
-                  allOrNone: false,
-                  records: [{Name: 'Foobar'}]
-                },
-                fixture: 'sobject/composite_sobjects_success_response'
+               method: :post,
+               with_body: {
+                 allOrNone: false,
+                 records: [{ Name: 'Foobar' }]
+               },
+               fixture: 'sobject/composite_sobjects_success_response'
 
-      subject { client.create_collection!([{Name: 'Foobar'}]) }
+      subject { client.create_collection!([{ Name: 'Foobar' }]) }
 
-      it { should eq [{'id' => 'some_id', 'errors' => [], 'success' => true}] }
+      it { should eq [{ 'id' => 'some_id', 'errors' => [], 'success' => true }] }
     end
 
     context 'with invalid params' do
       requests 'composite/sobjects',
-                method: :post,
-                status: 400,
-                with_body: {
-                  allOrNone: false,
-                  records: ['Foo']
-                },
-                fixture: 'sobject/composite_sobjects_error_response'
+               method: :post,
+               status: 400,
+               with_body: {
+                 allOrNone: false,
+                 records: ['Foo']
+               },
+               fixture: 'sobject/composite_sobjects_error_response'
 
-      subject {
+      subject do
         lambda do
           client.create_collection!(['Foo'])
         end
-      }
+      end
 
       it { should raise_error(Faraday::ClientError) }
     end
@@ -213,13 +213,13 @@ shared_examples_for Restforce::AbstractClient do
   describe '.create_collection' do
     context 'with invalid params' do
       requests 'composite/sobjects',
-                method: :post,
-                status: 400,
-                with_body: {
-                  allOrNone: false,
-                  records: ['Foo']
-                },
-                fixture: 'sobject/composite_sobjects_error_response'
+               method: :post,
+               status: 400,
+               with_body: {
+                 allOrNone: false,
+                 records: ['Foo']
+               },
+               fixture: 'sobject/composite_sobjects_error_response'
 
       subject { client.create_collection(['Foo']) }
 
@@ -230,33 +230,33 @@ shared_examples_for Restforce::AbstractClient do
   describe '.update_collection!' do
     context 'with valid params' do
       requests 'composite/sobjects',
-              method: :patch,
-              with_body: {
-                allOrNone: false,
-                records: [{Name: 'Foobar'}]
-              },
-              fixture: 'sobject/composite_sobjects_success_response'
+               method: :patch,
+               with_body: {
+                 allOrNone: false,
+                 records: [{ Name: 'Foobar' }]
+               },
+               fixture: 'sobject/composite_sobjects_success_response'
 
-      subject { client.update_collection!([{Name: 'Foobar'}]) }
+      subject { client.update_collection!([{ Name: 'Foobar' }]) }
 
-      it { should eq [{'id' => 'some_id', 'errors' => [], 'success' => true}] }
+      it { should eq [{ 'id' => 'some_id', 'errors' => [], 'success' => true }] }
     end
 
     context 'with invalid params' do
       requests 'composite/sobjects',
-                method: :patch,
-                status: 400,
-                with_body: {
-                  allOrNone: false,
-                  records: ['Foo']
-                },
-                fixture: 'sobject/composite_sobjects_error_response'
+               method: :patch,
+               status: 400,
+               with_body: {
+                 allOrNone: false,
+                 records: ['Foo']
+               },
+               fixture: 'sobject/composite_sobjects_error_response'
 
-      subject {
+      subject do
         lambda do
           client.update_collection!(['Foo'])
         end
-      }
+      end
 
       it { should raise_error(Faraday::ClientError) }
     end
@@ -265,13 +265,13 @@ shared_examples_for Restforce::AbstractClient do
   describe '.update_collection' do
     context 'with invalid params' do
       requests 'composite/sobjects',
-                method: :patch,
-                status: 400,
-                with_body: {
-                  allOrNone: false,
-                  records: ['Foo']
-                },
-                fixture: 'sobject/composite_sobjects_error_response'
+               method: :patch,
+               status: 400,
+               with_body: {
+                 allOrNone: false,
+                 records: ['Foo']
+               },
+               fixture: 'sobject/composite_sobjects_error_response'
 
       subject { client.update_collection(['Foo']) }
 
@@ -282,25 +282,25 @@ shared_examples_for Restforce::AbstractClient do
   describe '.destroy_collection!' do
     context 'with valid params' do
       requests 'composite/sobjects\?allOrNone=false&ids=Foo',
-                method: :delete,
-                fixture: 'sobject/composite_sobjects_destroy_success_response'
+               method: :delete,
+               fixture: 'sobject/composite_sobjects_destroy_success_response'
 
       subject { client.destroy_collection!(['Foo']) }
 
-      it { should eq [{'id' => 'Foo', 'errors' => [], 'success' => true}] }
+      it { should eq [{ 'id' => 'Foo', 'errors' => [], 'success' => true }] }
     end
 
     context 'with invalid params' do
       requests 'composite/sobjects\?allOrNone=false&ids=',
-                method: :delete,
-                status: 400,
-                fixture: 'sobject/composite_sobjects_destroy_bad_request_response'
+               method: :delete,
+               status: 400,
+               fixture: 'sobject/composite_sobjects_destroy_bad_request_response'
 
-      subject {
+      subject do
         lambda do
           client.destroy_collection!([])
         end
-      }
+      end
 
       it { should raise_error(Faraday::ClientError) }
     end
@@ -309,9 +309,9 @@ shared_examples_for Restforce::AbstractClient do
   describe '.destroy_collection' do
     context 'with invalid params' do
       requests 'composite/sobjects\?allOrNone=false&ids=',
-                method: :delete,
-                status: 400,
-                fixture: 'sobject/composite_sobjects_destroy_bad_request_response'
+               method: :delete,
+               status: 400,
+               fixture: 'sobject/composite_sobjects_destroy_bad_request_response'
 
       subject { client.destroy_collection([]) }
 
