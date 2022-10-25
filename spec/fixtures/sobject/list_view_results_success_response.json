@@ -1,0 +1,151 @@
+{
+  "columns" : [ {
+    "ascendingLabel" : "Z-A",
+    "descendingLabel" : "A-Z",
+    "fieldNameOrPath" : "Name",
+    "hidden" : false,
+    "label" : "Account Name",
+    "selectListItem" : "Name",
+    "sortDirection" : "ascending",
+    "sortIndex" : 0,
+    "sortable" : true,
+    "type" : "string"
+  }, {
+    "ascendingLabel" : "Z-A",
+    "descendingLabel" : "A-Z",
+    "fieldNameOrPath" : "Site",
+    "hidden" : false,
+    "label" : "Account Site",
+    "selectListItem" : "Site",
+    "sortDirection" : null,
+    "sortIndex" : null,
+    "sortable" : true,
+    "type" : "string"
+  }, {
+    "ascendingLabel" : "Z-A",
+    "descendingLabel" : "A-Z",
+    "fieldNameOrPath" : "BillingState",
+    "hidden" : false,
+    "label" : "Billing State/Province",
+    "selectListItem" : "BillingState",
+    "sortDirection" : null,
+    "sortIndex" : null,
+    "sortable" : true,
+    "type" : "string"
+  }, {
+    "ascendingLabel" : "9-0",
+    "descendingLabel" : "0-9",
+    "fieldNameOrPath" : "Phone",
+    "hidden" : false,
+    "label" : "Phone",
+    "selectListItem" : "Phone",
+    "sortDirection" : null,
+    "sortIndex" : null,
+    "sortable" : true,
+    "type" : "phone"
+  }, {
+    "ascendingLabel" : "Low to High",
+    "descendingLabel" : "High to Low",
+    "fieldNameOrPath" : "Type",
+    "hidden" : false,
+    "label" : "Type",
+    "selectListItem" : "toLabel(Type)",
+    "sortDirection" : null,
+    "sortIndex" : null,
+    "sortable" : true,
+    "type" : "picklist"
+  }, {
+    "ascendingLabel" : "Z-A",
+    "descendingLabel" : "A-Z",
+    "fieldNameOrPath" : "Owner.Alias",
+    "hidden" : false,
+    "label" : "Account Owner Alias",
+    "selectListItem" : "Owner.Alias",
+    "sortDirection" : null,
+    "sortIndex" : null,
+    "sortable" : true,
+    "type" : "string"
+  }, {
+    "ascendingLabel" : null,
+    "descendingLabel" : null,
+    "fieldNameOrPath" : "Id",
+    "hidden" : true,
+    "label" : "Account ID",
+    "selectListItem" : "Id",
+    "sortDirection" : null,
+    "sortIndex" : null,
+    "sortable" : false,
+    "type" : "id"
+  }, {
+    "ascendingLabel" : null,
+    "descendingLabel" : null,
+    "fieldNameOrPath" : "CreatedDate",
+    "hidden" : true,
+    "label" : "Created Date",
+    "selectListItem" : "CreatedDate",
+    "sortDirection" : null,
+    "sortIndex" : null,
+    "sortable" : false,
+    "type" : "datetime"
+  }, {
+    "ascendingLabel" : null,
+    "descendingLabel" : null,
+    "fieldNameOrPath" : "LastModifiedDate",
+    "hidden" : true,
+    "label" : "Last Modified Date",
+    "selectListItem" : "LastModifiedDate",
+    "sortDirection" : null,
+    "sortIndex" : null,
+    "sortable" : false,
+    "type" : "datetime"
+  }, {
+    "ascendingLabel" : null,
+    "descendingLabel" : null,
+    "fieldNameOrPath" : "SystemModstamp",
+    "hidden" : true,
+    "label" : "System Modstamp",
+    "selectListItem" : "SystemModstamp",
+    "sortDirection" : null,
+    "sortIndex" : null,
+    "sortable" : false,
+    "type" : "datetime"
+  } ],
+  "developerName" : "MyAccounts",
+  "done" : true,
+  "id" : "00BD0000005WcCN",
+  "label" : "My Accounts",
+  "records" : [ {
+    "columns" : [ {
+      "fieldNameOrPath" : "Name",
+      "value" : "Burlington Textiles Corp of America"
+    }, {
+      "fieldNameOrPath" : "Site",
+      "value" : null
+    }, {
+      "fieldNameOrPath" : "BillingState",
+      "value" : "NC"
+    }, {
+      "fieldNameOrPath" : "Phone",
+      "value" : "(336) 222-7000"
+    }, {
+      "fieldNameOrPath" : "Type",
+      "value" : "Customer - Direct"
+    }, {
+      "fieldNameOrPath" : "Owner.Alias",
+      "value" : "TUser"
+    }, {
+      "fieldNameOrPath" : "Id",
+      "value" : "001D000000JliSTIAZ"
+    }, {
+      "fieldNameOrPath" : "CreatedDate",
+      "value" : "Fri Aug 01 21:15:46 GMT 2014"
+    }, {
+      "fieldNameOrPath" : "LastModifiedDate",
+      "value" : "Fri Aug 01 21:15:46 GMT 2014"
+    }, {
+      "fieldNameOrPath" : "SystemModstamp",
+      "value" : "Fri Aug 01 21:15:46 GMT 2014"
+    } ]
+  } ],
+  "size" : 1
+}

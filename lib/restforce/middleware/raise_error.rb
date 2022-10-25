@@ -1,7 +1,16 @@
 # frozen_string_literal: true
 
 module Restforce
-  class Middleware::RaiseError < Faraday::Response::Middleware
+  class Middleware::RaiseError < Faraday::Middleware
+    # Required for Faraday versions pre-v1.2.0 which do not include
+    # an implementation of `#call` by default
+    def call(env)
+      on_request(env) if respond_to?(:on_request)
+      @app.call(env).on_complete do |environment|
+        on_complete(environment) if respond_to?(:on_complete)
+      end
+    end
+
     def on_complete(env)
       @env = env
       case env[:status]
@@ -11,9 +20,9 @@ module Restforce
           response_values
         )
       when 401
-        raise Restforce::UnauthorizedError, message
+        raise Restforce::UnauthorizedError.new(message, response_values)
       when 404
-        raise Restforce::NotFoundError, message
+        raise Restforce::NotFoundError.new(message, response_values)
       when 413
         raise Restforce::EntityTooLargeError.new(
           "413: Request Entity Too Large",
@@ -56,8 +65,7 @@ module Restforce
     def exception_class_for_error_code(error_code)
       return Restforce::ResponseError unless ERROR_CODE_MATCHER.match?(error_code)
 
-      constant_name = error_code.split('_').map(&:capitalize).join.to_sym
-      Restforce::ErrorCode.const_get(constant_name)
+      Restforce::ErrorCode.get_exception_class(error_code)
     end
   end
 end

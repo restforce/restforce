@@ -35,7 +35,7 @@ module Restforce
           @valid_for = options.delete(:valid_for)
           raise "#{field} is not a dependent picklist" if @valid_for && !dependent?
 
-          replace(picklist_values)
+          super(picklist_values)
         end
 
         private
@@ -86,7 +86,7 @@ module Restforce
           control_count = controlling_field['picklistValues'].count
           valid_for = picklist_entry['validFor'].ljust(control_count, 'A').unpack1('m').
                       unpack('C*')
-          (valid_for[index >> 3] & (0x80 >> index % 8)).positive?
+          (valid_for[index >> 3] & (0x80 >> (index % 8))).positive?
         end
       end
     end

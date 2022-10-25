@@ -380,7 +380,7 @@ module Restforce
             end
           else
             api_patch "sobjects/#{sobject}/#{field}/" \
-              "#{ERB::Util.url_encode(external_id)}", attrs
+                      "#{ERB::Util.url_encode(external_id)}", attrs
           end
 
         response.body.respond_to?(:fetch) ? response.body.fetch('id', true) : true
@@ -429,6 +429,7 @@ module Restforce
       # field   - External ID field to use (default: nil).
       #
       # Returns the Restforce::SObject sobject record.
+      # Raises NotFoundError if nothing is found.
       def find(sobject, id, field = nil)
         url = if field
                 "sobjects/#{sobject}/#{field}/#{ERB::Util.url_encode(id)}"
@@ -510,7 +511,7 @@ module Restforce
 
       # Internal: Errors that should be rescued from in non-bang methods
       def exceptions
-        [Faraday::ClientError]
+        [Faraday::Error]
       end
     end
   end
