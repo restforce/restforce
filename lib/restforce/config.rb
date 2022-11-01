@@ -113,8 +113,8 @@ module Restforce
     # The private key for JWT authentication
     option :jwt_key
 
-    # Set this to true if you're authenticating with a Sandbox instance.
-    # Defaults to false.
+    # The login host.
+    # Defaults to login.salesforce.com.
     option :host, default: lambda { ENV.fetch('SALESFORCE_HOST', 'login.salesforce.com') }
 
     option :oauth_token
