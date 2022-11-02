@@ -112,12 +112,13 @@ The `id` field can be used to [uniquely identify](https://developer.salesforce.c
 If you prefer to use a username and password to authenticate:
 
 ```ruby
-client = Restforce.new(username: 'foo',
-                       password: 'bar',
-                       security_token: 'security token',
-                       client_id: 'client_id',
-                       client_secret: 'client_secret',
-                       api_version: '41.0')
+client = Restforce.new(username: config['username'],
+                       password: config['password'],
+                       instance_url: config['instance_url'],
+                       host: config['host'],                   # https://test.salesforce.com for sandbox (optional)
+                       client_id: config['client_key'],        # Salesforce Client Key
+                       client_secret: config['client_secret'], # Salesforce Client Secret
+                       api_version: '55.0')
 ```
 
 #### JWT Bearer Token
