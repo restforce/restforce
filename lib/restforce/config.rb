@@ -161,6 +161,9 @@ module Restforce
     # Set use_cache to false to opt in to caching with client.with_caching
     option :use_cache, default: true
 
+    # Set to false to have Faraday::FollowRedirects middleware include the auth header on requests as it follows redirects
+    option :clear_authorization_header, default: true
+
     def options
       self.class.options
     end
