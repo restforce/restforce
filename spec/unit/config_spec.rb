@@ -62,7 +62,7 @@ describe Restforce do
     %i[username password security_token client_id client_secret compress
        timeout oauth_token refresh_token instance_url api_version host mashify
        authentication_retries proxy_uri authentication_callback ssl
-       request_headers log_level logger].each do |attr|
+       request_headers log_level logger clear_authorization_header].each do |attr|
       it "allows #{attr} to be set" do
         Restforce.configure do |config|
           config.send("#{attr}=", 'foobar')

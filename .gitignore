@@ -19,3 +19,6 @@ tmp
 .rspec
 .ruby-version
 *.swp
+.idea
+Vagrantfile
+.vagrant/
