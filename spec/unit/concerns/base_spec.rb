@@ -28,7 +28,7 @@ describe Restforce::Concerns::Base do
 
   describe '.options' do
     subject { lambda { client.options } }
-    it { should_not raise_error }
+    it { expect { subject.call }.not_to raise_error }
   end
 
   describe '.instance_url' do

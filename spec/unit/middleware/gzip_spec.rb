@@ -27,11 +27,16 @@ describe Restforce::Middleware::Gzip do
     end
 
     it 'decompresses the body' do
-      should change { env[:body] }.to(fixture('sobject/query_success_response'))
+      expect { subject.call }.to change {
+                                   env[:body]
+                                 }.to(fixture('sobject/query_success_response'))
     end
 
     context 'when :compress is false' do
-      it { should_not(change { env[:request_headers]['Accept-Encoding'] }) }
+      it {
+        expect { subject.call }.
+          not_to(change { env[:request_headers]['Accept-Encoding'] })
+      }
     end
 
     context 'when :compress is true' do
@@ -39,7 +44,11 @@ describe Restforce::Middleware::Gzip do
         options[:compress] = true
       end
 
-      it { should(change { env[:request_headers]['Accept-Encoding'] }.to('gzip')) }
+      it {
+        expect { subject.call }.to change {
+                                     env[:request_headers]['Accept-Encoding']
+                                   }.to('gzip')
+      }
     end
   end
 

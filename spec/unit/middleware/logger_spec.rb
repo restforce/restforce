@@ -16,6 +16,6 @@ describe Restforce::Middleware::Logger do
       logger.should_receive(:debug).with('response')
     end
 
-    it { should_not raise_error }
+    it { expect { subject.call }.not_to raise_error }
   end
 end
