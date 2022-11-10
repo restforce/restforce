@@ -15,7 +15,7 @@ describe Restforce::Middleware::Authentication do
 
   describe '.authenticate!' do
     subject { lambda { middleware.authenticate! } }
-    it      { should raise_error NotImplementedError }
+    it      { expect { subject.call }.to raise_error NotImplementedError }
   end
 
   describe '.call' do
@@ -26,7 +26,7 @@ describe Restforce::Middleware::Authentication do
         app.should_receive(:call).once
       end
 
-      it { should_not raise_error }
+      it { expect { subject.call }.not_to raise_error }
     end
 
     context 'when an exception is thrown' do
@@ -37,7 +37,7 @@ describe Restforce::Middleware::Authentication do
           and_raise(Restforce::UnauthorizedError.new('something bad'))
       end
 
-      it { should raise_error Restforce::UnauthorizedError }
+      it { expect { subject.call }.to raise_error Restforce::UnauthorizedError }
     end
   end
 

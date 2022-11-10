@@ -8,6 +8,10 @@ describe Restforce::Middleware::Authorization do
   describe '.call' do
     subject { lambda { middleware.call(env) } }
 
-    it { should change { env[:request_headers]['Authorization'] }.to eq 'OAuth token' }
+    it {
+      expect { subject.call }.to change {
+                                   env[:request_headers]['Authorization']
+                                 }.to eq 'OAuth token'
+    }
   end
 end

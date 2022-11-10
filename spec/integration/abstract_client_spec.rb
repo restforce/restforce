@@ -144,7 +144,10 @@ shared_examples_for Restforce::AbstractClient do
   describe '.update' do
     context 'with missing Id' do
       subject { lambda { client.update('Account', Name: 'Foobar') } }
-      it { should raise_error ArgumentError, 'ID field missing from provided attributes' }
+      it {
+        expect { subject.call }.
+          to raise_error ArgumentError, 'ID field missing from provided attributes'
+      }
     end
 
     context 'with invalid Id' do
@@ -248,7 +251,7 @@ shared_examples_for Restforce::AbstractClient do
                status: 404
 
       subject { lambda { destroy! } }
-      it { should raise_error Faraday::ResourceNotFound }
+      it { expect { subject.call }.to raise_error Faraday::ResourceNotFound }
     end
 
     context 'with success' do
@@ -431,7 +434,7 @@ shared_examples_for Restforce::AbstractClient do
       end
 
       subject { lambda { client.query('SELECT some, fields FROM object') } }
-      it { should raise_error Restforce::UnauthorizedError }
+      it { expect { subject.call }.to raise_error Restforce::UnauthorizedError }
     end
   end
 
