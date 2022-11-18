@@ -1,3 +1,7 @@
+# 6.1.0 (Nov 18 2022)
+
+* Add support for `faraday` v2.5.x and v2.6.x (@marcrohloff, @timrogers)
+
 # 6.0.0 (Sep 9 2022)
 
 __This version contains breaking changes. For help with upgrading, see [`UPGRADING.md`](https://github.com/restforce/restforce/blob/main/UPGRADING.md).__
