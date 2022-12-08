@@ -139,5 +139,31 @@ describe Restforce::Concerns::CompositeAPI do
       double('Faraday::Response', body: { 'compositeResponse' => [] })
     end
     it_behaves_like 'composite requests'
+
+    it 'throws error with composite response in error' do
+      response = double('Faraday::Response',
+                        body: { 'compositeResponse' =>
+                                  [{ 'httpStatusCode' => 400,
+                                     'body' => [{ 'errorCode' =>
+                                                    'DUPLICATE_VALUE' }] }] })
+      client.
+        should_receive(:api_post).
+        with(endpoint, { compositeRequest: [
+          {
+            method: 'POST',
+            url: '/services/data/v38.0/sobjects/Object',
+            body: { name: 'test' },
+            referenceId: 'create_ref'
+          }
+        ], allOrNone: all_or_none, collateSubrequests: false }.to_json).
+        and_return(response)
+
+      expect do
+        client.send(method) do |subrequests|
+          subrequests.create('Object', 'create_ref', name: 'test')
+        end
+      end.to raise_error(an_instance_of(Restforce::CompositeAPIError).
+        and(having_attributes(composite_response: response.body['compositeResponse'])))
+    end
   end
 end

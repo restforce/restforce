@@ -49,7 +49,15 @@ module Restforce
   UnauthorizedError   = Class.new(Faraday::ClientError)
   APIVersionError     = Class.new(Error)
   BatchAPIError       = Class.new(Error)
-  CompositeAPIError   = Class.new(Error)
+
+  class CompositeAPIError < Error
+    attr_reader :composite_response
+
+    def initialize(msg, composite_response = nil)
+      @composite_response = composite_response
+      super(msg)
+    end
+  end
 
   # Inherit from Faraday::ResourceNotFound for backwards-compatibility
   # Consumers of this library that rescue and handle Faraday::ResourceNotFound
