@@ -50,15 +50,6 @@ module Restforce
   APIVersionError     = Class.new(Error)
   BatchAPIError       = Class.new(Error)
 
-  class CompositeAPIError < Error
-    attr_reader :composite_response
-
-    def initialize(msg, composite_response = nil)
-      @composite_response = composite_response
-      super(msg)
-    end
-  end
-
   # Inherit from Faraday::ResourceNotFound for backwards-compatibility
   # Consumers of this library that rescue and handle Faraday::ResourceNotFound
   # can continue to do so.
@@ -68,6 +59,7 @@ module Restforce
   # Consumers of this library that rescue and handle Faraday::ClientError
   # can continue to do so.
   ResponseError       = Class.new(Faraday::ClientError)
+  CompositeAPIError   = Class.new(ResponseError)
   MatchesMultipleError= Class.new(ResponseError)
   EntityTooLargeError = Class.new(ResponseError)
 
