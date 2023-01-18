@@ -143,7 +143,7 @@ describe Restforce::Concerns::CompositeAPI do
         and_return(response)
       arg = method == :composite ? { all_or_none: true } : {}
       expect do
-        client.send(method, arg) do |subrequests|
+        client.send(method, **arg) do |subrequests|
           subrequests.create('Object', 'create_ref', name: 'test')
         end
       end.to raise_error(an_instance_of(Restforce::CompositeAPIError).
