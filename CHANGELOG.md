@@ -1,3 +1,8 @@
+# 6.2.0 (Jan 18 2023)
+
+* Add support for `faraday` v2.7.x (@timrogers)
+* Expose the Faraday `Response` on `CompositeAPIError`s (@shravan097)
+
 # 6.1.0 (Nov 18 2022)
 
 * Add support for `faraday` v2.5.x and v2.6.x (@marcrohloff, @timrogers)
