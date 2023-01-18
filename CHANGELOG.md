@@ -1,3 +1,7 @@
+# 6.2.1 (Jan 18 2023)
+
+* When a response claims to be gzipped but isn't, return the body as it is and don't explode (@timrogers)
+
 # 6.2.0 (Jan 18 2023)
 
 * Add support for `faraday` v2.7.x (@timrogers)
