@@ -17,38 +17,73 @@ describe Restforce::Middleware::Gzip do
   describe '.call' do
     subject { lambda { middleware.call(env) } }
 
-    before do
-      app.should_receive(:on_complete) { middleware.on_complete(env) }
-      app.should_receive(:call) do
-        env[:body] = gzip fixture('sobject/query_success_response')
-        env[:response_headers]['Content-Encoding'] = 'gzip'
-        app
-      end
-    end
-
-    it 'decompresses the body' do
-      expect { subject.call }.to change {
-                                   env[:body]
-                                 }.to(fixture('sobject/query_success_response'))
-    end
-
-    context 'when :compress is false' do
-      it {
-        expect { subject.call }.
-          not_to(change { env[:request_headers]['Accept-Encoding'] })
-      }
-    end
-
-    context 'when :compress is true' do
+    context 'when the response is gzipped' do
       before do
-        options[:compress] = true
+        app.should_receive(:on_complete) { middleware.on_complete(env) }
+        app.should_receive(:call) do
+          env[:body] = gzip fixture('sobject/query_success_response')
+          env[:response_headers]['Content-Encoding'] = 'gzip'
+          app
+        end
       end
 
-      it {
+      it 'decompresses the body' do
         expect { subject.call }.to change {
-                                     env[:request_headers]['Accept-Encoding']
-                                   }.to('gzip')
-      }
+                                     env[:body]
+                                   }.to(fixture('sobject/query_success_response'))
+      end
+
+      context 'when :compress is false' do
+        it 'does not set request headers to ask the response to be compressed' do
+          expect { subject.call }.
+            not_to(change { env[:request_headers]['Accept-Encoding'] })
+        end
+      end
+
+      context 'when :compress is true' do
+        before do
+          options[:compress] = true
+        end
+
+        it 'sets request headers to ask the response to be compressed' do
+          expect { subject.call }.to change {
+                                       env[:request_headers]['Accept-Encoding']
+                                     }.to('gzip')
+        end
+      end
+    end
+
+    context 'when the response claims to be gzipped, but is not' do
+      before do
+        app.should_receive(:on_complete) { middleware.on_complete(env) }
+        app.should_receive(:call) do
+          env[:body] = fixture('sobject/query_success_response')
+          env[:response_headers]['Content-Encoding'] = 'gzip'
+          app
+        end
+      end
+
+      it 'does not decompress the body' do
+        expect { subject.call }.to change {
+                                     env[:body]
+                                   }.to(fixture('sobject/query_success_response'))
+      end
+    end
+
+    context 'when the response does not even claim to be gzipped' do
+      before do
+        app.should_receive(:on_complete) { middleware.on_complete(env) }
+        app.should_receive(:call) do
+          env[:body] = fixture('sobject/query_success_response')
+          app
+        end
+      end
+
+      it 'does not decompress the body' do
+        expect { subject.call }.to change {
+                                     env[:body]
+                                   }.to(fixture('sobject/query_success_response'))
+      end
     end
   end
 
