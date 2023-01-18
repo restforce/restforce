@@ -28,6 +28,10 @@ module Restforce
     # Internal: Decompresses a gzipped string.
     def decompress(body)
       Zlib::GzipReader.new(StringIO.new(body)).read
+    rescue Zlib::GzipFile::Error
+      # We thought the response was gzipped, but it wasn't. Return the original
+      # body back to the caller. See https://github.com/restforce/restforce/issues/761.
+      body
     end
   end
 end
