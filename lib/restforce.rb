@@ -33,6 +33,7 @@ module Restforce
     autoload :API,            'restforce/concerns/api'
     autoload :BatchAPI,       'restforce/concerns/batch_api'
     autoload :CompositeAPI,   'restforce/concerns/composite_api'
+    autoload :CompositeTreeAPI, 'restforce/concerns/composite_tree_api'
   end
 
   module Data
@@ -60,6 +61,7 @@ module Restforce
   # can continue to do so.
   ResponseError       = Class.new(Faraday::ClientError)
   CompositeAPIError   = Class.new(ResponseError)
+  CompositeTreeAPIError = Class.new(ResponseError)
   MatchesMultipleError= Class.new(ResponseError)
   EntityTooLargeError = Class.new(ResponseError)
 
