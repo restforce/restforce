@@ -10,6 +10,117 @@ describe Restforce::Concerns::CompositeAPI do
   end
 
   shared_examples_for 'composite requests' do
+    it "#find by id" do
+      client.
+        should_receive(:api_post).
+        with(endpoint, { compositeRequest: [
+          {
+            method: 'GET',
+            url: '/services/data/v38.0/sobjects/Object/@{ref.id}',
+            referenceId: 'find_ref'
+          }
+        ], allOrNone: all_or_none, collateSubrequests: false }.to_json).
+        and_return(response)
+
+      client.send(method) do |subrequests|
+        subrequests.find('Object', 'find_ref', '@{ref.id}')
+      end
+    end
+
+    it "#find by external_id" do
+      client.
+        should_receive(:api_post).
+        with(endpoint, { compositeRequest: [
+          {
+            method: 'GET',
+            url: '/services/data/v38.0/sobjects/Object/email/test@salesforce',
+            referenceId: 'find_ref'
+          }
+        ], allOrNone: all_or_none, collateSubrequests: false }.to_json).
+        and_return(response)
+
+      client.send(method) do |subrequests|
+        subrequests.find('Object', 'find_ref', 'test@salesforce', 'email')
+      end
+    end
+
+    it "#find by id with fields options passed" do
+      client.
+        should_receive(:api_post).
+        with(endpoint, { compositeRequest: [
+          {
+            method: 'GET',
+            url: '/services/data/v38.0/sobjects/Object/123?fields=first%2Clast%2Cemail',
+            referenceId: 'find_ref'
+          }
+        ], allOrNone: all_or_none, collateSubrequests: false }.to_json).
+        and_return(response)
+
+      client.send(method) do |subrequests|
+        subrequests.find('Object', 'find_ref', '123', 'id',
+                         fields: %w[first last email])
+      end
+    end
+
+    it "#find by id with http_headers" do
+      client.
+        should_receive(:api_post).
+        with(endpoint, { compositeRequest: [
+          {
+            method: 'GET',
+            url: '/services/data/v38.0/sobjects/Object/123',
+            referenceId: 'find_ref',
+            httpHeaders: { "If-Modified-Since" => "Tue, 31 May 2016 18:00:00 GMT" }
+          }
+        ], allOrNone: all_or_none, collateSubrequests: false }.to_json).
+        and_return(response)
+
+      client.send(method) do |subrequests|
+        subrequests.find('Object', 'find_ref', '123', 'id',
+                         http_headers:
+                           { "If-Modified-Since" => "Tue, 31 May 2016 18:00:00 GMT" })
+      end
+    end
+
+    it "#query" do
+      client.
+        should_receive(:api_post).
+        with(endpoint, { compositeRequest: [
+          {
+            method: 'GET',
+            url: '/services/data/v38.0/query?q=select+Email+' \
+                 'from+Contact+where+id+%3D+%27@{ref.results[0].id}%27',
+            referenceId: 'query_ref'
+          }
+        ], allOrNone: all_or_none, collateSubrequests: false }.to_json).
+        and_return(response)
+
+      client.send(method) do |subrequests|
+        subrequests.query("select Email from Contact where id = '@{ref.results[0].id}'",
+                          'query_ref')
+      end
+    end
+
+    it "#query_all" do
+      client.
+        should_receive(:api_post).
+        with(endpoint, { compositeRequest: [
+          {
+            method: 'GET',
+            url: '/services/data/v38.0/queryAll?q=select+Email+' \
+                 'from+Contact+where+id+%3D+%27@{ref.results[0].id}%27',
+            referenceId: 'query_ref'
+          }
+        ], allOrNone: all_or_none, collateSubrequests: false }.to_json).
+        and_return(response)
+
+      client.send(method) do |subrequests|
+        subrequests.query_all("select Email from Contact where id = " \
+                              "'@{ref.results[0].id}'",
+                              'query_ref')
+      end
+    end
+
     it '#create' do
       client.
         should_receive(:api_post).
@@ -87,6 +198,23 @@ describe Restforce::Concerns::CompositeAPI do
         should_receive(:api_post).
         with(endpoint, { compositeRequest: [
           {
+            method: 'GET',
+            url: '/services/data/v38.0/sobjects/Contact/123',
+            referenceId: 'find_ref'
+          },
+          {
+            method: 'GET',
+            url: '/services/data/v38.0/query?q=select+Id+' \
+                 'from+Contact+where+Email+%3D+%27@{find_ref.Email}%27',
+            referenceId: 'query_ref'
+          },
+          {
+            method: 'GET',
+            url: '/services/data/v38.0/queryAll?q=select+Id+' \
+                 'from+Contact+where+Email+%3D+%27@{find_ref.Email}%27',
+            referenceId: 'query_all_ref'
+          },
+          {
             method: 'POST',
             url: '/services/data/v38.0/sobjects/Object',
             body: { name: 'test' },
@@ -107,6 +235,11 @@ describe Restforce::Concerns::CompositeAPI do
         and_return(response)
 
       client.send(method) do |subrequests|
+        subrequests.find('Contact', 'find_ref', '123')
+        subrequests.query("select Id from Contact where Email = '@{find_ref.Email}'",
+                          'query_ref')
+        subrequests.query_all("select Id from Contact where Email = '@{find_ref.Email}'",
+                              'query_all_ref')
         subrequests.create('Object', 'create_ref', name: 'test')
         subrequests.update('Object', 'update_ref', id: '123', name: 'test')
         subrequests.destroy('Object', 'destroy_ref', '123')
