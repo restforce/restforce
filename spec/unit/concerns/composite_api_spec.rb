@@ -40,7 +40,7 @@ describe Restforce::Concerns::CompositeAPI do
         and_return(response)
 
       client.send(method) do |subrequests|
-        subrequests.find('Object', 'find_ref', 'test@salesforce', 'email')
+        subrequests.find_by('Object', 'find_ref', 'test@salesforce', 'email')
       end
     end
 
@@ -57,7 +57,7 @@ describe Restforce::Concerns::CompositeAPI do
         and_return(response)
 
       client.send(method) do |subrequests|
-        subrequests.find('Object', 'find_ref', '123', 'id',
+        subrequests.find('Object', 'find_ref', '123',
                          fields: %w[first last email])
       end
     end
@@ -69,14 +69,14 @@ describe Restforce::Concerns::CompositeAPI do
           {
             method: 'GET',
             url: '/services/data/v38.0/sobjects/Object/123',
-            referenceId: 'find_ref',
-            httpHeaders: { "If-Modified-Since" => "Tue, 31 May 2016 18:00:00 GMT" }
+            httpHeaders: { "If-Modified-Since" => "Tue, 31 May 2016 18:00:00 GMT" },
+            referenceId: 'find_ref'
           }
         ], allOrNone: all_or_none, collateSubrequests: false }.to_json).
         and_return(response)
 
       client.send(method) do |subrequests|
-        subrequests.find('Object', 'find_ref', '123', 'id',
+        subrequests.find('Object', 'find_ref', '123',
                          http_headers:
                            { "If-Modified-Since" => "Tue, 31 May 2016 18:00:00 GMT" })
       end

@@ -40,6 +40,8 @@ module Restforce
       end
 
       class Subrequests
+        extend Restforce::Resources::SubrequestBuilder
+
         def initialize(options)
           @options = options
           @requests = []
@@ -52,75 +54,133 @@ module Restforce
         # reference_id  - The reference id to match with the response
         # id            - 'xxx'
         # field_name    - the field to query by. Must be unique in the table
-        # opts          - this is where you can pass a :fields list to be returned or
+        # opts          - this is where you can pass a :fields list to be returned and/or
         #                 specify some :http_headers ie:
         #                 { http_headers:
         #                   { "If-Modified-Since" => "Tue, 31 May 2016 18:00:00 GMT" } }
         # Returns the Restforce::SObject sobject record.
-        def find(sobject, reference_id, id, field_name = 'id', opts = {})
-          fields = opts.delete(:fields) || ''
 
-          http_headers_present = opts[:http_headers] && !opts[:http_headers].empty?
-          http_headers = http_headers_present ? { httpHeaders: opts[:http_headers] } : {}
-          params = fields.empty? ? {} : { fields: fields.join(',') }
-          url = if field_name.to_s.casecmp?('id')
-                  "#{sobject}/#{id}"
-                else
-                  "#{sobject}/#{field_name}/#{id}"
-                end
-          requests << {
-            method: 'GET',
-            url: encoded_path(composite_api_path(url), params),
-            referenceId: reference_id
-          }.merge(http_headers)
-        end
+        define_subrequest :basic_metadata,
+                          'Restforce::Resources::SObjectBasic',
+                          :get,
+                          :sobject_name, :reference_id
 
-        def query(soql, reference_id)
-          requests << {
-            method: 'GET',
-            url: encoded_path("/services/data/v#{options[:api_version]}/query",
-                              { q: soql }),
-            referenceId: reference_id
-          }
-        end
+        define_subrequest :create,
+                          'Restforce::Resources::SObjectBasic',
+                          :post,
+                          :sobject_name, :reference_id, :body
 
-        def query_all(soql, reference_id)
-          requests << {
-            method: 'GET',
-            url: encoded_path("/services/data/v#{options[:api_version]}/queryAll",
-                              { q: soql }),
-            referenceId: reference_id
-          }
-        end
+        # subrequest.find(sobject_name, reference_id, sobject_id, opts = {})
+        #
+        # sobject_name  - The String name of the sobject.
+        # reference_id  - The reference id to match with the response
+        # sobject_id    - A Salesforce Id
+        # opts          - this is where you can pass a :fields list to be returned and/or
+        #                 specify some :http_headers ie:
+        #                 { http_headers:
+        #                   { "If-Modified-Since" => "Tue, 31 May 2016 18:00:00 GMT" },
+        #                   fields: %w[first last email]
+        #                 }
+        # Returns the Restforce::SObject sobject record.
+        define_subrequest :find,
+                          'Restforce::Resources::SObjectRows',
+                          :get,
+                          :sobject_name, :reference_id, :sobject_id
 
-        def create(sobject, reference_id, attrs)
-          requests << {
-            method: 'POST',
-            url: composite_api_path(sobject),
-            body: attrs,
-            referenceId: reference_id
-          }
-        end
+        # subrequest.destroy(sobject_name, reference_id, sobject_id, opts = {})
+        #
+        # sobject_name  - The String name of the sobject.
+        # reference_id  - The reference id to match with the response
+        # sobject_id    - A Salesforce Id
+        # opts          - this is where you can specify some :http_headers ie:
+        #                 { http_headers:
+        #                   { "If-Modified-Since" => "Tue, 31 May 2016 18:00:00 GMT" },
+        #                 }
+        define_subrequest :destroy,
+                          'Restforce::Resources::SObjectRows',
+                          :delete,
+                          :sobject_name, :reference_id, :sobject_id
+
+        # subrequest.update_by_id(sobject_name, reference_id, sobject_id, opts = {})
+        #
+        # sobject_name  - The String name of the sobject.
+        # reference_id  - The reference id to match with the response
+        # sobject_id    - A Salesforce Id
+        # opts          - this is where you can specify some :http_headers ie:
+        #                 { http_headers:
+        #                   { "If-Modified-Since" => "Tue, 31 May 2016 18:00:00 GMT" },
+        #                 }
+        define_subrequest :update_by_id,
+                          'Restforce::Resources::SObjectRows',
+                          :patch,
+                          :sobject_name, :reference_id, :sobject_id
+
+        # subrequest.find_by(sobject_name, reference_id, field_value, field_name,
+        #                    opts = {})
+        #
+        # sobject_name  - The String name of the sobject.
+        # reference_id  - The reference id to match with the response
+        # field_value   - A Salesforce External Id
+        # field_name    - The External Field Name
+        # opts          - You can override the api_version
+        define_subrequest :find_by,
+                          'Restforce::Resources::SObjectRowsByExternalId',
+                          :get,
+                          :sobject_name, :reference_id, :field_value, :field_name
+
+        # subrequest.upsert_by(sobject_name, reference_id, field_value, field_name,
+        #                    body: { first: "John" })
+        #
+        # sobject_name  - The String name of the sobject.
+        # reference_id  - The reference id to match with the response
+        # field_value   - A Salesforce External Id
+        # field_name    - The External Field Name
+        # opts          - here you specify the body
+        define_subrequest :upsert_by,
+                          'Restforce::Resources::SObjectRowsByExternalId',
+                          :patch,
+                          :sobject_name, :reference_id, :field_value, :field_name
+
+        # subrequest.delete_by(sobject_name, reference_id, field_value, field_name)
+        #
+        # sobject_name  - The String name of the sobject.
+        # reference_id  - The reference id to match with the response
+        # field_value   - A Salesforce External Id
+        # field_name    - The External Field Name
+        # opts          - You can override the api_version
+        define_subrequest :delete_by,
+                          'Restforce::Resources::SObjectRowsByExternalId',
+                          :delete,
+                          :sobject_name, :reference_id, :field_value, :field_name
+
+        # subrequest.query(soql, reference_id,
+        #                 http_headers: {"Sforce-Query-Options" => 'batchSize=1000'})
+        #
+        # soql          - The String containing the soql query
+        # reference_id  - The reference id to match with the response
+        # opts          - You can override the batch file
+        define_subrequest :query,
+                          'Restforce::Resources::Query',
+                          :get,
+                          :soql, :reference_id
+
+        # subrequest.query_all(soql, reference_id,
+        #                 http_headers: {"Sforce-Query-Options" => 'batchSize=1000'})
+        #
+        # soql          - The String containing the soql query
+        # reference_id  - The reference id to match with the response
+        # opts          - You can override the batch file
+        define_subrequest :query_all,
+                          'Restforce::Resources::QueryAll',
+                          :get,
+                          :soql, :reference_id
 
         def update(sobject, reference_id, attrs)
           id = attrs.fetch(attrs.keys.find { |k, _v| k.to_s.casecmp?('id') }, nil)
           raise ArgumentError, 'Id field missing from attrs.' unless id
 
           attrs_without_id = attrs.reject { |k, _v| k.to_s.casecmp?('id') }
-          requests << {
-            method: 'PATCH',
-            url: composite_api_path("#{sobject}/#{id}"),
-            body: attrs_without_id,
-            referenceId: reference_id
-          }
-        end
-
-        def destroy(sobject, reference_id, id)
-          requests << {
-            method: 'DELETE',
-            url: composite_api_path("#{sobject}/#{id}"),
-            referenceId: reference_id
-          }
+          update_by_id(sobject, reference_id, id, body: attrs_without_id)
         end
 
         def upsert(sobject, reference_id, ext_field, attrs)
@@ -132,37 +192,7 @@ module Restforce
           raise ArgumentError, 'External id missing from attrs.' unless ext_id
 
           attrs_without_ext_id = attrs.reject { |k, _v| k.to_s.casecmp?(ext_field) }
-          requests << {
-            method: 'PATCH',
-            url: composite_api_path("#{sobject}/#{ext_field}/#{ext_id}"),
-            body: attrs_without_ext_id,
-            referenceId: reference_id
-          }
-        end
-
-        private
-
-        def encoded_path(path, params = {})
-          [
-            path,
-            params.empty? ? nil : '?',
-            # we don't want to encode reference_ids ie: '@{ref1.name}'
-            unescape_reference_ids(URI.encode_www_form(params))
-          ].join
-        end
-
-        # Even though SF documentation says query parameters must be URL encoded,
-        # if you do so and include a reference_id syntax, You'll get a malformed
-        # query because Salesforce doesn't fully URL decode everything
-        # I suspect they look for reference_ids before decoding the url
-        def unescape_reference_ids(str)
-          str.gsub(/%40%7B([\w.%]+)%7D/) do
-            "@{#{::Regexp.last_match(1).gsub(/%5B/, '[').gsub(/%5D/, ']')}}"
-          end
-        end
-
-        def composite_api_path(path)
-          "/services/data/v#{options[:api_version]}/sobjects/#{path}"
+          upsert_by(sobject, reference_id, ext_id, ext_field, body: attrs_without_ext_id)
         end
       end
     end
