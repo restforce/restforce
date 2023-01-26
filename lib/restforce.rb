@@ -33,6 +33,8 @@ module Restforce
     autoload :API,            'restforce/concerns/api'
     autoload :BatchAPI,       'restforce/concerns/batch_api'
     autoload :CompositeAPI,   'restforce/concerns/composite_api'
+    autoload :CompositeGraphAPI,  'restforce/concerns/composite_graph_api'
+    autoload :SubRequests,        'restforce/concerns/subrequests'
   end
 
   module Data

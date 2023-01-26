@@ -27,7 +27,7 @@ describe Restforce::Concerns::CompositeAPI do
       end
     end
 
-    it "#find by external_id" do
+    it "#find_by external_id" do
       client.
         should_receive(:api_post).
         with(endpoint, { compositeRequest: [

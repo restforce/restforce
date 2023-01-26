@@ -2,6 +2,16 @@
 
 module Restforce
   module Resources
+    class Requirements
+      class << self
+        def require_options(opts, *keys)
+          keys.each do |key|
+            raise ArgumentError, "You must include a #{key}" unless opts[key]
+          end
+        end
+      end
+    end
+
     class Base
       attr_accessor :method, :opts
 
@@ -47,14 +57,6 @@ module Restforce
 
         def build_option_url(opts = {})
           { api_version: '26.0' }.merge(opts)
-        end
-
-        protected
-
-        def require_arguments(opts, *keys)
-          keys.each do |key|
-            raise ArgumentError, "You must include a #{key}" unless opts[key]
-          end
         end
       end
 

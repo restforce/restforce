@@ -15,6 +15,12 @@ module Restforce
           else
             opts[:api_version] = options[:api_version]
           end
+
+          Restforce::Resources::Requirements.require_options(opts, :reference_id)
+          Restforce::Resources::Requirements.require_options(opts, :api_version)
+
+          reference_ids << opts[:reference_id]
+
           object = clazz.new(http_method, opts)
           yield(object) if block_given?
           object.opts = clazz.build_option_url(object.opts)

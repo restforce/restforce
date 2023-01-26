@@ -32,7 +32,7 @@ describe Restforce::Resources::SObjectRows do
                     Restforce::Resources::SObjectRows,
                     { sobject_name: 'Account',
                       api_version: '50',
-                      sobject_id: '123' },
+                      id: '123' },
                     "/services/data/v50/sobjects/Account/123"
   end
 end

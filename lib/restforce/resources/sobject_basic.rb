@@ -16,7 +16,9 @@ module Restforce
         end
 
         def build_option_url(opts = {})
-          require_arguments(opts, :sobject_name, :api_version)
+          Restforce::Resources::Requirements.require_options(opts,
+                                                             :sobject_name,
+                                                             :api_version)
           options = { api_version: '26.0' }.merge(opts)
           options[:url] ||= path(options[:api_version], options[:sobject_name])
           options
