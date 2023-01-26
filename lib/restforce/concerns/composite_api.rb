@@ -158,7 +158,7 @@ module Restforce
         #
         # soql          - The String containing the soql query
         # reference_id  - The reference id to match with the response
-        # opts          - You can override the batch file
+        # opts          - You can override the batch size
         define_subrequest :query,
                           'Restforce::Resources::Query',
                           :get,
