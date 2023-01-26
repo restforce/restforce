@@ -153,12 +153,31 @@ module Restforce
                           :delete,
                           :sobject_name, :reference_id, :field_value, :field_name
 
+        #
+        #   subrequest.headers_by(sobject_name, reference_id, field_value, field_name)
+        #
+        # Returns only the headers that are returned by sending a GET request to the
+        # sObject Rows by External ID resource. This gives you a chance to see returned
+        # header values of the GET request before retrieving the content itself.
+        #
+        # sobject_name  - The String name of the sobject.
+        # reference_id  - The reference id to match with the response
+        # field_value   - A Salesforce External Id
+        # field_name    - The External Field Name
+        # opts          - You can override the api_version
+
+        define_subrequest :headers_by,
+                          'Restforce::Resources::SObjectRowsByExternalId',
+                          :head,
+                          :sobject_name, :reference_id, :field_value, :field_name
+
         # subrequest.query(soql, reference_id,
         #                 http_headers: {"Sforce-Query-Options" => 'batchSize=1000'})
         #
         # soql          - The String containing the soql query
         # reference_id  - The reference id to match with the response
         # opts          - You can override the batch size
+
         define_subrequest :query,
                           'Restforce::Resources::Query',
                           :get,
