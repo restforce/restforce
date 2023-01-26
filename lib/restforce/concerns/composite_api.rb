@@ -194,6 +194,24 @@ module Restforce
                           :get,
                           :soql, :reference_id
 
+        define_generic_subrequest :approval_layouts,
+                                  'Restforce::Resources::Base',
+                                  [:get, :head],
+                                  :sobject_name,
+                                  :reference_id do |obj|
+          obj.opts[:url] = "/services/data/v#{obj.opts[:api_version]}/sobjects/" \
+                           "#{obj.opts[:sobject_name]}/describe/approvalLayouts/"
+        end
+
+        define_generic_subrequest :layout_description,
+                                  'Restforce::Resources::Base',
+                                  [:get, :head],
+                                  :sobject_name,
+                                  :reference_id do |obj|
+          obj.opts[:url] = "/services/data/v#{obj.opts[:api_version]}/sobjects/" \
+                           "#{obj.opts[:sobject_name]}/describe/layouts/"
+        end
+
         def update(sobject, reference_id, attrs)
           id = attrs.fetch(attrs.keys.find { |k, _v| k.to_s.casecmp?('id') }, nil)
           raise ArgumentError, 'Id field missing from attrs.' unless id

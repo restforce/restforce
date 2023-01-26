@@ -19,7 +19,10 @@ module Restforce
       end
 
       def to_hash
-        raise StandardError, "Must call to_hash on an inherited class"
+        {
+          method: method.to_s.upcase,
+          url: url
+        }
       end
 
       class << self
@@ -40,6 +43,10 @@ module Restforce
           str.gsub(/%40%7B([\w.%]+)%7D/) do
             "@{#{::Regexp.last_match(1).gsub(/%5B/, '[').gsub(/%5D/, ']')}}"
           end
+        end
+
+        def build_option_url(opts = {})
+          { api_version: '26.0' }.merge(opts)
         end
 
         protected

@@ -15,7 +15,21 @@ module Restforce
           else
             opts[:api_version] = options[:api_version]
           end
+          object = clazz.new(http_method, opts)
+          yield(object) if block_given?
+          object.opts = clazz.build_option_url(object.opts)
           requests << clazz.new(http_method, clazz.build_option_url(opts)).to_request
+        end
+      end
+
+      def define_generic_subrequest(subrequest_method, clazz,
+                                    http_methods, *params, &block)
+        http_methods.each do |http_method|
+          define_subrequest([http_method, subrequest_method].join('_'),
+                            clazz,
+                            http_method,
+                            *params,
+                            &block)
         end
       end
     end
