@@ -3,13 +3,6 @@
 module Restforce
   module Resources
     class QueryAll < Base
-      def to_hash
-        {
-          method: method.to_s.upcase,
-          url: url
-        }
-      end
-
       class << self
         def path(api_version, soql)
           encoded_path("/services/data/v#{api_version}/queryAll",
