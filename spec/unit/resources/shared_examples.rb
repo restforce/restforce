@@ -53,9 +53,9 @@ shared_examples_for 'a query resource' do |clazz, endpoint|
     it_behaves_like 'build_option_url',
                     clazz,
                     { soql: "select field from account where id = " \
-                            "'@{ref.results[0].addresses[0].Id'",
+                            "'@{ref.results[0].addresses[0].Id}'",
                       api_version: '50' },
                     "/services/data/v50/#{endpoint}?q=select+field+from+account" \
-                    "+where+id+%3D+%27%40%7Bref.results%5B0%5D.addresses%5B0%5D.Id%27"
+                    "+where+id+%3D+%27@{ref.results[0].addresses[0].Id}%27"
   end
 end

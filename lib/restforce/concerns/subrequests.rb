@@ -6,17 +6,20 @@ module Restforce
   module Concerns
     module SubRequests
       class UniqueNameSet
+        extend Forwardable
+        def_delegators :@values, :size, :empty?, :length, :each, :first, :last, :[]
+
         def initialize(name)
           @name = name
-          @names = {}
+          @values = []
+          @keys = {}
         end
 
         def <<(val)
-          if @names.key?(val)
-            raise ArgumentError, "The #{@name} #{val} is already in use."
-          end
+          raise ArgumentError, "The #{@name} #{val} is already in use." if @keys.key?(val)
 
-          @names[val] = true
+          @values << val
+          @keys[val] = true
         end
       end
 
@@ -143,7 +146,6 @@ module Restforce
         def initialize(options)
           @options = options
           @requests = []
-          @reference_ids = UniqueNameSet.new("reference_id")
         end
       end
 
@@ -155,7 +157,6 @@ module Restforce
         def initialize(options)
           @options = options
           @requests = []
-          @reference_ids = UniqueNameSet.new("reference_id")
         end
 
         # Public: Finds a single record and returns all fields.
@@ -198,6 +199,11 @@ module Restforce
                           :get,
                           :soql, :reference_id
 
+        # subrequest.get_approval_layouts(sobject_name, reference_id)
+        # subrequest.describe_approval_layouts(sobject_name, reference_id)
+        #
+        # sobject       - The String name of the sobject.
+        # reference_id  - The reference id to match with the response
         define_generic_subrequest :approval_layouts,
                                   'Restforce::Resources::Base',
                                   [:get, :head],
@@ -207,6 +213,11 @@ module Restforce
                            "#{obj.opts[:sobject_name]}/describe/approvalLayouts/"
         end
 
+        # subrequest.get_layout_description(sobject_name, reference_id)
+        # subrequest.describe_layout_description(sobject_name, reference_id)
+        #
+        # sobject       - The String name of the sobject.
+        # reference_id  - The reference id to match with the response
         define_generic_subrequest :layout_description,
                                   'Restforce::Resources::Base',
                                   [:get, :head],
