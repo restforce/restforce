@@ -9,6 +9,7 @@ module Restforce
     include Restforce::Concerns::API
     include Restforce::Concerns::BatchAPI
     include Restforce::Concerns::SObjectCollectionAPI
+    include Restforce::Concerns::SObjectTreeAPI
     include Restforce::Concerns::CompositeAPI
   end
 end
