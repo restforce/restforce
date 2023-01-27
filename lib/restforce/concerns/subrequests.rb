@@ -136,6 +136,7 @@ module Restforce
       end
 
       class GraphSubrequests
+        extend Restforce::Resources::SubrequestBuilder
         include BasicSubrequests
         attr_reader :options, :requests, :reference_ids
 
