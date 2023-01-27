@@ -182,6 +182,15 @@ module Restforce
         # soql          - The String containing the soql query
         # reference_id  - The reference id to match with the response
         # opts          - You can override the batch size
+        #
+        #
+        # Note: Using a reference_id in a sub request from a Query is done like so
+        #
+        #   ret1 = client.composite do |sub|
+        #     sub.query("select Id from Contact where Email != null limit 10", 'c1')
+        #     sub.query("select Email from Contact where Id = '@{c1.records[0].Id}'",
+        #               'c2')
+        #   end
 
         define_subrequest :query,
                           'Restforce::Resources::Query',
