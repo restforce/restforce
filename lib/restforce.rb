@@ -34,7 +34,9 @@ module Restforce
     autoload :BatchAPI,       'restforce/concerns/batch_api'
     autoload :SObjectCollectionAPI, 'restforce/concerns/sobject_collection_api'
     autoload :SObjectTreeAPI, 'restforce/concerns/sobject_tree_api'
-    autoload :CompositeAPI, 'restforce/concerns/composite_api'
+    autoload :CompositeAPI,   'restforce/concerns/composite_api'
+    autoload :CompositeGraphAPI,  'restforce/concerns/composite_graph_api'
+    autoload :SubRequests,        'restforce/concerns/subrequests'
   end
 
   module Data
