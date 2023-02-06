@@ -62,7 +62,6 @@ module Restforce
   # can continue to do so.
   ResponseError       = Class.new(Faraday::ClientError)
   CompositeAPIError   = Class.new(ResponseError)
-  SObjectTreeAPIError = Class.new(ResponseError)
   MatchesMultipleError= Class.new(ResponseError)
   EntityTooLargeError = Class.new(ResponseError)
 
