@@ -93,7 +93,7 @@ describe Restforce::Concerns::SObjectCollectionAPI do
 
   describe "#collection_delete!" do
     it "should delegate to collection_delete with all_or_none = true" do
-      client.should_receive(:collection_delete).with([1, 2], true)
+      client.should_receive(:collection_delete).with([1, 2], all_or_none: true)
       client.collection_delete!([1, 2])
     end
   end
@@ -113,16 +113,18 @@ describe Restforce::Concerns::SObjectCollectionAPI do
 
     it "should raise en arror when there are no records" do
       expect do
-        client.send(method, *[args, false].flatten.compact) do |builder|
+        client.send(method, *[args, { all_or_none: false }].flatten.compact) do |builder|
           builder
         end
       end.to raise_error(ArgumentError)
     end
 
-    [true, false].each do |all_or_none|
-      it "should take an all_or_none as #{all_or_none} parameter and pass it along" do
-        collection_client_expectation(all_or_none, successful_response, api_method)
-        client.send(method, *[args, all_or_none].flatten.compact) do |records|
+    [true, false].each do |all_or_none_value|
+      it "should take an all_or_none: #{all_or_none_value} parameter and pass it along" do
+        collection_client_expectation(all_or_none_value, successful_response, api_method)
+        client.send(method,
+                    *[args,
+                      { all_or_none: all_or_none_value }].flatten.compact) do |records|
           records.add('Account', record_attributes)
         end
       end
@@ -130,7 +132,7 @@ describe Restforce::Concerns::SObjectCollectionAPI do
 
     describe "##{method}!" do
       it "should delegate to #{method} with all_or_none = true" do
-        client.should_receive(method).with(*[args, true].flatten.compact, {})
+        client.should_receive(method).with(*[args, { all_or_none: true }].flatten.compact)
         client.send("#{method}!", *args)
       end
 
@@ -226,7 +228,7 @@ describe Restforce::Concerns::SObjectCollectionAPI do
       [true, false].each do |all_or_none|
         it "returns a response when is all_or_none = #{all_or_none}" do
           result = Hashie::Mash.new(body: successful_response).body
-          expect(subject.new(result, all_or_none).response).to eq(result)
+          expect(subject.new(result, all_or_none: all_or_none).response).to eq(result)
         end
       end
     end
@@ -234,7 +236,7 @@ describe Restforce::Concerns::SObjectCollectionAPI do
     context "an unsuccessful response" do
       it "returns a response when is all_or_none = false" do
         result = Hashie::Mash.new(body: unsuccessful_response).body
-        expect(subject.new(result, false).response).to eq(result)
+        expect(subject.new(result, all_or_none: false).response).to eq(result)
       end
     end
 
@@ -242,14 +244,14 @@ describe Restforce::Concerns::SObjectCollectionAPI do
       it "returns a response when is all_or_none = true" do
         result = Hashie::Mash.new(body: rolledback_response).body
         expect do
-          subject.new(result, true).response
+          subject.new(result, all_or_none: true).response
         end.to raise_error(Restforce::ResponseError)
       end
 
       it "raises an error with an accessible response" do
         result = Hashie::Mash.new(body: rolledback_response).body
         begin
-          subject.new(result, true).response
+          subject.new(result, all_or_none: true).response
         rescue StandardError => e
           expect(e.message).to eq("malformed id 001RM000003oLrB000")
           expect(e.response).to be_kind_of(Hashie::Array)
