@@ -18,23 +18,23 @@ module Restforce
                 fields: fields.join(',')).body
       end
 
-      def collection_delete(ids, all_or_none = nil)
-        all_or_none &= true
+      def collection_delete(ids, opts = {})
+        all_or_none = opts.delete(:all_or_none) || false
         raise ArgumentError, "ids are required" if Array(ids).empty?
 
         results = api_delete("composite/sobjects",
                              ids: ids.join(','),
                              allOrNone: all_or_none).body
-        CollectionResponse.new(results, all_or_none).response
+        CollectionResponse.new(results, all_or_none: all_or_none).response
         results
       end
 
       def collection_delete!(*ids)
-        collection_delete(ids.flatten, true)
+        collection_delete(ids.flatten, all_or_none: true)
       end
 
-      def collection_create(all_or_none = nil, opts = {})
-        all_or_none &= true
+      def collection_create(opts = {})
+        all_or_none = opts.delete(:all_or_none) || false
         builder = RecordsBuilder.new
         yield(builder)
         return builder.records if opts[:debug]
@@ -48,15 +48,15 @@ module Restforce
                              allOrNone: all_or_none,
                              records: builder.records
                            }).body
-        CollectionResponse.new(results, all_or_none).response
+        CollectionResponse.new(results, all_or_none: all_or_none).response
       end
 
       def collection_create!(opts = {}, &block)
-        collection_create(true, opts, &block)
+        collection_create(opts.merge(all_or_none: true), &block)
       end
 
-      def collection_update(all_or_none = nil, opts = {})
-        all_or_none &= true
+      def collection_update(opts = {})
+        all_or_none = opts.delete(:all_or_none) || false
         builder = RecordsBuilder.new
         yield(builder)
         return builder.records if opts[:debug]
@@ -70,15 +70,15 @@ module Restforce
                               allOrNone: all_or_none,
                               records: builder.records
                             }).body
-        CollectionResponse.new(results, all_or_none).response
+        CollectionResponse.new(results, all_or_none: all_or_none).response
       end
 
       def collection_update!(opts = {}, &block)
-        collection_update(true, opts, &block)
+        collection_update(opts.merge(all_or_none: true), &block)
       end
 
-      def collection_upsert(sobject_type, field_name, all_or_none = nil, opts = {})
-        all_or_none &= true
+      def collection_upsert(sobject_type, field_name, opts = {})
+        all_or_none = opts.delete(:all_or_none) || false
         builder = RecordsBuilder.new(field_name.to_sym)
         yield(builder)
         return builder.records if opts[:debug]
@@ -92,18 +92,17 @@ module Restforce
                               allOrNone: all_or_none,
                               records: builder.records
                             }).body
-        CollectionResponse.new(results, all_or_none).response
+        CollectionResponse.new(results, all_or_none: all_or_none).response
       end
 
       def collection_upsert!(sobject_type, field_name, opts = {}, &block)
-        collection_upsert(sobject_type, field_name, true, opts, &block)
+        collection_upsert(sobject_type, field_name, opts.merge(all_or_none: true), &block)
       end
 
       class CollectionResponse
         attr_accessor :results, :all_or_none
 
-        def initialize(results, all_or_none = nil)
-          all_or_none &= true
+        def initialize(results, all_or_none: false)
           @results = results
           @all_or_none = all_or_none
         end
