@@ -16,12 +16,7 @@ module Restforce
           records = builder.records
         end
 
-        begin
-          response = api_post("composite/tree/#{root}", { records: records }.to_json)
-        rescue Restforce::ResponseError => e
-          raise SObjectTreeAPIError.new(e.message, e)
-        end
-
+        response = api_post("composite/tree/#{root}", { records: records }.to_json)
         response.body
       end
 
