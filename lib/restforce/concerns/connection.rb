@@ -20,6 +20,8 @@ module Restforce
       private
 
       # Internal: Internal faraday connection where all requests go through
+      # rubocop:disable Metrics/AbcSize
+      # rubocop:disable Metrics/BlockLength
       def connection
         @connection ||= Faraday.new(options[:instance_url],
                                     connection_options) do |builder|
@@ -67,6 +69,8 @@ module Restforce
           builder.adapter adapter
         end
       end
+      # rubocop:enable Metrics/BlockLength
+      # rubocop:enable Metrics/AbcSize
 
       def adapter
         options[:adapter]
