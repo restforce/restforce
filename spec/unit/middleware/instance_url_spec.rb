@@ -11,7 +11,7 @@ describe Restforce::Middleware::InstanceURL do
         client.stub_chain :connection, url_prefix: URI.parse('http:/')
       end
 
-      it { should raise_error Restforce::UnauthorizedError }
+      it { expect { subject.call }.to raise_error Restforce::UnauthorizedError }
     end
 
     context 'when the instance url is set' do
@@ -20,7 +20,7 @@ describe Restforce::Middleware::InstanceURL do
         app.should_receive(:call).once
       end
 
-      it { should_not raise_error }
+      it { expect { subject.call }.not_to raise_error }
     end
   end
 end

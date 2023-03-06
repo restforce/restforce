@@ -29,7 +29,7 @@ module Restforce
         if all_or_none && has_errors
           last_error_index = results.rindex { |result| result['httpStatusCode'] != 412 }
           last_error = results[last_error_index]
-          raise CompositeAPIError, last_error['body'][0]['errorCode']
+          raise CompositeAPIError.new(last_error['body'][0]['errorCode'], response)
         end
 
         results

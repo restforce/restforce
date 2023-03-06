@@ -29,4 +29,6 @@ end
 
 # This patch is only needed with multipart-post < 2.0.0
 # 2.0.0 was released in 2013.
-require 'restforce/patches/parts' unless Parts::Part.method(:new).arity.abs == 4
+if defined?(Parts) && Parts::Part.method(:new).arity.abs != 4
+  require 'restforce/patches/parts'
+end

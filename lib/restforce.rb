@@ -49,7 +49,6 @@ module Restforce
   UnauthorizedError   = Class.new(Faraday::ClientError)
   APIVersionError     = Class.new(Error)
   BatchAPIError       = Class.new(Error)
-  CompositeAPIError   = Class.new(Error)
 
   # Inherit from Faraday::ResourceNotFound for backwards-compatibility
   # Consumers of this library that rescue and handle Faraday::ResourceNotFound
@@ -60,6 +59,7 @@ module Restforce
   # Consumers of this library that rescue and handle Faraday::ClientError
   # can continue to do so.
   ResponseError       = Class.new(Faraday::ClientError)
+  CompositeAPIError   = Class.new(ResponseError)
   MatchesMultipleError= Class.new(ResponseError)
   EntityTooLargeError = Class.new(ResponseError)
 

@@ -113,8 +113,8 @@ module Restforce
     # The private key for JWT authentication
     option :jwt_key
 
-    # Set this to true if you're authenticating with a Sandbox instance.
-    # Defaults to false.
+    # The login host.
+    # Defaults to login.salesforce.com.
     option :host, default: lambda { ENV.fetch('SALESFORCE_HOST', 'login.salesforce.com') }
 
     option :oauth_token
@@ -160,6 +160,10 @@ module Restforce
 
     # Set use_cache to false to opt in to caching with client.with_caching
     option :use_cache, default: true
+
+    # Set to true to have Faraday::FollowRedirects middleware omit the auth header
+    # when following redirects
+    option :clear_authorization_header, default: false
 
     def options
       self.class.options

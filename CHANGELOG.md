@@ -1,3 +1,16 @@
+# 6.2.1 (Jan 18 2023)
+
+* When a response claims to be gzipped but isn't, return the body as it is and don't explode (@timrogers)
+
+# 6.2.0 (Jan 18 2023)
+
+* Add support for `faraday` v2.7.x (@timrogers)
+* Expose the Faraday `Response` on `CompositeAPIError`s (@shravan097)
+
+# 6.1.0 (Nov 18 2022)
+
+* Add support for `faraday` v2.5.x and v2.6.x (@marcrohloff, @timrogers)
+
 # 6.0.0 (Sep 9 2022)
 
 __This version contains breaking changes. For help with upgrading, see [`UPGRADING.md`](https://github.com/restforce/restforce/blob/main/UPGRADING.md).__

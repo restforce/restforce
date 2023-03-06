@@ -123,6 +123,32 @@ describe Restforce::Concerns::CompositeAPI do
         end
       end.to raise_error(ArgumentError)
     end
+
+    it 'has response in CompositeAPIError' do
+      response = double('Faraday::Response',
+                        body: { 'compositeResponse' =>
+                                  [{ 'httpStatusCode' => 400,
+                                     'body' => [{ 'errorCode' =>
+                                                    'DUPLICATE_VALUE' }] }] })
+      client.
+        should_receive(:api_post).
+        with(endpoint, { compositeRequest: [
+          {
+            method: 'POST',
+            url: '/services/data/v38.0/sobjects/Object',
+            body: { name: 'test' },
+            referenceId: 'create_ref'
+          }
+        ], allOrNone: true, collateSubrequests: false }.to_json).
+        and_return(response)
+      arg = method == :composite ? { all_or_none: true } : {}
+      expect do
+        client.send(method, **arg) do |subrequests|
+          subrequests.create('Object', 'create_ref', name: 'test')
+        end
+      end.to raise_error(an_instance_of(Restforce::CompositeAPIError).
+        and(having_attributes(response: response)))
+    end
   end
 
   describe '#composite' do

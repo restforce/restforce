@@ -20,6 +20,8 @@ module Restforce
       private
 
       # Internal: Internal faraday connection where all requests go through
+      # rubocop:disable Metrics/AbcSize
+      # rubocop:disable Metrics/BlockLength
       def connection
         @connection ||= Faraday.new(options[:instance_url],
                                     connection_options) do |builder|
@@ -43,7 +45,10 @@ module Restforce
           # Caches GET requests.
           builder.use Restforce::Middleware::Caching, cache, options if cache
           # Follows 30x redirects.
-          builder.use Faraday::FollowRedirects::Middleware
+          builder.use Faraday::FollowRedirects::Middleware, {
+            # Pass the option to clear or send the auth header on redirects through
+            clear_authorization_header: options[:clear_authorization_header]
+          }
           # Raises errors for 40x responses.
           builder.use Restforce::Middleware::RaiseError
           # Parses returned JSON response into a hash.
@@ -64,6 +69,8 @@ module Restforce
           builder.adapter adapter
         end
       end
+      # rubocop:enable Metrics/BlockLength
+      # rubocop:enable Metrics/AbcSize
 
       def adapter
         options[:adapter]
