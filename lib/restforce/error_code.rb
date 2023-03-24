@@ -171,6 +171,8 @@ module Restforce
 
     class InsertUpdateDeleteNotAllowedDuringMaintenance < ResponseError; end
 
+    class InsufficientAccess < ResponseError; end
+
     class InsufficientAccessOnCrossReferenceEntity < ResponseError; end
 
     class InsufficientAccessOrReadonly < ResponseError; end
@@ -500,6 +502,8 @@ module Restforce
       "INACTIVE_OWNER_OR_USER" => InactiveOwnerOrUser,
       "INSERT_UPDATE_DELETE_NOT_ALLOWED_DURING_MAINTENANCE" =>
    InsertUpdateDeleteNotAllowedDuringMaintenance,
+      "INSUFFICIENT_ACCESS" =>
+   InsufficientAccess,
       "INSUFFICIENT_ACCESS_ON_CROSS_REFERENCE_ENTITY" =>
    InsufficientAccessOnCrossReferenceEntity,
       "INSUFFICIENT_ACCESS_OR_READONLY" => InsufficientAccessOrReadonly,
