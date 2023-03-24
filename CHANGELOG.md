@@ -1,3 +1,7 @@
+# 6.2.2 (Mar 24 2023)
+
+* Handle the `INSUFFICIENT_ACCESS` error returned by the Salesforce API (@timrogers, @nstuart-at-salesforce)
+
 # 6.2.1 (Jan 18 2023)
 
 * When a response claims to be gzipped but isn't, return the body as it is and don't explode (@timrogers)
