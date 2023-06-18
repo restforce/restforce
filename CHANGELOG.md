@@ -1,3 +1,7 @@
+# 6.2.3 (Jun 18 2023)
+
+* Handle the `CANNOT_DELETE_OWNER`, `CANNOT_POST_TO_ARCHIVED_GROUP`, `INVALID_INPUT`, `INVALID_MARKUP` and `INVALID_SEARCH` errors returned by the Salesforce API (@spurton)
+
 # 6.2.2 (Mar 24 2023)
 
 * Handle the `INSUFFICIENT_ACCESS` error returned by the Salesforce API (@timrogers, @nstuart-at-salesforce)
@@ -9,7 +13,7 @@
 # 6.2.0 (Jan 18 2023)
 
 * Add support for `faraday` v2.7.x (@timrogers)
-* Expose the Faraday `Response` on `CompositeAPIError`s (@shravan097)
+* Expose the Faraday `Response` on` `CompositeAPIError`s (@shravan097)
 
 # 6.1.0 (Nov 18 2022)
 
