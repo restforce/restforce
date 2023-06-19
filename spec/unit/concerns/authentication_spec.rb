@@ -36,8 +36,17 @@ describe Restforce::Concerns::Authentication do
   describe '.authentication_middleware' do
     subject { client.authentication_middleware }
 
+    context 'when client_id and client_secret options are provided' do
+      before do
+        client.stub client_credential?: true
+      end
+
+      it { should eq Restforce::Middleware::Authentication::ClientCredential }
+    end
+
     context 'when username and password options are provided' do
       before do
+        client.stub client_credential?: false
         client.stub username_password?: true
       end
 
@@ -46,6 +55,7 @@ describe Restforce::Concerns::Authentication do
 
     context 'when oauth options are provided' do
       before do
+        client.stub client_credential?: false
         client.stub username_password?: false
         client.stub oauth_refresh?: true
       end
@@ -55,6 +65,7 @@ describe Restforce::Concerns::Authentication do
 
     context 'when jwt option is provided' do
       before do
+        client.stub client_credential?: false
         client.stub username_password?: false
         client.stub oauth_refresh?: false
         client.stub jwt?: true
