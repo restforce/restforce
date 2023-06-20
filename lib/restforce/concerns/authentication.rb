@@ -15,19 +15,15 @@ module Restforce
 
       # Internal: Determines what middleware will be used based on the options provided
       def authentication_middleware
-        if client_credential?
-          Restforce::Middleware::Authentication::ClientCredential
-        elsif username_password?
+        if username_password?
           Restforce::Middleware::Authentication::Password
         elsif oauth_refresh?
           Restforce::Middleware::Authentication::Token
         elsif jwt?
           Restforce::Middleware::Authentication::JWTBearer
+        elsif client_credential?
+          Restforce::Middleware::Authentication::ClientCredential
         end
-      end
-
-      def client_credential?
-        options[:client_id] && options[:client_secret]
       end
 
       # Internal: Returns true if username/password (autonomous) flow should be used for
@@ -53,6 +49,12 @@ module Restforce
         options[:jwt_key] &&
           options[:username] &&
           options[:client_id]
+      end
+
+      # Internal: Returns true if client credential flow should be used for
+      # authentication.
+      def client_credential?
+        options[:client_id] && options[:client_secret]
       end
     end
   end
