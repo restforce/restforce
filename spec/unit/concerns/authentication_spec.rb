@@ -146,4 +146,26 @@ describe Restforce::Concerns::Authentication do
       it { should_not be true }
     end
   end
+
+  describe '.client_credential?' do
+    subject       { client.client_credential? }
+    let(:options) { {} }
+
+    before do
+      client.stub options: options
+    end
+
+    context 'when oauth client_credentials options are provided' do
+      let(:options) do
+        { client_id: 'client',
+          client_secret: 'secret' }
+      end
+
+      it { should be_truthy }
+    end
+
+    context 'when oauth client_credentials are not provided' do
+      it { should_not be true }
+    end
+  end
 end
