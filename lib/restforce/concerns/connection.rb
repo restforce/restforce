@@ -33,7 +33,7 @@ module Restforce
           # Handles multipart file uploads for blobs.
           builder.use Restforce::Middleware::Multipart
           # Converts the request into JSON.
-          builder.request :json
+          builder.request :restforce_json
           # Handles reauthentication for 403 responses.
           if authentication_middleware
             builder.use authentication_middleware, self, options
@@ -52,7 +52,7 @@ module Restforce
           # Raises errors for 40x responses.
           builder.use Restforce::Middleware::RaiseError
           # Parses returned JSON response into a hash.
-          builder.response :json, content_type: /\bjson$/
+          builder.response :restforce_json, content_type: /\bjson$/
           # Compress/Decompress the request/response
           unless adapter == :httpclient
             builder.use Restforce::Middleware::Gzip, self, options

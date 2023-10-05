@@ -87,4 +87,4 @@ module Restforce
   end
 end
 
-Faraday::Request.register_middleware(json: Restforce::Middleware::JsonRequest)
+Faraday::Request.register_middleware(restforce_json: Restforce::Middleware::JsonRequest)
