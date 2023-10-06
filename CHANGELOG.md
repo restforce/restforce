@@ -1,3 +1,7 @@
+# 6.2.4 (Oct 8, 2023)
+
+* Register the custom JSON middleware for Faraday with a more unique name to avoid clashes with other middleware (@dbackeus)
+
 # 6.2.3 (Jun 18 2023)
 
 * Handle the `CANNOT_DELETE_OWNER`, `CANNOT_POST_TO_ARCHIVED_GROUP`, `INVALID_INPUT`, `INVALID_MARKUP` and `INVALID_SEARCH` errors returned by the Salesforce API (@spurton)
