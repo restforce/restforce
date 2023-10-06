@@ -31,7 +31,7 @@ module Restforce
     CONTENT_TYPE = 'Content-Type'
 
     MIME_TYPE = 'application/json'
-    MIME_TYPE_REGEX = %r{^application/(vnd\..+\+)?json$}.freeze
+    MIME_TYPE_REGEX = %r{^application/(vnd\..+\+)?json$}
 
     #
     # Taken from `lib/faraday/middleware.rb` in the `faraday`
