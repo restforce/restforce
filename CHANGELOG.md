@@ -1,4 +1,10 @@
-# 6.2.4 (Oct 8, 2023)
+# 7.0.0 (Oct 6, 2023)
+
+__This version contains breaking changes. For help with upgrading, see [`UPGRADING.md`](https://github.com/restforce/restforce/blob/main/UPGRADING.md).__
+
+* __⚠️  Drop support for Ruby 2.7__, since [Ruby 2.7 has reached its end-of-life](https://www.ruby-lang.org/en/downloads/) (@timrogers)
+
+# 6.2.4 (Oct 6, 2023)
 
 * Register the custom JSON middleware for Faraday with a more unique name to avoid clashes with other middleware (@dbackeus)
 
