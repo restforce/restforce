@@ -37,8 +37,9 @@ Or install it yourself as:
 
     $ gem install restforce
 
-__As of version 6.0.0, this gem is only compatible with Ruby 2.7.0 and later.__ If you're using an earlier Ruby version:
+__As of version 7.0.0, this gem is only compatible with Ruby 3.0.0 and later.__ If you're using an earlier Ruby version:
 
+* for Ruby 2.7, use version 6.2.4 or earlier
 * for Ruby 2.6, use version 5.3.1 or earlier
 * for Ruby 2.5, use version 5.0.6 or earlier
 * for Ruby 2.4, use version 4.3.0 or earlier
