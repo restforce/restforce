@@ -7,7 +7,7 @@ faraday_version = ENV.fetch('FARADAY_VERSION', '~> 2.7.3')
 
 # Enable us to explicitly pick a Faraday version when running tests
 gem 'faraday', faraday_version
-gem 'faraday-typhoeus', '~> 1.0.0' unless faraday_version.start_with?("~> 1")
+gem 'faraday-typhoeus', '~> 1.1.0' unless faraday_version.start_with?("~> 1")
 gem 'faye' unless RUBY_PLATFORM == 'java'
 gem 'guard-rspec'
 gem 'guard-rubocop'
