@@ -43,6 +43,8 @@ module Restforce
 
     class CannotDeleteLastDatedConversionRate < ResponseError; end
 
+    class CannotDeleteOwner < ResponseError; end
+
     class CannotDeleteManagedObject < ResponseError; end
 
     class CannotDisableLastAdmin < ResponseError; end
@@ -54,6 +56,8 @@ module Restforce
     class CannotInsertUpdateActivateEntity < ResponseError; end
 
     class CannotModifyManagedObject < ResponseError; end
+
+    class CannotPostToArchivedGroup < ResponseError; end
 
     class CannotRenameApexReferencedField < ResponseError; end
 
@@ -171,6 +175,8 @@ module Restforce
 
     class InsertUpdateDeleteNotAllowedDuringMaintenance < ResponseError; end
 
+    class InsufficientAccess < ResponseError; end
+
     class InsufficientAccessOnCrossReferenceEntity < ResponseError; end
 
     class InsufficientAccessOrReadonly < ResponseError; end
@@ -217,7 +223,11 @@ module Restforce
 
     class InvalidInetAddress < ResponseError; end
 
+    class InvalidInput < ResponseError; end
+
     class InvalidLineitemCloneState < ResponseError; end
+
+    class InvalidMarkup < ResponseError; end
 
     class InvalidMasterOrTranslatedSolution < ResponseError; end
 
@@ -244,6 +254,8 @@ module Restforce
     class InvalidReplicationDate < ResponseError; end
 
     class InvalidSaveAsActivityFlag < ResponseError; end
+
+    class InvalidSearch < ResponseError; end
 
     class InvalidSessionId < ResponseError; end
 
@@ -434,11 +446,13 @@ module Restforce
       "CANNOT_DELETE_LAST_DATED_CONVERSION_RATE" =>
    CannotDeleteLastDatedConversionRate,
       "CANNOT_DELETE_MANAGED_OBJECT" => CannotDeleteManagedObject,
+      "CANNOT_DELETE_OWNER" => CannotDeleteOwner,
       "CANNOT_DISABLE_LAST_ADMIN" => CannotDisableLastAdmin,
       "CANNOT_ENABLE_IP_RESTRICT_REQUESTS" => CannotEnableIpRestrictRequests,
       "CANNOT_EXECUTE_FLOW_TRIGGER" => CannotExecuteFlowTrigger,
       "CANNOT_INSERT_UPDATE_ACTIVATE_ENTITY" => CannotInsertUpdateActivateEntity,
       "CANNOT_MODIFY_MANAGED_OBJECT" => CannotModifyManagedObject,
+      "CANNOT_POST_TO_ARCHIVED_GROUP" => CannotPostToArchivedGroup,
       "CANNOT_RENAME_APEX_REFERENCED_FIELD" => CannotRenameApexReferencedField,
       "CANNOT_RENAME_APEX_REFERENCED_OBJECT" => CannotRenameApexReferencedObject,
       "CANNOT_REPARENT_RECORD" => CannotReparentRecord,
@@ -500,6 +514,8 @@ module Restforce
       "INACTIVE_OWNER_OR_USER" => InactiveOwnerOrUser,
       "INSERT_UPDATE_DELETE_NOT_ALLOWED_DURING_MAINTENANCE" =>
    InsertUpdateDeleteNotAllowedDuringMaintenance,
+      "INSUFFICIENT_ACCESS" =>
+   InsufficientAccess,
       "INSUFFICIENT_ACCESS_ON_CROSS_REFERENCE_ENTITY" =>
    InsufficientAccessOnCrossReferenceEntity,
       "INSUFFICIENT_ACCESS_OR_READONLY" => InsufficientAccessOrReadonly,
@@ -524,7 +540,9 @@ module Restforce
       "INVALID_FILTER_ACTION" => InvalidFilterAction,
       "INVALID_ID_FIELD" => InvalidIdField,
       "INVALID_INET_ADDRESS" => InvalidInetAddress,
+      "INVALID_INPUT" => InvalidInput,
       "INVALID_LINEITEM_CLONE_STATE" => InvalidLineitemCloneState,
+      "INVALID_MARKUP" => InvalidMarkup,
       "INVALID_MASTER_OR_TRANSLATED_SOLUTION" => InvalidMasterOrTranslatedSolution,
       "INVALID_MESSAGE_ID_REFERENCE" => InvalidMessageIdReference,
       "INVALID_OPERATION" => InvalidOperation,
@@ -539,6 +557,7 @@ module Restforce
       "INVALID_READ_ONLY_USER_DML" => InvalidReadOnlyUserDml,
       "INVALID_REPLICATION_DATE" => InvalidReplicationDate,
       "INVALID_SAVE_AS_ACTIVITY_FLAG" => InvalidSaveAsActivityFlag,
+      "INVALID_SEARCH" => InvalidSearch,
       "INVALID_SESSION_ID" => InvalidSessionId,
       "INVALID_SIGNUP_COUNTRY" => InvalidSignupCountry,
       "INVALID_STATUS" => InvalidStatus,

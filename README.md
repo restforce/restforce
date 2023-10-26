@@ -27,7 +27,7 @@ Features include:
 
 Add this line to your application's Gemfile:
 
-    gem 'restforce', '~> 6.2.1'
+    gem 'restforce', '~> 7.0.0'
 
 And then execute:
 
@@ -37,8 +37,9 @@ Or install it yourself as:
 
     $ gem install restforce
 
-__As of version 6.0.0, this gem is only compatible with Ruby 2.7.0 and later.__ If you're using an earlier Ruby version:
+__As of version 7.0.0, this gem is only compatible with Ruby 3.0.0 and later.__ If you're using an earlier Ruby version:
 
+* for Ruby 2.7, use version 6.2.4 or earlier
 * for Ruby 2.6, use version 5.3.1 or earlier
 * for Ruby 2.5, use version 5.0.6 or earlier
 * for Ruby 2.4, use version 4.3.0 or earlier
@@ -830,13 +831,6 @@ client.create!("CustomField", {
   "Metadata" => { type: "Text", label: "Twitter Username", length: 15 },
 })
 ```
-
-## Links
-
-If you need a full Active Record experience, may be you can use
-[ActiveForce](https://github.com/ionia-corporation/active_force) that wraps
-Restforce and adds Associations, Query Building (like AREL), Validations and
-Callbacks.
 
 ## Contributing
 

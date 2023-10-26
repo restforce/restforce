@@ -1,3 +1,21 @@
+# 7.0.0 (Oct 6, 2023)
+
+__This version contains breaking changes. For help with upgrading, see [`UPGRADING.md`](https://github.com/restforce/restforce/blob/main/UPGRADING.md).__
+
+* __⚠️  Drop support for Ruby 2.7__, since [Ruby 2.7 has reached its end-of-life](https://www.ruby-lang.org/en/downloads/) (@timrogers)
+
+# 6.2.4 (Oct 6, 2023)
+
+* Register the custom JSON middleware for Faraday with a more unique name to avoid clashes with other middleware (@dbackeus)
+
+# 6.2.3 (Jun 18 2023)
+
+* Handle the `CANNOT_DELETE_OWNER`, `CANNOT_POST_TO_ARCHIVED_GROUP`, `INVALID_INPUT`, `INVALID_MARKUP` and `INVALID_SEARCH` errors returned by the Salesforce API (@spurton)
+
+# 6.2.2 (Mar 24 2023)
+
+* Handle the `INSUFFICIENT_ACCESS` error returned by the Salesforce API (@timrogers, @nstuart-at-salesforce)
+
 # 6.2.1 (Jan 18 2023)
 
 * When a response claims to be gzipped but isn't, return the body as it is and don't explode (@timrogers)
@@ -5,7 +23,7 @@
 # 6.2.0 (Jan 18 2023)
 
 * Add support for `faraday` v2.7.x (@timrogers)
-* Expose the Faraday `Response` on `CompositeAPIError`s (@shravan097)
+* Expose the Faraday `Response` on` `CompositeAPIError`s (@shravan097)
 
 # 6.1.0 (Nov 18 2022)
 

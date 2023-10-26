@@ -60,7 +60,7 @@ module Restforce
       }
     end
 
-    ERROR_CODE_MATCHER = /\A[A-Z_]+\z/.freeze
+    ERROR_CODE_MATCHER = /\A[A-Z_]+\z/
 
     def exception_class_for_error_code(error_code)
       return Restforce::ResponseError unless ERROR_CODE_MATCHER.match?(error_code)
