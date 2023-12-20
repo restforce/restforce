@@ -1,3 +1,8 @@
+# 7.1.0 (Dec 20, 2023)
+
+- Add support for the [OAuth 2.0 Client Credentials authentication flow](https://help.salesforce.com/s/articleView?id=sf.remoteaccess_oauth_client_credentials_flow.htm&type=5) (@rh-taro)
+- Add support for `faraday` v2.8.x (@timrogers)
+
 # 7.0.0 (Oct 6, 2023)
 
 __This version contains breaking changes. For help with upgrading, see [`UPGRADING.md`](https://github.com/restforce/restforce/blob/main/UPGRADING.md).__
