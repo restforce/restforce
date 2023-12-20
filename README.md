@@ -59,7 +59,7 @@ so you can do things like `client.query('select Id, (select Name from Children__
 
 Which authentication method you use really depends on your use case. If you're
 building an application where many users from different organizations are authenticated
-through oauth and you need to interact with data in their org on their behalf,
+through OAuth and you need to interact with data in their org on their behalf,
 you should use the OAuth token authentication method.
 
 If you're using the gem to interact with a single org (maybe you're building some
@@ -154,6 +154,17 @@ client = Restforce.new
 ```
 
 **Note:** Restforce library does not cache JWT Bearer tokens automatically. This means that every instantiation of the Restforce class will be treated as a new login by Salesforce. Remember that Salesforce enforces [rate limits on login requests](https://help.salesforce.com/s/articleView?id=000312767&type=1). If you are building an application that will instantiate the Restforce class more than this specified rate limit, you might want to consider caching the Bearer token either in-memory or in your own storage by leveraging the `authentication_callback` method. 
+
+## Client Credentials
+
+If you want to authenticate as an application, you can use the [Client Credentials flow](https://help.salesforce.com/s/articleView?id=sf.remoteaccess_oauth_client_credentials_flow.htm&type=5):
+
+```ruby
+client = Restforce.new(client_id: 'client_id',
+                       client_secret: 'client_secret',
+                       api_version: '55.0',
+                       instance_url: 'instance_url')
+```
 
 #### Sandbox Organizations
 
