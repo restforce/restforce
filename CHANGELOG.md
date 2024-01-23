@@ -1,3 +1,7 @@
+# 7.2.0 (Jan 23, 2024)
+
+- Add support for `faraday` v2.9.x (@timrogers)
+
 # 7.1.1 (Jan 23, 2024)
 
 - Handle the `APEX_REST_SERVICES_DISABLED` error returned by the Salesforce API
