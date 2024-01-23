@@ -1,3 +1,7 @@
+# 7.1.1 (Jan 23, 2024)
+
+- Handle the `APEX_REST_SERVICES_DISABLED` error returned by the Salesforce API
+
 # 7.1.0 (Dec 20, 2023)
 
 - Add support for the [OAuth 2.0 Client Credentials authentication flow](https://help.salesforce.com/s/articleView?id=sf.remoteaccess_oauth_client_credentials_flow.htm&type=5) (@rh-taro)
