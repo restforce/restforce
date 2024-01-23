@@ -4,7 +4,7 @@
 
 # 7.1.1 (Jan 23, 2024)
 
-- Handle the `APEX_REST_SERVICES_DISABLED` error returned by the Salesforce API
+- Handle the `APEX_REST_SERVICES_DISABLED` error returned by the Salesforce API (@timrogers)
 
 # 7.1.0 (Dec 20, 2023)
 
