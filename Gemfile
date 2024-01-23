@@ -3,7 +3,7 @@
 source 'https://rubygems.org'
 gemspec
 
-faraday_version = ENV.fetch('FARADAY_VERSION', '~> 2.8.0')
+faraday_version = ENV.fetch('FARADAY_VERSION', '~> 2.9.0')
 
 # Enable us to explicitly pick a Faraday version when running tests
 gem 'faraday', faraday_version
