@@ -19,6 +19,8 @@ module Restforce
 
     class ApexError < ResponseError; end
 
+    class ApexRestServicesDisabled < ResponseError; end
+
     class ApiCurrentlyDisabled < ResponseError; end
 
     class ApiDisabledForOrg < ResponseError; end
@@ -429,6 +431,7 @@ module Restforce
       "ALL_OR_NONE_OPERATION_ROLLED_BACK" => AllOrNoneOperationRolledBack,
       "ALREADY_IN_PROCESS" => AlreadyInProcess,
       "APEX_ERROR" => ApexError,
+      "APEX_REST_SERVICES_DISABLED" => ApexRestServicesDisabled,
       "API_CURRENTLY_DISABLED" => ApiCurrentlyDisabled,
       "API_DISABLED_FOR_ORG" => ApiDisabledForOrg,
       "ASSIGNEE_TYPE_REQUIRED" => AssigneeTypeRequired,
