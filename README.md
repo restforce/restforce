@@ -600,7 +600,6 @@ This feature permits the user to send a composite object—that is, a complex
 object with nested children—in a single API call. Up to 25 requests may be
 included in a single composite.
 
-Note that `GET` is not yet implemented for this API.
 
 ```ruby
 # build up an array of requests:

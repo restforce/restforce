@@ -93,6 +93,14 @@ module Restforce
           }
         end
 
+        def find(sobject, reference_id, id)
+          requests << {
+            method: 'GET',
+            url: composite_api_path("#{sobject}/#{id}"),
+            referenceId: reference_id
+          }
+        end
+
         private
 
         def composite_api_path(path)
