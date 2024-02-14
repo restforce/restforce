@@ -1,3 +1,7 @@
+# 7.3.0 (Feb 14, 2024 🧡)
+
+- Add support for making `GET` requests using the Composite API (@shravan097)
+
 # 7.2.0 (Jan 23, 2024)
 
 - Add support for `faraday` v2.9.x (@timrogers)
