@@ -842,6 +842,13 @@ client.create!("CustomField", {
 })
 ```
 
+## Links
+
+If you need a full Active Record experience, may be you can use
+[ActiveForce](https://github.com/Beyond-Finance/active_force) that wraps
+Restforce and adds Associations, Query Building (like AREL), Validations and
+Callbacks.
+
 ## Contributing
 
 We welcome all contributions - they help us make Restforce the best gem possible.
