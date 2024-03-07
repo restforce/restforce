@@ -842,6 +842,18 @@ client.create!("CustomField", {
 })
 ```
 
+## Configuration Precedence
+
+Here's the order of precedence from highest to lowest:
+
+Arguments on new: passing configuration options directly as arguments has the highest precedence. These settings will override any other configuration.
+
+Configuration block: using Restforce.configure to set configuration options is the next in line. They will take precedence over environment variables and defaults but will be overridden by direct arguments on instantiation.
+
+Environment variables: has the lowest precedence. If you set options using environment variables, they will be overridden by any other configuration method.
+
+Defaults: If none of the above methods are used, Restforce falls back to its default configuration values.
+
 ## Contributing
 
 We welcome all contributions - they help us make Restforce the best gem possible.
