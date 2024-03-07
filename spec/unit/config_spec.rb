@@ -70,6 +70,21 @@ describe Restforce do
         expect(Restforce.configuration.send(attr)).to eq 'foobar'
       end
     end
+
+    it 'takes precedence over environment variables' do
+      { 'SALESFORCE_USERNAME'  => 'env_foo',
+        'SALESFORCE_CLIENT_ID' => 'env_client id' }.
+        each { |var, value| ENV.stub(:fetch).with(var, anything).and_return(value) }
+
+      { username: 'config_foo', client_id: nil }.each do |attr, value|
+        Restforce.configure do |config|
+          config.send("#{attr}=", value)
+        end
+      end
+
+      expect(Restforce.configuration.send(:username)).to eq 'config_foo'
+      expect(Restforce.configuration.send(:client_id)).to eq 'env_client id'
+    end
   end
 
   describe '#log?' do
@@ -137,6 +152,18 @@ describe Restforce do
       Restforce.new do |builder|
         checker.check!
       end
+    end
+
+    it 'shows the precedence over config' do
+      ENV['SALESFORCE_USERNAME'] = 'env_foo'
+      Restforce.configure do |config|
+        config.username = 'config_foo'
+      end
+      client = Restforce.new(username: 'foo')
+
+      expect(client.options[:username]).to eq 'foo'
+
+      Restforce.instance_variable_set :@configuration, nil
     end
   end
 end
