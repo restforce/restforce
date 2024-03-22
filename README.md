@@ -354,10 +354,13 @@ client.update('Account', Id: '0016000000MRatd', Name: 'Whizbang Corp')
 ```ruby
 # Update the record with external `External__c` external ID set to '12'
 client.upsert('Account', 'External__c', External__c: 12, Name: 'Foobar')
-# => true or "RecordId"
+# => { 'id' => '0016000000MRatd', 'created' => true } if created
+# => { 'id' => '0016000000MRatd', 'created' => fale } if updated
 ```
 
-The upsert method will return the record Id if included in the response body from the Salesforce API; otherwise, it returns true. Currently the Salesforce API only returns the Id for newly created records.
+The upsert method will return a hash with the 'id' of the Salesforce record, and a 'created' attribute, equal to true if the record was created, false if it was updated.
+
+_The 'create' parameter is only available in [version 46.0](#api-versions) and later of the Salesforce API. Before that, you'll only get the 'id'_
 
 ### destroy
 
