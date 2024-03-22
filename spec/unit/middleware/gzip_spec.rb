@@ -1,5 +1,7 @@
 # frozen_string_literal: true
 
+require 'stringio'
+
 require 'spec_helper'
 
 describe Restforce::Middleware::Gzip do
