@@ -844,8 +844,8 @@ client.create!("CustomField", {
 
 ## Links
 
-If you need a full Active Record experience, may be you can use
-[ActiveForce](https://github.com/Beyond-Finance/active_force) that wraps
+If you need a full `ActiveRecord`-like experience, you may want to use
+[ActiveForce](https://github.com/Beyond-Finance/active_force), which wraps
 Restforce and adds Associations, Query Building (like AREL), Validations and
 Callbacks.
 
