@@ -27,7 +27,7 @@ Features include:
 
 Add this line to your application's Gemfile:
 
-    gem 'restforce', '~> 7.3.0'
+    gem 'restforce', '~> 7.3.1'
 
 And then execute:
 
@@ -841,6 +841,18 @@ client.create!("CustomField", {
   "Metadata" => { type: "Text", label: "Twitter Username", length: 15 },
 })
 ```
+
+## Configuration Precedence
+
+Here's the order of precedence from highest to lowest:
+
+Arguments on new: passing configuration options directly as arguments has the highest precedence. These settings will override any other configuration.
+
+Configuration block: using Restforce.configure to set configuration options is the next in line. They will take precedence over environment variables and defaults but will be overridden by direct arguments on instantiation.
+
+Environment variables: has the lowest precedence. If you set options using environment variables, they will be overridden by any other configuration method.
+
+Defaults: If none of the above methods are used, Restforce falls back to its default configuration values.
 
 ## Links
 

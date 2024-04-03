@@ -1,3 +1,7 @@
+# 7.3.1 (Mar 30, 2024)
+
+- Fix `uninitialized constant StringIO` error by explicitly requiring `StringIO` where it's used (@timrogers)
+
 # 7.3.0 (Feb 14, 2024 🧡)
 
 - Add support for making `GET` requests using the Composite API (@shravan097)

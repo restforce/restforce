@@ -1,5 +1,7 @@
 # frozen_string_literal: true
 
+require 'stringio'
+
 module Faraday
   module Parts
     module Part
