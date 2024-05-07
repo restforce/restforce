@@ -42,6 +42,13 @@ module Restforce
               retry
             end
             raise
+          rescue Faraday::ConnectionFailed
+            if retries.positive?
+              retries -= 1
+              sleep 10
+              retry
+            end
+            raise
           end
         end
       end
