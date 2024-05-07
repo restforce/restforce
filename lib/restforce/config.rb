@@ -136,7 +136,8 @@ module Restforce
     option :mashify
 
     # Faraday request read/open timeout.
-    option :timeout
+    option :timeout, default: 60
+    option :open_timeout, default: 60
 
     # Faraday adapter to use. Defaults to Faraday.default_adapter.
     option :adapter, default: lambda { Faraday.default_adapter }

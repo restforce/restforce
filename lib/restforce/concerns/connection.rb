@@ -78,12 +78,14 @@ module Restforce
 
       # Internal: Faraday Connection options
       def connection_options
-        { request: {
-          timeout: options[:timeout],
-          open_timeout: options[:timeout]
-        },
+        {
+          request: {
+            timeout: options[:timeout],
+            open_timeout: options[:open_timeout],
+          },
           proxy: options[:proxy_uri],
-          ssl: options[:ssl] }
+          ssl: options[:ssl]
+        }
       end
 
       # Internal: Returns true if the middlware stack includes the

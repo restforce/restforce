@@ -87,9 +87,15 @@ module Restforce
     private
 
     def faraday_options
-      { url: "https://#{@options[:host]}",
+      {
+        request: {
+          timeout: options[:timeout],
+          open_timeout: options[:open_timeout],
+        },
+        url: "https://#{@options[:host]}",
         proxy: @options[:proxy_uri],
-        ssl: @options[:ssl] }
+        ssl: @options[:ssl]
+      }
     end
   end
 end
