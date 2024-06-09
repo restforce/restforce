@@ -666,7 +666,7 @@ module Restforce
            "defined. If you're sure that this is a valid Salesforce error, then " \
            "please create an issue on GitHub at <#{GITHUB_ISSUE_URL}>."
 
-      super(constant_name)
+      super
     end
   end
 end
