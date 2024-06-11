@@ -1,9 +1,9 @@
-FROM ruby:2.6.5-alpine
+FROM ruby:2.7.0-alpine
 
 RUN apk add --no-cache \
   ca-certificates \
   wget \
-  openssl \ 
+  openssl \
   bash \
   build-base \
   git \
