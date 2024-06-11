@@ -157,6 +157,95 @@ module Restforce
         end
       end
 
+      # Public: Returns information about the specified Named Layout 
+      # specified sobject type.
+      #
+      # Only available in version 31.0 and later of the Salesforce API.
+      #
+      # Examples:
+      #  # get the layouts for the sobject
+      #  client.describe_named_layouts('Account', 'AccountAlt')
+      #  # => { ... }
+      #
+      # Returns the Hash representation of the describe_named_layouts result
+      def describe_named_layouts(sobject, layout_name)
+        version_guard(31.0) do
+          api_get("sobjects/#{sobject}/describe/namedLayouts/#{layout_name}").body
+        end
+      end
+
+      # Public: Returns information about the Compact Page Layouts for the
+      # specified sobject type, or of a specific CompactLayout if an ID is supplied.
+      #
+      # Only available in version 31.0 and later of the Salesforce API.
+      #
+      # Examples:
+      #  # get the layouts for the sobject
+      #  client.describe_compact_layouts('Account')
+      #  # => { ... }
+      #
+      #  # get the layout for the specified Id for the compact layout
+      #  client.describe_compact_layouts('Account', '012E0000000RHEp')
+      #  # => { ... }
+      #
+      # Returns the Hash representation of the describe_compact_layouts result
+      def describe_compact_layouts(sobject, layout_id = nil)
+        version_guard(31.0) do
+          if layout_id
+            api_get("sobjects/#{sobject}/describe/compactLayouts/#{layout_id}").body
+          else
+            api_get("sobjects/#{sobject}/describe/compactLayouts").body
+          end
+        end
+      end
+
+      # Public: Returns a list of the List Views for the specified sobject type, 
+      # information about a specific list, if an ID is supplied, 
+      # or actual members of the list.
+      #
+      # Only available in version 32.0 and later of the Salesforce API.
+      #
+      # Examples:
+      #  # get the list views for the sobject
+      #  client.list_views('Account')
+      #  # => { ... }
+      #
+      #  # get the list views for the specified Id for the sobject
+      #  client.list_views('Account', '012E0000000RHEp')
+      #  # => { ... }
+      #
+      #  # get the list views members for the specified List View
+      #  client.list_views('Account', '012E0000000RHEp', true)
+      #  # => { ... }
+      #
+      # Returns the Hash representation of the describe_layouts result
+      def list_views(sobject, listview_id = nil, get_results = false)
+        version_guard(32.0) do
+          if listview_id && get_results
+            api_get("sobjects/#{sobject}/listviews/#{listview_id}/results").body
+          elsif listview_id
+            api_get("sobjects/#{sobject}/listviews/#{listview_id}").body
+          else
+            api_get("sobjects/#{sobject}/listviews").body
+          end
+        end
+      end
+
+      # Public: Returns all tabs—including Lightning Page tabs—available to the current user.
+      # Only available in version 31.0 and later of the Salesforce API.
+      #
+      # Examples:
+      #  # get the layouts for the sobject
+      #  client.tabs('Account')
+      #  # => { ... }
+      #
+      # Returns the Hash representation of the tabs result
+      def tabs
+        version_guard(31.0) do
+          api_get('tabs').body
+        end
+      end
+
       # Public: Get the current organization's Id.
       #
       # Examples
