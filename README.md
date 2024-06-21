@@ -7,7 +7,7 @@ Restforce is a ruby gem for the [Salesforce REST api](http://www.salesforce.com/
 
 Features include:
 
-* A clean and modular architecture using [Faraday middleware](https://github.com/lostisland/faraday) and [Hashie::Mash](https://github.com/intridea/hashie/tree/v1.2.0)'d responses.
+* A clean and modular architecture using [Faraday middleware](https://github.com/lostisland/faraday) and [Hashie::Mash](https://github.com/hashie/hashie/)'d responses.
 * Support for interacting with multiple users from different organizations.
 * Support for parent-to-child relationships.
 * Support for aggregate queries.
