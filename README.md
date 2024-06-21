@@ -52,7 +52,7 @@ This gem is versioned using [Semantic Versioning](http://semver.org/), so you ca
 ## Usage
 
 Restforce is designed with flexibility and ease of use in mind. By default, all API calls will
-return [Hashie::Mash](https://github.com/intridea/hashie/tree/v1.2.0) objects,
+return [Hashie::Mash](https://github.com/hashie/hashie/?tab=readme-ov-file#mash) objects,
 so you can do things like `client.query('select Id, (select Name from Children__r) from Account').first.Children__r.first.Name`.
 
 ### Initialization
