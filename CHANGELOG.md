@@ -1,3 +1,7 @@
+## 7.4.0 (July 10, 2024)
+
+- Add support for `faraday` v2.10.x (@ryan-mcneil)
+
 # 7.3.1 (Mar 30, 2024)
 
 - Fix `uninitialized constant StringIO` error by explicitly requiring `StringIO` where it's used (@timrogers)
