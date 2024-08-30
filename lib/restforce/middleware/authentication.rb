@@ -9,6 +9,7 @@ module Restforce
     autoload :Password,  'restforce/middleware/authentication/password'
     autoload :Token,     'restforce/middleware/authentication/token'
     autoload :JWTBearer, 'restforce/middleware/authentication/jwt_bearer'
+    autoload :ClientCredential, 'restforce/middleware/authentication/client_credential'
 
     # Rescue from 401's, authenticate then raise the error again so the client
     # can reissue the request.
@@ -50,7 +51,7 @@ module Restforce
         builder.use Faraday::Request::UrlEncoded
         builder.use Restforce::Middleware::Mashify, nil, @options
         builder.use Faraday::FollowRedirects::Middleware
-        builder.response :json
+        builder.response :restforce_json
 
         if Restforce.log?
           builder.use Restforce::Middleware::Logger,

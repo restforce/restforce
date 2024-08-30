@@ -21,6 +21,8 @@ module Restforce
           Restforce::Middleware::Authentication::Token
         elsif jwt?
           Restforce::Middleware::Authentication::JWTBearer
+        elsif client_credential?
+          Restforce::Middleware::Authentication::ClientCredential
         end
       end
 
@@ -47,6 +49,12 @@ module Restforce
         options[:jwt_key] &&
           options[:username] &&
           options[:client_id]
+      end
+
+      # Internal: Returns true if client credential flow should be used for
+      # authentication.
+      def client_credential?
+        options[:client_id] && options[:client_secret]
       end
     end
   end

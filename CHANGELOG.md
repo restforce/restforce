@@ -1,3 +1,46 @@
+## 7.4.0 (July 10, 2024)
+
+- Add support for `faraday` v2.10.x (@ryan-mcneil)
+
+# 7.3.1 (Mar 30, 2024)
+
+- Fix `uninitialized constant StringIO` error by explicitly requiring `StringIO` where it's used (@timrogers)
+
+# 7.3.0 (Feb 14, 2024 🧡)
+
+- Add support for making `GET` requests using the Composite API (@shravan097)
+
+# 7.2.0 (Jan 23, 2024)
+
+- Add support for `faraday` v2.9.x (@timrogers)
+
+# 7.1.1 (Jan 23, 2024)
+
+- Handle the `APEX_REST_SERVICES_DISABLED` error returned by the Salesforce API (@timrogers)
+
+# 7.1.0 (Dec 20, 2023)
+
+- Add support for the [OAuth 2.0 Client Credentials authentication flow](https://help.salesforce.com/s/articleView?id=sf.remoteaccess_oauth_client_credentials_flow.htm&type=5) (@rh-taro)
+- Add support for `faraday` v2.8.x (@timrogers)
+
+# 7.0.0 (Oct 6, 2023)
+
+__This version contains breaking changes. For help with upgrading, see [`UPGRADING.md`](https://github.com/restforce/restforce/blob/main/UPGRADING.md).__
+
+* __⚠️  Drop support for Ruby 2.7__, since [Ruby 2.7 has reached its end-of-life](https://www.ruby-lang.org/en/downloads/) (@timrogers)
+
+# 6.2.4 (Oct 6, 2023)
+
+* Register the custom JSON middleware for Faraday with a more unique name to avoid clashes with other middleware (@dbackeus)
+
+# 6.2.3 (Jun 18 2023)
+
+* Handle the `CANNOT_DELETE_OWNER`, `CANNOT_POST_TO_ARCHIVED_GROUP`, `INVALID_INPUT`, `INVALID_MARKUP` and `INVALID_SEARCH` errors returned by the Salesforce API (@spurton)
+
+# 6.2.2 (Mar 24 2023)
+
+* Handle the `INSUFFICIENT_ACCESS` error returned by the Salesforce API (@timrogers, @nstuart-at-salesforce)
+
 # 6.2.1 (Jan 18 2023)
 
 * When a response claims to be gzipped but isn't, return the body as it is and don't explode (@timrogers)
@@ -5,7 +48,7 @@
 # 6.2.0 (Jan 18 2023)
 
 * Add support for `faraday` v2.7.x (@timrogers)
-* Expose the Faraday `Response` on `CompositeAPIError`s (@shravan097)
+* Expose the Faraday `Response` on` `CompositeAPIError`s (@shravan097)
 
 # 6.1.0 (Nov 18 2022)
 

@@ -193,6 +193,23 @@ describe Restforce::Concerns::CompositeAPI do
       end
     end
 
+    it '#find' do
+      client.
+        should_receive(:api_post).
+        with(endpoint, { compositeRequest: [
+          {
+            method: 'GET',
+            url: "/services/data/v38.0/sobjects/Object/00312345",
+            referenceId: 'find_ref'
+          }
+        ], allOrNone: all_or_none, collateSubrequests: false }.to_json).
+        and_return(response)
+
+      client.send(method) do |subrequests|
+        subrequests.find('Object', 'find_ref', '00312345')
+      end
+    end
+
     it 'multiple subrequests' do
       client.
         should_receive(:api_post).
