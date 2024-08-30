@@ -3,20 +3,20 @@
 source 'https://rubygems.org'
 gemspec
 
-faraday_version = ENV.fetch('FARADAY_VERSION', '~> 2.7.3')
+faraday_version = ENV.fetch('FARADAY_VERSION', '~> 2.10.0')
 
 # Enable us to explicitly pick a Faraday version when running tests
 gem 'faraday', faraday_version
-gem 'faraday-typhoeus', '~> 0.2.1' unless faraday_version.start_with?("~> 1")
+gem 'faraday-typhoeus', '~> 1.1.0' unless faraday_version.start_with?("~> 1")
 gem 'faye' unless RUBY_PLATFORM == 'java'
 gem 'guard-rspec'
 gem 'guard-rubocop'
 gem 'jruby-openssl', platforms: :jruby
 gem 'rake'
-gem 'rspec', '~> 3.12.0'
+gem 'rspec', '~> 3.13.0'
 gem 'rspec-collection_matchers', '~> 1.2.0'
 gem 'rspec-its', '~> 1.3.0'
 gem 'rspec_junit_formatter', '~> 0.6.0'
-gem 'rubocop', '~> 1.44.0'
+gem 'rubocop', '~> 1.65.0'
 gem 'simplecov', '~> 0.22.0'
-gem 'webmock', '~> 3.18.1'
+gem 'webmock', '~> 3.23.0'

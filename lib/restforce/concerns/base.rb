@@ -57,6 +57,11 @@ module Restforce
       #
       #        :request_headers         - A hash containing custom headers that will be
       #                                   appended to each request
+      #
+      #     :clear_authorization_header - A boolean that when set to true will cause
+      #                                   the Faraday::FollowRedirects middleware to
+      #                                   omit the auth header when following
+      #                                   redirects (default: false)
 
       def initialize(opts = {})
         raise ArgumentError, 'Please specify a hash of options' unless opts.is_a?(Hash)

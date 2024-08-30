@@ -27,7 +27,7 @@ Features include:
 
 Add this line to your application's Gemfile:
 
-    gem 'restforce', '~> 6.2.1'
+    gem 'restforce', '~> 7.4.0'
 
 And then execute:
 
@@ -37,8 +37,9 @@ Or install it yourself as:
 
     $ gem install restforce
 
-__As of version 6.0.0, this gem is only compatible with Ruby 2.7.0 and later.__ If you're using an earlier Ruby version:
+__As of version 7.0.0, this gem is only compatible with Ruby 3.0.0 and later.__ If you're using an earlier Ruby version:
 
+* for Ruby 2.7, use version 6.2.4 or earlier
 * for Ruby 2.6, use version 5.3.1 or earlier
 * for Ruby 2.5, use version 5.0.6 or earlier
 * for Ruby 2.4, use version 4.3.0 or earlier
@@ -58,7 +59,7 @@ so you can do things like `client.query('select Id, (select Name from Children__
 
 Which authentication method you use really depends on your use case. If you're
 building an application where many users from different organizations are authenticated
-through oauth and you need to interact with data in their org on their behalf,
+through OAuth and you need to interact with data in their org on their behalf,
 you should use the OAuth token authentication method.
 
 If you're using the gem to interact with a single org (maybe you're building some
@@ -112,12 +113,13 @@ The `id` field can be used to [uniquely identify](https://developer.salesforce.c
 If you prefer to use a username and password to authenticate:
 
 ```ruby
-client = Restforce.new(username: 'foo',
-                       password: 'bar',
-                       security_token: 'security token',
-                       client_id: 'client_id',
-                       client_secret: 'client_secret',
-                       api_version: '41.0')
+client = Restforce.new(username: config['username'],
+                       password: config['password'],
+                       instance_url: config['instance_url'],
+                       host: config['host'],                   # https://test.salesforce.com for sandbox (optional)
+                       client_id: config['client_key'],        # Salesforce Client Key
+                       client_secret: config['client_secret'], # Salesforce Client Secret
+                       api_version: '55.0')
 ```
 
 #### JWT Bearer Token
@@ -152,6 +154,17 @@ client = Restforce.new
 ```
 
 **Note:** Restforce library does not cache JWT Bearer tokens automatically. This means that every instantiation of the Restforce class will be treated as a new login by Salesforce. Remember that Salesforce enforces [rate limits on login requests](https://help.salesforce.com/s/articleView?id=000312767&type=1). If you are building an application that will instantiate the Restforce class more than this specified rate limit, you might want to consider caching the Bearer token either in-memory or in your own storage by leveraging the `authentication_callback` method. 
+
+#### Client Credentials
+
+If you want to authenticate as an application, you can use the [Client Credentials flow](https://help.salesforce.com/s/articleView?id=sf.remoteaccess_oauth_client_credentials_flow.htm&type=5):
+
+```ruby
+client = Restforce.new(client_id: 'client_id',
+                       client_secret: 'client_secret',
+                       api_version: '55.0',
+                       host: 'MYDOMAIN.my.salesforce.com')
+```
 
 #### Sandbox Organizations
 
@@ -587,7 +600,6 @@ This feature permits the user to send a composite object—that is, a complex
 object with nested children—in a single API call. Up to 25 requests may be
 included in a single composite.
 
-Note that `GET` is not yet implemented for this API.
 
 ```ruby
 # build up an array of requests:
@@ -830,12 +842,17 @@ client.create!("CustomField", {
 })
 ```
 
-## Links
+## Configuration Precedence
 
-If you need a full Active Record experience, may be you can use
-[ActiveForce](https://github.com/ionia-corporation/active_force) that wraps
-Restforce and adds Associations, Query Building (like AREL), Validations and
-Callbacks.
+Here's the order of precedence from highest to lowest:
+
+Arguments on new: passing configuration options directly as arguments has the highest precedence. These settings will override any other configuration.
+
+Configuration block: using Restforce.configure to set configuration options is the next in line. They will take precedence over environment variables and defaults but will be overridden by direct arguments on instantiation.
+
+Environment variables: has the lowest precedence. If you set options using environment variables, they will be overridden by any other configuration method.
+
+Defaults: If none of the above methods are used, Restforce falls back to its default configuration values.
 
 ## Contributing
 

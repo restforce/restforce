@@ -1,3 +1,15 @@
+# Upgrading from Restforce 6.x to 7.x
+
+## Ruby 2.7 is no longer supported
+
+__Likelyhood of impact__: Moderate
+
+Ruby 2.7 is no longer officially supported as an active version of the Ruby language. That means that it will not receive patches and security fixes.
+
+Accordingly, we've dropped support for Ruby 2.7 in the Restforce library. The gemspec now specifies that only 3.0 onwards is supported, and this will be enforced by RubyGems.
+
+Before you update to Restforce 7.x, you'll need to switch to Ruby 3.0.0 or later. The current version of Ruby at the time of writing is 3.2.2.
+
 # Upgrading from Restforce 5.x to 6.x
 
 __There are two breaking changes introduced in Restforce 6.x__. In this guide, you'll learn about these changes and what you should check in your code to make sure that it will work with the latest version of the library.

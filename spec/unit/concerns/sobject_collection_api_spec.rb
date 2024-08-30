@@ -102,13 +102,13 @@ describe Restforce::Concerns::SObjectCollectionAPI do
                                                                  api_method,
                                                                  *args|
     def collection_client_expectation(all_or_none, response, api_method = :api_post)
-      client.
-        should_receive(api_method).
-        with(endpoint,
-             allOrNone: all_or_none,
-             records: [{
-               attributes: { type: "Account" }
-             }.merge(record_attributes)]).and_return(Hashie::Mash.new(body: response))
+      expect(client).to receive(api_method)
+          .with(endpoint,
+                {
+                  allOrNone: all_or_none,
+                  records: [{ attributes: { type: "Account" } }
+                              .merge(record_attributes)]
+                }).and_return(Hashie::Mash.new(body: response))
     end
 
     it "should raise en arror when there are no records" do
