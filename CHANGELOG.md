@@ -1,3 +1,7 @@
+## 7.5.0 (September 4, 2024)
+
+- Add support for `faraday` v2.11.x (@timrogers)
+
 ## 7.4.0 (July 10, 2024)
 
 - Add support for `faraday` v2.10.x (@ryan-mcneil)
