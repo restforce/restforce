@@ -23,7 +23,7 @@ module Restforce
           {
             iss: @options[:client_id],
             sub: @options[:username],
-            aud: @options[:host],
+            aud: @options[:aud] || @options[:host],
             iat: Time.now.utc.to_i,
             exp: Time.now.utc.to_i + 180
           }
