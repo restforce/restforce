@@ -475,6 +475,20 @@ module Restforce
         api_get(path).body
       end
 
+      class << self
+        def version_guard(version, api_version)
+          if version.to_f <= api_version.to_f
+            yield if block_given?
+          else
+            raise APIVersionError, "You must set an `api_version` of at least " \
+                                   "#{version} to use this feature in the Salesforce " \
+                                   "API. Set the `api_version` option when configuring " \
+                                   "the client - see https://github.com/ejholmes/" \
+                                   "restforce/blob/master/README.md#api-versions"
+          end
+        end
+      end
+
       private
 
       # Internal: Returns a path to an api endpoint
@@ -489,16 +503,8 @@ module Restforce
 
       # Internal: Ensures that the `api_version` set for the Restforce client is at least
       # the provided version before performing a particular action
-      def version_guard(version)
-        if version.to_f <= options[:api_version].to_f
-          yield
-        else
-          raise APIVersionError, "You must set an `api_version` of at least #{version} " \
-                                 "to use this feature in the Salesforce API. Set the " \
-                                 "`api_version` option when configuring the client - " \
-                                 "see https://github.com/ejholmes/restforce/blob/master" \
-                                 "/README.md#api-versions"
-        end
+      def version_guard(version, &block)
+        Restforce::Concerns::API.version_guard(version, options[:api_version], &block)
       end
 
       def extract_case_insensitive_string_or_symbol_key_from_hash!(hash, key)
