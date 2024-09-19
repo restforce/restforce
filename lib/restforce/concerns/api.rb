@@ -483,7 +483,7 @@ module Restforce
             raise APIVersionError, "You must set an `api_version` of at least " \
                                    "#{version} to use this feature in the Salesforce " \
                                    "API. Set the `api_version` option when configuring " \
-                                   "the client - see https://github.com/ejholmes/" \
+                                   "the client - see https://github.com/restforce/" \
                                    "restforce/blob/master/README.md#api-versions"
           end
         end
