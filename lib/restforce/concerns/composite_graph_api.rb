@@ -35,7 +35,7 @@ module Restforce
         composite.validate!
         composite.yield_builder(&block)
 
-        return composite.to_hash if opts[:debug]
+        return composite.to_hash if opts[:dry_run]
 
         response = api_post('composite/graph', composite.to_json)
         results = response.body
