@@ -66,7 +66,7 @@ module Restforce
 
           return unless builder.node_count > MAX_NODE_COUNT
 
-          raise ArgumentError, 'Cannot have more than 500 notes.'
+          raise ArgumentError, 'Cannot have more than 500 nodes.'
         end
 
         def yield_builder
