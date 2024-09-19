@@ -19,7 +19,7 @@ module Restforce
       end
 
       def collection_delete(ids, opts = {})
-        all_or_none = opts.delete(:all_or_none) || false
+        all_or_none = opts.fetch(:all_or_none, false)
         raise ArgumentError, "ids are required" if Array(ids).empty?
 
         results = api_delete("composite/sobjects",
