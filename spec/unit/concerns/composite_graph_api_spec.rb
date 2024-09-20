@@ -61,9 +61,9 @@ describe Restforce::Concerns::CompositeGraphAPI do
     expect(result.has_errors).to be_falsey
   end
 
-  context "in debug mode" do
+  context "in dry run mode" do
     it "should return a hash" do
-      debug_output = client.composite_graph(debug: true) do |builder|
+      debug_output = client.composite_graph(dry_run: true) do |builder|
         builder.graph('g1') do |subrequest|
           subrequest.find('Contact', 'c1', 'xxx')
         end
