@@ -78,7 +78,7 @@ module Restforce
       end
 
       def collection_upsert(sobject_type, field_name, opts = {})
-        all_or_none = opts.delete(:all_or_none) || false
+        all_or_none = opts.fetch(:all_or_none, false)
         builder = RecordsBuilder.new(field_name.to_sym)
         yield(builder)
         return builder.records if opts[:debug]
