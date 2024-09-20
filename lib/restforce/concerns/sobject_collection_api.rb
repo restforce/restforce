@@ -56,7 +56,7 @@ module Restforce
       end
 
       def collection_update(opts = {})
-        all_or_none = opts.delete(:all_or_none) || false
+        all_or_none = opts.fetch(:all_or_none, false)
         builder = RecordsBuilder.new
         yield(builder)
         return builder.records if opts[:dry_run]
