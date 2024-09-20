@@ -81,7 +81,7 @@ module Restforce
         all_or_none = opts.fetch(:all_or_none, false)
         builder = RecordsBuilder.new(field_name.to_sym)
         yield(builder)
-        return builder.records if opts[:debug]
+        return builder.records if opts[:dry_run]
 
         if builder.records.empty?
           raise ArgumentError, "There are no records to be created"
