@@ -112,7 +112,8 @@ module Restforce
           if all_or_none && has_errors
             last_error_index = results.rindex do |result|
               !result.success && !result.errors.empty? &&
-                result.errors.last.statusCode != 'ALL_OR_NONE_OPERATION_ROLLED_BACK '
+
+                result.errors.last.statusCode != 'ALL_OR_NONE_OPERATION_ROLLED_BACK'
             end
             last_error = results[last_error_index]
             raise ::Restforce::ResponseError.new(last_error.errors.last.message, results)
