@@ -116,7 +116,7 @@ If you prefer to use a username and password to authenticate:
 client = Restforce.new(username: config['username'],
                        password: config['password'],
                        instance_url: config['instance_url'],
-                       host: config['host'],                   # https://test.salesforce.com for sandbox (optional)
+                       host: config['host'],                   # test.salesforce.com for sandbox (optional)
                        client_id: config['client_key'],        # Salesforce Client Key
                        client_secret: config['client_secret'], # Salesforce Client Secret
                        api_version: '55.0')
