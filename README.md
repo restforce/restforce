@@ -329,7 +329,7 @@ client.search('FIND {bar}')
 # => #<Restforce::Collection >
 
 # Find accounts matching the term 'genepoint' and return the `Name` field
-client.search('FIND {genepoint} RETURNING Account (Name)').map(&:Name)
+client.search('FIND {genepoint} RETURNING Account (Name)')["searchRecords"].map(&:Name)
 # => ['GenePoint']
 ```
 
