@@ -15,7 +15,7 @@ gem 'jruby-openssl', platforms: :jruby
 gem 'rake'
 gem 'rspec', '~> 3.13.0'
 gem 'rspec-collection_matchers', '~> 1.2.0'
-gem 'rspec-its', '~> 1.3.0'
+gem 'rspec-its', '~> 2.0.0'
 gem 'rspec_junit_formatter', '~> 0.6.0'
 gem 'rubocop', '~> 1.69.2'
 gem 'simplecov', '~> 0.22.0'
