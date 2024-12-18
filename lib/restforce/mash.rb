@@ -46,10 +46,10 @@ module Restforce
       end
     end
 
-    def initialize(source_hash = nil, client = nil, default = nil, &blk)
+    def initialize(source_hash = nil, client = nil, default = nil, &)
       @client = client
       deep_update(source_hash) if source_hash
-      default ? super(default) : super(&blk)
+      default ? super(default) : super(&)
     end
 
     def dup

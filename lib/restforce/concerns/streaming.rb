@@ -9,9 +9,9 @@ module Restforce
       # block    - A block to run when a new message is received.
       #
       # Returns a Faye::Subscription
-      def legacy_subscribe(topics, options = {}, &block)
+      def legacy_subscribe(topics, options = {}, &)
         topics = Array(topics).map { |channel| "/topic/#{channel}" }
-        subscription(topics, options, &block)
+        subscription(topics, options, &)
       end
       alias subscribe legacy_subscribe
 
@@ -21,12 +21,12 @@ module Restforce
       # block    - A block to run when a new message is received.
       #
       # Returns a Faye::Subscription
-      def subscription(channels, options = {}, &block)
+      def subscription(channels, options = {}, &)
         one_or_more_channels = Array(channels)
         one_or_more_channels.each do |channel|
           replay_handlers[channel] = options[:replay]
         end
-        faye.subscribe(one_or_more_channels, &block)
+        faye.subscribe(one_or_more_channels, &)
       end
 
       # Public: Faye client to use for subscribing to PushTopics
