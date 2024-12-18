@@ -27,7 +27,7 @@ Features include:
 
 Add this line to your application's Gemfile:
 
-    gem 'restforce', '~> 7.5.0'
+    gem 'restforce', '~> 8.0.0'
 
 And then execute:
 
@@ -37,15 +37,16 @@ Or install it yourself as:
 
     $ gem install restforce
 
-__As of version 7.0.0, this gem is only compatible with Ruby 3.0.0 and later.__ If you're using an earlier Ruby version:
+**As of version 8.0.0, this gem is only compatible with Ruby 3.1.0 and later.** If you're using an earlier Ruby version:
 
-* for Ruby 2.7, use version 6.2.4 or earlier
-* for Ruby 2.6, use version 5.3.1 or earlier
-* for Ruby 2.5, use version 5.0.6 or earlier
-* for Ruby 2.4, use version 4.3.0 or earlier
-* for Ruby 2.3, use version 3.2.0 or earlier
-* for Ruby versions 2.2, 2.1 and 2.0, use version 2.5.3 or earlier
-* for Ruby 1.9.3, use version 2.4.2
+- for Ruby 3.0, use version 7.6.0 or earlier
+- for Ruby 2.7, use version 6.2.4 or earlier
+- for Ruby 2.6, use version 5.3.1 or earlier
+- for Ruby 2.5, use version 5.0.6 or earlier
+- for Ruby 2.4, use version 4.3.0 or earlier
+- for Ruby 2.3, use version 3.2.0 or earlier
+- for Ruby versions 2.2, 2.1 and 2.0, use version 2.5.3 or earlier
+- for Ruby 1.9.3, use version 2.4.2
 
 This gem is versioned using [Semantic Versioning](http://semver.org/), so you can be confident when updating that there will not be breaking changes outside of a major version (following format MAJOR.MINOR.PATCH, so for instance moving from 3.1.0 to 4.0.0 would be allowed to include incompatible API changes). See the [changelog](https://github.com/restforce/restforce/tree/master/CHANGELOG.md) for details on what has changed in each version.
 
