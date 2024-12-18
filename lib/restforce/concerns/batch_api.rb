@@ -29,8 +29,8 @@ module Restforce
         end.flatten
       end
 
-      def batch!(&block)
-        batch(halt_on_error: true, &block)
+      def batch!(&)
+        batch(halt_on_error: true, &)
       end
 
       class Subrequests
