@@ -1,3 +1,7 @@
+## 7.6.0 (December 18, 2024)
+
+- **Allow all `faraday` versions up to, but not including, v3.0.0**: For more details, see https://github.com/restforce/restforce/pull/915 (@timrogers)
+
 ## 7.5.0 (September 4, 2024)
 
 - Add support for `faraday` v2.11.x (@timrogers)
