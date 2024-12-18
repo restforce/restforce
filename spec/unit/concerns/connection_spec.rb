@@ -85,6 +85,8 @@ describe Restforce::Concerns::Connection do
       client.stub options: { adapter: :typhoeus }
     end
 
-    its(:adapter) { should eq(:typhoeus) }
+    it "uses typheous adapter" do
+      expect(client.send(:adapter)).to be(:typhoeus)
+    end
   end
 end
