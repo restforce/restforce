@@ -1,3 +1,15 @@
+# Upgrading from Restforce 7.x to 8.x
+
+## Ruby 3.0 is no longer supported
+
+**Likelyhood of impact**: Moderate
+
+Ruby 3.0 is no longer officially supported as an active version of the Ruby language. That means that it will not receive patches and security fixes.
+
+Accordingly, we've dropped support for Ruby 3.0 in the Restforce library. The gemspec now specifies that only 3.1 onwards is supported, and this will be enforced by RubyGems.
+
+Before you update to Restforce 8.x, you'll need to switch to Ruby 3.1.0 or later. The current version of Ruby at the time of writing is 3.3.6.
+
 # Upgrading from Restforce 6.x to 7.x
 
 ## Ruby 2.7 is no longer supported
