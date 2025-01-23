@@ -855,6 +855,13 @@ Environment variables: has the lowest precedence. If you set options using envir
 
 Defaults: If none of the above methods are used, Restforce falls back to its default configuration values.
 
+## Links
+
+If you need a full `ActiveRecord`-like experience, you may want to use
+[ActiveForce](https://github.com/Beyond-Finance/active_force), which wraps
+Restforce and adds Associations, Query Building (like AREL), Validations and
+Callbacks.
+
 ## Contributing
 
 We welcome all contributions - they help us make Restforce the best gem possible.
