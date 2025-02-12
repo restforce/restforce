@@ -9,8 +9,9 @@ describe Restforce::Middleware::Authentication do
       authentication_retries: retries,
       adapter: :net_http,
       # rubocop:disable Naming/VariableNumber
-      ssl: { version: :TLSv1_2 } }
-    # rubocop:enable Naming/VariableNumber
+      ssl: { version: :TLSv1_2 },
+      # rubocop:enable Naming/VariableNumber
+      timeout: 10 }
   end
 
   describe '.authenticate!' do
