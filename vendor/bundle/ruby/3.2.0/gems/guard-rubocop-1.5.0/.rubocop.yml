@@ -1,0 +1,39 @@
+inherit_from: .rubocop_todo.yml
+
+AllCops:
+  TargetRubyVersion: 2.5
+
+Layout/FirstArrayElementIndentation:
+  EnforcedStyle: consistent
+
+Layout/LineLength:
+  Max: 100
+
+Lint/MissingSuper:
+  Exclude:
+    - spec/support/silence_output.rb
+
+Metrics/BlockLength:
+  Exclude:
+    - 'spec/**/*.rb'
+
+Metrics/MethodLength:
+  Max: 15
+
+Naming/HeredocDelimiterNaming:
+  Enabled: false
+
+Naming/RescuedExceptionsVariableName:
+  PreferredName: error
+
+Style/EmptyMethod:
+  EnforcedStyle: expanded
+
+Style/FrozenStringLiteralComment:
+  Exclude:
+    - lib/guard/rubocop/templates/Guardfile
+
+Style/RegexpLiteral:
+  Exclude:
+    - '**/*.gemspec'
+    - '**/Guardfile'

@@ -1,0 +1,14 @@
+[
+  {
+    "author": {
+      "github": "http://github.com/secobarbital",
+      "name":   "Seggy Umboh"
+    },
+    "contributions": [
+      "widen supported IP addresses",
+      "fix case-sensitivity issue with HTTP headers",
+      "correct issue when running under Ruby 1.8.x",
+      "made Jar act more like a browser (dropping cookies w/o exception)"
+    ]
+  }
+]
