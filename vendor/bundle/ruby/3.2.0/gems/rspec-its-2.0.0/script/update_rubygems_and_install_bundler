@@ -1,0 +1,7 @@
+#!/bin/bash
+
+set -e
+
+echo "Installing latest rubygems / bundler"
+yes | gem update --system
+yes | gem install bundler

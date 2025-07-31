@@ -1,0 +1,30 @@
+name: CI
+on: [push, pull_request]
+jobs:
+  rspec:
+    name: RSpec
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        ruby: ['2.5', '2.6', '2.7', '3.0']
+    steps:
+      - uses: actions/checkout@v2
+      - uses: ruby/setup-ruby@v1
+        with:
+          ruby-version: ${{ matrix.ruby }}
+      - run: bundle install
+      - run: bundle exec rspec
+      # FIXME: https://github.com/rubocop/guard-rubocop/pull/48#issuecomment-906893891
+      # - uses: coverallsapp/github-action@master
+      #   with:
+      #     github-token: ${{ secrets.GITHUB_TOKEN }}
+  rubocop:
+    name: RuboCop
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - uses: ruby/setup-ruby@v1
+        with:
+          ruby-version: 2.5
+      - run: bundle install
+      - run: bundle exec rubocop
