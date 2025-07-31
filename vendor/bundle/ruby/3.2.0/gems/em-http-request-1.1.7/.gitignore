@@ -1,9 +1,0 @@
-*.bundle
-*.o
-Makefile
-mkmf.log
-Gemfile.lock
-misc
-gems/
-vendor/
-.idea
