@@ -1,0 +1,19 @@
+current directory: /home/runner/work/restforce/restforce/vendor/bundle/ruby/3.2.0/gems/eventmachine-1.2.7/ext/fastfilereader
+/usr/bin/ruby3.2 -I/usr/lib/ruby/vendor_ruby extconf.rb
+creating Makefile
+
+current directory: /home/runner/work/restforce/restforce/vendor/bundle/ruby/3.2.0/gems/eventmachine-1.2.7/ext/fastfilereader
+make DESTDIR\= sitearchdir\=./.gem.20250731-3425-pni197 sitelibdir\=./.gem.20250731-3425-pni197 clean
+
+current directory: /home/runner/work/restforce/restforce/vendor/bundle/ruby/3.2.0/gems/eventmachine-1.2.7/ext/fastfilereader
+make DESTDIR\= sitearchdir\=./.gem.20250731-3425-pni197 sitelibdir\=./.gem.20250731-3425-pni197
+compiling mapper.cpp
+compiling rubymain.cpp
+linking shared-object fastfilereaderext.so
+
+current directory: /home/runner/work/restforce/restforce/vendor/bundle/ruby/3.2.0/gems/eventmachine-1.2.7/ext/fastfilereader
+make DESTDIR\= sitearchdir\=./.gem.20250731-3425-pni197 sitelibdir\=./.gem.20250731-3425-pni197 install
+/usr/bin/install -c -m 0755 fastfilereaderext.so ./.gem.20250731-3425-pni197
+
+current directory: /home/runner/work/restforce/restforce/vendor/bundle/ruby/3.2.0/gems/eventmachine-1.2.7/ext/fastfilereader
+make DESTDIR\= sitearchdir\=./.gem.20250731-3425-pni197 sitelibdir\=./.gem.20250731-3425-pni197 clean
