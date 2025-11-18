@@ -73,11 +73,15 @@ module Restforce
         our_default = default
         our_name    = name
         configuration.send :define_method, our_name do
-          instance_variable_get(:"@#{our_name}") ||
+          value = instance_variable_get(:"@#{our_name}")
+          if value.nil?
             instance_variable_set(
               :"@#{our_name}",
               our_default.respond_to?(:call) ? our_default.call : our_default
             )
+          else
+            value
+          end
         end
       end
     end
