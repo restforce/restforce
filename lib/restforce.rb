@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 require 'faraday'
+require 'faraday/net_http'
 require 'faraday/follow_redirects'
 require 'json'
 require 'jwt'
@@ -84,8 +85,8 @@ module Restforce
     end
 
     # Helper for decoding signed requests.
-    def decode_signed_request(*args)
-      SignedRequest.decode(*args)
+    def decode_signed_request(*)
+      SignedRequest.decode(*)
     end
   end
 
