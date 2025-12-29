@@ -327,6 +327,125 @@ module Restforce
         true
       end
 
+      # Public: Insert collection of records.
+      #
+      # attrs_collection - Collection of attributes for new records.
+      # all_or_none - Fail all collection if one record creation fails.
+      #
+      # Examples
+      #
+      #   # Add new accounts
+      #   client.create_collection([{Name: 'Foo Inc.'}, {Name: 'Bar Corp.'}])
+      #   # => [{ 'id' => '0016000000MRatd', 'success' => true, 'errors' => [] },
+      #   #     { 'id' => '0016000000MRert', 'success' => true, 'errors' => [] }]
+      #
+      # Returns array of result objects.
+      # Returns false if something bad happens.
+      def create_collection(*args)
+        create_collection!(*args)
+      rescue *exceptions
+        false
+      end
+
+      # Public: Insert collection of records.
+      #
+      # attrs_collection - Collection of attributes for new records.
+      # all_or_none - Fail all collection if one record creation fails.
+      #
+      # Examples
+      #
+      #   # Add new accounts
+      #   client.create_collection!([{Name: 'Foo Inc.'}, {Name: 'Bar Corp.'}])
+      #   # => [{ 'id' => '1', 'success' => true, 'errors' => [] },
+      #   #     { 'id' => '2', 'success' => true, 'errors' => [] }]
+      #
+      # Returns array of result objects.
+      # Raises exceptions if an error is returned from Salesforce.
+      def create_collection!(attrs_collection, all_or_none = false)
+        raise ArgumentError,
+          'Amount of records to create is limited to 200' if attrs_collection.size > 200
+
+        api_post('composite/sobjects', {records: attrs_collection, allOrNone: all_or_none}).body
+      end
+
+      # Public: Update collection of records.
+      #
+      # attrs_collection - Collection of attributes for existing records.
+      # all_or_none - Fail all collection if one record creation fails.
+      #
+      # Examples
+      #
+      #   # Update accounts
+      #   client.update_collection([{Id: '1', Name: 'Foo Inc.'}, {Id: '2', Name: 'Bar Corp.'}])
+      #   # => [{ 'id' => '1', 'success' => true, 'errors' => [] },
+      #   #     { 'id' => '2', 'success' => true, 'errors' => [] }]
+      #
+      # Returns array of result objects.
+      # Returns false if something bad happens.
+      def update_collection(*args)
+        update_collection!(*args)
+      rescue *exceptions
+        false
+      end
+
+      # Public: Update collection of records.
+      #
+      # attrs_collection - Collection of attributes for existing records.
+      # all_or_none - Fail all collection if one record creation fails.
+      #
+      # Examples
+      #
+      #   # Update accounts
+      #   client.update_collection!([{Id: '1', Name: 'Foo Inc.'}, {Id: '2', Name: 'Bar Corp.'}])
+      #   # => [{ 'id' => '1', 'success' => true, 'errors' => [] },
+      #   #     { 'id' => '2', 'success' => true, 'errors' => [] }]
+      #
+      # Returns array of result objects.
+      # Raises exceptions if an error is returned from Salesforce.
+      def update_collection!(attrs_collection, all_or_none = false)
+        raise ArgumentError,
+          'Amount of records to update is limited to 200' if attrs_collection.size > 200
+
+        api_patch('composite/sobjects', {records: attrs_collection, allOrNone: all_or_none}).body
+      end
+
+      # Public: Delete collection of records.
+      #
+      # ids - List of IDs of objects to be deleted.
+      # all_or_none - Roll back the entire request when the deletion of any object fails.
+      #
+      # Examples
+      #
+      #   # Delete collection of records
+      #   client.destroy_collection('0016000000MRatd', '0016000000ERats')
+      #
+      # Returns array of result objects.
+      # Returns false if an error is returned from Salesforce.
+      def destroy_collection(*args)
+        destroy_collection!(*args)
+      rescue *exceptions
+        false
+      end
+
+      # Public: Delete collection of records.
+      #
+      # ids - List of IDs of objects to be deleted.
+      # all_or_none - Roll back the entire request when the deletion of any object fails.
+      #
+      # Examples
+      #
+      #   # Delete collection of records
+      #   client.destroy_collection!('0016000000MRatd', '0016000000ERats')
+      #
+      # Returns array of result objects.
+      # Raises exceptions if an error is returned from Salesforce.
+      def destroy_collection!(ids, all_or_none = false)
+        raise ArgumentError,
+          'Amount of records to delete is limited to 200' if ids.size > 200
+
+        api_delete("composite/sobjects?ids=#{ids.join(',')}&allOrNone=#{all_or_none}").body
+      end
+
       # Public: Update or create a record based on an external ID
       #
       # sobject - The name of the sobject to created.
