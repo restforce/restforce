@@ -22,3 +22,4 @@ tmp
 .idea
 Vagrantfile
 .vagrant/
+vendor/
