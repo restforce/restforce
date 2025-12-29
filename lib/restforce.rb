@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 require 'faraday'
+require 'faraday/net_http'
 require 'faraday/follow_redirects'
 require 'json'
 require 'jwt'
