@@ -35,7 +35,9 @@ jobs:
             "2.9.2",
             "2.10.1",
             "2.11.0",
-            "2.12.2",
+            "2.12.3",
+            "2.13.4",
+            "2.14.0"
           ]
     env:
       FARADAY_VERSION: ~> ${{ matrix.faraday_version }}
