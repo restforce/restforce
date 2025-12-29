@@ -43,8 +43,8 @@ module Restforce
     class Option
       attr_reader :configuration, :name, :options
 
-      def self.define(*args)
-        new(*args).define
+      def self.define(*)
+        new(*).define
       end
 
       def initialize(configuration, name, options = {})
@@ -85,8 +85,8 @@ module Restforce
     class << self
       attr_accessor :options
 
-      def option(*args)
-        option = Option.define(self, *args)
+      def option(*)
+        option = Option.define(self, *)
         (self.options ||= []) << option.name
       end
     end
