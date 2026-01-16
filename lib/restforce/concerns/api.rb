@@ -338,8 +338,9 @@ module Restforce
       #   # Update the record with external ID of 12
       #   client.upsert('Account', 'External__c', External__c: 12, Name: 'Foobar')
       #
-      # Returns true if the record was found and updated.
-      # Returns the Id of the newly created record if the record was created.
+      # Returns a hash with the 'id' of the Salesforce record, and a 'created'
+      # attribute, equal to true if the record was created, false if it was updated.
+      # ex: { 'id' => '0016000000MRatd', 'created' => false }
       # Returns false if something bad happens (for example if the external ID matches
       # multiple resources).
       def upsert(*args)
@@ -359,8 +360,9 @@ module Restforce
       #   # Update the record with external ID of 12
       #   client.upsert!('Account', 'External__c', External__c: 12, Name: 'Foobar')
       #
-      # Returns true if the record was found and updated.
-      # Returns the Id of the newly created record if the record was created.
+      # Returns a hash with the 'id' of the Salesforce record, and a 'created'
+      # attribute, equal to true if the record was created, false if it was updated.
+      # ex: { 'id' => '0016000000MRatd', 'created' => false }
       # Raises an exception if an error is returned from Salesforce, including the 300
       # error returned if the external ID provided matches multiple records (in which
       # case the conflicting IDs can be found by looking at the response on the error)
@@ -383,7 +385,7 @@ module Restforce
                       "#{ERB::Util.url_encode(external_id)}", attrs
           end
 
-        response.body.respond_to?(:fetch) ? response.body.fetch('id', true) : true
+        response.body.slice("id", "created")
       end
 
       # Public: Delete a record.
