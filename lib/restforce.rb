@@ -33,10 +33,22 @@ module Restforce
     autoload :API,            'restforce/concerns/api'
     autoload :BatchAPI,       'restforce/concerns/batch_api'
     autoload :CompositeAPI,   'restforce/concerns/composite_api'
+    autoload :CompositeGraphAPI,  'restforce/concerns/composite_graph_api'
+    autoload :SubRequests,        'restforce/concerns/subrequests'
   end
 
   module Data
     autoload :Client, 'restforce/data/client'
+  end
+
+  module Resources
+    autoload :SubrequestBuilder,        'restforce/resources/subrequest_builder'
+    autoload :Base,                     'restforce/resources/base'
+    autoload :SObjectBasic,             'restforce/resources/sobject_basic'
+    autoload :SObjectRows,              'restforce/resources/sobject_rows'
+    autoload :SObjectRowsByExternalId,  'restforce/resources/sobject_rows_by_external_id'
+    autoload :Query,                    'restforce/resources/query'
+    autoload :QueryAll,                 'restforce/resources/query_all'
   end
 
   module Tooling

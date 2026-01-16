@@ -9,5 +9,6 @@ module Restforce
     include Restforce::Concerns::API
     include Restforce::Concerns::BatchAPI
     include Restforce::Concerns::CompositeAPI
+    include Restforce::Concerns::CompositeGraphAPI
   end
 end
