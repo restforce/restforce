@@ -60,7 +60,7 @@ __There are three breaking changes introduced in Restforce 5.x__. In this guide,
 __Likelyhood of impact__: Moderate
 
 The Salesforce REST API can return a range of `errorCode`s representing different kinds of errors. To make these easy to
-handle in your code, we want to turn these into individual, specific exception classes in the `Restforce::ErrorCode` namespace that inherit from `Restforce:: ResponseError`.
+handle in your code, we want to turn these into individual, specific exception classes in the `Restforce::ErrorCode` namespace that inherit from `Restforce::ResponseError`.
 
 Up until now, these exception classes have been defined dynamically at runtime which has some disadvantages - see the [pull request](https://github.com/restforce/restforce/pull/551) for more details.
 
