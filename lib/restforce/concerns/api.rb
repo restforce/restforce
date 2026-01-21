@@ -475,6 +475,91 @@ module Restforce
         api_get(path).body
       end
 
+
+      # Public: Insert multiple records of an sobject or insert sets of nested records of sobject
+      #
+      # Only available in version 34.0 and later of the Salesforce API.
+      #
+      # sobject - String name of the sobject.
+      # records - A single sobject tree input or collection of sobject tree inputs.
+      #           A sobject tree contains:
+      #             - attributes: type and referenceId (Required)
+      #             - required object fields (Required)
+      #             - optional object fields
+      #             - Child relationships
+      #
+      # Examples
+      #
+      #   # Add multiple accounts
+      #   client.create_multiple!('Account',
+      #                          { "records" => [{
+      #                            "attributes" => {"type"  => "Account", "referenceId"  => "ref1"},
+      #                            "name" => "SampleAccount1"
+      #                            },{
+      #                            "attributes" => {"type"  => "Account", "referenceId"  => "ref2"},
+      #                            "name"  => "SampleAccount2"
+      #                            }]})
+      #   # => {"hasErrors" : false,
+      #         "results" : [{
+      #            "referenceId" : "ref1",
+      #            "id" : "001D000000K0fXOIAZ"},{
+      #            "referenceId" : "ref2",
+      #            "id" : "001D000000K0fXPIAZ"}]}
+      #
+      # Returns a response that contains
+      #   - hasErrors (boolean)
+      #   - results for each object inserted or errors
+      # Returns false if something bad happens.
+      def create_multiple(*args)
+        create_multiple!(*args)
+      rescue *exceptions
+        false
+      end
+      alias_method :create_nested, :create_multiple
+      alias_method :insert_multiple, :create_multiple
+      alias_method :insert_nested, :create_multiple
+
+      # Public: Insert multiple records of an sobject or insert sets of nested records of sobject
+      #
+      # Only available in version 34.0 and later of the Salesforce API.
+      #
+      # sobject - String name of the sobject.
+      # records - A single sobject tree input or collection of sobject tree inputs.
+      #           A sobject tree contains:
+      #             - attributes: type and referenceId (Required)
+      #             - required object fields (Required)
+      #             - optional object fields
+      #             - Child relationships
+      #
+      # Examples
+      #
+      #   # Add multiple accounts
+      #   client.create_multiple!('Account',
+      #                          { "records" => [{
+      #                            "attributes" => {"type"  => "Account", "referenceId"  => "ref1"},
+      #                            "name" => "SampleAccount1"
+      #                            },{
+      #                            "attributes" => {"type"  => "Account", "referenceId"  => "ref2"},
+      #                            "name"  => "SampleAccount2"
+      #                            }]})
+      #   # => {"hasErrors" : false,
+      #         "results" : [{
+      #            "referenceId" : "ref1",
+      #            "id" : "001D000000K0fXOIAZ"},{
+      #            "referenceId" : "ref2",
+      #            "id" : "001D000000K0fXPIAZ"}]}
+      #
+      # Returns a response that contains
+      #   - hasErrors (boolean)
+      #   - results for each object inserted or errors
+      # Raises exceptions if an error is returned from Salesforce.
+      def create_multiple!(sobject, records)
+        version_guard(34.0) { api_post("composite/tree/#{sobject}", records).body['results'] }
+      end
+      alias_method :create_nested!, :create_multiple!
+      alias_method :insert_multiple!, :create_multiple!
+      alias_method :insert_nested!, :create_multiple!
+
       private
 
       # Internal: Returns a path to an api endpoint
