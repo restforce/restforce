@@ -35,7 +35,7 @@ module Restforce
       #                                   (default: 'login.salesforce.com').
       #
       #        :api_version             - The String REST api version to use
-      #                                   (default: '24.0')
+      #                                   (default: '26.0')
       #
       #        :authentication_retries  - The number of times that client
       #                                   should attempt to reauthenticate
