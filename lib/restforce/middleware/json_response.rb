@@ -19,8 +19,8 @@ module Restforce
     # Faraday. In Faraday, this refers to a Faraday constant.
     CONTENT_TYPE = 'Content-Type'
 
-    def initialize(app = nil, parser_options: nil, content_type: /\bjson$/,
-                   preserve_raw: false)
+    def initialize(app = nil, _options = {}, parser_options: nil,
+                   content_type: /\bjson$/, preserve_raw: false)
       super(app)
       @parser_options = parser_options
       @content_types = Array(content_type)
