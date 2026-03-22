@@ -8,7 +8,7 @@ AllCops:
     - .*/**/*
     - vendor/**/*
   NewCops: enable
-  TargetRubyVersion: 3.1
+  TargetRubyVersion: 3.2
 
 # Limit lines to 90 characters.
 Layout/LineLength:
