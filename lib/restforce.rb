@@ -2,7 +2,6 @@
 
 require 'faraday'
 require 'faraday/follow_redirects'
-require 'faraday/net_http'
 require 'json'
 require 'jwt'
 

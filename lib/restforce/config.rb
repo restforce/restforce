@@ -138,10 +138,8 @@ module Restforce
     # Faraday request read/open timeout.
     option :timeout
 
-    # Faraday adapter to use. Defaults to Faraday.default_adapter, falling back
-    # to :net_http (always available as a restforce dependency) for Faraday 2.0.0
-    # which removed net_http from its bundled adapters.
-    option :adapter, default: lambda { Faraday.default_adapter || :net_http }
+    # Faraday adapter to use. Defaults to Faraday.default_adapter.
+    option :adapter, default: lambda { Faraday.default_adapter }
 
     option :proxy_uri, default: lambda { ENV.fetch('SALESFORCE_PROXY_URI', nil) }
 
