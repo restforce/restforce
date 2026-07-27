@@ -19,12 +19,20 @@ module Restforce
     # Faraday. In Faraday, this refers to a Faraday constant.
     CONTENT_TYPE = 'Content-Type'
 
-    def initialize(app = nil, parser_options: nil, content_type: /\bjson$/,
-                   preserve_raw: false)
+    # In older Faraday 1.x versions, the DependencyLoader module's `new` method
+    # uses `def new(*)` which doesn't forward keyword arguments properly in Ruby 3+.
+    # This causes keyword arguments like `content_type:` to be converted to a Hash
+    # and passed as a second positional argument. We handle both cases here.
+    def initialize(app = nil, options = nil, **kwargs)
       super(app)
-      @parser_options = parser_options
-      @content_types = Array(content_type)
-      @preserve_raw = preserve_raw
+
+      # If options is a Hash, it means we received keyword args as a positional hash
+      # (Faraday 1.x with Ruby 3+). Otherwise, use kwargs (Faraday 2.x style).
+      opts = options.is_a?(Hash) ? options : kwargs
+
+      @parser_options = opts[:parser_options]
+      @content_types = Array(opts[:content_type] || /\bjson$/)
+      @preserve_raw = opts[:preserve_raw] || false
     end
 
     #

@@ -48,7 +48,7 @@ jobs:
         uses: ruby/setup-ruby@v1
         with:
           bundler-cache: true
-          ruby-version: 3.1
+          ruby-version: 4.0
       - name: Install dependencies
         run: bundle install
       - name: Run RSpec tests
