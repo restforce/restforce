@@ -19,7 +19,7 @@ Features include:
 * Support for GZIP compression.
 * Support for [custom Apex REST endpoints](#custom-apex-rest-endpoints).
 * Support for dependent picklists.
-* Support for decoding [Force.com Canvas](http://www.salesforce.com/us/developer/docs/platform_connectpre/canvas_framework.pdf) signed requests. (NEW!)
+* Support for decoding [Force.com Canvas](https://developer.salesforce.com/docs/atlas.en-us.platform_connect.meta/platform_connect/canvas_framework_intro.htm) signed requests. (NEW!)
 
 [Official Website](https://restforce.github.io/) | [Documentation](http://rubydoc.info/gems/restforce/frames) | [Changelog](https://github.com/restforce/restforce/tree/master/CHANGELOG.md)
 
