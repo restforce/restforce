@@ -3,7 +3,7 @@
 [![CircleCI](https://circleci.com/gh/restforce/restforce.svg?style=svg)](https://circleci.com/gh/restforce/restforce)
 ![Downloads](https://img.shields.io/gem/dt/restforce.svg)
 
-Restforce is a ruby gem for the [Salesforce REST API](http://www.salesforce.com/us/developer/docs/api_rest/index.htm).
+Restforce is a ruby gem for the [Salesforce REST API](https://developer.salesforce.com/docs/atlas.en-us.api_rest.meta/api_rest/intro_what_is_rest_api.htm).
 
 Features include:
 
@@ -733,7 +733,7 @@ EM.run {
 
 _See also_:
 
-* [Force.com Streaming API docs](http://www.salesforce.com/us/developer/docs/api_streaming/index.htm)
+* [Force.com Streaming API docs](https://developer.salesforce.com/docs/atlas.en-us.api_streaming.meta/api_streaming/intro_stream.htm)
 * [Message Durability docs](https://developer.salesforce.com/docs/atlas.en-us.api_streaming.meta/api_streaming/using_streaming_api_durability.htm)
 
 *Note:* Restforce's streaming implementation is known to be compatible with version `0.8.9` of the faye gem.
@@ -826,7 +826,7 @@ You can use Restforce to decode signed requests from Salesforce. See [the exampl
 
 ## Tooling API
 
-To use the [Tooling API](http://www.salesforce.com/us/developer/docs/api_toolingpre/api_tooling.pdf),
+To use the [Tooling API](https://developer.salesforce.com/docs/atlas.en-us.api_tooling.meta/api_tooling/intro_api_tooling.htm),
 call `Restforce.tooling` instead of `Restforce.new`:
 
 ```ruby
