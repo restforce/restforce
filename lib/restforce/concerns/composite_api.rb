@@ -35,8 +35,8 @@ module Restforce
         results
       end
 
-      def composite!(collate_subrequests: false, &block)
-        composite(all_or_none: true, collate_subrequests: collate_subrequests, &block)
+      def composite!(collate_subrequests: false, &)
+        composite(all_or_none: true, collate_subrequests: collate_subrequests, &)
       end
 
       class Subrequests

@@ -7,9 +7,8 @@ jobs:
       fail-fast: false
       matrix:
         # Normally, we only test the most recent patch version for any given minor version.
-        # For v2.0.x, we test v2.0.0 and v2.0.1 because v2.0.0 has a special behaviour where
-        # the Net::HTTP adapter is not included. See
-        # https://github.com/lostisland/faraday/blob/main/UPGRADING.md#faraday-20.
+        # Faraday v2.0.0 is excluded because its SSL options struct lacks the `ciphers` field
+        # added in v2.0.1, which makes it incompatible with modern faraday-net_http adapters.
         faraday_version:
           [
             "1.1.0",
@@ -22,7 +21,6 @@ jobs:
             "1.8.0",
             "1.9.3",
             "1.10.3",
-            "2.0.0",
             "2.0.1",
             "2.1.0",
             "2.2.0",
@@ -48,7 +46,7 @@ jobs:
         uses: ruby/setup-ruby@v1
         with:
           bundler-cache: true
-          ruby-version: 3.1
+          ruby-version: 3.2
       - name: Install dependencies
         run: bundle install
       - name: Run RSpec tests

@@ -263,8 +263,8 @@ module Restforce
       #
       # Returns the String Id of the newly created sobject.
       # Returns false if something bad happens.
-      def create(*args)
-        create!(*args)
+      def create(*)
+        create!(*)
       rescue *exceptions
         false
       end
@@ -300,8 +300,8 @@ module Restforce
       #
       # Returns true if the sobject was successfully updated.
       # Returns false if there was an error.
-      def update(*args)
-        update!(*args)
+      def update(*)
+        update!(*)
       rescue *exceptions
         false
       end
@@ -342,8 +342,8 @@ module Restforce
       # Returns the Id of the newly created record if the record was created.
       # Returns false if something bad happens (for example if the external ID matches
       # multiple resources).
-      def upsert(*args)
-        upsert!(*args)
+      def upsert(*)
+        upsert!(*)
       rescue *exceptions
         false
       end
@@ -398,8 +398,8 @@ module Restforce
       #
       # Returns true if the sobject was successfully deleted.
       # Returns false if an error is returned from Salesforce.
-      def destroy(*args)
-        destroy!(*args)
+      def destroy(*)
+        destroy!(*)
       rescue *exceptions
         false
       end
