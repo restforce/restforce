@@ -1,0 +1,4 @@
+{
+  "message": "Json Deserialization failed on token 'null' and has left off in the middle of parsing a row. Will go to end of row to begin parsing the next row",
+  "errorCode": "INVALID_FIELD"
+}
