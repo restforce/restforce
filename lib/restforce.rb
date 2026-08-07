@@ -32,7 +32,9 @@ module Restforce
     autoload :Base,           'restforce/concerns/base'
     autoload :API,            'restforce/concerns/api'
     autoload :BatchAPI,       'restforce/concerns/batch_api'
-    autoload :CompositeAPI,   'restforce/concerns/composite_api'
+    autoload :SObjectCollectionAPI, 'restforce/concerns/sobject_collection_api'
+    autoload :SObjectTreeAPI, 'restforce/concerns/sobject_tree_api'
+    autoload :CompositeAPI, 'restforce/concerns/composite_api'
   end
 
   module Data
