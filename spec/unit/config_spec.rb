@@ -71,6 +71,13 @@ describe Restforce do
       end
     end
 
+    it "allows use_cache to be set" do
+      Restforce.configure do |config|
+        config.use_cache = false
+      end
+      expect(Restforce.configuration.use_cache).to be false
+    end
+
     it 'takes precedence over environment variables' do
       { 'SALESFORCE_USERNAME'  => 'env_foo',
         'SALESFORCE_CLIENT_ID' => 'env_client id' }.
