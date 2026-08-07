@@ -16,6 +16,13 @@ module Restforce
       @client.describe_layouts(sobject_type, layout_id)
     end
 
+    def refresh
+      ensure_id
+      new_record = @client.find(sobject_type, self.Id)
+      deep_update(new_record.attrs)
+      new_record
+    end
+
     # Public: Persist the attributes to Salesforce.
     #
     # Examples
