@@ -59,7 +59,7 @@ module Restforce
     end
 
     def parse(body)
-      ::JSON.parse(body, @parser_options || {}) unless body.strip.empty?
+      ::JSON.parse(body, **(@parser_options || {})) unless body.strip.empty?
     end
 
     def parse_response?(env)
